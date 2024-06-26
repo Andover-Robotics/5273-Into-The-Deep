@@ -6,22 +6,23 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 
 @TeleOp(name = "Main Teleop", group = "main")
 public class MainTeleop extends LinearOpMode {
-    static double TICKS_PER_REV = 8192;
-    static double WHEEL_DIAMETER = 35 / 25.4;
-    static double LATERAL_DISTANCE = 9.5;
+    private static double TICKS_PER_REV = 8192;
+    private static double WHEEL_DIAMETER = 35 / 25.4;
+    private static double LATERAL_DISTANCE = 8.82;
 
     public double ticks_to_inches(double ticks) {
-        return ticks / TICKS_PER_REV * WHEEL_DIAMETER * Math.PI;
+        return (ticks / TICKS_PER_REV) * WHEEL_DIAMETER * Math.PI;
     }
 
     @Override
     public void runOpMode() {
 
-        double dt = 0.05;
+        double dt = 0.001;
         int spread = 5;
 
         DcMotor leftFrontDrive  = hardwareMap.get(DcMotor.class, "driveFL");
@@ -112,7 +113,18 @@ public class MainTeleop extends LinearOpMode {
             telemetry.addData("right encoder", rightEncoderVal);
             telemetry.addData("lateral encoder", lateralEncoderVal);
             telemetry.addData("inches traveled", inchesTraveled);
-            telemetry.addData("phi", thetas);
+
+//            double[] thetas2 = new double[thetas.size()];
+//            for(int i = 0; i < thetas2.length; i++){
+//                thetas2[i] = Math.abs(thetas.get(i)) % (2 * Math.PI) * (thetas.get(i) < 0 ? -1 : 1);
+//                if(thetas2[i] > Math.PI){
+//                    thetas2[i] -= 2 * Math.PI;
+//                }else if(thetas2[i] < -Math.PI){
+//                    thetas2[i] += 2 * Math.PI;
+//                }
+//            }
+
+            telemetry.addData("thetas", thetas);
 
 //            theta += phi;
             for(int i = 0; i < spread * 2 + 1; i++) {
