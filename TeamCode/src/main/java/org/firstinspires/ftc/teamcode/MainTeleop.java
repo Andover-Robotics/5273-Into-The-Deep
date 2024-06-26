@@ -5,7 +5,6 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 
 
@@ -13,7 +12,7 @@ import java.util.Arrays;
 public class MainTeleop extends LinearOpMode {
     private static double TICKS_PER_REV = 8192;
     private static double WHEEL_DIAMETER = 35 / 25.4;
-    private static double LATERAL_DISTANCE = 8.82;
+    private static double LATERAL_DISTANCE = 8.78;
 
     public double ticks_to_inches(double ticks) {
         return (ticks / TICKS_PER_REV) * WHEEL_DIAMETER * Math.PI;
@@ -43,14 +42,14 @@ public class MainTeleop extends LinearOpMode {
         int lastLeftEncoderVal = leftEncoderVal;
         int lastLateralEncoderVal = lateralEncoderVal;
 
-        ArrayList<Double> thetas = new ArrayList<Double>();
+        double[] thetas = new double[spread*2+1];
         for(int i = -spread; i <= spread; i++) {
-            thetas.add(0.0);
+            thetas[i+spread]=0.0;
         }
 
-        ArrayList<Double> lateral_distances = new ArrayList<Double>();
+        double[] lateral_distances = new double[spread*2+1];
         for(int i = -spread; i <= spread; i++) {
-            lateral_distances.add(LATERAL_DISTANCE + i * dt);
+            lateral_distances[i+spread]=LATERAL_DISTANCE + i * dt;
         }
 
 
@@ -103,9 +102,9 @@ public class MainTeleop extends LinearOpMode {
             int deltaLeftEncoderVal = leftEncoderVal - lastLeftEncoderVal;
 
             double inchesTraveled = (ticks_to_inches(deltaRightEncoderVal) + ticks_to_inches(deltaLeftEncoderVal)) / 2;
-            ArrayList<Double> phis = new ArrayList<Double>();
+            double[] phis = new double[spread * 2 + 1];
             for(int i = 0; i < spread * 2 + 1; i++){
-                phis.add((ticks_to_inches(deltaRightEncoderVal)  - ticks_to_inches(deltaLeftEncoderVal)) / lateral_distances.get(i));
+                phis[i]=(ticks_to_inches(deltaRightEncoderVal)  - ticks_to_inches(deltaLeftEncoderVal)) / lateral_distances[i];
             }
 //            double phi = (ticks_to_inches(deltaRightEncoderVal)  - ticks_to_inches(deltaLeftEncoderVal)) / LATERAL_DISTANCE;
 
@@ -128,7 +127,7 @@ public class MainTeleop extends LinearOpMode {
 
 //            theta += phi;
             for(int i = 0; i < spread * 2 + 1; i++) {
-                thetas.set(i, thetas.get(i) + phis.get(i));
+                thetas[i] = thetas[i] + phis[i];
             }
             lastLateralEncoderVal = lateralEncoderVal;
             lastLeftEncoderVal = leftEncoderVal;
