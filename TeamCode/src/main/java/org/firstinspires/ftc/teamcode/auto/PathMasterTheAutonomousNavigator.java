@@ -24,7 +24,18 @@ import  org.firstinspires.ftc.teamcode.Slides;
 
 @Config
 @Autonomous(name = "PATH", group = "Autonomous")
-public class PathMasterTheAutonomousNavigator extends LinearOpMode{
+/**
+ * Yet another OpMode, this time for Autonomous
+ * Yes, the names are intentional (and great), don't mess with them
+ * See {@link org.firstinspires.ftc.teamcode.Slides} for more components
+*/
+public class PathMasterTheAutonomousNavigator extends LinearOpMode {
+    /**
+     * Runs the OpMode
+     * @return nothing
+     * @since 0.0
+     * @see org.firstinspires.ftc.teamcode.auto.PathMasterTheAutonomousNavigator
+    */
     public void runOpMode(){
         MecanumDrive titanDrivePrecisionPowertrain = new MecanumDrive(hardwareMap, new Pose2d(69,42.0,Math.toRadians(69)));
         Slides vortexGlideXtreme = new Slides(hardwareMap);
