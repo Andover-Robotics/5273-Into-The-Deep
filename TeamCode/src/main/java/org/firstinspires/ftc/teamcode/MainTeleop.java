@@ -5,8 +5,6 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
-import java.util.Arrays;
-
 
 @TeleOp(name = "Main Teleop", group = "main")
 public class MainTeleop extends LinearOpMode {
