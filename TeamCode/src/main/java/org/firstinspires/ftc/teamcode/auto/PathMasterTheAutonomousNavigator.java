@@ -23,7 +23,7 @@ import org.firstinspires.ftc.teamcode.auto.MecanumDrive;
 import  org.firstinspires.ftc.teamcode.Slides;
 
 @Config
-@Autonomous(name = "BLUE_TEST_AUTO_PIXEL", group = "Autonomous")
+@Autonomous(name = "PATH", group = "Autonomous")
 public class PathMasterTheAutonomousNavigator extends LinearOpMode{
     public void runOpMode(){
         MecanumDrive titanDrivePrecisionPowertrain = new MecanumDrive(hardwareMap, new Pose2d(69,42.0,Math.toRadians(69)));
