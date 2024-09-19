@@ -22,19 +22,14 @@ import org.firstinspires.ftc.teamcode.auto.MecanumDrive;
 //our special silly very important goofy classes (w rizz)
 import  org.firstinspires.ftc.teamcode.Slides;
 
+/**
+ * Yet another OpMode, this time for Autonomous - the names are intentional (and great), don't mess with them
+ */
 @Config
 @Autonomous(name = "PATH", group = "Autonomous")
-/**
- * Yet another OpMode, this time for Autonomous
- * Yes, the names are intentional (and great), don't mess with them
- * See {@link org.firstinspires.ftc.teamcode.Slides} for more components
-*/
 public class PathMasterTheAutonomousNavigator extends LinearOpMode {
     /**
      * Runs the OpMode
-     * @return nothing
-     * @since 0.0
-     * @see org.firstinspires.ftc.teamcode.auto.PathMasterTheAutonomousNavigator
     */
     public void runOpMode(){
         MecanumDrive titanDrivePrecisionPowertrain = new MecanumDrive(hardwareMap, new Pose2d(69,42.0,Math.toRadians(69)));

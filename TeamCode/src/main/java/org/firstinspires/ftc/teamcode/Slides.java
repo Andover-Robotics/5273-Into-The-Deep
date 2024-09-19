@@ -7,6 +7,10 @@ import com.acmerobotics.roadrunner.Action;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
+/**
+ * The Slides mechanism, representing both Slide motors.
+ * See {@link org.firstinspires.ftc.teamcode.auto.PathMasterTheAutonomousNavigator}
+ */
 public class Slides {
     private DcMotor slidesLeft;
     private DcMotor slidesRight;
