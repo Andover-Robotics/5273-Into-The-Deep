@@ -8,9 +8,9 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
 @TeleOp(name = "Main Teleop", group = "main")
 public class MainTeleop extends LinearOpMode {
-    private static double TICKS_PER_REV = 8192;
-    private static double WHEEL_DIAMETER = 35 / 25.4;
-    private static double LATERAL_DISTANCE = 8.78;
+    private static final double TICKS_PER_REV = 8192;
+    private static final double WHEEL_DIAMETER = 35 / 25.4;
+    private static final double LATERAL_DISTANCE = 8.78;
 
     public double ticks_to_inches(double ticks) {
         return (ticks / TICKS_PER_REV) * WHEEL_DIAMETER * Math.PI;
