@@ -6,7 +6,7 @@ import com.noahbres.meepmeep.MeepMeep;
 import com.noahbres.meepmeep.roadrunner.DefaultBotBuilder;
 import com.noahbres.meepmeep.roadrunner.entity.RoadRunnerBotEntity;
 
-public class MeepMeepTesting {
+public class MeepMeepAutoPath1A {
     public static void main(String[] args) {
         System.setProperty("sun.java2d.opengl", "true");
         MeepMeep meepMeep = new MeepMeep(600);
@@ -29,6 +29,7 @@ public class MeepMeepTesting {
                 .waitSeconds(2)
                 .strafeToSplineHeading(new Vector2d(-55,-55),Math.toRadians(225))
                 .build());
+
 
         meepMeep.setBackground(MeepMeep.Background.FIELD_INTO_THE_DEEP_OFFICIAL)
                 .setDarkMode(true)
