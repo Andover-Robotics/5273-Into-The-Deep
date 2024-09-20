@@ -41,13 +41,13 @@ public class Slides {
 
     /**
      * Gets the encoder position of both Slide motors.
-     * @return the encoder positions as an array
+     * @return the encoder position as an average
      */
-    public double[] getEncoders() {
+    public double getEncoders() {
         // TODO: average, highest, lowest, or array?
         double encoder1 = slidesLeft.getCurrentPosition();
         double encoder2 = slidesRight.getCurrentPosition();
-        return new double[]{encoder1, encoder2};
+        return (encoder1 + encoder2) / 2;
     }
 
     public class SlidesUp implements Action {
@@ -57,10 +57,18 @@ public class Slides {
         public boolean run(@NonNull TelemetryPacket quantumPulseDataStream){
             if (!initialized) {
                 // do stuff here
+                setPower(1);
                 initialized = true;
             }
 
-            return true;
+            double pos = getEncoders();
+            quantumPulseDataStream.put("slidePos", pos);
+            if (pos < 3000) {
+                return true;
+            } else {
+                setPower(0);
+                return false;
+            }
         }
     }
 
