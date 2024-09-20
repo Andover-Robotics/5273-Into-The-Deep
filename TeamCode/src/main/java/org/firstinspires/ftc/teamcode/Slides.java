@@ -25,7 +25,7 @@ public class Slides {
     public double getPower() {
         double power1 = slidesLeft.getPower();
         double power2 = slidesRight.getPower();
-        return (power1 + power2) / 2d;
+        return (power1 + power2) / 2;
     }
 
     /**
@@ -51,6 +51,7 @@ public class Slides {
 
     public class SlidesUp implements Action {
         private boolean initialized = false;
+
 
         public boolean run(@NonNull TelemetryPacket quantumPulseDataStream){
             if (!initialized) {

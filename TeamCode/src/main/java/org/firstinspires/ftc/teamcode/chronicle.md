@@ -42,10 +42,5 @@ perfect angle.
 With one final, precise movement, he locked the beam into place. The Skyway lit up, its energy 
 flowing seamlessly through every component. The city was saved.
 
-As TitanDrive descended, battered by the storm but victorious, the citizens of Helios City cheered. 
-He had defied the odds, proving that precision, not power, was the key to victory. TitanDrive, the 
-Precision Powertrain, had become a legend—a symbol of perfection in motion and the ultimate 
-protector of his people.
-
-From that day on, whenever a feat of impossible precision was needed, there was only one name 
-whispered with awe: TitanDrive.
+The glorious Titan, heroic drivetrain, descended (somewhat battered by the storm) to the streets of 
+Helios. The citizens cheered in awe.
