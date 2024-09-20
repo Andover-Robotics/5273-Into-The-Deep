@@ -12,10 +12,10 @@ public class Movement {
     private DcMotor rightFront;
     private DcMotor rightBack;
     public Movement (HardwareMap map){
-        leftFront = map.get(DcMotor.class, "driveFL");
-        leftBack = map.get(DcMotor.class, "driveBL");
-        rightFront = map.get(DcMotor.class, "driveFR");
-        rightBack = map.get(DcMotor.class, "driveBR");
+        leftFront = map.get(DcMotor.class, "leftFront");
+        leftBack = map.get(DcMotor.class, "leftBack");
+        rightFront = map.get(DcMotor.class, "rightFront");
+        rightBack = map.get(DcMotor.class, "rightBack");
     }
 
     // TODO: implement later

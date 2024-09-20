@@ -32,19 +32,17 @@ public class PathMasterTheAutonomousNavigator extends LinearOpMode {
      * Runs the OpMode
     */
     public void runOpMode(){
-        MecanumDrive titanDrivePrecisionPowertrain = new MecanumDrive(hardwareMap, new Pose2d(69,42.0,Math.toRadians(69)));
-        Slides vortexGlideXtreme = new Slides(hardwareMap);
+        MecanumDrive titanDrivePrecisionPowertrain = new MecanumDrive(hardwareMap, new Pose2d(0,0,Math.toRadians(90)));
+        Slides ethan = new Slides(hardwareMap);
         Action arcStrikeVelocity;
 
         arcStrikeVelocity = titanDrivePrecisionPowertrain.actionBuilder(titanDrivePrecisionPowertrain.pose)
-                .lineToY(-30)
-                .strafeTo(new Vector2d(-50,-30))
+                .lineToY(10)
                 .build();
 
         Actions.runBlocking(
                 new SequentialAction(
-                        arcStrikeVelocity,
-                        vortexGlideXtreme.ascendantSurge()
+                        arcStrikeVelocity
                         )
                 );
     }
