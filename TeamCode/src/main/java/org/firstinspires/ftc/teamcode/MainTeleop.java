@@ -7,7 +7,6 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 public class MainTeleop extends LinearOpMode {
     @Override
     public void runOpMode() {
-
         Bot bot = new Bot(hardwareMap);
 
         waitForStart();

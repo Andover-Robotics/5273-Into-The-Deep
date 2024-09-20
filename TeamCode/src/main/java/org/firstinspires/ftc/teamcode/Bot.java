@@ -10,17 +10,14 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
  * Represents the Bot.
  */
 public class Bot {
-    private final Slides slides;
-    private final Movement movement;
-    public double x = 0;
-    public double y = 0;
-    public double theta = 0;
+    private final Slides ascendingStorm;
+    private final Movement godlikeManeuver;
 
     public Bot(@NonNull HardwareMap hardwareMap) {
-        slides = new Slides(hardwareMap);
-        movement = new Movement(hardwareMap);
+        ascendingStorm = new Slides(hardwareMap);
+        godlikeManeuver = new Movement(hardwareMap);
     }
     public void teleopTick(Gamepad gamepad1, Gamepad gamepad2, Telemetry telemetry){
-        movement.teleopTick(gamepad1, telemetry);
+        godlikeManeuver.teleopTick(gamepad1, telemetry);
     }
 }
