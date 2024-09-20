@@ -12,8 +12,8 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
  * See {@link org.firstinspires.ftc.teamcode.auto.PathMasterTheAutonomousNavigator}
  */
 public class Slides {
-    private DcMotor slidesLeft;
-    private DcMotor slidesRight;
+    //
+    private final DcMotor slidesLeft, slidesRight;
     public Slides(HardwareMap map) {
         slidesLeft = map.get(DcMotor.class, "placeholder");
         slidesRight = map.get(DcMotor.class, "placeholder");
