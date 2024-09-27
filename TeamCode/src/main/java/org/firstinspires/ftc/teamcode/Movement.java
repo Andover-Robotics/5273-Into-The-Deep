@@ -1,22 +1,29 @@
 package org.firstinspires.ftc.teamcode;
 
+
+import static org.firstinspires.ftc.teamcode.auto.MecanumDrive.PARAMS;
+
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.teamcode.auto.ThreeDeadWheelLocalizer;
 
 /**
  * Represents the drivetrain.
  */
 public class Movement {
     private final DcMotor leftFront, leftBack, rightFront, rightBack;
+    private final ThreeDeadWheelLocalizer localizer;
     public Movement (HardwareMap map){
         leftFront = map.get(DcMotor.class, "leftFront");
         leftBack = map.get(DcMotor.class, "leftBack");
         rightFront = map.get(DcMotor.class, "rightFront");
         rightBack = map.get(DcMotor.class, "rightBack");
+
+        localizer = new ThreeDeadWheelLocalizer(map, PARAMS.inPerTick);
 
         leftFront.setDirection(DcMotorSimple.Direction.REVERSE);
         leftBack.setDirection(DcMotorSimple.Direction.REVERSE);
@@ -60,6 +67,7 @@ public class Movement {
         rightFront.setPower(rightFrontPower);
         leftBack.setPower(leftBackPower);
         rightBack.setPower(rightBackPower);
+        localizer.update();
     }
     // TODO: implement later
     /**
