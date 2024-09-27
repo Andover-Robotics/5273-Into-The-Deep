@@ -23,10 +23,10 @@ public class OldMainTeleop extends LinearOpMode {
         double dt = 0.001;
         int spread = 5;
 
-        DcMotor leftFrontDrive  = hardwareMap.get(DcMotor.class, "driveFL");
-        DcMotor leftBackDrive  = hardwareMap.get(DcMotor.class, "driveBL");
-        DcMotor rightFrontDrive = hardwareMap.get(DcMotor.class, "driveFR");
-        DcMotor rightBackDrive = hardwareMap.get(DcMotor.class, "driveBR");
+        DcMotor leftFrontDrive  = hardwareMap.get(DcMotor.class, "leftFront");
+        DcMotor leftBackDrive  = hardwareMap.get(DcMotor.class, "leftBack");
+        DcMotor rightFrontDrive = hardwareMap.get(DcMotor.class, "rightFront");
+        DcMotor rightBackDrive = hardwareMap.get(DcMotor.class, "rightBack");
 
         leftFrontDrive.setDirection(DcMotorSimple.Direction.REVERSE);
         leftBackDrive.setDirection(DcMotorSimple.Direction.REVERSE);

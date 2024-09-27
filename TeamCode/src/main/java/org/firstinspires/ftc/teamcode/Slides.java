@@ -13,10 +13,10 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
  */
 public class Slides {
     //
-    private final DcMotor slidesLeft, slidesRight;
+    private DcMotor slidesLeft, slidesRight;
     public Slides(HardwareMap map) {
-        slidesLeft = map.get(DcMotor.class, "placeholder");
-        slidesRight = map.get(DcMotor.class, "placeholder");
+        //slidesLeft = map.get(DcMotor.class, "placeholder");
+        //slidesRight = map.get(DcMotor.class, "placeholder");
     }
 
     /**
