@@ -14,15 +14,15 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 public class Bot {
     private final Slides ascendingStorm;
     private final Movement godlikeManeuver;
-    private CRServo intake;
+    private final CRServo intake;
 
     public Bot(@NonNull HardwareMap hardwareMap) {
         ascendingStorm = new Slides(hardwareMap);
         godlikeManeuver = new Movement(hardwareMap);
-        //intake = hardwareMap.get(CRServo.class, "intake");
+        intake = hardwareMap.get(CRServo.class, "intake");
     }
     public void teleopTick(Gamepad gamepad1, Gamepad gamepad2, Telemetry telemetry){
         godlikeManeuver.teleopTick(gamepad1, telemetry);
-        //intake.setPower(gamepad2.a ? 1 : 0);        // TODO: figure out if intake direction needs to be reversed
+        intake.setPower(gamepad2.a ? 1 : (gamepad2.b ? -1 : 0));        // TODO: figure out if intake direction needs to be reversed
     }
 }
