@@ -39,7 +39,12 @@ public class PathMasterTheAutonomousNavigator extends LinearOpMode {
 
         arcStrikeVelocity = titanDrivePrecisionPowertrain.actionBuilder(titanDrivePrecisionPowertrain.pose)
                 .lineToY(10)
+                .afterTime(1, () -> {
+                    telemetry.addData("moving", "yes");
+                })
                 .build();
+
+        waitForStart();
 
         Actions.runBlocking(
                 new SequentialAction(
