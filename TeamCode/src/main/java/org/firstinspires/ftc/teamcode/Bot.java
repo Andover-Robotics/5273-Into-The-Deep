@@ -14,7 +14,7 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 public class Bot {
     private final Slides ascendingStorm;
     private final Movement godlikeManeuver;
-    private CRServo intake;
+    private final CRServo intake;
 
     public Bot(@NonNull HardwareMap hardwareMap) {
         ascendingStorm = new Slides(hardwareMap);
