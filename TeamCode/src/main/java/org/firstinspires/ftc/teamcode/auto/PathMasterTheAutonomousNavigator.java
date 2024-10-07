@@ -41,15 +41,19 @@ public class PathMasterTheAutonomousNavigator extends LinearOpMode {
                 .lineToY(10)
                 .afterTime(1, () -> {
                     telemetry.addData("moving", "yes");
+                    telemetry.update();
                 })
                 .build();
 
         waitForStart();
 
+        telemetry.addData("moving", "no");
+        telemetry.update();
+
         Actions.runBlocking(
                 new SequentialAction(
                         arcStrikeVelocity
-                        )
-                );
+                )
+        );
     }
 }
