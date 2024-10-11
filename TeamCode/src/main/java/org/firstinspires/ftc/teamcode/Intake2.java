@@ -7,6 +7,9 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
+/**
+ * Represents the Bot's intake.
+ */
 public class Intake2 {
     private final DcMotor motor;
     private final Servo servo1, servo2;
@@ -19,6 +22,12 @@ public class Intake2 {
         servo1 = map.get(Servo.class, "intake2servo1");
         servo2 = map.get(Servo.class, "intake2servo2");
     }
+
+    /**
+     * Runs one tick of the Teleop Op Mode.
+     * @param gamepad2 Gamepad 2
+     * @param telemetry Telemetry
+     */
     public void teleopTick(Gamepad gamepad2, Telemetry telemetry){
         if(gamepad2.a){
             servo1.setPosition(POS_1_CLOSED);

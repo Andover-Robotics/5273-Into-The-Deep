@@ -23,6 +23,13 @@ public class Bot {
 //        intake = hardwareMap.get(CRServo.class, "intake");
         intake = new Intake2(hardwareMap);
     }
+
+    /**
+     * Runs one tick of the Teleop Op Mode
+     * @param gamepad1 Gamepad 1
+     * @param gamepad2 Gamepad 2
+     * @param telemetry Telemetry
+     */
     public void teleopTick(Gamepad gamepad1, Gamepad gamepad2, Telemetry telemetry){
         godlikeManeuver.teleopTick(gamepad1, telemetry);
 //        intake.setPower(gamepad2.a ? 1 : (gamepad2.b ? -1 : 0));
