@@ -3,15 +3,15 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-@TeleOp(name = "New Main Teleop", group = "main")
 /**
- * Represents the Teleop Op Mode
+ * Represents the Teleop OpMode
  */
+@TeleOp(name = "New Main Teleop", group = "main")
 public class MainTeleop extends LinearOpMode {
-    @Override
     /**
      * Runs the OpMode.
      */
+    @Override
     public void runOpMode() {
         Bot bot = new Bot(hardwareMap);
 

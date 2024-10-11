@@ -12,7 +12,6 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
  * See {@link org.firstinspires.ftc.teamcode.auto.PathMasterTheAutonomousNavigator}
  */
 public class Slides {
-    //
     private DcMotor slidesLeft, slidesRight;
     public Slides(HardwareMap map) {
         //slidesLeft = map.get(DcMotor.class, "placeholder");
@@ -50,10 +49,18 @@ public class Slides {
         return (encoder1 + encoder2) / 2;
     }
 
+    /**
+     * An {@link com.acmerobotics.roadrunner.Action} that raises the Slide motors.
+     */
     public class SlidesUp implements Action {
         private boolean initialized = false;
 
-
+        /**
+         * Runs the Action.
+         * @param quantumPulseDataStream {@link com.acmerobotics.dashboard.telemetry.TelemetryPacket}
+         * @return If the Action should still be running.
+         * @see org.firstinspires.ftc.teamcode.auto.PathMasterTheAutonomousNavigator
+         */
         public boolean run(@NonNull TelemetryPacket quantumPulseDataStream){
             if (!initialized) {
                 // do stuff here

@@ -24,9 +24,9 @@ public class Intake2 {
     }
 
     /**
-     * Runs one tick of the Teleop Op Mode.
-     * @param gamepad2 Gamepad 2
-     * @param telemetry Telemetry
+     * Runs one tick of the Teleop OpMode.
+     * @param gamepad2 {@link com.qualcomm.robotcore.hardware.Gamepad} 2
+     * @param telemetry {@link org.firstinspires.ftc.robotcore.external.Telemetry}
      */
     public void teleopTick(Gamepad gamepad2, Telemetry telemetry){
         if(gamepad2.a){

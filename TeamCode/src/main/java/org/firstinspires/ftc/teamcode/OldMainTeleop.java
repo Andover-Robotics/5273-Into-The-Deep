@@ -5,7 +5,9 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
-
+/**
+ * Represents a TeleOp OpMode. Not currently used, mainly kept around for reference purposes.
+ */
 @TeleOp(name = "Old Main Teleop", group = "main")
 public class OldMainTeleop extends LinearOpMode {
     //
@@ -17,6 +19,9 @@ public class OldMainTeleop extends LinearOpMode {
         return (ticks / TICKS_PER_REV) * WHEEL_DIAMETER * Math.PI;
     }
 
+    /**
+     * Runs the OpMode.
+     */
     @Override
     public void runOpMode() {
 

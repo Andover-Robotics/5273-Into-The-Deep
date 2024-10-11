@@ -7,6 +7,9 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 import java.util.Map;
 
+/**
+ * An OpMode that finds servo values. Copied from last year's code.
+ */
 @TeleOp(name = "Servo Value Finder", group = "Teleop")
 public class ServoValueFinder extends LinearOpMode {
 
@@ -14,8 +17,12 @@ public class ServoValueFinder extends LinearOpMode {
     private static int num = 0;
     private boolean dpad_right_prev = false;
     private boolean dpad_left_prev = false;
+
+    /**
+     * Runs the OpMode.
+     */
     @Override
-    public void runOpMode() throws InterruptedException {
+    public void runOpMode() {
         SERVO_LIST = hardwareMap.servo.entrySet().stream().map(Map.Entry::getKey).toArray(String[]::new);
         while(!gamepad2.a && !isStopRequested()){
             if(gamepad2.dpad_right && !dpad_right_prev){

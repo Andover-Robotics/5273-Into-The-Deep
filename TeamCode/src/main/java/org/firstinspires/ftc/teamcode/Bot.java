@@ -25,10 +25,10 @@ public class Bot {
     }
 
     /**
-     * Runs one tick of the Teleop Op Mode
-     * @param gamepad1 Gamepad 1
-     * @param gamepad2 Gamepad 2
-     * @param telemetry Telemetry
+     * Runs one tick of the Teleop OpMode.
+     * @param gamepad1 {@link com.qualcomm.robotcore.hardware.Gamepad} 1
+     * @param gamepad2 {@link com.qualcomm.robotcore.hardware.Gamepad} 2
+     * @param telemetry {@link org.firstinspires.ftc.robotcore.external.Telemetry}
      */
     public void teleopTick(Gamepad gamepad1, Gamepad gamepad2, Telemetry telemetry){
         godlikeManeuver.teleopTick(gamepad1, telemetry);
