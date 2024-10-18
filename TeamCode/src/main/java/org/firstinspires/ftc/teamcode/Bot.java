@@ -17,6 +17,10 @@ public class Bot {
 //    private final CRServo intake;
     private final Intake2 intake;
 
+    /**
+     * Initializes a Bot instance.
+     * @param hardwareMap {@link com.qualcomm.robotcore.hardware.HardwareMap}
+     */
     public Bot(@NonNull HardwareMap hardwareMap) {
         ascendingStorm = new Slides(hardwareMap);
         godlikeManeuver = new Movement(hardwareMap);

@@ -13,6 +13,11 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
  */
 public class Slides {
     private DcMotor slidesLeft, slidesRight;
+
+    /**
+     * Initializes a Slides instance.
+     * @param map {@link com.qualcomm.robotcore.hardware.HardwareMap}
+     */
     public Slides(HardwareMap map) {
         //slidesLeft = map.get(DcMotor.class, "placeholder");
         //slidesRight = map.get(DcMotor.class, "placeholder");

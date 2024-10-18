@@ -12,7 +12,6 @@ import java.util.Map;
  */
 @TeleOp(name = "Servo Value Finder", group = "Teleop")
 public class ServoValueFinder extends LinearOpMode {
-
     private static String[] SERVO_LIST;
     private static int num = 0;
     private boolean dpad_right_prev = false;

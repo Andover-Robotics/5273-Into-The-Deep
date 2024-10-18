@@ -17,6 +17,11 @@ public class Intake2 {
     private final static double POS_1_OPEN = 0;
     private final static double POS_2_CLOSED = 0;
     private final static double POS_2_OPEN = 0;
+
+    /**
+     *  Initializes a Intake2 instance.
+     * @param map {@link com.qualcomm.robotcore.hardware.HardwareMap}
+     */
     public Intake2(HardwareMap map){
         motor = map.get(DcMotor.class, "intake2motor");
         servo1 = map.get(Servo.class, "intake2servo1");

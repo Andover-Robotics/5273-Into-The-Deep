@@ -17,6 +17,11 @@ import org.firstinspires.ftc.teamcode.auto.ThreeDeadWheelLocalizer;
 public class Movement {
     private final DcMotor leftFront, leftBack, rightFront, rightBack;
     private final ThreeDeadWheelLocalizer localizer;
+
+    /**
+     * Initializes a Movement instance.
+     * @param map {@link com.qualcomm.robotcore.hardware.HardwareMap}
+     */
     public Movement (HardwareMap map){
         leftFront = map.get(DcMotor.class, "leftFront");
         leftBack = map.get(DcMotor.class, "leftBack");
@@ -73,6 +78,7 @@ public class Movement {
         rightBack.setPower(rightBackPower);
         localizer.update();
     }
+
     // TODO: implement later
     /**
      * Moves the bot to a certain point with a certain orientation.
