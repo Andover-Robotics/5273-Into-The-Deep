@@ -19,10 +19,15 @@ public class Slides {
     private final DcMotor slidesLeft, slidesRight;
     private static final int UPPER_BOUND = 6000;
     private static final int LOWER_BOUND = -6000;
+
+    /**
+     * Initializes a Slides instance.
+     * @param map {@link com.qualcomm.robotcore.hardware.HardwareMap}
+     */
     public Slides(HardwareMap map) {
+        // TODO: reverse one of them or both of them
         slidesLeft = map.get(DcMotor.class, "slidesLeftMotor");
         slidesRight = map.get(DcMotor.class, "slidesRightMotor");
-        //TODO: reverse one of them or both of them
     }
 
     /**
@@ -56,19 +61,33 @@ public class Slides {
         return (encoder1 + encoder2) / 2;
     }
 
+    /**
+     * Runs one tick of the Teleop Op Mode.
+     * @param gamepad2 {@link com.qualcomm.robotcore.hardware.Gamepad} 2
+     * @param telemetry {@link org.firstinspires.ftc.robotcore.external.Telemetry}
+     */
     public void teleopTick(Gamepad gamepad2, Telemetry telemetry){
-        int pos = (int)getEncoders();
-        if(!gamepad2.b && (pos > UPPER_BOUND || pos < LOWER_BOUND)) {
+        int pos = (int) getEncoders();
+        if (!gamepad2.b && (pos > UPPER_BOUND || pos < LOWER_BOUND)) {
             setPower(0);
-        }else{
-            setPower(gamepad2.left_stick_y); // TODO maybe reverse input
+        } else {
+            // TODO: reverse input?
+            setPower(gamepad2.left_stick_y);
         }
     }
 
+    /**
+     * An {@link com.acmerobotics.roadrunner.Action} that raises the Slide motors.
+     */
     public class SlidesUp implements Action {
         private boolean initialized = false;
 
-
+        /**
+         * Runs the Action.
+         * @param quantumPulseDataStream {@link com.acmerobotics.dashboard.telemetry.TelemetryPacket}
+         * @return If the Action should still be running.
+         * @see org.firstinspires.ftc.teamcode.auto.PathMasterTheAutonomousNavigator
+         */
         public boolean run(@NonNull TelemetryPacket quantumPulseDataStream){
             if (!initialized) {
                 // do stuff here
