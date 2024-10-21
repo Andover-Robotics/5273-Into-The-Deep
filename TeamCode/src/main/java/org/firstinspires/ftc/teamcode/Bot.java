@@ -24,6 +24,7 @@ public class Bot {
     public Bot(@NonNull HardwareMap hardwareMap) {
         ascendingStorm = new Slides(hardwareMap);
         godlikeManeuver = new Movement(hardwareMap);
+        // TODO: add motors
 //        intake = hardwareMap.get(CRServo.class, "intake");
         intake = new Intake2(hardwareMap);
     }

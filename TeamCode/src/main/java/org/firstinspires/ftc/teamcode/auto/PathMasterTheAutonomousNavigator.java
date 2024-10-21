@@ -56,9 +56,6 @@ public class PathMasterTheAutonomousNavigator extends LinearOpMode {
 
         waitForStart();
 
-        telemetry.addData("moving", "no");
-        telemetry.update();
-
         Actions.runBlocking(
                 new SequentialAction(
                         arcStrikeVelocity

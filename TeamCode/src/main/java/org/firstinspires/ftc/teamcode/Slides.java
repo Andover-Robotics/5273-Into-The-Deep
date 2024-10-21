@@ -19,6 +19,7 @@ public class Slides {
      * @param map {@link com.qualcomm.robotcore.hardware.HardwareMap}
      */
     public Slides(HardwareMap map) {
+        // TODO: add motors
         //slidesLeft = map.get(DcMotor.class, "placeholder");
         //slidesRight = map.get(DcMotor.class, "placeholder");
     }
