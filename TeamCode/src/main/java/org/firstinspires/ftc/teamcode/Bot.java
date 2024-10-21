@@ -14,8 +14,8 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 public class Bot {
     private final Slides ascendingStorm;
     private final Movement godlikeManeuver;
-//    private final CRServo intake;
-    private final Intake2 intake;
+    private final Claw claw;
+    private final Slides slides;
 
     /**
      * Initializes a Bot instance.
@@ -25,8 +25,8 @@ public class Bot {
         ascendingStorm = new Slides(hardwareMap);
         godlikeManeuver = new Movement(hardwareMap);
         // TODO: add motors
-//        intake = hardwareMap.get(CRServo.class, "intake");
-        intake = new Intake2(hardwareMap);
+        claw = new Claw(hardwareMap);
+        slides = new Slides(hardwareMap);
     }
 
     /**
@@ -37,7 +37,7 @@ public class Bot {
      */
     public void teleopTick(Gamepad gamepad1, Gamepad gamepad2, Telemetry telemetry){
         godlikeManeuver.teleopTick(gamepad1, telemetry);
-//        intake.setPower(gamepad2.a ? 1 : (gamepad2.b ? -1 : 0));
-        intake.teleopTick(gamepad2, telemetry);
+        slides.teleopTick(gamepad2, telemetry);
+        claw.teleopTick(gamepad2, telemetry);
     }
 }

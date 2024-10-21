@@ -5,23 +5,24 @@ import androidx.annotation.NonNull;
 import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
 import com.acmerobotics.roadrunner.Action;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 /**
  * The Slides mechanism, representing both Slide motors.
  * See {@link org.firstinspires.ftc.teamcode.auto.PathMasterTheAutonomousNavigator}
  */
 public class Slides {
-    private DcMotor slidesLeft, slidesRight;
-
-    /**
-     * Initializes a Slides instance.
-     * @param map {@link com.qualcomm.robotcore.hardware.HardwareMap}
-     */
+    //
+    private final DcMotor slidesLeft, slidesRight;
+    private static final int UPPER_BOUND = 6000;
+    private static final int LOWER_BOUND = -6000;
     public Slides(HardwareMap map) {
-        // TODO: add motors
-        //slidesLeft = map.get(DcMotor.class, "placeholder");
-        //slidesRight = map.get(DcMotor.class, "placeholder");
+        slidesLeft = map.get(DcMotor.class, "slidesLeftMotor");
+        slidesRight = map.get(DcMotor.class, "slidesRightMotor");
+        //TODO: reverse one of them or both of them
     }
 
     /**
@@ -55,18 +56,19 @@ public class Slides {
         return (encoder1 + encoder2) / 2;
     }
 
-    /**
-     * An {@link com.acmerobotics.roadrunner.Action} that raises the Slide motors.
-     */
+    public void teleopTick(Gamepad gamepad2, Telemetry telemetry){
+        int pos = (int)getEncoders();
+        if(!gamepad2.b && (pos > UPPER_BOUND || pos < LOWER_BOUND)) {
+            setPower(0);
+        }else{
+            setPower(gamepad2.left_stick_y); // TODO maybe reverse input
+        }
+    }
+
     public class SlidesUp implements Action {
         private boolean initialized = false;
 
-        /**
-         * Runs the Action.
-         * @param quantumPulseDataStream {@link com.acmerobotics.dashboard.telemetry.TelemetryPacket}
-         * @return If the Action should still be running.
-         * @see org.firstinspires.ftc.teamcode.auto.PathMasterTheAutonomousNavigator
-         */
+
         public boolean run(@NonNull TelemetryPacket quantumPulseDataStream){
             if (!initialized) {
                 // do stuff here
