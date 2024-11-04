@@ -12,7 +12,7 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 /**
  * The Slides mechanism, representing both Slide motors.
- * See {@link org.firstinspires.ftc.teamcode.auto.PathMasterTheAutonomousNavigator}
+ * See {@link org.firstinspires.ftc.teamcode.auto.PathMasterTheTestingNavigator}
  */
 public class Slides {
     //
@@ -86,7 +86,7 @@ public class Slides {
          * Runs the Action.
          * @param quantumPulseDataStream {@link com.acmerobotics.dashboard.telemetry.TelemetryPacket}
          * @return If the Action should still be running.
-         * @see org.firstinspires.ftc.teamcode.auto.PathMasterTheAutonomousNavigator
+         * @see org.firstinspires.ftc.teamcode.auto.PathMasterTheTestingNavigator
          */
         public boolean run(@NonNull TelemetryPacket quantumPulseDataStream){
             if (!initialized) {
