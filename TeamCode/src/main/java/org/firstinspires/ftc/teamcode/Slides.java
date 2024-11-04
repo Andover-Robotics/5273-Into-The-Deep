@@ -15,7 +15,6 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
  * See {@link org.firstinspires.ftc.teamcode.auto.PathMasterTheTestingNavigator}
  */
 public class Slides {
-    //
     private final DcMotor slidesLeft, slidesRight;
     private static final int UPPER_BOUND = 6000;
     private static final int LOWER_BOUND = -6000;
@@ -24,7 +23,7 @@ public class Slides {
      * Initializes a Slides instance.
      * @param map {@link com.qualcomm.robotcore.hardware.HardwareMap}
      */
-    public Slides(HardwareMap map) {
+    public Slides(@NonNull HardwareMap map) {
         // TODO: reverse one of them or both of them
         slidesLeft = map.get(DcMotor.class, "slidesLeftMotor");
         slidesRight = map.get(DcMotor.class, "slidesRightMotor");
