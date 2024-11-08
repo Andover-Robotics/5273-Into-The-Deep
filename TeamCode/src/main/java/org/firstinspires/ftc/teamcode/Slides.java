@@ -45,7 +45,8 @@ public class Slides {
      */
     public void setPower(double power) {
         // TODO: is this correct?
-        slidesLeft.setPower(power);
+        // 17/20 is a temporary scale factor TODO: remove scale factor once we use new drivetrain
+        slidesLeft.setPower(power*(17d/20d));
         slidesRight.setPower(power);
     }
 
