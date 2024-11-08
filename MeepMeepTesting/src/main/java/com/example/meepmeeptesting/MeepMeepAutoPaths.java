@@ -17,14 +17,22 @@ public class MeepMeepAutoPaths {
         RoadRunnerBotEntity myBot = quickBot(meepMeep,0);
         myBot.runAction(getPathA(myBot,0));
 
+        RoadRunnerBotEntity myBot1 = quickBot(meepMeep,1);
+        myBot1.runAction(getPathA(myBot1,1));
+
         RoadRunnerBotEntity myBot2 = quickBot(meepMeep, 2);
         myBot2.runAction(getPathA(myBot2,2));
+
+        RoadRunnerBotEntity myBot3 = quickBot(meepMeep,3);
+        myBot3.runAction(getPathA(myBot3,3));
 
         meepMeep.setBackground(MeepMeep.Background.FIELD_INTO_THE_DEEP_JUICE_DARK)
                 .setDarkMode(true)
                 .setBackgroundAlpha(0.95f)
-                .addEntity(myBot2)
                 .addEntity(myBot)
+                .addEntity(myBot1)
+                .addEntity(myBot2)
+                .addEntity(myBot3)
                 .start();
     }
 
@@ -46,7 +54,7 @@ public class MeepMeepAutoPaths {
     }
     private static Action getPathA(RoadRunnerBotEntity myBot, int quadrant){
         int xFactor = quadrant%3==0?1:-1;
-        int yFactor = quadrant>= 2?-1:1;
+        int yFactor = quadrant>=2?-1:1;
         return myBot.getDrive().actionBuilder(new Pose2d(10*xFactor, 60*yFactor, Math.toRadians(getAngle(270,quadrant))))
                 .lineToY(35*yFactor)
                 .waitSeconds(3)
