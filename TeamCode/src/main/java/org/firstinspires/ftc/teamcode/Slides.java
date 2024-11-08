@@ -15,8 +15,7 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
  * See {@link org.firstinspires.ftc.teamcode.auto.PathMasterTheAutonomousNavigator}
  */
 public class Slides {
-    //Control hub motor 0 - Right Slide
-    //Control hub motor 1 - Left Slide
+    //
     private final DcMotor slidesLeft, slidesRight;
     private static final int UPPER_BOUND = 6000;
     private static final int LOWER_BOUND = -6000;

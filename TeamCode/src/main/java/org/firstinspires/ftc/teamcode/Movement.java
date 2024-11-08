@@ -1,7 +1,8 @@
 package org.firstinspires.ftc.teamcode;
 
-
 import static org.firstinspires.ftc.teamcode.auto.MecanumDrive.PARAMS;
+
+import androidx.annotation.NonNull;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
@@ -22,7 +23,7 @@ public class Movement {
      * Initializes a Movement instance.
      * @param map {@link com.qualcomm.robotcore.hardware.HardwareMap}
      */
-    public Movement (HardwareMap map){
+    public Movement(@NonNull HardwareMap map){
         leftFront = map.get(DcMotor.class, "leftFront");
         leftBack = map.get(DcMotor.class, "leftBack");
         rightFront = map.get(DcMotor.class, "rightFront");

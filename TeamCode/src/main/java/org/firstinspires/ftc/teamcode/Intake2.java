@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
+import androidx.annotation.NonNull;
+
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
@@ -19,10 +21,10 @@ public class Intake2 {
     private final static double POS_2_OPEN = 0;
 
     /**
-     *  Initializes a Intake2 instance.
+     * Initializes a Intake2 instance.
      * @param map {@link com.qualcomm.robotcore.hardware.HardwareMap}
      */
-    public Intake2(HardwareMap map){
+    public Intake2(@NonNull HardwareMap map){
         motor = map.get(DcMotor.class, "intake2motor");
         servo1 = map.get(Servo.class, "intake2servo1");
         servo2 = map.get(Servo.class, "intake2servo2");
