@@ -23,6 +23,8 @@ public class Slides {
         slidesLeft = map.get(DcMotor.class, "slidesLeftMotor");
         slidesRight = map.get(DcMotor.class, "slidesRightMotor");
         //TODO: reverse one of them or both of them
+
+        //pivotLeft
     }
 
     /**
