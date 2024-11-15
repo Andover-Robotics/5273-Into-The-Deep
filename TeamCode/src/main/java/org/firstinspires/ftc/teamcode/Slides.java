@@ -22,7 +22,9 @@ public class Slides {
     public Slides(HardwareMap map) {
         slidesLeft = map.get(DcMotor.class, "slidesLeftMotor");
         slidesRight = map.get(DcMotor.class, "slidesRightMotor");
-        //TODO: reverse one of them or both of them
+        //TODO: find which one to reverse
+
+        //pivotLeft
     }
 
     /**
@@ -57,11 +59,12 @@ public class Slides {
     }
 
     public void teleopTick(Gamepad gamepad2, Telemetry telemetry){
+        double input = gamepad2.left_stick_y; // TODO maybe reverse input
         int pos = (int)getEncoders();
-        if(!gamepad2.b && (pos > UPPER_BOUND || pos < LOWER_BOUND)) {
+        if(!gamepad2.b && ((pos > UPPER_BOUND && input > 0) || (pos < LOWER_BOUND && input < 0) )) {
             setPower(0);
         }else{
-            setPower(gamepad2.left_stick_y); // TODO maybe reverse input
+            setPower(input);
         }
     }
 

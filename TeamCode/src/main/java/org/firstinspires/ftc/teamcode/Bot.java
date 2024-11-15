@@ -16,6 +16,7 @@ public class Bot {
     private final Movement godlikeManeuver;
     private final Claw claw;
     private final Slides slides;
+    private final Pivot pivot;
 
     /**
      * Initializes a Bot instance.
@@ -24,9 +25,9 @@ public class Bot {
     public Bot(@NonNull HardwareMap hardwareMap) {
         ascendingStorm = new Slides(hardwareMap);
         godlikeManeuver = new Movement(hardwareMap);
-        // TODO: add motors
         claw = new Claw(hardwareMap);
         slides = new Slides(hardwareMap);
+        pivot = new Pivot(hardwareMap);
     }
 
     /**
@@ -39,5 +40,6 @@ public class Bot {
         godlikeManeuver.teleopTick(gamepad1, telemetry);
         slides.teleopTick(gamepad2, telemetry);
         claw.teleopTick(gamepad2, telemetry);
+        pivot.teleopTick(gamepad2, telemetry);
     }
 }
