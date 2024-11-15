@@ -14,16 +14,16 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 public class Pivot {
     private final DcMotor pivotLeft, pivotRight;
-    private static final int UPPER_BOUND = 6000;
-    private static final int LOWER_BOUND = -6000;
+    private static final int UPPER_BOUND = 250;
+    private static final int LOWER_BOUND = -250;
 
-    private static final double EQUALIBRIUM_MAGNITUDE = 0.2;
-    private static final double BRAKING_MAGNITUDE = 0.2;
+    private static final double EQUILIBRIUM_MAGNITUDE = 0.2; // for counteracting gravity
+    private static final double BRAKING_MAGNITUDE = 0.2; // for smoothness when it stops going up/down
     private static final double INPUT_MAGNITUDE = 0.3;
 
     private int lastPos;
 
-    private final ElapsedTime dt;
+    private final ElapsedTime dt; // delta t
 
     public Pivot(HardwareMap map) {
         pivotLeft = map.get(DcMotor.class, "pivotLeft");
@@ -79,23 +79,20 @@ public class Pivot {
         return (encoder1 + encoder2) / 2;
     }
 
-
     public void teleopTick(Gamepad gamepad2, Telemetry telemetry) {
         int pos = (int) getEncoders();
-        double dtMills = dt.milliseconds();
-        dt.reset();
-        int dxTicks = lastPos - pos;
-        lastPos = pos;
-        double vel = (double)dxTicks/dtMills;
-
-
         double input = gamepad2.right_stick_y;
-
-        double equalibrium = Math.sin((-(Math.PI * pos) / 500)* EQUALIBRIUM_MAGNITUDE);
-
-        double additionalBraking = input == 0.0 ? vel * BRAKING_MAGNITUDE : 0;
-
-
-        setPower(equalibrium + input * INPUT_MAGNITUDE + additionalBraking);
+        if(!gamepad2.b && ((pos > UPPER_BOUND && input > 0) || (pos < LOWER_BOUND && input < 0) )) {
+            setPower(0);
+        }else{
+            double dtMills = dt.milliseconds();
+            dt.reset();
+            int dxTicks = lastPos - pos;
+            lastPos = pos;
+            double vel = (double)dxTicks/dtMills;
+            double equilibrium = Math.sin((-(Math.PI * pos) / 500)) * EQUILIBRIUM_MAGNITUDE;
+            double additionalBraking = input == 0.0 ? vel * BRAKING_MAGNITUDE : 0;
+            setPower(equilibrium + input * INPUT_MAGNITUDE + additionalBraking);
+        }
     }
 }
