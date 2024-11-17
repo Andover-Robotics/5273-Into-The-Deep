@@ -12,22 +12,22 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
  * Represents the Bot.
  */
 public class Bot {
-    private final Slides ascendingStorm;
+    //private final Slides ascendingStorm;
     private final Movement godlikeManeuver;
-    private final Claw claw;
-    private final Slides slides;
-    private final Pivot pivot;
+    //private final Claw claw;
+    //private final Slides slides;
+    //private final Pivot pivot;
 
     /**
      * Initializes a Bot instance.
      * @param hardwareMap {@link com.qualcomm.robotcore.hardware.HardwareMap}
      */
     public Bot(@NonNull HardwareMap hardwareMap) {
-        ascendingStorm = new Slides(hardwareMap);
+        //ascendingStorm = new Slides(hardwareMap);
         godlikeManeuver = new Movement(hardwareMap);
-        claw = new Claw(hardwareMap);
-        slides = new Slides(hardwareMap);
-        pivot = new Pivot(hardwareMap);
+        //claw = new Claw(hardwareMap);
+        //slides = new Slides(hardwareMap);
+        //pivot = new Pivot(hardwareMap);
     }
 
     /**
@@ -38,8 +38,8 @@ public class Bot {
      */
     public void teleopTick(Gamepad gamepad1, Gamepad gamepad2, Telemetry telemetry){
         godlikeManeuver.teleopTick(gamepad1, telemetry);
-        slides.teleopTick(gamepad2, telemetry);
-        claw.teleopTick(gamepad2, telemetry);
-        pivot.teleopTick(gamepad2, telemetry);
+        //slides.teleopTick(gamepad2, telemetry);
+        //claw.teleopTick(gamepad2, telemetry);
+        //pivot.teleopTick(gamepad2, telemetry);
     }
 }

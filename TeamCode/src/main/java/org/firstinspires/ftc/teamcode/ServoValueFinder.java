@@ -48,6 +48,7 @@ public class ServoValueFinder extends LinearOpMode {
                 servo.setPosition(servo.getPosition()+0.0001);
             }else if(gamepad2.dpad_down){
                 servo.setPosition(servo.getPosition()-0.0001);
+                
             }
             telemetry.addData("servo pos: ",servo.getPosition());
             telemetry.update();
