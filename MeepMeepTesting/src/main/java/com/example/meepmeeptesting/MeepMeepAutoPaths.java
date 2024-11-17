@@ -56,6 +56,7 @@ public class MeepMeepAutoPaths {
         int xFactor = quadrant%3==0?1:-1;
         int yFactor = quadrant>=2?-1:1;
         return myBot.getDrive().actionBuilder(new Pose2d(10*xFactor, 60*yFactor, Math.toRadians(getAngle(270,quadrant))))
+                //specimen position
                 .lineToY(35*yFactor)
                 .waitSeconds(1)
                 .strafeTo(new Vector2d(48*xFactor,38*yFactor))
