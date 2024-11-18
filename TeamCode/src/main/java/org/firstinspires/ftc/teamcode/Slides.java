@@ -5,6 +5,7 @@ import androidx.annotation.NonNull;
 import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
 import com.acmerobotics.roadrunner.Action;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
@@ -12,7 +13,7 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 /**
  * The Slides mechanism, representing both Slide motors.
- * See {@link org.firstinspires.ftc.teamcode.auto.PathMasterTheAutonomousNavigator}
+ * See {@link org.firstinspires.ftc.teamcode.auto.PathMasterTheTestingNavigator}
  */
 public class Slides {
     //
@@ -20,9 +21,12 @@ public class Slides {
     private static final int UPPER_BOUND = 6000;
     private static final int LOWER_BOUND = -6000;
     public Slides(HardwareMap map) {
+        //slides left are 1
+        //slides right are 2
         slidesLeft = map.get(DcMotor.class, "slidesLeftMotor");
         slidesRight = map.get(DcMotor.class, "slidesRightMotor");
-        //TODO: find which one to reverse
+
+        slidesLeft.setDirection(DcMotorSimple.Direction.REVERSE);
 
         //pivotLeft
     }

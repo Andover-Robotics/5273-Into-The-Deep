@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode;
 
 
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -13,7 +14,7 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
  */
 
 public class Pivot {
-    private final DcMotor pivotLeft, pivotRight;
+    private final DcMotor pivot;
     private static final int UPPER_BOUND = 250;
     private static final int LOWER_BOUND = -250;
 
@@ -26,19 +27,16 @@ public class Pivot {
     private final ElapsedTime dt; // delta t
 
     public Pivot(HardwareMap map) {
-        pivotLeft = map.get(DcMotor.class, "pivotLeft");
-        pivotRight = map.get(DcMotor.class, "pivotRight");
 
-        pivotLeft.setDirection(DcMotor.Direction.REVERSE);
-        pivotRight.setDirection(DcMotor.Direction.FORWARD);
+        //extension 0
+        pivot = map.get(DcMotor.class, "pivot");
 
-        pivotLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        pivotRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        pivot.setDirection(DcMotor.Direction.FORWARD);
 
-        pivotLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        pivotRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        pivotLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        pivotRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        pivot.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
+        pivot.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        pivot.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         dt = new ElapsedTime();
         dt.reset();
@@ -52,9 +50,8 @@ public class Pivot {
      * @return the power of the motors, averaged
      */
     public double getPower() {
-        double power1 = pivotLeft.getPower();
-        double power2 = pivotRight.getPower();
-        return (power1 + power2) / 2;
+        double power = pivot.getPower();
+        return power;
     }
 
     /**
@@ -63,8 +60,7 @@ public class Pivot {
      * @param power the power of the motors to set
      */
     public void setPower(double power) {
-        pivotLeft.setPower(power);
-        pivotRight.setPower(power);
+        pivot.setPower(power);
     }
 
     /**
@@ -74,9 +70,8 @@ public class Pivot {
      */
 
     public double getEncoders() {
-        double encoder1 = pivotLeft.getCurrentPosition();
-        double encoder2 = pivotRight.getCurrentPosition();
-        return (encoder1 + encoder2) / 2;
+        double encoder = pivot.getCurrentPosition();
+        return encoder;
     }
 
     public void teleopTick(Gamepad gamepad2, Telemetry telemetry) {

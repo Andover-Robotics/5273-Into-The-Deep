@@ -15,8 +15,8 @@ public class Bot {
     //private final Slides ascendingStorm;
     private final Movement godlikeManeuver;
     //private final Claw claw;
-    //private final Slides slides;
-    //private final Pivot pivot;
+    private final Slides slides;
+    private final Pivot pivot;
 
     /**
      * Initializes a Bot instance.
@@ -26,8 +26,8 @@ public class Bot {
         //ascendingStorm = new Slides(hardwareMap);
         godlikeManeuver = new Movement(hardwareMap);
         //claw = new Claw(hardwareMap);
-        //slides = new Slides(hardwareMap);
-        //pivot = new Pivot(hardwareMap);
+        slides = new Slides(hardwareMap);
+        pivot = new Pivot(hardwareMap);
     }
 
     /**
