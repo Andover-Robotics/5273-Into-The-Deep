@@ -16,7 +16,6 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
  * See {@link org.firstinspires.ftc.teamcode.auto.PathMasterTheTestingNavigator}
  */
 public class Slides {
-    //
     private final DcMotor slidesLeft, slidesRight;
     private static final int UPPER_BOUND = 6000;
     private static final int LOWER_BOUND = -6000;
@@ -25,8 +24,7 @@ public class Slides {
         //slides right are 2
         slidesLeft = map.get(DcMotor.class, "slidesLeftMotor");
         slidesRight = map.get(DcMotor.class, "slidesRightMotor");
-
-        slidesLeft.setDirection(DcMotorSimple.Direction.REVERSE);
+        slidesRight.setDirection(DcMotorSimple.Direction.REVERSE);
 
         //pivotLeft
     }

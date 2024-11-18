@@ -38,8 +38,8 @@ public class Bot {
      */
     public void teleopTick(Gamepad gamepad1, Gamepad gamepad2, Telemetry telemetry){
         godlikeManeuver.teleopTick(gamepad1, telemetry);
-        //slides.teleopTick(gamepad2, telemetry);
+        slides.teleopTick(gamepad2, telemetry);
         //claw.teleopTick(gamepad2, telemetry);
-        //pivot.teleopTick(gamepad2, telemetry);
+        pivot.teleopTick(gamepad2, telemetry);
     }
 }
