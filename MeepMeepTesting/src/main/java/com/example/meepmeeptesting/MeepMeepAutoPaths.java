@@ -73,7 +73,6 @@ public class MeepMeepAutoPaths {
                 .strafeToSplineHeading(new Vector2d(55*xFactor,55*yFactor),Math.toRadians(getAngle(45,quadrant)))
                 .waitSeconds(1)
                 .strafeToSplineHeading(new Vector2d(25*xFactor,10*yFactor),Math.toRadians(getAngle(180,quadrant)))
-
                 .build();
     }
     private static Action getPathB(RoadRunnerBotEntity myBot, int quadrant){

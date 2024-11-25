@@ -12,7 +12,6 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 /**
  * The Pivot mechanism, representing both Pivot motors.
  */
-
 public class Pivot {
     private final DcMotor pivot;
     private static final int UPPER_BOUND = 250;
@@ -26,6 +25,10 @@ public class Pivot {
 
     private final ElapsedTime dt; // delta t
 
+    /**
+     * Initalizes a Pivot instance.
+     * @param map {@link com.qualcomm.robotcore.hardware.HardwareMap}
+     */
     public Pivot(HardwareMap map) {
 
         //extension 0
@@ -68,12 +71,16 @@ public class Pivot {
      *
      * @return the encoder position as an average
      */
-
     public double getEncoders() {
         double encoder = pivot.getCurrentPosition();
         return encoder;
     }
 
+    /**
+     * Runs one tick of the Teleop OpMode.
+     * @param gamepad2 {@link com.qualcomm.robotcore.hardware.Gamepad} 2
+     * @param telemetry {@link org.firstinspires.ftc.robotcore.external.Telemetry}
+     */
     public void teleopTick(Gamepad gamepad2, Telemetry telemetry) {
         int pos = (int) getEncoders();
         double input = gamepad2.right_stick_y;
