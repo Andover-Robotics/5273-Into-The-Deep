@@ -85,12 +85,6 @@ public class Slides {
      */
     public class SlidesUp implements Action {
         private boolean initialized = false;
-
-        /**
-         * Runs the Action.
-         * @param quantumPulseDataStream {@link com.}
-         * @return to keep running
-         */
         public boolean run(@NonNull TelemetryPacket quantumPulseDataStream){
             if (!initialized) {
                 // do stuff here
