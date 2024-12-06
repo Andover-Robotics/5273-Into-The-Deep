@@ -32,7 +32,7 @@ public class Movement {
         localizer = new ThreeDeadWheelLocalizer(map, PARAMS.inPerTick);
 
         leftFront.setDirection(DcMotorSimple.Direction.REVERSE);
-        leftBack.setDirection(DcMotorSimple.Direction.REVERSE);
+//        leftBack.setDirection(DcMotorSimple.Direction.REVERSE);
 
         leftFront.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         leftBack.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -46,7 +46,7 @@ public class Movement {
      * @param gamepad1 {@link com.qualcomm.robotcore.hardware.Gamepad} 1
      * @param telemetry {@link org.firstinspires.ftc.robotcore.external.Telemetry}
      */
-    public void teleopTick(double leftStickY, double leftStickX, double rightStickX Telemetry telemetry){
+    public void teleopTick(double leftStickY, double leftStickX, double rightStickX, Telemetry telemetry){
         double axial = -leftStickY;  // Note: pushing stick forward gives negative value
         double lateral = leftStickX;
         double yaw = rightStickX;
