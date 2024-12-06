@@ -43,6 +43,6 @@ public class Bot {
         slides.teleopTick(gamepad2.left_stick_y, gamepad2.b, telemetry);
 //        claw.teleopTick(gamepad2, telemetry);
         pivot.teleopTick(gamepad2.right_stick_y, gamepad2.b, telemetry);
-        //diffyRotator.teleopTick(gamepad2.y, gamepad2.x, telemetry);
+        diffyRotator.teleopTick(gamepad2, telemetry);
     }
 }

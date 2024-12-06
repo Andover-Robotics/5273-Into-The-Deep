@@ -49,7 +49,7 @@ public class Claw {
 
     /**
      * Runs one tick of the Teleop Op Mode.
-     * @param gamepad2 {@link com.qualcomm.robotcore.hardware.Gamepad} 2
+     *  {@link com.qualcomm.robotcore.hardware.Gamepad} 2
      * @param telemetry {@link org.firstinspires.ftc.robotcore.external.Telemetry}
      */
     public void teleopTick(boolean openButton, boolean closeButton, Telemetry telemetry){

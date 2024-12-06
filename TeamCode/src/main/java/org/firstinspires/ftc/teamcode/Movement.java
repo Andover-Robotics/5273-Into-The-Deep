@@ -43,10 +43,11 @@ public class Movement {
     // tick for teleop
     /**
      * Runs one tick of the Teleop OpMode.
-     * @param gamepad1 {@link com.qualcomm.robotcore.hardware.Gamepad} 1
-     * @param telemetry {@link org.firstinspires.ftc.robotcore.external.Telemetry}
+     *
+     * @param gamepad1  {@link Gamepad} 1
+     * @param telemetry {@link Telemetry}
      */
-    public void teleopTick(double leftStickY, double leftStickX, double rightStickX Telemetry telemetry){
+    public void teleopTick(double leftStickY, double leftStickX, double rightStickX, Telemetry telemetry Telemetry telemetry){
         double axial = -leftStickY;  // Note: pushing stick forward gives negative value
         double lateral = leftStickX;
         double yaw = rightStickX;

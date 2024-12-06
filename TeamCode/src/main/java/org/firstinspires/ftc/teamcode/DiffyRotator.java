@@ -1,8 +1,11 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.Servo.Direction;
+
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 public class DiffyRotator {
     private final Servo leftServo;
@@ -37,6 +40,24 @@ public class DiffyRotator {
         public Position(double left, double right){
             LEFT = left;
             RIGHT = right;
+        }
+    }
+    public void teleopTick(Gamepad gamepad , Telemetry telemetry){
+        if(gamepad.dpad_up){
+            rightServo.setPosition(rightServo.getPosition()+0.0001);
+            leftServo.setPosition(leftServo.getPosition()-0.0001);
+        }
+        if(gamepad.dpad_down){
+            rightServo.setPosition(rightServo.getPosition()-0.0001);
+            leftServo.setPosition(leftServo.getPosition()+0.0001);
+        }
+        if(gamepad.dpad_left){
+            rightServo.setPosition(rightServo.getPosition()+0.0001);
+            leftServo.setPosition(leftServo.getPosition()+0.0001);
+        }
+        if(gamepad.dpad_right){
+            rightServo.setPosition(rightServo.getPosition()-0.0001);
+            leftServo.setPosition(leftServo.getPosition()-0.0001);
         }
     }
 }
