@@ -17,7 +17,7 @@ public class Bot {
     //private final Claw claw;
     private final Slides slides;
     private final Pivot pivot;
-    private final ClawRotator clawRotator;
+    private final DiffyRotator diffyRotator;
 
     /**
      * Initializes a Bot instance.
@@ -29,7 +29,7 @@ public class Bot {
         //claw = new Claw(hardwareMap);
         slides = new Slides(hardwareMap);
         pivot = new Pivot(hardwareMap);
-        clawRotator = new ClawRotator(hardwareMap);
+        diffyRotator = new DiffyRotator(hardwareMap);
     }
 
     /**
@@ -43,6 +43,6 @@ public class Bot {
         slides.teleopTick(gamepad2, telemetry);
         //claw.teleopTick(gamepad2, telemetry);
         pivot.teleopTick(gamepad2, telemetry);
-        clawRotator.teleopTick(gamepad2, telemetry);
+        //diffyRotator.teleopTick(gamepad2, telemetry);
     }
 }
