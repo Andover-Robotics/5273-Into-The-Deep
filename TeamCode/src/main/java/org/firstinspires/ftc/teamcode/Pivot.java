@@ -14,11 +14,11 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
  */
 public class Pivot {
     private final DcMotor pivot;
-    private static final int UPPER_BOUND = 250;
-    private static final int LOWER_BOUND = -250;
+    private static final int UPPER_BOUND = 1254-323;
+    private static final int LOWER_BOUND = -1128-323;
 
-    private static final double EQUILIBRIUM_MAGNITUDE = 0.2; // for counteracting gravity
-    private static final double BRAKING_MAGNITUDE = 0.2; // for smoothness when it stops going up/down
+    private static final double EQUILIBRIUM_MAGNITUDE = 0; // for counteracting gravity
+    private static final double BRAKING_MAGNITUDE = 0; // for smoothness when it stops going up/down
     private static final double INPUT_MAGNITUDE = 0.3;
 
     private int lastPos;
@@ -83,6 +83,7 @@ public class Pivot {
      */
     public void teleopTick(Gamepad gamepad2, Telemetry telemetry) {
         int pos = (int) getEncoders();
+        telemetry.addData("Pivot position",pos);
         double input = gamepad2.right_stick_y;
         if(!gamepad2.b && ((pos > UPPER_BOUND && input > 0) || (pos < LOWER_BOUND && input < 0) )) {
             setPower(0);

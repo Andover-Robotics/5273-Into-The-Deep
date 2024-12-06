@@ -73,6 +73,7 @@ public class Slides {
     public void teleopTick(Gamepad gamepad2, Telemetry telemetry){
         double input = gamepad2.left_stick_y; // TODO maybe reverse input
         int pos = (int)getEncoders();
+        telemetry.addData("Slides position: ",pos);
         if(!gamepad2.b && ((pos > UPPER_BOUND && input > 0) || (pos < LOWER_BOUND && input < 0) )) {
             setPower(0);
         }else{
