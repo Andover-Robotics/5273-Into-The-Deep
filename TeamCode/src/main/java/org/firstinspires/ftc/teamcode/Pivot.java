@@ -81,11 +81,11 @@ public class Pivot {
      * @param gamepad2 {@link com.qualcomm.robotcore.hardware.Gamepad} 2
      * @param telemetry {@link org.firstinspires.ftc.robotcore.external.Telemetry}
      */
-    public void teleopTick(Gamepad gamepad2, Telemetry telemetry) {
+    public void teleopTick(double stickY, boolean overrideButton, Telemetry telemetry) {
         int pos = (int) getEncoders();
         telemetry.addData("Pivot position",pos);
-        double input = gamepad2.right_stick_y;
-        if(!gamepad2.b && ((pos > UPPER_BOUND && input > 0) || (pos < LOWER_BOUND && input < 0) )) {
+        double input = stickY;
+        if(!overrideButton && ((pos > UPPER_BOUND && input > 0) || (pos < LOWER_BOUND && input < 0) )) {
             setPower(0);
         }else{
             double dtMills = dt.milliseconds();

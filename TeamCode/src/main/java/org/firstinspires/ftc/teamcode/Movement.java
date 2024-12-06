@@ -46,10 +46,10 @@ public class Movement {
      * @param gamepad1 {@link com.qualcomm.robotcore.hardware.Gamepad} 1
      * @param telemetry {@link org.firstinspires.ftc.robotcore.external.Telemetry}
      */
-    public void teleopTick(Gamepad gamepad1, Telemetry telemetry){
-        double axial = -gamepad1.left_stick_y;  // Note: pushing stick forward gives negative value
-        double lateral = gamepad1.left_stick_x;
-        double yaw = gamepad1.right_stick_x;
+    public void teleopTick(double leftStickY, double leftStickX, double rightStickX Telemetry telemetry){
+        double axial = -leftStickY;  // Note: pushing stick forward gives negative value
+        double lateral = leftStickX;
+        double yaw = rightStickX;
 
         // Combine the joystick requests for each axis-motion to determine each wheel's power.
         // Set up a variable for each drive wheel to save the power level for telemetry.
