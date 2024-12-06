@@ -52,10 +52,10 @@ public class Claw {
      * @param gamepad2 {@link com.qualcomm.robotcore.hardware.Gamepad} 2
      * @param telemetry {@link org.firstinspires.ftc.robotcore.external.Telemetry}
      */
-    public void teleopTick(Gamepad gamepad2, Telemetry telemetry){
-        if (gamepad2.y) {
+    public void teleopTick(boolean openButton, boolean closeButton, Telemetry telemetry){
+        if (openButton) {
             openClaw();
-        } else if (gamepad2.x) {
+        } else if (closeButton) {
             closeClaw();
         }
     }

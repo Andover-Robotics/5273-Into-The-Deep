@@ -70,11 +70,11 @@ public class Slides {
      * @param gamepad2 {@link com.qualcomm.robotcore.hardware.Gamepad} 2
      * @param telemetry {@link org.firstinspires.ftc.robotcore.external.Telemetry}
      */
-    public void teleopTick(Gamepad gamepad2, Telemetry telemetry){
-        double input = gamepad2.left_stick_y; // TODO maybe reverse input
+    public void teleopTick(double stickY, boolean overrideButton, Telemetry telemetry){
+        double input = stickY; // TODO maybe reverse input
         int pos = (int)getEncoders();
         telemetry.addData("Slides position: ",pos);
-        if(!gamepad2.b && ((pos > UPPER_BOUND && input > 0) || (pos < LOWER_BOUND && input < 0) )) {
+        if(!overrideButton && ((pos > UPPER_BOUND && input > 0) || (pos < LOWER_BOUND && input < 0) )) {
             setPower(0);
         }else{
             setPower(input);
