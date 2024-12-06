@@ -16,6 +16,6 @@ public class DiffyZero extends LinearOpMode {
         DiffyRotator diff = new DiffyRotator(hardwareMap);
 
         waitForStart();
-        diff.zero();
+        diff.pitch(0);
     }
 }

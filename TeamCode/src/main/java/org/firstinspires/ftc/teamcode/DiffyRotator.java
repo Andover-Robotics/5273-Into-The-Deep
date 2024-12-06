@@ -22,11 +22,6 @@ public class DiffyRotator {
         rightServo.setPosition(gamma);
     }
 
-    public void zero() {
-        leftServo.setPosition(0);
-        rightServo.setPosition(0);
-    }
-
     private static Direction reverseDirection(Direction origDirection){
         if (origDirection == Direction.FORWARD) return Direction.REVERSE;
         return Direction.FORWARD;
