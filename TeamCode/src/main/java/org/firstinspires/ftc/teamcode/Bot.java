@@ -14,7 +14,7 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 public class Bot {
     //private final Slides ascendingStorm;
     private final Movement godlikeManeuver;
-    //private final Claw claw;
+    private final Claw claw;
     private final Slides slides;
     private final Pivot pivot;
     private final DiffyRotator diffyRotator;
@@ -26,7 +26,7 @@ public class Bot {
     public Bot(@NonNull HardwareMap hardwareMap) {
         //ascendingStorm = new Slides(hardwareMap);
         godlikeManeuver = new Movement(hardwareMap);
-        //claw = new Claw(hardwareMap);
+        claw = new Claw(hardwareMap);
         slides = new Slides(hardwareMap);
         pivot = new Pivot(hardwareMap);
         diffyRotator = new DiffyRotator(hardwareMap);
@@ -41,7 +41,7 @@ public class Bot {
     public void teleopTick(Gamepad gamepad1, Gamepad gamepad2, Telemetry telemetry){
         godlikeManeuver.teleopTick(gamepad1.left_stick_x, gamepad1.left_stick_y, gamepad1.right_stick_x, telemetry);
         slides.teleopTick(gamepad2.left_stick_y, gamepad2.b, telemetry);
-//        claw.teleopTick(gamepad2, telemetry);
+        claw.teleopTick(gamepad2.right_trigger, telemetry);
         pivot.teleopTick(gamepad2.right_stick_y, gamepad2.b, telemetry);
         diffyRotator.teleopTick(gamepad2, telemetry);
     }
