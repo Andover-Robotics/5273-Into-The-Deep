@@ -99,7 +99,10 @@ public class Pivot {
             double vel = (double) dxTicks / dtMills;
 
             //TODO: change these equations
-            double equilibrium = Math.sin((-(Math.PI * pos) / 500)) * EQUILIBRIUM_MAGNITUDE; // Adjust EQUILIBRIUM_MAGNITUDE
+            double encoderTicksPer2Pi = 1993.6;//from spec sheet of gobilda yellowjacket 5203 series 84 rpm motor
+            double motorGearToPivotGearRatio = 2.8;
+            double encoderTicksPivotPerPi = encoderTicksPer2Pi*motorGearToPivotGearRatio/2;
+            double equilibrium = Math.cos(((Math.PI * pos) / encoderTicksPivotPerPi)) * EQUILIBRIUM_MAGNITUDE; // Adjust EQUILIBRIUM_MAGNITUDE
             double additionalBraking = input == 0.0 ? vel * BRAKING_MAGNITUDE : 0; // Adjust BRAKING_MAGNITUDE
 
             setPower(equilibrium + input * INPUT_MAGNITUDE + additionalBraking);
