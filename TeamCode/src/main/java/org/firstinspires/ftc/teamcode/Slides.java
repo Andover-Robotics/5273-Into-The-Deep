@@ -18,8 +18,8 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 public class Slides {
     private final DcMotor slidesLeft, slidesRight;
     //sets limits of slides extension
-    private static final int UPPER_BOUND = 52;
-    private static final int LOWER_BOUND = -4880;
+    private static final int UPPER_BOUND = 5200;
+    private static final int LOWER_BOUND = -5200;
 
     /**
      * Initializes a Slides instance.
