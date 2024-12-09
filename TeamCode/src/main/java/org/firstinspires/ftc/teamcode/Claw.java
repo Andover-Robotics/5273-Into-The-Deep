@@ -53,9 +53,9 @@ public class Claw {
      * @param telemetry {@link org.firstinspires.ftc.robotcore.external.Telemetry}
      */
     public void teleopTick(float trigger, Telemetry telemetry){
-        if (trigger > 0.15 && !(rotobot.getPosition()==OPEN_POS)){
+        if (trigger<=0.15 && !(rotobot.getPosition()==OPEN_POS)){
             openClaw();
-        } else if (trigger<=0.15 && !(rotobot.getPosition()==CLOSED_POS)) {
+        } else if (trigger > 0.15 && !(rotobot.getPosition()==CLOSED_POS)) {
             closeClaw();
         }
     }
