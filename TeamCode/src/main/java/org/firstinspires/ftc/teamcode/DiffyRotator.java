@@ -62,11 +62,12 @@ public class DiffyRotator {
         }
 
         if(gamepad.x){
-            zero();
+            rightServo.setPosition(0.23);
+            leftServo.setPosition(0.46);
         }
         if(gamepad.y){
-            rightServo.setPosition(0.5);
-            leftServo.setPosition(0.5);
+            rightServo.setPosition(0.54);
+            leftServo.setPosition(1);
         }
         telemetry.addData("Servo Right: ",rightServo.getPosition());
         telemetry.addData("Servo Left: ",leftServo.getPosition());
