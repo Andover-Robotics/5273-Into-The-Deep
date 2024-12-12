@@ -17,21 +17,19 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
  */
 public class Slides {
     private final DcMotor slidesLeft, slidesRight;
-    private static final int UPPER_BOUND = 6000;
-    private static final int LOWER_BOUND = -6000;
+    //sets limits of slides extension
+    private static final int UPPER_BOUND = 5200;
+    private static final int LOWER_BOUND = -5200;
 
     /**
      * Initializes a Slides instance.
      * @param map {@link com.qualcomm.robotcore.hardware.HardwareMap}
      */
     public Slides(HardwareMap map) {
-        //slides left are
-        //slides right are 2
         slidesLeft = map.get(DcMotor.class, "slidesLeftMotor");
         slidesRight = map.get(DcMotor.class, "slidesRightMotor");
         slidesRight.setDirection(DcMotorSimple.Direction.REVERSE);
 
-        //pivotLeft
     }
 
     /**
@@ -49,7 +47,6 @@ public class Slides {
      * @param power the power of the motors to set
      */
     public void setPower(double power) {
-        // TODO: is this correct?
         slidesLeft.setPower(power);
         slidesRight.setPower(power);
     }
@@ -58,21 +55,21 @@ public class Slides {
      * Gets the encoder position of both Slide motors.
      * @return the encoder position as an average
      */
-    public double getEncoders() {
-        // TODO: average, highest, lowest, or array?
-        double encoder1 = slidesLeft.getCurrentPosition();
-        double encoder2 = slidesRight.getCurrentPosition();
+    public int getEncoders() {
+        int encoder1 = slidesLeft.getCurrentPosition();
+        int encoder2 = slidesRight.getCurrentPosition();
         return (encoder1 + encoder2) / 2;
     }
 
     /**
      * Runs one tick of the Teleop OpMode.
-     * @param gamepad2 {@link com.qualcomm.robotcore.hardware.Gamepad} 2
+     * @param stickY {@link com.qualcomm.robotcore.hardware.Gamepad} 2
+     * @param overrideButton {@link com.qualcomm.robotcore.hardware.Gamepad}
      * @param telemetry {@link org.firstinspires.ftc.robotcore.external.Telemetry}
      */
     public void teleopTick(double stickY, boolean overrideButton, Telemetry telemetry){
-        double input = stickY; // TODO maybe reverse input
-        int pos = (int)getEncoders();
+        double input = stickY;
+        int pos = getEncoders();
         telemetry.addData("Slides position: ",pos);
         if(!overrideButton && ((pos > UPPER_BOUND && input > 0) || (pos < LOWER_BOUND && input < 0) )) {
             setPower(0);

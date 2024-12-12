@@ -15,7 +15,7 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 public class Claw {
     private final Servo rotobot;
     private final DiffyRotator andrewLu;
-    public static final double OPEN_POS = 0.4244, CLOSED_POS = 0.3039;
+    public static final double OPEN_POS = 0.1861, CLOSED_POS = 0.0628;
     public static final double UP_POS = 0.1, DOWN_POS = 0.2;
     /**
      * Initializes a Claw instance.
@@ -49,13 +49,13 @@ public class Claw {
 
     /**
      * Runs one tick of the Teleop Op Mode.
-     * @param gamepad2 {@link com.qualcomm.robotcore.hardware.Gamepad} 2
+     *  {@link com.qualcomm.robotcore.hardware.Gamepad} 2
      * @param telemetry {@link org.firstinspires.ftc.robotcore.external.Telemetry}
      */
-    public void teleopTick(boolean openButton, boolean closeButton, Telemetry telemetry){
-        if (openButton) {
+    public void teleopTick(float trigger, Telemetry telemetry){
+        if (trigger<=0.15 && !(rotobot.getPosition()==OPEN_POS)){
             openClaw();
-        } else if (closeButton) {
+        } else if (trigger > 0.15 && !(rotobot.getPosition()==CLOSED_POS)) {
             closeClaw();
         }
     }

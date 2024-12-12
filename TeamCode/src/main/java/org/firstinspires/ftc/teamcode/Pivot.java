@@ -1,6 +1,6 @@
+
+
 package org.firstinspires.ftc.teamcode;
-
-
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Gamepad;
@@ -14,11 +14,12 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
  */
 public class Pivot {
     private final DcMotor pivot;
-    private static final int UPPER_BOUND = 1254-323;
-    private static final int LOWER_BOUND = -1128-323;
+    //sets limits for pivot rotation
+    private static final int UPPER_BOUND = -20000000;
+    private static final int LOWER_BOUND = -20000000;
 
-    private static final double EQUILIBRIUM_MAGNITUDE = 0; // for counteracting gravity
-    private static final double BRAKING_MAGNITUDE = 0; // for smoothness when it stops going up/down
+    private static final double EQUILIBRIUM_MAGNITUDE = 0.2; // for counteracting gravity
+    private static final double BRAKING_MAGNITUDE = 0.1; // for smoothness when it stops going up/down
     private static final double INPUT_MAGNITUDE = 0.3;
 
     private int lastPos;
@@ -26,7 +27,8 @@ public class Pivot {
     private final ElapsedTime dt; // delta t
 
     /**
-     * Initalizes a Pivot instance.
+     * Initializes a Pivot instance.
+     *
      * @param map {@link com.qualcomm.robotcore.hardware.HardwareMap}
      */
     public Pivot(HardwareMap map) {
@@ -44,7 +46,7 @@ public class Pivot {
         dt = new ElapsedTime();
         dt.reset();
 
-        lastPos = (int)getEncoders();
+        lastPos = getEncoders();
     }
 
     /**
@@ -71,31 +73,40 @@ public class Pivot {
      *
      * @return the encoder position as an average
      */
-    public double getEncoders() {
-        double encoder = pivot.getCurrentPosition();
-        return encoder;
+    public int getEncoders() {
+        return pivot.getCurrentPosition();
     }
 
     /**
      * Runs one tick of the Teleop OpMode.
-     * @param gamepad2 {@link com.qualcomm.robotcore.hardware.Gamepad} 2
+     *
+     * @param stickY  {@link com.qualcomm.robotcore.hardware.Gamepad}
+     * @param overrideButton {@link com.qualcomm.robotcore.hardware.Gamepad}
      * @param telemetry {@link org.firstinspires.ftc.robotcore.external.Telemetry}
      */
     public void teleopTick(double stickY, boolean overrideButton, Telemetry telemetry) {
-        int pos = (int) getEncoders();
-        telemetry.addData("Pivot position",pos);
+        int pos = getEncoders();
+        telemetry.addData("Pivot position", pos);
+
         double input = stickY;
-        if(!overrideButton && ((pos > UPPER_BOUND && input > 0) || (pos < LOWER_BOUND && input < 0) )) {
+        if (!overrideButton && ((pos > UPPER_BOUND && input > 0) || (pos < LOWER_BOUND && input < 0))) {
             setPower(0);
-        }else{
+        } else {
             double dtMills = dt.milliseconds();
             dt.reset();
             int dxTicks = lastPos - pos;
             lastPos = pos;
-            double vel = (double)dxTicks/dtMills;
-            double equilibrium = Math.sin((-(Math.PI * pos) / 500)) * EQUILIBRIUM_MAGNITUDE;
-            double additionalBraking = input == 0.0 ? vel * BRAKING_MAGNITUDE : 0;
+            double vel = (double) dxTicks / dtMills;
+
+            //TODO: change these equations
+            double encoderTicksPer2Pi = 1993.6;//from spec sheet of gobilda yellowjacket 5203 series 84 rpm motor
+            double motorGearToPivotGearRatio = 2.8;
+            double encoderTicksPivotPerPi = encoderTicksPer2Pi*motorGearToPivotGearRatio/2;
+            double equilibrium = Math.cos(((Math.PI * pos) / encoderTicksPivotPerPi)) * EQUILIBRIUM_MAGNITUDE; // Adjust EQUILIBRIUM_MAGNITUDE
+            double additionalBraking = input == 0.0 ? vel * BRAKING_MAGNITUDE : 0; // Adjust BRAKING_MAGNITUDE
+
             setPower(equilibrium + input * INPUT_MAGNITUDE + additionalBraking);
         }
     }
+
 }

@@ -31,6 +31,7 @@ public class Movement {
 
         localizer = new ThreeDeadWheelLocalizer(map, PARAMS.inPerTick);
 
+        //reversed motor to reflect installation
         leftFront.setDirection(DcMotorSimple.Direction.REVERSE);
 //        leftBack.setDirection(DcMotorSimple.Direction.REVERSE);
 
@@ -41,15 +42,11 @@ public class Movement {
     }
 
     // tick for teleop
-    /**
-     * Runs one tick of the Teleop OpMode.
-     * @param gamepad1 {@link com.qualcomm.robotcore.hardware.Gamepad} 1
-     * @param telemetry {@link org.firstinspires.ftc.robotcore.external.Telemetry}
-     */
-    public void teleopTick(double leftStickY, double leftStickX, double rightStickX, Telemetry telemetry){
-        double axial = -leftStickY;  // Note: pushing stick forward gives negative value
-        double lateral = leftStickX;
-        double yaw = rightStickX;
+
+    public void teleopTick(double leftStickX, double leftStickY, double rightStickX, double trigger, Telemetry telemetry){
+        double axial = -leftStickY * (1 - trigger * 0.75);  // Note: pushing stick forward gives negative value
+        double lateral = leftStickX * (1 - trigger * 0.75);
+        double yaw = rightStickX * (1 - trigger * 0.75);
 
         // Combine the joystick requests for each axis-motion to determine each wheel's power.
         // Set up a variable for each drive wheel to save the power level for telemetry.
