@@ -15,7 +15,7 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 public class Claw {
     private final Servo rotobot;
     private final DiffyRotator andrewLu;
-    public static final double OPEN_POS = 0.1861, CLOSED_POS = 0.0228;
+    public static final double OPEN_POS = 0.1861, CLOSED_POS = 0.0628;
     public static final double UP_POS = 0.1, DOWN_POS = 0.2;
     /**
      * Initializes a Claw instance.

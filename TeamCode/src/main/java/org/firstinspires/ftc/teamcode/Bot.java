@@ -39,7 +39,7 @@ public class Bot {
      * @param telemetry {@link org.firstinspires.ftc.robotcore.external.Telemetry}
      */
     public void teleopTick(Gamepad gamepad1, Gamepad gamepad2, Telemetry telemetry){
-        godlikeManeuver.teleopTick(gamepad1.left_stick_x, gamepad1.left_stick_y, gamepad1.right_stick_x, telemetry);
+        godlikeManeuver.teleopTick(gamepad1.left_stick_x, gamepad1.left_stick_y, gamepad1.right_stick_x, gamepad1.right_trigger,telemetry);
         slides.teleopTick(gamepad2.left_stick_y, gamepad2.b, telemetry);
         claw.teleopTick(gamepad2.right_trigger, telemetry);
         pivot.teleopTick(gamepad2.right_stick_y, gamepad2.b, telemetry);

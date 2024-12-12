@@ -15,8 +15,8 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 public class Pivot {
     private final DcMotor pivot;
     //sets limits for pivot rotation
-    private static final int UPPER_BOUND = -20000;
-    private static final int LOWER_BOUND = -20000;
+    private static final int UPPER_BOUND = -20000000;
+    private static final int LOWER_BOUND = -20000000;
 
     private static final double EQUILIBRIUM_MAGNITUDE = 0.2; // for counteracting gravity
     private static final double BRAKING_MAGNITUDE = 0.1; // for smoothness when it stops going up/down
