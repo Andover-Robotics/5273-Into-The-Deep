@@ -11,6 +11,7 @@ import org.opencv.core.Mat;
 import org.opencv.core.MatOfPoint;
 import org.opencv.core.MatOfPoint2f;
 import org.opencv.core.RotatedRect;
+import org.opencv.core.Size;
 import org.opencv.imgproc.Imgproc;
 import org.opencv.imgproc.Moments;
 import org.openftc.easyopencv.OpenCvCamera;
@@ -45,13 +46,16 @@ public class Bot {
             // Blur
             //Mat blur = new Mat();
             //Img
-
+            Mat blurredImage = new Mat();
+            Imgproc.GaussianBlur(gray, blurredImage, new Size(5, 5), 0);
             Mat edges = new Mat();
-            Imgproc.Canny(gray, edges, 50, 150);
+            Imgproc.Canny(blurredImage, edges, 50, 150);
 
             List<MatOfPoint> contours = new ArrayList<>();
             Mat hierarchy = new Mat();
             Imgproc.findContours(edges, contours, hierarchy, Imgproc.RETR_EXTERNAL, Imgproc.CHAIN_APPROX_SIMPLE);
+
+
 
             for (MatOfPoint contour: contours) {
                 MatOfPoint2f approx = new MatOfPoint2f();
