@@ -19,6 +19,13 @@ public class Bot {
     private final Pivot pivot;
     private final DiffyRotator diffyRotator;
 
+    public enum FSM{
+        OUTTAKE, //outtake
+        INTAKE, //intake
+        STARTING
+    }
+
+    public FSM fsm = FSM.STARTING;
     /**
      * Initializes a Bot instance.
      * @param hardwareMap {@link com.qualcomm.robotcore.hardware.HardwareMap}
