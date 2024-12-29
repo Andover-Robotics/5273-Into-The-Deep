@@ -19,7 +19,7 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 public class SlidesHorizontal {
     private final Servo slideServo;
 
-    private static double expanded = 1.0, contracted = 0.0;
+    private static final double EXPANDED = 1.0, CONTRACTED = 0.0;
 
     public SlidesHorizontal(HardwareMap map) {
         slideServo = map.get(Servo.class, "slidesH");
@@ -33,12 +33,12 @@ public class SlidesHorizontal {
     public HSlides fsm = HSlides.IN;
 
     public void close() {
-        slideServo.setPosition(contracted);
+        slideServo.setPosition(CONTRACTED);
         fsm = HSlides.IN;
     }
 
     public void open() {
-        slideServo.setPosition(expanded);
+        slideServo.setPosition(EXPANDED);
         fsm = HSlides.OUT;
     }
 
