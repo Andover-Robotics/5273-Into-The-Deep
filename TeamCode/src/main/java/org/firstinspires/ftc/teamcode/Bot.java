@@ -29,7 +29,7 @@ public class Bot {
     //private final Slides ascendingStorm;
     private final Movement godlikeManeuver;
     private final Claw claw;
-    private final Slides slides;
+    private final SlidesVertical slides;
     private final Pivot pivot;
     private final DiffyRotator diffyRotator;
     private final OpenCvPipeline pipeline = new RectPipeline();
@@ -109,7 +109,7 @@ public class Bot {
         //ascendingStorm = new Slides(hardwareMap);
         godlikeManeuver = new Movement(hardwareMap);
         claw = new Claw(hardwareMap);
-        slides = new Slides(hardwareMap);
+        slides = new SlidesVertical(hardwareMap);
         pivot = new Pivot(hardwareMap);
         diffyRotator = new DiffyRotator(hardwareMap);
         WebcamName webcamName = hardwareMap.get(WebcamName.class, "NAME_OF_CAMERA_IN_CONFIG_FILE");
@@ -134,10 +134,6 @@ public class Bot {
      * @param telemetry {@link org.firstinspires.ftc.robotcore.external.Telemetry}
      */
     public void teleopTick(Gamepad gamepad1, Gamepad gamepad2, Telemetry telemetry){
-        godlikeManeuver.teleopTick(gamepad1.left_stick_x, gamepad1.left_stick_y, gamepad1.right_stick_x, gamepad1.right_trigger,telemetry);
-        slides.teleopTick(gamepad2.left_stick_y, gamepad2.b, telemetry);
-        claw.teleopTick(gamepad2.right_trigger, telemetry);
-        pivot.teleopTick(gamepad2.right_stick_y, gamepad2.b, telemetry);
-        diffyRotator.teleopTick(gamepad2, telemetry);
+
     }
 }
