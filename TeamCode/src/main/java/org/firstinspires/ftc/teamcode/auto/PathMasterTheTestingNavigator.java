@@ -4,7 +4,6 @@ package org.firstinspires.ftc.teamcode.auto;
 import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.roadrunner.Action;
 import com.acmerobotics.roadrunner.Pose2d;
-import com.acmerobotics.roadrunner.PoseVelocity2d;
 import com.acmerobotics.roadrunner.SequentialAction;
 import com.acmerobotics.roadrunner.ftc.Actions;
 import com.acmerobotics.roadrunner.Vector2d;
@@ -15,7 +14,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 //our special silly very important goofy classes (w rizz)
-import  org.firstinspires.ftc.teamcode.Slides;
+import org.firstinspires.ftc.teamcode.SlidesVertical;
 
 /**
  * Yet another OpMode, this time for Autonomous - the names are intentional (and great), don't mess with them
@@ -28,7 +27,7 @@ public class PathMasterTheTestingNavigator extends LinearOpMode {
     */
     public void runOpMode(){
         MecanumDrive titanDrivePrecisionPowertrain = new MecanumDrive(hardwareMap, new Pose2d(-10, -60, Math.toRadians(90)));
-        Slides ethan = new Slides(hardwareMap);
+        SlidesVertical ethan = new SlidesVertical(hardwareMap);
         Action arcStrikeVelocity;
 
         arcStrikeVelocity = titanDrivePrecisionPowertrain.actionBuilder(titanDrivePrecisionPowertrain.pose)
