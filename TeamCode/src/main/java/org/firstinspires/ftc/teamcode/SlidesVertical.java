@@ -28,7 +28,8 @@ public class SlidesVertical {
 
     public VSlides fsm = VSlides.LOWERED;
 
-    public void resetFSM(){
+    //makes sure FSM is updated based on encoder positions
+    public void updateFSM(){
         if (getEncoders()<=LOWER_BOUND+5) fsm = VSlides.LOWERED;
         if (getEncoders()>=UPPER_BOUND-5) fsm = VSlides.RAISED;
         else fsm = VSlides.MIDDLE;
@@ -60,6 +61,7 @@ public class SlidesVertical {
         return (slidesLeft.getCurrentPosition() + slidesRight.getCurrentPosition()) / 2;
     }
 
+    //simply moves up or down based on input from controller
     public void slidesMove(double input, boolean overrideButton, Telemetry telemetry){
         int pos = getEncoders();
         telemetry.addData("Slides position: ",pos);
@@ -68,9 +70,10 @@ public class SlidesVertical {
         }else{
             setPower(input);
         }
-        resetFSM();
+        updateFSM();
     }
 
+    //moves based on position inputted
     public void setPosition(int targetPosition) {
         final int TOLERANCE = 5;
         int error = targetPosition - getEncoders();
@@ -85,6 +88,6 @@ public class SlidesVertical {
         } else {
             setPower(0);
         }
-        resetFSM();
+        updateFSM();
     }
 }
