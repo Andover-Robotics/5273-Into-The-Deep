@@ -2,6 +2,8 @@ package org.firstinspires.ftc.teamcode;
 
 import androidx.annotation.NonNull;
 
+import com.acmerobotics.roadrunner.Action;
+import com.acmerobotics.roadrunner.Actions;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
@@ -19,7 +21,8 @@ public class Bot {
     private final Claw claw;
 
     public enum FSM{
-        STARTING
+        INTAKE,
+        TRANSFER
     }
 
     public FSM fsm = FSM.STARTING;
@@ -48,6 +51,25 @@ public class Bot {
      * @param telemetry {@link org.firstinspires.ftc.robotcore.external.Telemetry}
      */
     public void teleopTick(Gamepad gamepad1, Gamepad gamepad2, Telemetry telemetry){
-
+        godlikeManeuver.teleopTick(gamepad1.left_stick_x,gamepad1.left_stick_y,gamepad1.right_stick_x,gamepad1.right_trigger,telemetry);
+        switch(fsm){
+            case INTAKE:
+                //TODO: implement horizontal slides active method
+                intake.posIntake();
+                if(gamepad2.right_trigger>0) intake.runIntake();
+                else intake.stop();
+                //TODO: do claw class autotranfer
+                if(gamepad2.a) {
+                    //TODO: move the intake-transfer to an action
+                    hSlides.close();
+                    vSlides.moveToLowerBound();
+                    intake.posTransfer();
+                    claw.openClaw();
+                    //TODO: implement claw transferring
+                    intake.runTransfer();
+                    claw.closeClaw();
+                    fsm = FSM.TRANSFER;
+                }
+        }
     }
 }
