@@ -17,12 +17,13 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
  * See {@link org.firstinspires.ftc.teamcode.auto.PathMasterTheTestingNavigator}
  */
 public class SlidesHorizontal {
-    private final Servo slideServo;
+    private final Servo slidesLeft, slidesRight;
 
     private static final double EXPANDED = 1.0, CONTRACTED = 0.0;
 
     public SlidesHorizontal(HardwareMap map) {
-        slideServo = map.get(Servo.class, "slidesH");
+        slidesLeft = map.get(Servo.class, "slidesHL");
+        slidesRight = map.get(Servo.class, "slidesHR");
     }
 
     public enum HSlides {
@@ -32,14 +33,18 @@ public class SlidesHorizontal {
 
     public HSlides fsm = HSlides.IN;
 
+    public void setBothPosition(double position) {
+        slidesLeft.setPosition(position);
+        slidesRight.setPosition(position);
+    }
+
     public void close() {
-        slideServo.setPosition(CONTRACTED);
+        setBothPosition(CONTRACTED);
         fsm = HSlides.IN;
     }
 
     public void open() {
-        slideServo.setPosition(EXPANDED);
+        setBothPosition(EXPANDED);
         fsm = HSlides.OUT;
     }
-
 }
