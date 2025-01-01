@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
+import androidx.annotation.ContentView;
 import androidx.annotation.NonNull;
 
 import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
@@ -28,7 +29,8 @@ public class SlidesHorizontal {
 
     public enum HSlides {
         OUT,
-        IN
+        IN,
+        MIDDLE
     }
 
     public HSlides fsm = HSlides.IN;
@@ -36,6 +38,29 @@ public class SlidesHorizontal {
     public void setBothPosition(double position) {
         slidesLeft.setPosition(position);
         slidesRight.setPosition(position);
+    }
+
+    public double getPositions(){
+        return(slidesLeft.getPosition()+ slidesRight.getPosition())/2.0;
+    }
+
+    public void setPower(double power){
+        if (getPositions()+(Math.signum(power)*0.01) >= EXPANDED) open();
+        else if (getPositions()+(Math.signum(power)*0.01) <= CONTRACTED) close();
+        else {
+            setBothPosition(getPositions() + (Math.signum(power)*0.01));
+            fsm = HSlides.MIDDLE;
+        }
+    }
+
+    public void slidesMove(double input, boolean overrideButton, Telemetry telemetry){
+        double pos = (getPositions());
+        telemetry.addData("Horizontal Slides position: ",pos);
+        if(!overrideButton && ((pos > CONTRACTED && input > 0) || (pos < EXPANDED && input < 0) )) {
+            setPower(0);
+        }else{
+            setPower(input);
+        }
     }
 
     public void close() {

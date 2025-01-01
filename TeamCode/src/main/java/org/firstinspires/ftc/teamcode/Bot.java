@@ -59,7 +59,7 @@ public class Bot {
                 hSlides.close();
                 intake.stop();
             case INTAKE:
-                //TODO: implement horizontal slides active method
+                hSlides.slidesMove(gamepad2.left_stick_y, gamepad2.b,telemetry);
                 intake.posIntake();
                 vSlides.moveToLowerBound();
                 if(gamepad2.right_trigger>0) intake.runIntake();
