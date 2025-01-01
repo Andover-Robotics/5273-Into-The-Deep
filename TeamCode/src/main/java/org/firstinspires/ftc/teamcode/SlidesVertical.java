@@ -18,7 +18,7 @@ public class SlidesVertical {
     private final DcMotor slidesLeft, slidesRight;
     //sets limits of slides extension
     private static final int UPPER_BOUND = 5200;
-    private static final int LOWER_BOUND = -5200;
+    private static final int LOWER_BOUND = 0;
 
     public enum VSlides {
         LOWERED,  // Slides at the lower bound
@@ -36,13 +36,13 @@ public class SlidesVertical {
     }
 
     public void moveToLowerBound() {
+        if(!(fsm == VSlides.LOWERED)) setPosition(LOWER_BOUND);
         fsm = VSlides.LOWERED;
-        setPosition(LOWER_BOUND);
     }
 
     public void moveToUpperBound() {
+        if(!(fsm== VSlides.RAISED)) setPosition(UPPER_BOUND);
         fsm = VSlides.RAISED;
-        setPosition(UPPER_BOUND);
     }
 
     public SlidesVertical(HardwareMap map) {

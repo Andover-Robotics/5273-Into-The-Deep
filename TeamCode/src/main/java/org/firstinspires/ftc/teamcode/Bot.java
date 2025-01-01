@@ -21,10 +21,10 @@ public class Bot {
     private final Claw claw;
 
     public enum FSM{
+        STARTING,
         INTAKE,
         TRANSFER
     }
-
     public FSM fsm = FSM.STARTING;
     /**
      * Initializes a Bot instance.
@@ -53,9 +53,15 @@ public class Bot {
     public void teleopTick(Gamepad gamepad1, Gamepad gamepad2, Telemetry telemetry){
         godlikeManeuver.teleopTick(gamepad1.left_stick_x,gamepad1.left_stick_y,gamepad1.right_stick_x,gamepad1.right_trigger,telemetry);
         switch(fsm){
+            case STARTING:
+                intake.posIntake();
+                vSlides.moveToLowerBound();
+                hSlides.close();
+                intake.stop();
             case INTAKE:
                 //TODO: implement horizontal slides active method
                 intake.posIntake();
+                vSlides.moveToLowerBound();
                 if(gamepad2.right_trigger>0) intake.runIntake();
                 else intake.stop();
                 //TODO: do claw class autotranfer
