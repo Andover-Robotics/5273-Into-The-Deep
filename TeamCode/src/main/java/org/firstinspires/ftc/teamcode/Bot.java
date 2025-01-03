@@ -77,4 +77,21 @@ public class Bot {
                 }
         }
     }
+
+    public SequentialAction actionTransfer() {
+        return new SequentialAction(
+                new InstantAction(intake::closeIntake),
+                new InstantAction(hSlides::close),
+                new InstantAction(vSlides::moveToLowerBound),
+                new InstantAction(outtake::openBucket),
+                new InstantAction(intake::posTransfer),
+                new InstantAction(outtake::posTransfer),
+                new SleepAction(0.3),
+                new InstantAction(outtake::closeTransfer),
+                new SleepAction(0.1),
+                new InstantAction(intake::openTransfer),
+                new InstantAction(intake::posIntake),
+                new InstantAction(outtake::posBucket),
+                new InstantAction(() -> fsm = FSM.TRANSFER));
+    }
 }
