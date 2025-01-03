@@ -25,6 +25,7 @@ public class SlidesHorizontal {
     public SlidesHorizontal(HardwareMap map) {
         slidesLeft = map.get(Servo.class, "slidesHL");
         slidesRight = map.get(Servo.class, "slidesHR");
+        slidesRight.setDirection(Servo.Direction.REVERSE);
     }
 
     public enum HSlides {
