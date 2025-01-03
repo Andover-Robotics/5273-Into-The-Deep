@@ -39,28 +39,30 @@ public class Camera {
 
     // OpenCV image processing
     class RectPipeline extends OpenCvPipeline {
+        private Mat gray = new Mat();
+        private Mat blurredImage = new Mat();
+        private Mat edges = new Mat();
+        private Mat hierarchy = new Mat();
+        private MatOfPoint2f approx = new MatOfPoint2f();
+        private MatOfPoint2f contour2f = new MatOfPoint2f();
+
         @Override
         public Mat processFrame(Mat input) {
-            Mat gray = new Mat();
             Imgproc.cvtColor(input, gray, Imgproc.COLOR_RGBA2GRAY);
 
             // Reduce noise in outcome
-            Mat blurredImage = new Mat();
             Imgproc.GaussianBlur(gray, blurredImage, new Size(GAUSSIAN_BLUR, GAUSSIAN_BLUR), 0);
 
             // Finds edge LINES
-            Mat edges = new Mat();
             Imgproc.Canny(blurredImage, edges, CANNY_THRESHOLD_LOWER, CANNY_THRESHOLD_HIGHER);
 
             // Finds edge POINTS
             List<MatOfPoint> contours = new ArrayList<>();
-            Mat hierarchy = new Mat();
             Imgproc.findContours(edges, contours, hierarchy, Imgproc.RETR_EXTERNAL, Imgproc.CHAIN_APPROX_SIMPLE);
 
             for (MatOfPoint contour: contours) {
                 // Approximates a polygon from edge POINTS
-                MatOfPoint2f approx = new MatOfPoint2f();
-                MatOfPoint2f contour2f = new MatOfPoint2f(contour.toArray());
+                contour2f.fromArray(contour.toArray());
                 double epsilon = APPROX_FACTOR * Imgproc.arcLength(contour2f, true);
                 Imgproc.approxPolyDP(contour2f, approx, epsilon, true);
 
@@ -71,7 +73,7 @@ public class Camera {
 
                     if (area >= MIN_RECT) {
                         // Gets a rotated rectangle, because standard Rects are parallel to coordinate axes
-                        RotatedRect rotated = Imgproc.minAreaRect(new MatOfPoint2f(contour.toArray()));
+                        RotatedRect rotated = Imgproc.minAreaRect(contour2f);
                         // Do something with rotated.angle for orientation
                         telemetry.addData("it worked", rotated.angle);
                     }
