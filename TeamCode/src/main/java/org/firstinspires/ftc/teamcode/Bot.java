@@ -3,7 +3,11 @@ package org.firstinspires.ftc.teamcode;
 import androidx.annotation.NonNull;
 
 import com.acmerobotics.roadrunner.Action;
-import com.acmerobotics.roadrunner.Actions;
+import com.acmerobotics.roadrunner.InstantAction;
+import com.acmerobotics.roadrunner.ParallelAction;
+import com.acmerobotics.roadrunner.SequentialAction;
+import com.acmerobotics.roadrunner.SleepAction;
+import com.acmerobotics.roadrunner.ftc.Actions;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
@@ -18,7 +22,7 @@ public class Bot {
     private final SlidesHorizontal hSlides;
     private final Intake intake;
     private final SlidesVertical vSlides;
-    private final Claw claw;
+    private final Outtake outtake;
 
     public enum FSM{
         STARTING,
@@ -39,7 +43,7 @@ public class Bot {
 
         // outtake:
         vSlides = new SlidesVertical(hardwareMap);
-        claw = new Claw(hardwareMap);
+        outtake = new Outtake(hardwareMap);
 
         godlikeManeuver = new Movement(hardwareMap);
     }
@@ -50,14 +54,18 @@ public class Bot {
      * @param gamepad2 {@link com.qualcomm.robotcore.hardware.Gamepad} 2
      * @param telemetry {@link org.firstinspires.ftc.robotcore.external.Telemetry}
      */
-    public void teleopTick(Gamepad gamepad1, Gamepad gamepad2, Telemetry telemetry){
+    public void teleopTick(Gamepad gamepad1, Gamepad gamepad2, Telemetry telemetry) throws InterruptedException{
         godlikeManeuver.teleopTick(gamepad1.left_stick_x,gamepad1.left_stick_y,gamepad1.right_stick_x,gamepad1.right_trigger,telemetry);
         switch(fsm){
             case STARTING:
-                intake.posIntake();
-                vSlides.moveToLowerBound();
-                hSlides.close();
-                intake.stop();
+                if(gamepad2.a){
+                  hSlides.close();
+                  vSlides.moveToLowerBound();
+                  intake.posIntake();
+                  outtake.closeBucket();
+                  fsm = FSM.INTAKE;
+                }
+                break;
             case INTAKE:
                 hSlides.slidesMove(gamepad2.left_stick_y, gamepad2.b,telemetry);
                 intake.posIntake();
