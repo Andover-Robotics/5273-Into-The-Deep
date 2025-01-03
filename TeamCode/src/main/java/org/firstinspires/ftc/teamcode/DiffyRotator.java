@@ -1,71 +1,59 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.arcrobotics.ftclib.hardware.SimpleServo;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
-import com.qualcomm.robotcore.hardware.Servo;
+import com.arcrobotics.ftclib.hardware.ServoEx;
 import com.qualcomm.robotcore.hardware.Servo.Direction;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 public class DiffyRotator {
-    private final Servo leftServo;
-    private final Servo rightServo;
+    public final SimpleServo leftServo;
+    public final SimpleServo rightServo;
+    public double roll;
+    public double pitch;
 
-    public DiffyRotator(HardwareMap hardwareMap) {
-        leftServo = hardwareMap.get(Servo.class, "diffyRotatorLeft");
-        rightServo = hardwareMap.get(Servo.class, "diffyRotatorRight");
-        rightServo.setDirection(Direction.REVERSE);
-    }
-    public void roll(double sigma) {
-        leftServo.setPosition(sigma);
-        rightServo.setPosition(sigma);
-    }
+    public final double ROLL_MAX = 180, ROLL_MIN = 0;
+    public final double PITCH_MAX = 100, PITCH_MIN = 0;
 
-    public void pitch(double gamma){
-        leftServo.setPosition(gamma);
-        rightServo.setPosition(-gamma);
+    public DiffyRotator(HardwareMap hardwareMap, String nameL, String nameR) {
+        leftServo = new SimpleServo(hardwareMap, nameL, 0,180);
+        rightServo = new SimpleServo(hardwareMap, nameR,0,180);
+        leftServo.setInverted(true);
     }
 
-    private static Direction reverseDirection(Direction origDirection){
-        if (origDirection == Direction.FORWARD) return Direction.REVERSE;
-        return Direction.FORWARD;
+    public void rollToDegrees(double rollDegrees){
+        if (rollDegrees>=ROLL_MAX) rollDegrees=ROLL_MAX;
+        if (rollDegrees<=ROLL_MIN) rollDegrees=ROLL_MIN;
+        double deltaL = pitch + rollDegrees;
+        double deltaR = pitch + (ROLL_MAX - rollDegrees); //inverse amount of degrees to the right side servo
+        leftServo.turnToAngle(deltaL);
+        rightServo.turnToAngle(deltaR);
+        roll = rollDegrees;
     }
-    public static class Position {
-        public final double LEFT;
-        public final double RIGHT;
-        public Position(double left, double right){
-            LEFT = left;
-            RIGHT = right;
-        }
-    }
-    public void teleopTick(Gamepad gamepad , Telemetry telemetry){
-        if (gamepad.dpad_up && Math.pow(rightServo.getPosition(),leftServo.getPosition())!= rightServo.getPosition()) {
-            rightServo.setPosition(rightServo.getPosition() + 0.01);
-            leftServo.setPosition(leftServo.getPosition() + 0.01);
-        }
-        if (gamepad.dpad_down && rightServo.getPosition()*leftServo.getPosition()!=0) {
-            rightServo.setPosition(rightServo.getPosition() - 0.01);
-            leftServo.setPosition(leftServo.getPosition() - 0.01);
-        }
-        if (gamepad.dpad_left && rightServo.getPosition()<1 && leftServo.getPosition()>0) {
-            rightServo.setPosition(rightServo.getPosition() + 0.01);
-            leftServo.setPosition(leftServo.getPosition() - 0.01);
-        }
-        if (gamepad.dpad_right && rightServo.getPosition()>0 && leftServo.getPosition()<1) {
-            rightServo.setPosition(rightServo.getPosition() - 0.01);
-            leftServo.setPosition(leftServo.getPosition() + 0.01);
-        }
 
-        if(gamepad.x){
-            rightServo.setPosition(0.23);
-            leftServo.setPosition(0.46);
-        }
-        if(gamepad.y){
-            rightServo.setPosition(0.54);
-            leftServo.setPosition(1);
-        }
-        telemetry.addData("Servo Right: ",rightServo.getPosition());
-        telemetry.addData("Servo Left: ",leftServo.getPosition());
+    public void pitchToDegrees(double pitchDegrees){
+        if (pitchDegrees>=PITCH_MAX) pitchDegrees=PITCH_MAX;
+        if (pitchDegrees<=PITCH_MIN) pitchDegrees=PITCH_MIN;
+        double deltaL = roll + pitchDegrees;
+        double deltaR = pitchDegrees + (PITCH_MAX - roll); //inverse amount of degrees to the right side servo
+        leftServo.turnToAngle(deltaL);
+        rightServo.turnToAngle(deltaR);
+        pitch = pitchDegrees;
     }
+
+    public void rollPitch(double rollDegrees, double pitchDegrees){
+        pitchDegrees=pitchDegrees%360;
+        rollDegrees = Math.max(ROLL_MIN, Math.min(ROLL_MAX, rollDegrees));
+        pitchDegrees = Math.max(PITCH_MIN, Math.min(PITCH_MAX, pitchDegrees));
+        double leftAngle = pitchDegrees + (rollDegrees);
+        double rightAngle = pitchDegrees + (ROLL_MAX - (rollDegrees));
+        leftServo.turnToAngle(leftAngle);
+        rightServo.turnToAngle(rightAngle);
+        roll = rollDegrees;
+        pitch = pitchDegrees;
+    }
+
 }
 
