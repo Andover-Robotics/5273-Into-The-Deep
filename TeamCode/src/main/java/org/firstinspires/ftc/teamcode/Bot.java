@@ -68,21 +68,12 @@ public class Bot {
                 break;
             case INTAKE:
                 hSlides.slidesMove(gamepad2.left_stick_y, gamepad2.b,telemetry);
-                intake.posIntake();
-                vSlides.moveToLowerBound();
-                if(gamepad2.right_trigger>0) intake.runIntake();
-                else intake.stop();
-                //TODO: do claw class autotranfer
+                intake.moveRoll(gamepad2.dpad_left,gamepad2.dpad_right);
+                if(gamepad2.right_trigger>0) intake.openIntake();
+                else intake.closeIntake();
                 if(gamepad2.a) {
-                    //TODO: move the intake-transfer to an action
-                    hSlides.close();
-                    vSlides.moveToLowerBound();
-                    intake.posTransfer();
-                    claw.openClaw();
-                    //TODO: implement claw transferring
-                    intake.runTransfer();
-                    claw.closeClaw();
-                    fsm = FSM.TRANSFER;
+                    Thread thread = new Thread(() -> Actions.runBlocking(actionTransfer()));
+                    thread.start();
                 }
         }
     }
