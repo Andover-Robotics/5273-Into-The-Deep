@@ -17,7 +17,7 @@ public class Intake {
         //intake = map.get(CRServo.class, "iServo");
         fourL = map.get(Servo.class, "fourIL");
         fourR = map.get(Servo.class, "fourIR");
-        claw = new Claw(map,CLAW_OPEN,CLAW_CLOSED,"iClaw");
+        claw = new Claw(map,CLAW_OPEN,CLAW_CLOSED,"iClaw", "iDiffL","iDiffR");
         fourR.setDirection(Servo.Direction.REVERSE);
     }
 
