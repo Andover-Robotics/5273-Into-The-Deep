@@ -23,6 +23,21 @@ public class ServoValueFinder extends LinearOpMode {
     @Override
     public void runOpMode() {
         SERVO_LIST = hardwareMap.servo.entrySet().stream().map(Map.Entry::getKey).toArray(String[]::new);
+        waitForStart();
+        Servo servo = getServo();
+        while(opModeIsActive()){
+            if(gamepad2.b){
+                servo = getServo();
+            }else if(gamepad2.dpad_up){
+                servo.setPosition(servo.getPosition()+0.0001);
+            }else if(gamepad2.dpad_down){
+                servo.setPosition(servo.getPosition()-0.0001);
+            }
+            telemetry.addData("servo pos: ",servo.getPosition());
+            telemetry.update();
+        }
+    }
+    public Servo getServo(){
         while(!gamepad2.a && !isStopRequested()){
             if(gamepad2.dpad_right && !dpad_right_prev){
                 num = (num + 1) % SERVO_LIST.length;
@@ -40,18 +55,6 @@ public class ServoValueFinder extends LinearOpMode {
             telemetry.addData("selected servo: ", SERVO_LIST[num]);
             telemetry.update();
         }
-
-        Servo servo = hardwareMap.get(Servo.class, SERVO_LIST[num]);
-        waitForStart();
-        while(opModeIsActive()){
-            if(gamepad2.dpad_up){
-                servo.setPosition(servo.getPosition()+0.0001);
-            }else if(gamepad2.dpad_down){
-                servo.setPosition(servo.getPosition()-0.0001);
-                
-            }
-            telemetry.addData("servo pos: ",servo.getPosition());
-            telemetry.update();
-        }
+        return hardwareMap.get(Servo.class, SERVO_LIST[num]);
     }
 }
