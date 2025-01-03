@@ -8,25 +8,39 @@ public class Intake {
     private final CRServo intake;
     private final Arm arm;
     private static final double RUN_POWER = 1;
+    //private final CRServo intake;
+    private final Servo fourL, fourR;
+    private final Claw claw;
+    private static final double CLAW_OPEN = 0, CLAW_CLOSED = 0;
+    private static final double FOUR_INTAKE = 0, FOUR_OUTTAKE = 0;
 
     public Intake (HardwareMap map) {
-        intake = map.get(CRServo.class, "iServo");
-        arm = new Arm(map);
+        //intake = map.get(CRServo.class, "iServo");
+        fourL = map.get(Servo.class, "fourIL");
+        fourR = map.get(Servo.class, "fourIR");
+        claw = new Claw(map,CLAW_OPEN,CLAW_CLOSED,"iClaw");
+        fourR.setDirection(Servo.Direction.REVERSE);
     }
 
     public enum IntakeState {
-        INTAKE_RUN,
-        INTAKE_STOP,
-        TRANSFER_RUN,
-        TRANSFER_STOP
+        INTAKE_OPEN,
+        INTAKE_CLOSED,
+        TRANSFER_OPEN,
+        TRANSFER_CLOSED
     }
 
-    public IntakeState fsm = IntakeState.INTAKE_STOP;
+    public IntakeState fsm = IntakeState.INTAKE_OPEN;
 
-    public void runIntake(){
+    public void openIntake(){
         posIntake();
-        intake.setPower(RUN_POWER);
-        fsm = IntakeState.INTAKE_RUN;
+        claw.openClaw();
+        fsm = IntakeState.INTAKE_OPEN;
+    }
+
+    public void closeIntake(){
+        posIntake();
+        claw.closeClaw();
+        fsm = IntakeState.INTAKE_CLOSED;
     }
 
     public void posIntake(){
@@ -41,8 +55,14 @@ public class Intake {
 
     public void runTransfer(){
         posTransfer();
-        intake.setPower(-RUN_POWER);
-        fsm = IntakeState.TRANSFER_RUN;
+        claw.openClaw();
+        fsm = IntakeState.TRANSFER_OPEN;
+    }
+
+    public void closeTransfer(){
+        posTransfer();
+        claw.closeClaw();
+        fsm = IntakeState.TRANSFER_CLOSED;
     }
 
     public void posTransfer(){
