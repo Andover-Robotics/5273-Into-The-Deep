@@ -12,7 +12,7 @@ public class MainTeleop extends LinearOpMode {
      * Runs the OpMode.
      */
     @Override
-    public void runOpMode() {
+    public void runOpMode() throws InterruptedException {
         Bot bot = new Bot(hardwareMap);
 
         waitForStart();

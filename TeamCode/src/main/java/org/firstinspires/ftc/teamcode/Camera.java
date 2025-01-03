@@ -1,7 +1,8 @@
-package org.firstinspires.ftc.teamcode.old;
+package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.opencv.core.Mat;
 import org.opencv.core.MatOfPoint;
@@ -19,7 +20,7 @@ import java.util.List;
 
 public class Camera {
     private final OpenCvPipeline pipeline = new RectPipeline();
-
+    private final Telemetry telemetry;
     // Factor to estimate a polygon with - shouldn't be too low because noise will impact
     // the image more, and shouldn't be too high, or otherwise detail is lost
     private final double APPROX_FACTOR = 0.04;
@@ -72,6 +73,7 @@ public class Camera {
                         // Gets a rotated rectangle, because standard Rects are parallel to coordinate axes
                         RotatedRect rotated = Imgproc.minAreaRect(new MatOfPoint2f(contour.toArray()));
                         // Do something with rotated.angle for orientation
+                        telemetry.addData("it worked", rotated.angle);
                     }
                 }
             }
@@ -80,8 +82,9 @@ public class Camera {
         }
     }
 
-    public Camera (HardwareMap hardwareMap){
-        WebcamName webcamName = hardwareMap.get(WebcamName.class, "NAME_OF_CAMERA_IN_CONFIG_FILE");
+    public Camera (HardwareMap hardwareMap, Telemetry tele){
+        telemetry = tele;
+        WebcamName webcamName = hardwareMap.get(WebcamName.class, "webcam");
         OpenCvCamera camera = OpenCvCameraFactory.getInstance().createWebcam(webcamName);
         camera.openCameraDeviceAsync(new OpenCvCamera.AsyncCameraOpenListener() {
             @Override
@@ -91,6 +94,7 @@ public class Camera {
             @Override
             public void onError(int errorCode) {
                 // send help if this occurs
+                tele.addData("send help (error code): ", errorCode);
             }
         });
         camera.setPipeline(pipeline);
