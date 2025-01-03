@@ -75,6 +75,22 @@ public class Bot {
                     Thread thread = new Thread(() -> Actions.runBlocking(actionTransfer()));
                     thread.start();
                 }
+                break;
+            case TRANSFER:
+                vSlides.slidesMove(gamepad2.right_stick_y, gamepad2.b, telemetry);
+                outtake.moveRoll(gamepad2.dpad_left,gamepad2.dpad_right);
+                if (gamepad2.right_trigger>0)
+                    outtake.closeBucket();
+                else
+                    outtake.openBucket();
+                if(gamepad2.a){
+                    hSlides.close();
+                    vSlides.moveToLowerBound();
+                    intake.posIntake();
+                    outtake.closeBucket();
+                    fsm = FSM.INTAKE;
+                }
+                break;
         }
     }
 
