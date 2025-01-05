@@ -7,7 +7,9 @@ import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.opencv.core.Mat;
 import org.opencv.core.MatOfPoint;
 import org.opencv.core.MatOfPoint2f;
+import org.opencv.core.Point;
 import org.opencv.core.RotatedRect;
+import org.opencv.core.Scalar;
 import org.opencv.core.Size;
 import org.opencv.imgproc.Imgproc;
 import org.opencv.imgproc.Moments;
@@ -18,9 +20,10 @@ import org.openftc.easyopencv.OpenCvPipeline;
 import java.util.ArrayList;
 import java.util.List;
 
+// TODO look at https://github.com/OpenFTC/EasyOpenCV/blob/master/examples/src/main/java/org/firstinspires/ftc/teamcode/StoneOrientationExample.java sometime
 public class Camera {
     private final OpenCvPipeline pipeline = new RectPipeline();
-    private final Telemetry telemetry;
+    private OpenCvCamera camera;
     // Factor to estimate a polygon with - shouldn't be too low because noise will impact
     // the image more, and shouldn't be too high, or otherwise detail is lost
     private final double APPROX_FACTOR = 0.04;
@@ -74,8 +77,11 @@ public class Camera {
                     if (area >= MIN_RECT) {
                         // Gets a rotated rectangle, because standard Rects are parallel to coordinate axes
                         RotatedRect rotated = Imgproc.minAreaRect(contour2f);
-                        // Do something with rotated.angle for orientation
-                        telemetry.addData("it worked", rotated.angle);
+                        // TODO Do something with rotated.angle for orientation
+
+                        // Draw onto screen (thank you OpenCV for not being able to draw rotated rectangles)
+                        List<MatOfPoint> polygon = new ArrayList<MatOfPoint>() {{ add(contour); }};
+                        Imgproc.polylines(input, polygon, true, new Scalar(255, 0, 0), 4);
                     }
                 }
             }
@@ -84,10 +90,9 @@ public class Camera {
         }
     }
 
-    public Camera (HardwareMap hardwareMap, Telemetry tele){
-        telemetry = tele;
+    public Camera(HardwareMap hardwareMap, Telemetry telemetry) {
         WebcamName webcamName = hardwareMap.get(WebcamName.class, "webcam");
-        OpenCvCamera camera = OpenCvCameraFactory.getInstance().createWebcam(webcamName);
+        camera = OpenCvCameraFactory.getInstance().createWebcam(webcamName);
         camera.openCameraDeviceAsync(new OpenCvCamera.AsyncCameraOpenListener() {
             @Override
             public void onOpened() {
@@ -96,10 +101,14 @@ public class Camera {
             @Override
             public void onError(int errorCode) {
                 // send help if this occurs
-                tele.addData("send help (error code): ", errorCode);
+                telemetry.addData("send help (error code): ", errorCode);
+                telemetry.update();
             }
         });
         camera.setPipeline(pipeline);
     }
 
+    public OpenCvCamera getCamera() {
+        return camera;
+    }
 }
