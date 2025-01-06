@@ -7,7 +7,6 @@ import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.opencv.core.Mat;
 import org.opencv.core.MatOfPoint;
 import org.opencv.core.MatOfPoint2f;
-import org.opencv.core.Point;
 import org.opencv.core.RotatedRect;
 import org.opencv.core.Scalar;
 import org.opencv.core.Size;
@@ -24,6 +23,7 @@ import java.util.List;
 public class Camera {
     private final OpenCvPipeline pipeline = new RectPipeline();
     private OpenCvCamera camera;
+    private volatile RotatedRect result = null;
     // Factor to estimate a polygon with - shouldn't be too low because noise will impact
     // the image more, and shouldn't be too high, or otherwise detail is lost
     private final double APPROX_FACTOR = 0.04;
@@ -51,6 +51,8 @@ public class Camera {
 
         @Override
         public Mat processFrame(Mat input) {
+            result = null;
+
             Imgproc.cvtColor(input, gray, Imgproc.COLOR_RGBA2GRAY);
 
             // Reduce noise in outcome
@@ -75,13 +77,12 @@ public class Camera {
                     double area = moments.get_m00();
 
                     if (area >= MIN_RECT) {
-                        // Gets a rotated rectangle, because standard Rects are parallel to coordinate axes
-                        RotatedRect rotated = Imgproc.minAreaRect(contour2f);
-                        // TODO Do something with rotated.angle for orientation
-
                         // Draw onto screen (thank you OpenCV for not being able to draw rotated rectangles)
                         List<MatOfPoint> polygon = new ArrayList<MatOfPoint>() {{ add(contour); }};
                         Imgproc.polylines(input, polygon, true, new Scalar(255, 0, 0), 4);
+
+                        // Gets a rotated rectangle, because standard Rects are parallel to coordinate axes
+                        result = Imgproc.minAreaRect(contour2f);
                     }
                 }
             }
@@ -110,5 +111,9 @@ public class Camera {
 
     public OpenCvCamera getCamera() {
         return camera;
+    }
+
+    public RotatedRect getResult() {
+        return result;
     }
 }
