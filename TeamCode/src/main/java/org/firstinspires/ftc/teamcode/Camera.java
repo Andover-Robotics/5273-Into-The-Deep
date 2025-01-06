@@ -32,14 +32,10 @@ public class Camera {
     private final double MIN_RECT = 1000;
     // How many pixels should be blended together
     private final int GAUSSIAN_BLUR = 5;
-    // Lower gradient bound for Canny edge detector
-    // https://en.wikipedia.org/wiki/Canny_edge_detector#Double_threshold
-    private final int CANNY_THRESHOLD_LOWER = 40;
-    // Higher bound for Canny edge detector
-    private final int CANNY_THRESHOLD_HIGHER = 130;
     // Used for camera streaming - make sure this matches the camera's resolution
     private final int CAMERA_WIDTH = 320;
     private final int CAMERA_HEIGHT = 240;
+    // Used for color detection
     private final int COLOR_BOUND = 170;
     private final Scalar bound1 = new Scalar(0, COLOR_BOUND, 0);
     private final Scalar bound2 = new Scalar(0, 0, COLOR_BOUND);
@@ -75,7 +71,7 @@ public class Camera {
             Core.inRange(blurredImage, bound2, highBound, mask2);
             Core.bitwise_or(mask1, mask2, interMask);
             Core.bitwise_and(blurredImage, blurredImage, colorResult, interMask);
-             */
+            */
 
             // Finds edge POINTS
             List<MatOfPoint> contours = new ArrayList<>();
@@ -87,19 +83,19 @@ public class Camera {
                 double epsilon = APPROX_FACTOR * Imgproc.arcLength(contour2f, true);
                 Imgproc.approxPolyDP(contour2f, approx, epsilon, true);
 
-                /*if (approx.rows() == 4)*/ {
-                    // Zeroth moment means area (mass but height is 0)
-                    Moments moments = Imgproc.moments(contour);
-                    double area = moments.get_m00();
+                // Zeroth moment means area (mass but height is 0)
+                Moments moments = Imgproc.moments(contour);
+                double area = moments.get_m00();
 
-                    if (area >= MIN_RECT) {
-                        // Draw onto screen (thank you OpenCV for not being able to draw rotated rectangles)
-                        List<MatOfPoint> polygon = new ArrayList<MatOfPoint>() {{ add(contour); }};
-                        Imgproc.polylines(input, polygon, true, new Scalar(255, 0, 0), 4);
+                if (area >= MIN_RECT) {
+                    // Draw onto screen (thank you OpenCV for not being able to draw rotated rectangles)
+                    List<MatOfPoint> polygon = new ArrayList<MatOfPoint>() {{
+                        add(contour);
+                    }};
+                    Imgproc.polylines(input, polygon, true, new Scalar(255, 0, 0), 4);
 
-                        // Gets a rotated rectangle, because standard Rects are parallel to coordinate axes
-                        result = Imgproc.minAreaRect(contour2f);
-                    }
+                    // Gets a rotated rectangle, because standard Rects are parallel to coordinate axes
+                    result = Imgproc.minAreaRect(contour2f);
                 }
             }
 
