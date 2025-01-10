@@ -5,19 +5,19 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.OpticalDistanceSensor;
 
-@TeleOp(name = "Sigma Color Finder", group = "Teleop")
+@TeleOp(name = "Color Finder", group = "Teleop")
 public class ColorTester extends LinearOpMode {
-    ColorSensor ethanLazar;
+    ColorSensor colorSensor;
 
     @Override
     public void runOpMode(){
-        ethanLazar = hardwareMap.get(ColorSensor.class, "color");
+        colorSensor = hardwareMap.get(ColorSensor.class, "color");
         waitForStart();
         while(opModeIsActive()){
-            telemetry.addData("Light Detected:",((OpticalDistanceSensor) ethanLazar).getLightDetected());
-            telemetry.addData("Red", ethanLazar.red());
-            telemetry.addData("Green", ethanLazar.green());
-            telemetry.addData("Blue", ethanLazar.blue());
+            telemetry.addData("Light Detected:",((OpticalDistanceSensor) colorSensor).getLightDetected());
+            telemetry.addData("Red", colorSensor.red());
+            telemetry.addData("Green", colorSensor.green());
+            telemetry.addData("Blue", colorSensor.blue());
             telemetry.update();
         }
     }

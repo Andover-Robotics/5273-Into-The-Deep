@@ -20,17 +20,17 @@ import org.firstinspires.ftc.teamcode.SlidesVertical;
  * Yet another OpMode, this time for Autonomous - the names are intentional (and great), don't mess with them
  */
 @Config
-@Autonomous(name = "rizzlord", group = "Autonomous")
+@Autonomous(name = "Autonomous", group = "Autonomous")
 public class PathMasterTheTestingNavigator extends LinearOpMode {
     /**
      * Runs the OpMode
     */
     public void runOpMode(){
-        MecanumDrive titanDrivePrecisionPowertrain = new MecanumDrive(hardwareMap, new Pose2d(-10, -60, Math.toRadians(90)));
-        SlidesVertical ethan = new SlidesVertical(hardwareMap);
+        MecanumDrive mecanumDrive = new MecanumDrive(hardwareMap, new Pose2d(-10, -60, Math.toRadians(90)));
+        SlidesVertical slidesVertical = new SlidesVertical(hardwareMap);
         Action arcStrikeVelocity;
 
-        arcStrikeVelocity = titanDrivePrecisionPowertrain.actionBuilder(titanDrivePrecisionPowertrain.pose)
+        arcStrikeVelocity = mecanumDrive.actionBuilder(mecanumDrive.pose)
                 .lineToY(-35)
                 .waitSeconds(3)
                 .strafeTo(new Vector2d(-48,-38))
