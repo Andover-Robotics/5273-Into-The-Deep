@@ -78,7 +78,6 @@ public class Bot {
                 break;
             case TRANSFER:
                 vSlides.slidesMove(gamepad2.right_stick_y, gamepad2.b, telemetry);
-                outtake.moveRoll(gamepad2.dpad_left,gamepad2.dpad_right);
                 if (gamepad2.right_trigger>0)
                     outtake.closeBucket();
                 else

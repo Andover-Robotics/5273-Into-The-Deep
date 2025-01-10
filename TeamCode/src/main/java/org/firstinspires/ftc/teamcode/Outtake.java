@@ -42,7 +42,7 @@ public class Outtake {
 
     public void posBucket(){
         fourTo(FOUR_BUCKET);
-        claw.clawRollPitch(ROLL_HORIZONTAL,PITCH_BUCKET);
+        claw.clawPitch(PITCH_BUCKET);
     }
 
     public void openTransfer(){
@@ -59,16 +59,12 @@ public class Outtake {
 
     public void posTransfer(){
         fourTo(FOUR_TRANSFER);
-        claw.clawRollPitch(ROLL_HORIZONTAL, PITCH_TRANSFER);
+        claw.clawPitch(PITCH_TRANSFER);
     }
 
-    public void fourTo(double position){
+    public void fourTo(double position) {
         fourL.setPosition(position);
         fourR.setPosition(position);
-    }
-
-    public void moveRoll(boolean l, boolean r){
-        claw.rollActiveClaw(l,r);
     }
 
 }
