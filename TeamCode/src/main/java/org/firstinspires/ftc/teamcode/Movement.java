@@ -33,7 +33,7 @@ public class Movement {
 
         //reversed motor to reflect installation
         leftFront.setDirection(DcMotorSimple.Direction.REVERSE);
-//        leftBack.setDirection(DcMotorSimple.Direction.REVERSE);
+        leftBack.setDirection(DcMotorSimple.Direction.REVERSE);
 
         leftFront.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         leftBack.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -54,6 +54,11 @@ public class Movement {
         double rightFrontPower = axial - lateral - yaw;
         double leftBackPower   = axial - lateral + yaw;
         double rightBackPower  = axial + lateral - yaw;
+
+        leftFrontPower*=0.1;
+        rightFrontPower*=0.1;
+        leftBackPower*=0.1;
+        rightBackPower*=0.1;
 
         // Normalize the values so no wheel power exceeds 100%
         // This ensures that the robot maintains the desired motion.
