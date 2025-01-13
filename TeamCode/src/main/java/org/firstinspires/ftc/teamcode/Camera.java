@@ -86,7 +86,8 @@ public class Camera {
                     Imgproc.polylines(input, polygon, true, drawColor, 4);
 
                     // Store the rotated rectangle
-                    result = Imgproc.minAreaRect(contour2f);
+                    RotatedRect next = Imgproc.minAreaRect(contour2f);
+                    if (result == null || next.size.area() > result.size.area()) result = next;
                 }
             }
         }

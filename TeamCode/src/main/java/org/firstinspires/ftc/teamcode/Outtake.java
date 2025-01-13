@@ -11,11 +11,11 @@ public class Outtake {
     private static final double ROLL_HORIZONTAL = 0, ROLL_VERTICAL = 0;
     private static final double PITCH_BUCKET = 0, PITCH_TRANSFER= 0;
 
-    public Outtake (HardwareMap map) {
+    public Outtake (HardwareMap map, Camera camera) {
         //intake = map.get(CRServo.class, "iServo");
         fourL = map.get(Servo.class, "fourOL");
         fourR = map.get(Servo.class, "fourOR");
-        claw = new Claw(map,CLAW_OPEN,CLAW_CLOSED,"oClaw","oDiffL","oDiffR");
+        claw = new Claw(map,CLAW_OPEN,CLAW_CLOSED,"oClaw","oDiffL","oDiffR", camera);
         fourR.setDirection(Servo.Direction.REVERSE);
     }
 

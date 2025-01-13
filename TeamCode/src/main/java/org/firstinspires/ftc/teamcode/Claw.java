@@ -7,6 +7,8 @@ import androidx.annotation.NonNull;
 
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
+import org.opencv.core.RotatedRect;
+
 /**
  * Represents the claw mechanism of our robot.
  */
@@ -15,17 +17,19 @@ public class Claw {
     private final DiffyRotator diffyRotator;
     public static double openPos, closedPos;
     private ColorSensor colorSensor;
+    private Camera camera;
     /**
      * Initializes a Claw instance.
      * @param hardwareMap {@link com.qualcomm.robotcore.hardware.HardwareMap}
      */
-    public Claw(@NonNull HardwareMap hardwareMap, double open, double closed, String name, String nameL, String nameR)
+    public Claw(@NonNull HardwareMap hardwareMap, double open, double closed, String name, String nameL, String nameR, Camera dCamera)
     {
         servo = hardwareMap.get(Servo.class, name);
         diffyRotator = new DiffyRotator(hardwareMap, nameL, nameR);
         openPos = open;
         closedPos = closed;
         colorSensor = hardwareMap.get(ColorSensor.class, "colorSensor");
+        camera = dCamera;
     }
 
     public void clawRollPitch(double rollDeg, double pitchDeg) {
@@ -58,11 +62,23 @@ public class Claw {
         else if (right && !left) clawRoll(diffyRotator.roll+15);
     }
     public void pitchActiveClaw(boolean up, boolean down){
-        if (up && !down) clawPitch(andrewLu.roll+5);
-        else if (down && !up) clawPitch(andrewLu.roll+5);
+        if (up && !down) clawPitch(diffyRotator.roll+5);
+        else if (down && !up) clawPitch(diffyRotator.roll+5);
     }
-        // sample colors red, blue and yellow yellow = #FFFF00
-     //This means that the range for each color value is from 0 to 4095 (2^12 = 4096).
+
+    public void toSamplePosition() {
+        RotatedRect result = camera.getResult();
+        if (result != null) {
+            openClaw();
+            clawPitch(90);
+            double angle = result.angle;
+            if (result.size.width > result.size.height) angle += 90;
+            clawRoll(angle);
+        }
+    }
+
+    // sample colors red, blue and yellow yellow = #FFFF00
+    // This means that the range for each color value is from 0 to 4095 (2^12 = 4096).
     //TODO: fine tune values
     public boolean hasSample()
     {

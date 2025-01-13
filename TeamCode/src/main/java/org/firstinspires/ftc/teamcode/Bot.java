@@ -20,6 +20,7 @@ public class Bot {
     private final Intake intake;
     private final SlidesVertical vSlides;
     private final Outtake outtake;
+    private final Camera camera;
 
     public enum FSM{
         STARTING,
@@ -31,16 +32,17 @@ public class Bot {
      * Initializes a Bot instance.
      * @param hardwareMap {@link com.qualcomm.robotcore.hardware.HardwareMap}
      */
-    public Bot(@NonNull HardwareMap hardwareMap) {
+    public Bot(@NonNull HardwareMap hardwareMap, @NonNull Telemetry telemetry) {
         // initializations:
+        camera = new Camera(hardwareMap, telemetry);
 
         // intake:
         hSlides = new SlidesHorizontal(hardwareMap);
-        intake = new Intake(hardwareMap);
+        intake = new Intake(hardwareMap, camera);
 
         // outtake:
         vSlides = new SlidesVertical(hardwareMap);
-        outtake = new Outtake(hardwareMap);
+        outtake = new Outtake(hardwareMap, camera);
 
         movement = new Movement(hardwareMap);
     }

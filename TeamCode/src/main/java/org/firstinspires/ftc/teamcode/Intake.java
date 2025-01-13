@@ -13,11 +13,11 @@ public class Intake {
     private static final double ROLL_HORIZONTAL = 0, ROLL_VERTICAL = 0;
     private static final double PITCH_INTAKE = 0, PITCH_TRANSFER= 0;
 
-    public Intake (HardwareMap map) {
+    public Intake (HardwareMap map, Camera camera) {
         //intake = map.get(CRServo.class, "iServo");
         fourL = map.get(Servo.class, "fourIL");
         fourR = map.get(Servo.class, "fourIR");
-        claw = new Claw(map,CLAW_OPEN,CLAW_CLOSED,"iClaw", "iDiffL","iDiffR");
+        claw = new Claw(map,CLAW_OPEN,CLAW_CLOSED,"iClaw", "iDiffL","iDiffR", camera);
         fourR.setDirection(Servo.Direction.REVERSE);
     }
 
