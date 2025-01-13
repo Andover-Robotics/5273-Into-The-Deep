@@ -13,12 +13,12 @@ public class MainTeleop extends LinearOpMode {
      */
     @Override
     public void runOpMode() throws InterruptedException {
-        Bot bot = new Bot(hardwareMap);
+        Movement movement = new Movement(hardwareMap);
 
         waitForStart();
 
         while (opModeIsActive()) {
-            bot.teleopTick(gamepad1, gamepad2, telemetry);
+            movement.teleopTick(gamepad1.left_stick_x,gamepad1.left_stick_y,gamepad1.right_stick_x,gamepad1.right_trigger,telemetry);
             telemetry.update();
         }
     }

@@ -4,89 +4,91 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
-import org.opencv.core.Mat;
-import org.opencv.core.MatOfPoint;
-import org.opencv.core.MatOfPoint2f;
-import org.opencv.core.Point;
-import org.opencv.core.RotatedRect;
-import org.opencv.core.Scalar;
-import org.opencv.core.Size;
-import org.opencv.imgproc.Imgproc;
-import org.opencv.imgproc.Moments;
-import org.openftc.easyopencv.OpenCvCamera;
-import org.openftc.easyopencv.OpenCvCameraFactory;
-import org.openftc.easyopencv.OpenCvCameraRotation;
-import org.openftc.easyopencv.OpenCvPipeline;
+import org.opencv.core.*;
+import org.opencv.imgproc.*;
+import org.openftc.easyopencv.*;
+
 import java.util.ArrayList;
 import java.util.List;
 
-// TODO look at https://github.com/OpenFTC/EasyOpenCV/blob/master/examples/src/main/java/org/firstinspires/ftc/teamcode/StoneOrientationExample.java sometime
 public class Camera {
     private final OpenCvPipeline pipeline = new RectPipeline();
     private OpenCvCamera camera;
+    private volatile RotatedRect result = null;
     // Factor to estimate a polygon with - shouldn't be too low because noise will impact
     // the image more, and shouldn't be too high, or otherwise detail is lost
-    private final double APPROX_FACTOR = 0.04;
+    private final double APPROX_FACTOR = 0.06;
     // Makes sure that the rectangle is large enough and that it isn't noise
     private final double MIN_RECT = 1000;
     // How many pixels should be blended together
     private final int GAUSSIAN_BLUR = 5;
-    // Lower gradient bound for Canny edge detector
-    // https://en.wikipedia.org/wiki/Canny_edge_detector#Double_threshold
-    private final int CANNY_THRESHOLD_LOWER = 50;
-    // Higher bound for Canny edge detector
-    private final int CANNY_THRESHOLD_HIGHER = 150;
     // Used for camera streaming - make sure this matches the camera's resolution
     private final int CAMERA_WIDTH = 320;
     private final int CAMERA_HEIGHT = 240;
+    // HSV Bounds for red, yellow, and blue
+    private final Scalar LOWER_RED = new Scalar(0, 100, 100);
+    private final Scalar UPPER_RED = new Scalar(10, 255, 255);
+    private final Scalar LOWER_YELLOW = new Scalar(20, 100, 100);
+    private final Scalar UPPER_YELLOW = new Scalar(30, 255, 255);
+    private final Scalar LOWER_BLUE = new Scalar(100, 100, 100);
+    private final Scalar UPPER_BLUE = new Scalar(130, 255, 255);
 
     // OpenCV image processing
     class RectPipeline extends OpenCvPipeline {
-        private Mat gray = new Mat();
+        private Mat hsv = new Mat();
         private Mat blurredImage = new Mat();
-        private Mat edges = new Mat();
+        private Mat mask = new Mat();
         private Mat hierarchy = new Mat();
         private MatOfPoint2f approx = new MatOfPoint2f();
         private MatOfPoint2f contour2f = new MatOfPoint2f();
 
         @Override
         public Mat processFrame(Mat input) {
-            Imgproc.cvtColor(input, gray, Imgproc.COLOR_RGBA2GRAY);
+            result = null;
 
-            // Reduce noise in outcome
-            Imgproc.GaussianBlur(gray, blurredImage, new Size(GAUSSIAN_BLUR, GAUSSIAN_BLUR), 0);
+            // Convert to HSV
+            Imgproc.cvtColor(input, hsv, Imgproc.COLOR_RGB2HSV);
 
-            // Finds edge LINES
-            Imgproc.Canny(blurredImage, edges, CANNY_THRESHOLD_LOWER, CANNY_THRESHOLD_HIGHER);
+            // Reduce noise
+            Imgproc.GaussianBlur(hsv, blurredImage, new Size(GAUSSIAN_BLUR, GAUSSIAN_BLUR), 0);
 
-            // Finds edge POINTS
+            // Detect and process each color
+            processColor(blurredImage, LOWER_RED, UPPER_RED, new Scalar(255, 0, 0), input);
+            processColor(blurredImage, LOWER_YELLOW, UPPER_YELLOW, new Scalar(0, 255, 255), input);
+            processColor(blurredImage, LOWER_BLUE, UPPER_BLUE, new Scalar(0, 0, 255), input);
+
+            return input;
+        }
+
+        private void processColor(Mat hsvImage, Scalar lower, Scalar upper, Scalar drawColor, Mat input) {
+            // Create mask for color
+            Core.inRange(hsvImage, lower, upper, mask);
+
+            // Find contours
             List<MatOfPoint> contours = new ArrayList<>();
-            Imgproc.findContours(edges, contours, hierarchy, Imgproc.RETR_EXTERNAL, Imgproc.CHAIN_APPROX_SIMPLE);
+            Imgproc.findContours(mask, contours, hierarchy, Imgproc.RETR_EXTERNAL, Imgproc.CHAIN_APPROX_SIMPLE);
 
-            for (MatOfPoint contour: contours) {
-                // Approximates a polygon from edge POINTS
+            for (MatOfPoint contour : contours) {
+                // Approximate polygon
                 contour2f.fromArray(contour.toArray());
                 double epsilon = APPROX_FACTOR * Imgproc.arcLength(contour2f, true);
                 Imgproc.approxPolyDP(contour2f, approx, epsilon, true);
 
-                if (approx.rows() == 4) {
-                    // Zeroth moment means area (mass but height is 0)
-                    Moments moments = Imgproc.moments(contour);
-                    double area = moments.get_m00();
+                // Calculate area
+                Moments moments = Imgproc.moments(contour);
+                double area = moments.get_m00();
 
-                    if (area >= MIN_RECT) {
-                        // Gets a rotated rectangle, because standard Rects are parallel to coordinate axes
-                        RotatedRect rotated = Imgproc.minAreaRect(contour2f);
-                        // TODO Do something with rotated.angle for orientation
+                if (area >= MIN_RECT) {
+                    // Draw polygon on the frame
+                    List<MatOfPoint> polygon = new ArrayList<MatOfPoint>() {{
+                        add(new MatOfPoint(approx.toArray()));
+                    }};
+                    Imgproc.polylines(input, polygon, true, drawColor, 4);
 
-                        // Draw onto screen (thank you OpenCV for not being able to draw rotated rectangles)
-                        List<MatOfPoint> polygon = new ArrayList<MatOfPoint>() {{ add(contour); }};
-                        Imgproc.polylines(input, polygon, true, new Scalar(255, 0, 0), 4);
-                    }
+                    // Store the rotated rectangle
+                    result = Imgproc.minAreaRect(contour2f);
                 }
             }
-
-            return input;
         }
     }
 
@@ -98,9 +100,9 @@ public class Camera {
             public void onOpened() {
                 camera.startStreaming(CAMERA_WIDTH, CAMERA_HEIGHT, OpenCvCameraRotation.UPRIGHT);
             }
+
             @Override
             public void onError(int errorCode) {
-                // send help if this occurs
                 telemetry.addData("send help (error code): ", errorCode);
                 telemetry.update();
             }
@@ -110,5 +112,9 @@ public class Camera {
 
     public OpenCvCamera getCamera() {
         return camera;
+    }
+
+    public RotatedRect getResult() {
+        return result;
     }
 }

@@ -2,9 +2,7 @@ package org.firstinspires.ftc.teamcode;
 
 import androidx.annotation.NonNull;
 
-import com.acmerobotics.roadrunner.Action;
 import com.acmerobotics.roadrunner.InstantAction;
-import com.acmerobotics.roadrunner.ParallelAction;
 import com.acmerobotics.roadrunner.SequentialAction;
 import com.acmerobotics.roadrunner.SleepAction;
 import com.acmerobotics.roadrunner.ftc.Actions;
@@ -12,13 +10,12 @@ import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
-import org.firstinspires.ftc.teamcode.old.Pivot;
 
 /**
  * Represents the Bot.
  */
 public class Bot {
-    private final Movement godlikeManeuver;
+    private final Movement movement;
     private final SlidesHorizontal hSlides;
     private final Intake intake;
     private final SlidesVertical vSlides;
@@ -45,7 +42,7 @@ public class Bot {
         vSlides = new SlidesVertical(hardwareMap);
         outtake = new Outtake(hardwareMap);
 
-        godlikeManeuver = new Movement(hardwareMap);
+        movement = new Movement(hardwareMap);
     }
 
     /**
@@ -55,7 +52,7 @@ public class Bot {
      * @param telemetry {@link org.firstinspires.ftc.robotcore.external.Telemetry}
      */
     public void teleopTick(Gamepad gamepad1, Gamepad gamepad2, Telemetry telemetry) throws InterruptedException{
-        godlikeManeuver.teleopTick(gamepad1.left_stick_x,gamepad1.left_stick_y,gamepad1.right_stick_x,gamepad1.right_trigger,telemetry);
+        movement.teleopTick(gamepad1.left_stick_x,gamepad1.left_stick_y,gamepad1.right_stick_x,gamepad1.right_trigger,telemetry);
         switch(fsm){
             case STARTING:
                 if(gamepad2.a){
@@ -69,6 +66,7 @@ public class Bot {
             case INTAKE:
                 hSlides.slidesMove(gamepad2.left_stick_y, gamepad2.b,telemetry);
                 intake.moveRoll(gamepad2.dpad_left,gamepad2.dpad_right);
+                intake.movePitch(gamepad2.dpad_up,gamepad2.dpad_down);
                 if(gamepad2.right_trigger>0) intake.openIntake();
                 else intake.closeIntake();
                 if(gamepad2.a) {
@@ -78,7 +76,6 @@ public class Bot {
                 break;
             case TRANSFER:
                 vSlides.slidesMove(gamepad2.right_stick_y, gamepad2.b, telemetry);
-                outtake.moveRoll(gamepad2.dpad_left,gamepad2.dpad_right);
                 if (gamepad2.right_trigger>0)
                     outtake.closeBucket();
                 else
