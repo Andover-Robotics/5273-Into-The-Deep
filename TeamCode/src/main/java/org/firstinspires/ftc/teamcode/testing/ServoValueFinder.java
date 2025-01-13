@@ -46,8 +46,10 @@ public class ServoValueFinder extends LinearOpMode {
     private static ServoGroup[] initServoGroups(HardwareMap hardwareMap, ServoGroup[] groups){
         List<String> singleServoNames = Arrays.asList(hardwareMap.servo.entrySet().stream().map(Map.Entry::getKey).toArray(String[]::new)); // all servo names
         for(ServoGroup group : groups){
-            for(String servoName : group.servoNames){
-                singleServoNames.remove(servoName); // remove grouped servos
+            if(group != null){
+                for(String servoName : group.servoNames){
+                    singleServoNames.remove(servoName); // remove grouped servos
+                }
             }
         }
         ServoGroup[] result = new ServoGroup[singleServoNames.size() + groups.length];
@@ -113,13 +115,25 @@ public class ServoValueFinder extends LinearOpMode {
             return result.toString();
         }
         private static ServoGroup makeServoPair(HardwareMap hardwareMap, String servo1, String servo2) {
-            return new ServoGroup(hardwareMap, new String[]{servo1,servo2}, true, true);
+            try{
+                return new ServoGroup(hardwareMap, new String[]{servo1, servo2}, true, true);
+            }catch(Exception e){ // if servos are not found
+                return null;
+            }
         }
         private static ServoGroup makeAntiServoPair(HardwareMap hardwareMap, String servo1, String servo2) {
-            return new ServoGroup(hardwareMap, new String[]{servo1,servo2}, true, false);
+            try{
+                return new ServoGroup(hardwareMap, new String[]{servo1, servo2}, true, false);
+            }catch(Exception e){ // if servos are not found
+                return null;
+            }
         }
         private static ServoGroup makeServo(HardwareMap hardwareMap, String servo) {
-            return new ServoGroup(hardwareMap, new String[] {servo}, true);
+            try{
+                return new ServoGroup(hardwareMap, new String[]{servo}, true);
+            }catch(Exception e){ // if servos are not found
+                return null;
+            }
         }
     }
 }
