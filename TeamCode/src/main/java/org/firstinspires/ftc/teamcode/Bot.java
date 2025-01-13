@@ -69,6 +69,7 @@ public class Bot {
             case INTAKE:
                 hSlides.slidesMove(gamepad2.left_stick_y, gamepad2.b,telemetry);
                 intake.moveRoll(gamepad2.dpad_left,gamepad2.dpad_right);
+                intake.movePitch(gamepad2.dpad_up,gamepad2.dpad_down);
                 if(gamepad2.right_trigger>0) intake.openIntake();
                 else intake.closeIntake();
                 if(gamepad2.a) {

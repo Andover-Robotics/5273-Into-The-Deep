@@ -69,8 +69,11 @@ public class Intake {
         fourR.setPosition(position);
     }
 
-    public void moveRoll(boolean l, boolean r){
+    public void movePitch(boolean l, boolean r){
         claw.rollActiveClaw(l,r);
+    }
+    public void moveRoll(boolean u, boolean d){
+        claw.pitchActiveClaw(u,d);
     }
 
 }

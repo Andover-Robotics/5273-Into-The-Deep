@@ -55,6 +55,10 @@ public class Claw {
         if (left && !right) clawRoll(andrewLu.roll+15);
         else if (right && !left) clawRoll(andrewLu.roll+15);
     }
+    public void pitchActiveClaw(boolean up, boolean down){
+        if (up && !down) clawPitch(andrewLu.roll+5);
+        else if (down && !up) clawPitch(andrewLu.roll+5);
+    }
         // sample colors red, blue and yellow yellow = #FFFF00
      //This means that the range for each color value is from 0 to 4095 (2^12 = 4096).
     //TODO: fine tune values
