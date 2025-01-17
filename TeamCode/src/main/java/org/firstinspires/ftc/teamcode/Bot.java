@@ -57,6 +57,10 @@ public class Bot {
         movement.teleopTick(gamepad1.left_stick_x,gamepad1.left_stick_y,gamepad1.right_stick_x,gamepad1.right_trigger,telemetry);
         switch(fsm){
             case STARTING:
+                if (gamepad2.b) {
+                    intake.toSamplePosition();
+                    fsm = FSM.TRANSFER;
+                }
                 if(gamepad2.a){
                   hSlides.close();
                   vSlides.moveToLowerBound();

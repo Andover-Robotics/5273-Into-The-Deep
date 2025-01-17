@@ -70,7 +70,7 @@ public class Claw {
         RotatedRect result = camera.getResult();
         if (result != null) {
             openClaw();
-            clawPitch(90);
+            // TODO roll claw position down (after testing)
             double angle = result.angle;
             if (result.size.width > result.size.height) angle += 90;
             clawRoll(angle);
