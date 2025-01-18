@@ -55,6 +55,8 @@ public class Bot {
      */
     public void teleopTick(Gamepad gamepad1, Gamepad gamepad2, Telemetry telemetry) throws InterruptedException{
         movement.teleopTick(gamepad1.left_stick_x,gamepad1.left_stick_y,gamepad1.right_stick_x,gamepad1.right_trigger,telemetry);
+        telemetry.addData("Vertical Slides Pos: ", vSlides.getEncoders());
+        telemetry.addData("Horizontal Slides Pos: ", hSlides.getPositions());
         switch(fsm){
             case STARTING:
                 if (gamepad2.b) {
@@ -90,6 +92,7 @@ public class Bot {
                     Thread thread = new Thread(() -> Actions.runBlocking(actionTransfer()));
                     thread.start();
                 }
+                telemetry.addData("Has sample: ",intake.hasSample());
                 break;
             case TRANSFER:
                 vSlides.slidesMove(gamepad2.right_stick_y, gamepad2.b, telemetry);
