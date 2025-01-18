@@ -1,6 +1,5 @@
 package org.firstinspires.ftc.teamcode;
 
-import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
@@ -9,9 +8,10 @@ public class Intake {
     private final Servo fourL, fourR;
     private final Claw claw;
     private static final double CLAW_OPEN = 0, CLAW_CLOSED = 0;
-    private static final double FOUR_INTAKE = 0, FOUR_OUTTAKE = 0;
+    private static final double FOURL_INTAKE = 0, FOURL_TRANSFER = 0, FOURL_SURVEY = 0;
+    private static final double FOURR_INTAKE = 0, FOURR_TRANSFER = 0, FOURR_SURVEY = 0;
     private static final double ROLL_HORIZONTAL = 0, ROLL_VERTICAL = 0;
-    private static final double PITCH_INTAKE = 0, PITCH_TRANSFER= 0;
+    private static final double PITCH_INTAKE = 0, PITCH_TRANSFER= 0, PITCH_SURVEY = 0;
 
     public Intake (HardwareMap map, Camera camera) {
         //intake = map.get(CRServo.class, "iServo");
@@ -22,14 +22,31 @@ public class Intake {
     }
 
     public enum IntakeState {
-        INTAKE_OPEN,
+        SURVEY_OPEN,
+        SURVEY_CLOSED,
         INTAKE_CLOSED,
+        INTAKE_OPEN,
         TRANSFER_OPEN,
         TRANSFER_CLOSED
     }
 
     public IntakeState fsm = IntakeState.INTAKE_OPEN;
 
+    public void openSurvey(){
+        posSurvey();
+        claw.openClaw();
+        fsm = IntakeState.SURVEY_OPEN;
+    }
+    public void closeSurvey(){
+        posSurvey();
+        claw.openClaw();
+        fsm = IntakeState.SURVEY_CLOSED;
+    }
+    public void posSurvey(){
+        fourLTo(FOURL_SURVEY);
+        fourRTo(FOURR_SURVEY);
+        claw.clawRollPitch(ROLL_HORIZONTAL,PITCH_SURVEY);
+    }
     public void openIntake(){
         posIntake();
         claw.openClaw();
@@ -43,7 +60,8 @@ public class Intake {
     }
 
     public void posIntake(){
-        fourTo(FOUR_INTAKE);
+        fourLTo(FOURL_INTAKE);
+        fourRTo(FOURR_INTAKE);
         claw.clawRollPitch(ROLL_HORIZONTAL,PITCH_INTAKE);
     }
 
@@ -60,18 +78,49 @@ public class Intake {
     }
 
     public void posTransfer(){
-        fourTo(FOUR_OUTTAKE);
+        fourLTo(FOURL_TRANSFER);
+        fourRTo(FOURR_TRANSFER);
         claw.clawRollPitch(ROLL_VERTICAL, PITCH_TRANSFER);
     }
 
-    public void fourTo(double position){
+    public void fourLTo(double position){
         fourL.setPosition(position);
+    }
+    public void fourRTo(double position){
         fourR.setPosition(position);
+    }
+
+    public double getRoll(){
+        return (claw.getRoll());
+    }
+
+    public double getPitch(){
+        return (claw.getPitch());
+    }
+
+    public void clawActive(double input){
+        claw.setClaw(claw.getClawPos()+(0.01*Math.signum(input)));
+    }
+    public double getClaw(){
+        return claw.getClawPos();
+    }
+
+    public double fourLPos(){
+        return(fourL.getPosition());
+    }
+
+    public double fourRPos(){
+        return(fourR.getPosition());
     }
 
     public void toSamplePosition() {
         claw.toSamplePosition();
     }
+
+    public boolean hasSample(){
+        return(claw.hasSample());
+    }
+
 
     public void movePitch(boolean l, boolean r){
         claw.rollActiveClaw(l,r);
