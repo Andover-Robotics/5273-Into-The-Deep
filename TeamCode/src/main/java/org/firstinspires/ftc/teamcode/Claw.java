@@ -55,7 +55,19 @@ public class Claw {
     }
 
     public void setClaw(double pos) {
-        servo.setPosition(pos);}
+        servo.setPosition(pos);
+    }
+
+    public double getRoll(){
+        return(diffyRotator.roll);
+    }
+    public double getPitch(){
+        return(diffyRotator.pitch);
+    }
+
+    public double getClawPos(){
+        return(servo.getPosition());
+    }
 
     public void rollActiveClaw(boolean left, boolean right){
         if (left && !right) clawRoll(diffyRotator.roll+15);
@@ -65,11 +77,13 @@ public class Claw {
         if (up && !down) clawPitch(diffyRotator.roll+5);
         else if (down && !up) clawPitch(diffyRotator.roll+5);
     }
-
+    public boolean sampleFound() {
+        RotatedRect result = camera.getResult();
+        return(result != null);
+    }
     public void toSamplePosition() {
         RotatedRect result = camera.getResult();
         if (result != null) {
-            openClaw();
             // TODO roll claw position down (after testing)
             double angle = result.angle;
             if (result.size.width > result.size.height) angle += 90;
@@ -89,6 +103,6 @@ public class Claw {
         return(
                 (red >= 2500 && blue <= 500 && green <= 500) ||
                 (red <= 500 && blue >= 2500 && green <= 500) ||
-                 (red >= 2500 && blue <= 500 && green >= 2500));
+                (red >= 2500 && blue <= 500 && green >= 2500));
     }
 }
