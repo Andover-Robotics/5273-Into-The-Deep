@@ -58,7 +58,7 @@ public class SlidesVertical {
 
 
     public int getEncoders() {
-        return (slidesLeft.getCurrentPosition() + slidesRight.getCurrentPosition()) / 2;
+        return (int)((slidesLeft.getCurrentPosition() + slidesRight.getCurrentPosition()) / 2);
     }
 
     //simply moves up or down based on input from controller
