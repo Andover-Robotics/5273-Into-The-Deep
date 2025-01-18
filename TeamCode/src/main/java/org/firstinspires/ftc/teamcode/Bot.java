@@ -64,7 +64,7 @@ public class Bot {
                 if(gamepad2.a){
                   hSlides.close();
                   vSlides.moveToLowerBound();
-                  intake.posIntake();
+                  intake.posSurvey();
                   outtake.closeBucket();
                   fsm = FSM.INTAKE;
                 }
@@ -73,8 +73,19 @@ public class Bot {
                 hSlides.slidesMove(gamepad2.left_stick_y, gamepad2.b,telemetry);
                 intake.moveRoll(gamepad2.dpad_left,gamepad2.dpad_right);
                 intake.movePitch(gamepad2.dpad_up,gamepad2.dpad_down);
-                if(gamepad2.right_trigger>0) intake.openIntake();
-                else intake.closeIntake();
+                if (intake.fsm == Intake.IntakeState.SURVEY_OPEN) intake.toSamplePosition();
+                if (gamepad2.right_trigger>0) {
+                    intake.openIntake();
+                }
+                else if (intake.fsm == Intake.IntakeState.SURVEY_OPEN || intake.fsm == Intake.IntakeState.INTAKE_CLOSED){
+                    intake.closeSurvey();
+                }
+                else if (intake.fsm == Intake.IntakeState.INTAKE_OPEN) {
+                    intake.closeIntake();
+                }
+                else {
+                    intake.openSurvey();
+                }
                 if(gamepad2.a) {
                     Thread thread = new Thread(() -> Actions.runBlocking(actionTransfer()));
                     thread.start();
@@ -89,7 +100,7 @@ public class Bot {
                 if(gamepad2.a){
                     hSlides.close();
                     vSlides.moveToLowerBound();
-                    intake.posIntake();
+                    intake.posSurvey();
                     outtake.closeBucket();
                     fsm = FSM.INTAKE;
                 }
@@ -99,7 +110,7 @@ public class Bot {
 
     public SequentialAction actionTransfer() {
         return new SequentialAction(
-                new InstantAction(intake::closeIntake),
+                new InstantAction(intake::closeSurvey),
                 new InstantAction(hSlides::close),
                 new InstantAction(vSlides::moveToLowerBound),
                 new InstantAction(outtake::openBucket),
