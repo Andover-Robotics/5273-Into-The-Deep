@@ -19,11 +19,7 @@ import java.util.Map;
 public class ServoValueFinder extends LinearOpMode {
     private final static double STEP = 0.0001;
     private static int num;
-    private final ServoGroup[] SERVO_LIST = initServoGroups(hardwareMap, new ServoGroup[] {
-            ServoGroup.makeAntiServoPair(hardwareMap,"fourOL","fourOR"),
-            ServoGroup.makeAntiServoPair(hardwareMap,"fourIL","fourIR"),
-            ServoGroup.makeAntiServoPair(hardwareMap,"slidesHL","slidesHR")
-    });
+    
     /**
      * Runs the OpMode.
      */
@@ -62,6 +58,12 @@ public class ServoValueFinder extends LinearOpMode {
         return result;
     }
     public ServoGroup getServo(){
+        // hardwareMap is only initialized once the OpMode is running
+        final ServoGroup[] SERVO_LIST = initServoGroups(hardwareMap, new ServoGroup[] {
+            ServoGroup.makeAntiServoPair(hardwareMap,"fourOL","fourOR"),
+            ServoGroup.makeAntiServoPair(hardwareMap,"fourIL","fourIR"),
+            ServoGroup.makeAntiServoPair(hardwareMap,"slidesHL","slidesHR")
+        });
         boolean dpad_right_prev = true;
         boolean dpad_left_prev = true;
         while(!gamepad2.a && !isStopRequested()){
