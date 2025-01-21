@@ -6,6 +6,11 @@ import com.acmerobotics.roadrunner.InstantAction;
 import com.acmerobotics.roadrunner.SequentialAction;
 import com.acmerobotics.roadrunner.SleepAction;
 import com.acmerobotics.roadrunner.ftc.Actions;
+import com.arcrobotics.ftclib.command.button.GamepadButton;
+import com.arcrobotics.ftclib.command.button.Trigger;
+import com.arcrobotics.ftclib.gamepad.GamepadEx;
+import com.arcrobotics.ftclib.gamepad.GamepadKeys;
+import com.arcrobotics.ftclib.gamepad.TriggerReader;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
@@ -53,15 +58,16 @@ public class Bot {
      * @param gamepad2 {@link com.qualcomm.robotcore.hardware.Gamepad} 2
      * @param telemetry {@link org.firstinspires.ftc.robotcore.external.Telemetry}
      */
-    public void teleopTick(Gamepad gamepad1, Gamepad gamepad2, Telemetry telemetry) throws InterruptedException{
-        movement.teleopTick(gamepad1.left_stick_x,gamepad1.left_stick_y,gamepad1.right_stick_x,gamepad1.right_trigger,telemetry);
+    public void teleopTick(GamepadEx gamepad1, GamepadEx gamepad2, Telemetry telemetry) throws InterruptedException{
+        final TriggerReader rightTrigger = new TriggerReader(gamepad2, GamepadKeys.Trigger.RIGHT_TRIGGER);
+        movement.teleopTick(gamepad1.getLeftX(),gamepad1.getLeftY(),gamepad1.getRightX(), gamepad1.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER),telemetry);
         switch(fsm){
             case STARTING:
-                if (gamepad2.b) {
+                if (gamepad2.wasJustPressed(GamepadKeys.Button.B)) {
                     intake.toSamplePosition();
                     fsm = FSM.TRANSFER;
                 }
-                if(gamepad2.a){
+                if(gamepad2.wasJustPressed(GamepadKeys.Button.A)){
                   hSlides.close();
                   vSlides.moveToLowerBound();
                   intake.posIntake();
@@ -70,23 +76,23 @@ public class Bot {
                 }
                 break;
             case INTAKE:
-                hSlides.slidesMove(gamepad2.left_stick_y, gamepad2.b,telemetry);
-                intake.moveRoll(gamepad2.dpad_left,gamepad2.dpad_right);
-                intake.movePitch(gamepad2.dpad_up,gamepad2.dpad_down);
-                if(gamepad2.right_trigger>0) intake.openIntake();
+                hSlides.slidesMove(gamepad2.getLeftY(), gamepad2.isDown(GamepadKeys.Button.B),telemetry);
+                intake.moveRoll(gamepad2.getButton(GamepadKeys.Button.DPAD_LEFT),gamepad2.getButton(GamepadKeys.Button.DPAD_RIGHT));
+                intake.movePitch(gamepad2.getButton(GamepadKeys.Button.DPAD_UP),gamepad2.getButton(GamepadKeys.Button.DPAD_DOWN));
+                if(rightTrigger.wasJustPressed()) intake.openIntake();
                 else intake.closeIntake();
-                if(gamepad2.a) {
+                if(gamepad2.wasJustPressed(GamepadKeys.Button.A)) {
                     Thread thread = new Thread(() -> Actions.runBlocking(actionTransfer()));
                     thread.start();
                 }
                 break;
             case TRANSFER:
-                vSlides.slidesMove(gamepad2.right_stick_y, gamepad2.b, telemetry);
-                if (gamepad2.right_trigger>0)
+                vSlides.slidesMove(gamepad2.getRightY(), gamepad2.isDown(GamepadKeys.Button.B), telemetry);
+                if (rightTrigger.wasJustPressed())
                     outtake.closeBucket();
-                else
+                else if (rightTrigger.wasJustReleased())
                     outtake.openBucket();
-                if(gamepad2.a){
+                if(gamepad2.wasJustPressed(GamepadKeys.Button.A)){
                     hSlides.close();
                     vSlides.moveToLowerBound();
                     intake.posIntake();
