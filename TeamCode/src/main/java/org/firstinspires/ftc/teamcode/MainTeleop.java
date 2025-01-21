@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
@@ -14,11 +15,13 @@ public class MainTeleop extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
         Bot bot = new Bot(hardwareMap, telemetry);
+        GamepadEx gamepadEx1 = new GamepadEx(gamepad1);
+        GamepadEx gamepadEx2 = new GamepadEx(gamepad2);
 
         waitForStart();
 
         while (opModeIsActive()) {
-            bot.teleopTick(gamepad1, gamepad2, telemetry);
+            bot.teleopTick(gamepadEx1, gamepadEx2, telemetry);
             telemetry.update();
         }
     }
