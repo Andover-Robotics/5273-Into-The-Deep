@@ -10,9 +10,9 @@ public class Intake {
     //private final CRServo intake;
     private final Servo fourL, fourR;
     private final Claw claw;
-    private static final double CLAW_OPEN = 0, CLAW_CLOSED = 0;
-    private static final double FOURL_INTAKE = 0, FOURL_TRANSFER = 0, FOURL_SURVEY = 0;
-    private static final double FOURR_INTAKE = 0, FOURR_TRANSFER = 0, FOURR_SURVEY = 0;
+    private static final double CLAW_OPEN = 0.37, CLAW_CLOSED = 0.07;
+    private static final double FOURL_INTAKE = 0.61, FOURL_TRANSFER = 1, FOURL_SURVEY = 0.7388;
+    private static final double FOURR_INTAKE = 0.61, FOURR_TRANSFER = 1, FOURR_SURVEY = 0.7388;
     private static final double ROLL_HORIZONTAL = 0, ROLL_VERTICAL = 0;
     private static final double PITCH_INTAKE = 0, PITCH_TRANSFER= 0, PITCH_SURVEY = 0;
 
