@@ -23,6 +23,29 @@ public class DiffyRotator {
         leftServo.setInverted(true);
     }
 
+    public void teleopTick(Gamepad gamepad , Telemetry telemetry) {
+        if (gamepad.dpad_up) {
+            rightServo.setPosition(rightServo.getPosition() + 0.01);
+            leftServo.setPosition(leftServo.getPosition() + 0.01);
+        }
+        if (gamepad.dpad_down) {
+            rightServo.setPosition(rightServo.getPosition() - 0.01);
+            leftServo.setPosition(leftServo.getPosition() - 0.01);
+        }
+        if (gamepad.dpad_left) {
+            rightServo.setPosition(rightServo.getPosition() + 0.01);
+            leftServo.setPosition(leftServo.getPosition() - 0.01);
+        }
+        if (gamepad.dpad_right) {
+            rightServo.setPosition(rightServo.getPosition() - 0.01);
+            leftServo.setPosition(leftServo.getPosition() + 0.01);
+        }
+
+        telemetry.addData("diffy right position: ",rightServo.getPosition());
+        telemetry.addData("diffy left position: ",leftServo.getPosition());
+
+    }
+
     public void rollToDegrees(double rollDegrees){
         if (rollDegrees>=ROLL_MAX) rollDegrees=ROLL_MAX;
         if (rollDegrees<=ROLL_MIN) rollDegrees=ROLL_MIN;
