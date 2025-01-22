@@ -19,13 +19,20 @@ import com.qualcomm.robotcore.hardware.Gamepad;
 @TeleOp(name = "Intake Value Tester", group = "Teleop")
 public class IntakeValueTester extends LinearOpMode {
     Intake intake;
+    SlidesVertical vSlides;
+    Outtake outtake;
     GamepadEx gp1;
     GamepadEx gp2;
+    SlidesHorizontal hSlides;
+
     @Override
     public void runOpMode(){
         gp1 = new GamepadEx(gamepad1);
         gp2 = new GamepadEx(gamepad2);
         intake = new Intake(hardwareMap,new Camera(hardwareMap, telemetry));
+        outtake = new Outtake(hardwareMap);
+        vSlides = new SlidesVertical(hardwareMap);
+        hSlides = new SlidesHorizontal(hardwareMap);
         waitForStart();
         while(opModeIsActive()){
             vSlides.slidesMove(gp2.getLeftY(), gp2.getButton(GamepadKeys.Button.B), telemetry);
@@ -43,14 +50,23 @@ public class IntakeValueTester extends LinearOpMode {
                 outtake.fourLTo(1);
                 outtake.fourRTo(0);
             }
-            intake.moveRoll(gamepad1.dpad_left,gamepad1.dpad_right);
-            intake.movePitch(gamepad1.dpad_up,gamepad1.dpad_down);
             if (gp1.getButton(GamepadKeys.Button.Y)){
+               /* intake.fourLTo(0.302);
+                intake.fourRTo(0.64);*/
+            }
             if (gp1.isDown(GamepadKeys.Button.LEFT_BUMPER)){
+                intake.fourLTo(intake.fourLPos()+0.0005);
+                intake.fourRTo(intake.fourRPos()-(0.0005));
+            }
             if (gp1.isDown(GamepadKeys.Button.RIGHT_BUMPER)){
+                intake.fourLTo(intake.fourLPos()+0.0005);
+                intake.fourRTo(intake.fourRPos()-(0.0005));
+            }
+            intake.moveDiffyPos(gamepad1,telemetry);
             intake.clawActive(gamepad1.right_stick_y);
-            telemetry.addData("Intake Arm Position Left: ",intake.fourLPos());
-            telemetry.addData("Intake Arm Position Right: ",intake.fourRPos());
+            hSlides.slidesMove(gamepad1.left_stick_y, gamepad1.b,telemetry);
+            telemetry.addData("Outtake Arm Position Left: ",intake.fourLPos());
+            telemetry.addData("Outtake Arm Position Right: ",intake.fourRPos());
             telemetry.addData("Roll Position : ",intake.getRoll());
             telemetry.addData("Pitch Position: ",intake.getPitch());
             telemetry.addData("Claw Position: ", intake.getClaw());
