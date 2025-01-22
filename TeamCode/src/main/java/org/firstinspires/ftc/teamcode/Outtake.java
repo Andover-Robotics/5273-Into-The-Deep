@@ -15,7 +15,6 @@ public class Outtake {
         fourR = map.get(Servo.class, "fourOR");
         claw = map.get(Servo.class, "oClaw");
     }
-
     public enum OuttakeState {
         TRANSFER_OPEN,
         TRANSFER_CLOSED,
@@ -37,31 +36,53 @@ public class Outtake {
         fsm = OuttakeState.BUCKET_CLOSED;
     }
 
+
+    public double fourLPos(){
+        return(fourL.getPosition());
+    }
+
+    public double fourRPos(){
+        return(fourR.getPosition());
+    }
+
+
+
     public void posBucket(){
-        fourTo(FOUR_BUCKET);
-        claw.clawPitch(PITCH_BUCKET);
+        fourRTo(FOUR_BUCKET);
+        fourLTo(FOUR_BUCKET);
     }
 
     public void openTransfer(){
         posTransfer();
-        claw.openClaw();
+        openClaw();
         fsm = OuttakeState.TRANSFER_OPEN;
     }
 
     public void closeTransfer(){
         posTransfer();
-        claw.closeClaw();
+        closeClaw();
         fsm = OuttakeState.TRANSFER_CLOSED;
     }
 
     public void posTransfer(){
-        fourTo(FOUR_TRANSFER);
-        claw.clawPitch(PITCH_TRANSFER);
+        fourLTo(FOUR_TRANSFER);
+        fourRTo(FOUR_TRANSFER);
     }
 
-    public void fourTo(double position) {
+
+
+    public void fourLTo(double position){
         fourL.setPosition(position);
+    }
+    public void fourRTo(double position){
         fourR.setPosition(position);
     }
 
+    public void openClaw(){
+        claw.setPosition(CLAW_OPEN);
+    }
+
+    public void closeClaw(){
+        claw.setPosition(CLAW_CLOSED);
+    }
 }
