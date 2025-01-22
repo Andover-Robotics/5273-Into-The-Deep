@@ -25,7 +25,6 @@ public class SlidesHorizontal {
     public SlidesHorizontal(HardwareMap map) {
         slidesLeft = map.get(Servo.class, "slidesHL");
         slidesRight = map.get(Servo.class, "slidesHR");
-        slidesRight.setDirection(Servo.Direction.REVERSE);
     }
 
     public enum HSlides {
@@ -46,12 +45,13 @@ public class SlidesHorizontal {
     }
 
     public void setPower(double power){
-        if (getPositions()+(Math.signum(power)*0.01) >= EXPANDED) open();
-        else if (getPositions()+(Math.signum(power)*0.01) <= CONTRACTED) close();
-        else {
-            setBothPosition(getPositions() + (Math.signum(power)*0.01));
+        //if (getPositions()+(Math.signum(power)*0.01) >= EXPANDED) open();
+        //else if (getPositions()+(Math.signum(power)*0.01) <= CONTRACTED) close();
+        //else {
+            slidesRight.setPosition(slidesRight.getPosition() + (Math.signum(power)*0.01));
+            slidesLeft.setPosition(slidesLeft.getPosition() + (Math.signum(power)*(-0.01)));
             fsm = HSlides.MIDDLE;
-        }
+        //}
     }
 
     public void slidesMove(double input, boolean overrideButton, Telemetry telemetry){
