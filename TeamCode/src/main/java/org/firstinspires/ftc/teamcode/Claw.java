@@ -1,12 +1,14 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.hardware.ColorSensor;
+import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import androidx.annotation.NonNull;
 
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.opencv.core.RotatedRect;
 
 /**
@@ -67,6 +69,10 @@ public class Claw {
 
     public double getClawPos(){
         return(servo.getPosition());
+    }
+
+    public void positionalActiveClaw(Gamepad gamepad, Telemetry telemetry){
+        diffyRotator.teleopTick(gamepad,telemetry);
     }
 
     public void rollActiveClaw(boolean left, boolean right){
