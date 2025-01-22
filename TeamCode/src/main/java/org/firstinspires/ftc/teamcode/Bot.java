@@ -17,6 +17,8 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
+import java.time.temporal.TemporalField;
+
 /**
  * Represents the Bot.
  */
@@ -51,6 +53,8 @@ public class Bot {
         outtake = new Outtake(hardwareMap);
 
         movement = new Movement(hardwareMap);
+
+        fsm = FSM.STARTING;
     }
 
     /**
@@ -62,14 +66,12 @@ public class Bot {
     public void teleopTick(GamepadEx gamepad1, GamepadEx gamepad2, Telemetry telemetry) throws InterruptedException{
         final TriggerReader rightTrigger = new TriggerReader(gamepad2, GamepadKeys.Trigger.RIGHT_TRIGGER);
         movement.teleopTick(gamepad1.getLeftX(),gamepad1.getLeftY(),gamepad1.getRightX(), gamepad1.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER),telemetry);
+        telemetry.addData("State: ",fsm);
+
         telemetry.addData("Vertical Slides Pos: ", vSlides.getEncoders());
         telemetry.addData("Horizontal Slides Pos: ", hSlides.getPositions());
         switch(fsm){
             case STARTING:
-                if (gamepad2.wasJustPressed(GamepadKeys.Button.B)) {
-                    intake.toSamplePosition();
-                    fsm = FSM.TRANSFER;
-                }
                 if(gamepad2.wasJustPressed(GamepadKeys.Button.A)){
                   hSlides.close();
                   vSlides.moveToLowerBound();
