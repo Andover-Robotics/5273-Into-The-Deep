@@ -68,7 +68,7 @@ public class SlidesVertical {
         if(!overrideButton && ((pos > UPPER_BOUND && input > 0) || (pos < LOWER_BOUND && input < 0) )) {
             setPower(0);
         }else{
-            setPower(input);
+            setPower(input * 0.01); // temporarily extra slow
         }
         updateFSM();
     }

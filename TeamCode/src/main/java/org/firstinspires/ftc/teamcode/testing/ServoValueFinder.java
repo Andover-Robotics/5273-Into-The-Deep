@@ -8,7 +8,9 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -40,7 +42,7 @@ public class ServoValueFinder extends LinearOpMode {
         }
     }
     private static ServoGroup[] initServoGroups(HardwareMap hardwareMap, ServoGroup[] groups){
-        List<String> singleServoNames = Arrays.asList(hardwareMap.servo.entrySet().stream().map(Map.Entry::getKey).toArray(String[]::new)); // all servo names
+        List<String> singleServoNames = new LinkedList<String>(Arrays.asList(hardwareMap.servo.entrySet().stream().map(Map.Entry::getKey).toArray(String[]::new))); // all servo names
         for(ServoGroup group : groups){
             if(group != null){
                 for(String servoName : group.servoNames){
