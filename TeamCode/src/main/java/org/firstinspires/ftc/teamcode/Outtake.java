@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 public class Outtake {
     private final Servo fourL, fourR;
     private final Servo claw;
-    private static final double CLAW_OPEN = 0.0972, CLAW_CLOSED = 0.0022;
+    private static final double CLAW_OPEN = 0.2028, CLAW_CLOSED = 0.0022;
     private static final double FOURL_BUCKET = 0, FOURL_TRANSFER = 1;
     private static final double FOURR_BUCKET = 1, FOURR_TRANSFER = 0;
 
@@ -67,9 +67,12 @@ public class Outtake {
         fourLTo(FOURL_TRANSFER);
         fourRTo(FOURR_TRANSFER);
     }
-
-
-
+    public void open(){
+        claw.setPosition(CLAW_OPEN);
+    }
+    public void close(){
+        claw.setPosition(CLAW_CLOSED);
+    }
     public void fourLTo(double position){
         fourL.setPosition(position);
     }
