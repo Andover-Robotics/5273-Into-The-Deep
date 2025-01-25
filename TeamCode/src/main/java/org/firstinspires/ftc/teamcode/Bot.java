@@ -122,17 +122,18 @@ public class Bot {
     public SequentialAction actionTransfer() {
         return new SequentialAction(
                 new InstantAction(intake::closeSurvey),
-                new InstantAction(hSlides::close),
                 new InstantAction(vSlides::moveToLowerBound),
-                new InstantAction(outtake::openBucket),
-                new InstantAction(intake::posTransfer),
-                new InstantAction(outtake::posTransfer),
-                new SleepAction(0.3),
+                new InstantAction(outtake::openTransfer),
+                new InstantAction(hSlides::setTransfer),
+                new InstantAction(intake::closeTransfer),
+                new InstantAction(intake::looseClaw),
                 new InstantAction(outtake::closeTransfer),
+                new SleepAction(0.3),
+                new InstantAction(intake::open),
                 new SleepAction(0.1),
-                new InstantAction(intake::openTransfer),
-                new InstantAction(intake::posIntake),
-                new InstantAction(outtake::posBucket),
+                new InstantAction(intake::openSurvey),
+                new InstantAction(outtake::closeBucket),
+                new InstantAction(hSlides::close),
                 new InstantAction(() -> fsm = FSM.TRANSFER));
     }
 }
