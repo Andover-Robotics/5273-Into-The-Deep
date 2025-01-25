@@ -63,6 +63,8 @@ public class IntakeValueTester extends LinearOpMode {
             if (gp1.getRightY()>0) intake.open();
             if (gp1.getRightY()==0) intake.looseClaw();
             if (gp1.getRightY()<0) intake.close();
+            if (gp2.getRightY()>0) outtake.open();
+            if (gp2.getRightY()<0) outtake.close();
 
             intake.moveDiffyPos(gamepad1,telemetry);
             hSlides.setPower(gp1.getLeftY());
