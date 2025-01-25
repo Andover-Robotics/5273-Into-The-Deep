@@ -35,8 +35,13 @@ public class IntakeValueTester extends LinearOpMode {
         outtake = new Outtake(hardwareMap);
         vSlides = new SlidesVertical(hardwareMap);
         hSlides = new SlidesHorizontal(hardwareMap);
+        boolean start = false;
         waitForStart();
         while(opModeIsActive()){
+            if (!start){
+                start = true;
+                hSlides.close();
+            }
             vSlides.slidesMove(gp2.getLeftY(), gp2.getButton(GamepadKeys.Button.B), telemetry);
             telemetry.addData("vSlides position",vSlides.getEncoders());
             if (gp1.getButton(GamepadKeys.Button.A)){
@@ -59,7 +64,6 @@ public class IntakeValueTester extends LinearOpMode {
             if (gp1.getRightY()==0) intake.looseClaw();
             if (gp1.getRightY()<0) intake.close();
 
-            if (gp2.getRightY()>0)
             intake.moveDiffyPos(gamepad1,telemetry);
             hSlides.setPower(gp1.getLeftY());
             telemetry.addData("HSlides Left: ",hSlides.getLeft());
