@@ -6,8 +6,9 @@ import com.qualcomm.robotcore.hardware.Servo;
 public class Outtake {
     private final Servo fourL, fourR;
     private final Servo claw;
-    private static final double CLAW_OPEN = 0, CLAW_CLOSED = 0;
-    private static final double FOUR_BUCKET = 0, FOUR_TRANSFER = 0;
+    private static final double CLAW_OPEN = 0.0972, CLAW_CLOSED = 0.0022;
+    private static final double FOURL_BUCKET = 0, FOURL_TRANSFER = 1;
+    private static final double FOURR_BUCKET = 1, FOURR_TRANSFER = 0;
 
     public Outtake (HardwareMap map) {
         //intake = map.get(CRServo.class, "iServo");
@@ -45,11 +46,9 @@ public class Outtake {
         return(fourR.getPosition());
     }
 
-
-
     public void posBucket(){
-        fourRTo(FOUR_BUCKET);
-        fourLTo(FOUR_BUCKET);
+        fourRTo(FOURR_BUCKET);
+        fourLTo(FOURL_BUCKET);
     }
 
     public void openTransfer(){
@@ -65,8 +64,8 @@ public class Outtake {
     }
 
     public void posTransfer(){
-        fourLTo(FOUR_TRANSFER);
-        fourRTo(FOUR_TRANSFER);
+        fourLTo(FOURL_TRANSFER);
+        fourRTo(FOURR_TRANSFER);
     }
 
 
