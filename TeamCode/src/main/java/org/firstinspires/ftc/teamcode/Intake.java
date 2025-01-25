@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
@@ -132,7 +133,7 @@ public class Intake {
         return(claw.hasSample());
     }
 
-    public void moveDiffyPos(Gamepad gamepad, Telemetry telemetry){
+    public void moveDiffyPos(GamepadEx gamepad, Telemetry telemetry){
         claw.positionalActiveClaw(gamepad,telemetry);
     }
 

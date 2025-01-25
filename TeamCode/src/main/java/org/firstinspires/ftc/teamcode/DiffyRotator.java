@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.arcrobotics.ftclib.gamepad.GamepadEx;
+import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.arcrobotics.ftclib.hardware.SimpleServo;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -30,20 +32,20 @@ public class DiffyRotator {
         leftServo.setPosition(pos);
     }
 
-    public void teleopTick(Gamepad gamepad , Telemetry telemetry) {
-        if (gamepad.dpad_up) {
+    public void teleopTick(GamepadEx gamepad , Telemetry telemetry) {
+        if (gamepad.isDown(GamepadKeys.Button.DPAD_UP)) {
             rightServo.setPosition(rightServo.getPosition() + 0.01);
             leftServo.setPosition(leftServo.getPosition() + 0.01);
         }
-        if (gamepad.dpad_down) {
+        if (gamepad.isDown(GamepadKeys.Button.DPAD_DOWN)) {
             rightServo.setPosition(rightServo.getPosition() - 0.01);
             leftServo.setPosition(leftServo.getPosition() - 0.01);
         }
-        if (gamepad.dpad_left) {
+        if (gamepad.isDown(GamepadKeys.Button.DPAD_LEFT)) {
             rightServo.setPosition(rightServo.getPosition() + 0.01);
             leftServo.setPosition(leftServo.getPosition() - 0.01);
         }
-        if (gamepad.dpad_right) {
+        if (gamepad.isDown(GamepadKeys.Button.DPAD_RIGHT)) {
             rightServo.setPosition(rightServo.getPosition() - 0.01);
             leftServo.setPosition(leftServo.getPosition() + 0.01);
         }

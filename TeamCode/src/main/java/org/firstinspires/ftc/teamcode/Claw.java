@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.Servo;
@@ -76,7 +77,7 @@ public class Claw {
         return(servo.getPosition());
     }
 
-    public void positionalActiveClaw(Gamepad gamepad, Telemetry telemetry){
+    public void positionalActiveClaw(GamepadEx gamepad, Telemetry telemetry){
         diffyRotator.teleopTick(gamepad,telemetry);
     }
 
