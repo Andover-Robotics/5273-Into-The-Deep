@@ -61,31 +61,25 @@ public class Camera {
         }
 
         private void processColor(Mat hsvImage, Scalar lower, Scalar upper, Scalar drawColor, Mat input) {
-            // Create mask for color
             Core.inRange(hsvImage, lower, upper, mask);
 
-            // Find contours
             List<MatOfPoint> contours = new ArrayList<>();
             Imgproc.findContours(mask, contours, hierarchy, Imgproc.RETR_EXTERNAL, Imgproc.CHAIN_APPROX_SIMPLE);
 
             for (MatOfPoint contour : contours) {
-                // Approximate polygon
                 contour2f.fromArray(contour.toArray());
                 double epsilon = APPROX_FACTOR * Imgproc.arcLength(contour2f, true);
                 Imgproc.approxPolyDP(contour2f, approx, epsilon, true);
 
-                // Calculate area
                 Moments moments = Imgproc.moments(contour);
                 double area = moments.get_m00();
 
                 if (area >= MIN_RECT) {
-                    // Draw polygon on the frame
                     List<MatOfPoint> polygon = new ArrayList<MatOfPoint>() {{
                         add(new MatOfPoint(approx.toArray()));
                     }};
                     Imgproc.polylines(input, polygon, true, drawColor, 4);
 
-                    // Store the rotated rectangle
                     RotatedRect next = Imgproc.minAreaRect(contour2f);
                     if (result == null || next.size.area() > result.size.area()) result = next;
                 }

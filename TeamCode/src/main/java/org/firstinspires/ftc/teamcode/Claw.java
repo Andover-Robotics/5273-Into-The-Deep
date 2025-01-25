@@ -94,12 +94,11 @@ public class Claw {
         if (up && !down) clawPitch(diffyRotator.roll+5);
         else if (down && !up) clawPitch(diffyRotator.roll+5);
     }
-    public boolean sampleFound() {
-        RotatedRect result = camera.getResult();
-        return(result != null);
+    public RotatedRect getSample() {
+        return camera.getResult();
     }
     public void toSamplePosition() {
-        RotatedRect result = camera.getResult();
+        RotatedRect result = getSample();
         if (result != null) {
             // TODO roll claw position down (after testing)
             double angle = result.angle;
