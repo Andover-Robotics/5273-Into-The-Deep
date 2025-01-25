@@ -96,7 +96,7 @@ public class Bot {
                     intake.closeIntake();
                     Thread.sleep(300);
                 }
-                else if (!(intake.fsm == Intake.IntakeState.INTAKE_CLOSED)&& !(gamepad2.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER)>0.1)){
+                else if (!(intake.fsm == Intake.IntakeState.INTAKE_CLOSED || intake.fsm == Intake.IntakeState.SURVEY_CLOSED)&& !(gamepad2.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER)>0.1)){
                     intake.openSurvey();
                 }
                 if(intake.fsm == Intake.IntakeState.INTAKE_OPEN && (gamepad2.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER)>0.1)){
