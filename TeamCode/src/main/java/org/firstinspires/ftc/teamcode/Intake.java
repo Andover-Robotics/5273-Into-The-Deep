@@ -55,7 +55,6 @@ public class Intake {
         fourLTo(FOURL_SURVEY);
         fourRTo(FOURR_SURVEY);
         claw.setPositions(0.7406,0.6394);
-        claw.clawRollPitch(ROLL_HORIZONTAL,PITCH_SURVEY);
     }
     public void openIntake(){
         posIntake();
@@ -73,7 +72,6 @@ public class Intake {
         fourLTo(FOURL_INTAKE);
         fourRTo(FOURR_INTAKE);
         claw.setPositions(0.7406,0.6394);
-        claw.clawRollPitch(ROLL_HORIZONTAL,PITCH_INTAKE);
     }
 
     public void looseClaw(){claw.looseClaw();}
