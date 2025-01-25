@@ -72,18 +72,17 @@ public class Bot {
         //telemetry.addData("Horizontal Slides Pos: ", hSlides.getPositions());
         switch(fsm){
             case STARTING:
-                if(gamepad2.wasJustPressed(GamepadKeys.Button.A)){
+                if(gamepad2.isDown(GamepadKeys.Button.A)){
                   hSlides.close();
                   vSlides.moveToLowerBound();
-                  intake.posSurvey();
+                  intake.openSurvey();
                   outtake.closeBucket();
                   fsm = FSM.INTAKE;
                 }
                 break;
             case INTAKE:
-                //hSlides.slidesMove(gamepad2.getLeftY(), gamepad2.isDown(GamepadKeys.Button.B),telemetry);
-                intake.moveRoll(gamepad2.getButton(GamepadKeys.Button.DPAD_LEFT),gamepad2.getButton(GamepadKeys.Button.DPAD_RIGHT));
-                intake.movePitch(gamepad2.getButton(GamepadKeys.Button.DPAD_UP),gamepad2.getButton(GamepadKeys.Button.DPAD_DOWN));
+                hSlides.setPower(gamepad2.getLeftY());
+                intake.moveDiffyPos(gamepad2,telemetry);
                 if (intake.fsm == Intake.IntakeState.SURVEY_OPEN) intake.toSamplePosition();
                 if (rightTrigger.wasJustPressed()) {
                     intake.openIntake();
