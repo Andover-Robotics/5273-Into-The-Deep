@@ -91,7 +91,7 @@ public class Intake {
     public void posTransfer(){
         fourLTo(FOURL_TRANSFER);
         fourRTo(FOURR_TRANSFER);
-        claw.clawRollPitch(ROLL_VERTICAL, PITCH_TRANSFER);
+        claw.setPositions(1,1);
     }
 
     public void fourLTo(double position){
