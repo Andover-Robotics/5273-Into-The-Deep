@@ -7,8 +7,8 @@ public class Outtake {
     private final Servo fourL, fourR;
     private final Servo claw;
     private static final double CLAW_OPEN = 0.2028, CLAW_CLOSED = 0.0022;
-    private static final double FOURL_BUCKET = 0, FOURL_TRANSFER = 1;
-    private static final double FOURR_BUCKET = 1, FOURR_TRANSFER = 0;
+    private static final double FOURL_BUCKET = 1, FOURL_TRANSFER = 0;
+    private static final double FOURR_BUCKET = 0, FOURR_TRANSFER = 1;
 
     public Outtake (HardwareMap map) {
         //intake = map.get(CRServo.class, "iServo");
