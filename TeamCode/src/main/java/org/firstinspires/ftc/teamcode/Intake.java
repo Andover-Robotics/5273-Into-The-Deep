@@ -10,9 +10,9 @@ public class Intake {
     //private final CRServo intake;
     private final Servo fourL, fourR;
     private final Claw claw;
-    private static final double CLAW_OPEN = 0.37, CLAW_CLOSED = 0.07;
-    private static final double FOURL_INTAKE = 0.61, FOURL_TRANSFER = 1, FOURL_SURVEY = 0.7388;
-    private static final double FOURR_INTAKE = 0.61, FOURR_TRANSFER = 1, FOURR_SURVEY = 0.7388;
+    private static final double CLAW_OPEN = 0.1683, CLAW_CLOSED = 0.0094;
+    private static final double FOURL_INTAKE = 0.08, FOURL_TRANSFER = 0.503, FOURL_SURVEY = 0.302;
+    private static final double FOURR_INTAKE = 0.16, FOURR_TRANSFER = 1, FOURR_SURVEY = 0.64;
     private static final double ROLL_HORIZONTAL = 0, ROLL_VERTICAL = 0;
     private static final double PITCH_INTAKE = 0, PITCH_TRANSFER= 0, PITCH_SURVEY = 0;
 
@@ -35,6 +35,12 @@ public class Intake {
 
     public IntakeState fsm = IntakeState.INTAKE_OPEN;
 
+    public void open(){
+        claw.openClaw();
+    }
+    public void close(){
+        claw.closeClaw();
+    }
     public void openSurvey(){
         posSurvey();
         claw.openClaw();
@@ -48,6 +54,7 @@ public class Intake {
     public void posSurvey(){
         fourLTo(FOURL_SURVEY);
         fourRTo(FOURR_SURVEY);
+        claw.setPositions(0.7406,0.6394);
         claw.clawRollPitch(ROLL_HORIZONTAL,PITCH_SURVEY);
     }
     public void openIntake(){
@@ -65,12 +72,15 @@ public class Intake {
     public void posIntake(){
         fourLTo(FOURL_INTAKE);
         fourRTo(FOURR_INTAKE);
+        claw.setPositions(0.7406,0.6394);
         claw.clawRollPitch(ROLL_HORIZONTAL,PITCH_INTAKE);
     }
 
+    public void looseClaw(){claw.looseClaw();}
+
     public void openTransfer(){
         posTransfer();
-        claw.openClaw();
+        claw.looseClaw();
         fsm = IntakeState.TRANSFER_OPEN;
     }
 
