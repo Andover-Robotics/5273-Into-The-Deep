@@ -49,7 +49,7 @@ public class Intake {
     }
     public void closeSurvey(){
         posSurvey();
-        claw.openClaw();
+        claw.closeClaw();
         fsm = IntakeState.SURVEY_CLOSED;
     }
     public void posSurvey(){
