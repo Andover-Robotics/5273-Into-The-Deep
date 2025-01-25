@@ -23,6 +23,13 @@ public class DiffyRotator {
         leftServo.setInverted(true);
     }
 
+    public void setRight(double pos){
+        rightServo.setPosition(pos);
+    }
+    public void setLeft(double pos){
+        leftServo.setPosition(pos);
+    }
+
     public void teleopTick(Gamepad gamepad , Telemetry telemetry) {
         if (gamepad.dpad_up) {
             rightServo.setPosition(rightServo.getPosition() + 0.01);
