@@ -18,6 +18,7 @@ public class Claw {
     private final Servo servo;
     private final DiffyRotator diffyRotator;
     public static double openPos, closedPos;
+    public final double LOOSE_POS = 0.04;
     private ColorSensor colorSensor;
     private Camera camera;
     /**
@@ -42,6 +43,10 @@ public class Claw {
 
     public void clawPitch(double pitchDeg){
         diffyRotator.pitchToDegrees(pitchDeg);}
+
+    public void looseClaw(){
+        servo.setPosition(LOOSE_POS);
+    }
     /**
      * Opens the claw.
      */
@@ -73,6 +78,11 @@ public class Claw {
 
     public void positionalActiveClaw(Gamepad gamepad, Telemetry telemetry){
         diffyRotator.teleopTick(gamepad,telemetry);
+    }
+
+    public void setPositions(double lPos, double rPos){
+        diffyRotator.setLeft(lPos);
+        diffyRotator.setRight(rPos);
     }
 
     public void rollActiveClaw(boolean left, boolean right){
