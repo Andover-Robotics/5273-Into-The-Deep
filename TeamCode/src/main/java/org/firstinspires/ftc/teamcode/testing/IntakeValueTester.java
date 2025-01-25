@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.testing;
 
+import android.transition.Slide;
+
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
@@ -38,33 +40,30 @@ public class IntakeValueTester extends LinearOpMode {
             vSlides.slidesMove(gp2.getLeftY(), gp2.getButton(GamepadKeys.Button.B), telemetry);
             telemetry.addData("vSlides position",vSlides.getEncoders());
             if (gp1.getButton(GamepadKeys.Button.A)){
-                /*intake.fourLTo(0.106);
-                intake.fourRTo(0.2);*/
-                outtake.fourLTo(0.1);
-                outtake.fourRTo(0.9);
-
+                intake.posIntake();
             }
             if (gp1.getButton(GamepadKeys.Button.B)){
-                /*intake.fourLTo(0.503); //top position : 0.503
-                intake.fourRTo(1); // top position : 1*/
-                outtake.fourLTo(1);
-                outtake.fourRTo(0);
+                intake.posTransfer();
             }
             if (gp1.getButton(GamepadKeys.Button.Y)){
-               /* intake.fourLTo(0.302);
-                intake.fourRTo(0.64);*/
+                intake.posSurvey();
             }
-            if (gp1.isDown(GamepadKeys.Button.LEFT_BUMPER)){
-                intake.fourLTo(intake.fourLPos()+0.0005);
-                intake.fourRTo(intake.fourRPos()-(0.0005));
+            if (gp2.getButton(GamepadKeys.Button.A)){
+                outtake.posTransfer();
+
             }
-            if (gp1.isDown(GamepadKeys.Button.RIGHT_BUMPER)){
-                intake.fourLTo(intake.fourLPos()+0.0005);
-                intake.fourRTo(intake.fourRPos()-(0.0005));
+            if (gp2.getButton(GamepadKeys.Button.B)){
+                outtake.posBucket();
             }
+            if (gp1.getRightY()>0) intake.open();
+            if (gp1.getRightY()==0) intake.looseClaw();
+            if (gp1.getRightY()<0) intake.close();
+
+            if (gp2.getRightY()>0)
             intake.moveDiffyPos(gamepad1,telemetry);
-            intake.clawActive(gamepad1.right_stick_y);
-            hSlides.slidesMove(gamepad1.left_stick_y, gamepad1.b,telemetry);
+            hSlides.setPower(gp1.getLeftY());
+            telemetry.addData("HSlides Left: ",hSlides.getLeft());
+            telemetry.addData("HSlides Right: ",hSlides.getRight());
             telemetry.addData("Outtake Arm Position Left: ",intake.fourLPos());
             telemetry.addData("Outtake Arm Position Right: ",intake.fourRPos());
             telemetry.addData("Roll Position : ",intake.getRoll());
