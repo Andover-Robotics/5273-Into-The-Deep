@@ -83,6 +83,7 @@ public class Bot {
             case INTAKE:
                 hSlides.setPower(gamepad2.getLeftY());
                 intake.moveDiffyPos(gamepad2,telemetry);
+                telemetry.addData("Intake State", intake.fsm);
                 if (intake.fsm == Intake.IntakeState.SURVEY_OPEN) intake.toSamplePosition();
                 if (gamepad2.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER)>0.1){
                     intake.openIntake();
@@ -90,10 +91,10 @@ public class Bot {
                 else if (intake.fsm == Intake.IntakeState.SURVEY_OPEN || intake.fsm == Intake.IntakeState.INTAKE_CLOSED){
                     intake.closeSurvey();
                 }
-                else if (intake.fsm == Intake.IntakeState.INTAKE_OPEN) {
+                if (intake.fsm == Intake.IntakeState.INTAKE_OPEN && !(gamepad2.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER)>0.1)) {
                     intake.closeIntake();
                 }
-                else {
+                else if (!(intake.fsm == Intake.IntakeState.INTAKE_CLOSED)){
                     intake.openSurvey();
                 }
                 if(gamepad2.isDown(GamepadKeys.Button.B)) {
