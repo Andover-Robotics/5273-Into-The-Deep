@@ -75,8 +75,8 @@ public class Bot {
                 if(gamepad2.isDown(GamepadKeys.Button.A)){
                   hSlides.close();
                   vSlides.moveToLowerBound();
-                  intake.openSurvey();
-                  outtake.closeBucket();
+                  intake.closeSurvey();
+                  outtake.closeTransfer();
                   fsm = FSM.INTAKE;
                 }
                 break;
@@ -129,12 +129,20 @@ public class Bot {
         return new SequentialAction(
                 new InstantAction(intake::closeSurvey),
                 new InstantAction(vSlides::moveToLowerBound),
-                new InstantAction(outtake::openTransfer),
-                new InstantAction(hSlides::setTransfer),
-                new InstantAction(intake::closeTransfer),
-                new InstantAction(intake::looseClaw),
-                new InstantAction(outtake::closeTransfer),
+                new InstantAction(hSlides::setPreTransfer),
                 new SleepAction(0.3),
+                new InstantAction(outtake::posTransfer),
+                new SleepAction(0.1),
+                new InstantAction(outtake::openTransfer),
+                new SleepAction(0.1),
+                new InstantAction(intake::closeTransfer),
+                new SleepAction(0.3),
+                new InstantAction(hSlides::setTransfer),
+                new SleepAction(0.1),
+                new InstantAction(intake::looseClaw),
+                new SleepAction(0.1),
+                new InstantAction(outtake::closeTransfer),
+                new SleepAction(0.1),
                 new InstantAction(intake::open),
                 new SleepAction(0.1),
                 new InstantAction(intake::openSurvey),
