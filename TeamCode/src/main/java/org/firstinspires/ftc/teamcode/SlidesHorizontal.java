@@ -41,6 +41,12 @@ public class SlidesHorizontal {
         slidesRight.setPosition(position);
     }
 
+    public void setTransfer(){
+        //left 0.1644 right 0.8344
+        setLeft(0.1644);
+        setRight(0.8344);
+    }
+
     public void setRight(double pos){
         slidesRight.setPosition(pos);
     }
