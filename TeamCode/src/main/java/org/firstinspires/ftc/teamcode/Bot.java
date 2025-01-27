@@ -74,9 +74,10 @@ public class Bot {
             case STARTING:
                 if(gamepad2.isDown(GamepadKeys.Button.A)){
                   hSlides.close();
+                  vSlides.resetEncoders();
                   vSlides.moveToLowerBound();
                   intake.closeSurvey();
-                  outtake.closeTransfer();
+                  outtake.closeBucket();
                   fsm = FSM.INTAKE;
                 }
                 break;
