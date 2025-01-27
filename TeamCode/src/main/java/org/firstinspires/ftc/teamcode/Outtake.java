@@ -7,8 +7,8 @@ public class Outtake {
     private final Servo fourL, fourR;
     private final Servo claw;
     private static final double CLAW_OPEN = 0.2028, CLAW_CLOSED = 0.0022;
-    private static final double FOURL_BUCKET = 0, FOURL_TRANSFER = 0.95;
-    private static final double FOURR_BUCKET = 1, FOURR_TRANSFER = 0.15;
+    private static final double FOURL_BUCKET = 0, FOURL_TRANSFER = 0.95, FOURL_CLIP = 0;
+    private static final double FOURR_BUCKET = 1, FOURR_TRANSFER = 0.15, FOURR_CLIP = 0;
 
     public Outtake (HardwareMap map) {
         //intake = map.get(CRServo.class, "iServo");
@@ -20,7 +20,9 @@ public class Outtake {
         TRANSFER_OPEN,
         TRANSFER_CLOSED,
         BUCKET_OPEN,
-        BUCKET_CLOSED
+        BUCKET_CLOSED,
+        CLIP_OPEN,
+        CLIP_CLOSED
     }
 
     public OuttakeState fsm = OuttakeState.BUCKET_CLOSED;
@@ -66,6 +68,22 @@ public class Outtake {
     public void posTransfer(){
         fourLTo(FOURL_TRANSFER);
         fourRTo(FOURR_TRANSFER);
+    }
+    public void openClip(){
+        posClip();
+        openClaw();
+        fsm = OuttakeState.CLIP_OPEN;
+    }
+
+    public void closeClip(){
+        posClip();
+        closeClaw();
+        fsm = OuttakeState.CLIP_CLOSED;
+    }
+
+    public void posClip(){
+        fourLTo(FOURL_CLIP);
+        fourRTo(FOURR_CLIP);
     }
     public void open(){
         claw.setPosition(CLAW_OPEN);
