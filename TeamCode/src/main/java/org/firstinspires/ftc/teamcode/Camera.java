@@ -21,13 +21,13 @@ public class Camera {
     // Makes sure that the rectangle is large enough and that it isn't noise
     private final double MIN_RECT = 1000;
     // How many pixels should be blended together
-    private final int GAUSSIAN_BLUR = 9;
+    private final int GAUSSIAN_BLUR = 5;
     // Used for camera streaming - make sure this matches the camera's resolution
     private final int CAMERA_WIDTH = 320;
     private final int CAMERA_HEIGHT = 240;
     // HSV Bounds for red, yellow, and blue
-    private final Scalar LOWER_RED = new Scalar(0, 100, 100);
-    private final Scalar UPPER_RED = new Scalar(10, 255, 255);
+    private final Scalar LOWER_RED = new Scalar(0, 80, 25);
+    private final Scalar UPPER_RED = new Scalar(15, 255, 255);
     private final Scalar LOWER_YELLOW = new Scalar(20, 100, 100);
     private final Scalar UPPER_YELLOW = new Scalar(30, 255, 255);
     private final Scalar LOWER_BLUE = new Scalar(100, 100, 100);
@@ -37,6 +37,7 @@ public class Camera {
     class RectPipeline extends OpenCvPipeline {
         private Mat hsv = new Mat();
         private Mat blurredImage = new Mat();
+        private Mat blurredImage2 = new Mat();
         private Mat mask = new Mat();
         private Mat hierarchy = new Mat();
         private MatOfPoint2f approx = new MatOfPoint2f();
@@ -58,10 +59,12 @@ public class Camera {
                 // Reduce noise
                 Imgproc.GaussianBlur(hsv, blurredImage, new Size(GAUSSIAN_BLUR, GAUSSIAN_BLUR), 0);
 
+                blurredImage.convertTo(blurredImage2, -1, 0.9, 0);
+
                 // Detect and process each color
-                processColor(blurredImage, LOWER_RED, UPPER_RED, new Scalar(255, 0, 0), input);
-                processColor(blurredImage, LOWER_YELLOW, UPPER_YELLOW, new Scalar(0, 255, 255), input);
-                processColor(blurredImage, LOWER_BLUE, UPPER_BLUE, new Scalar(0, 0, 255), input);
+                processColor(blurredImage2, LOWER_RED, UPPER_RED, new Scalar(255, 0, 0), input);
+                processColor(blurredImage2, LOWER_YELLOW, UPPER_YELLOW, new Scalar(0, 255, 255), input);
+                processColor(blurredImage2, LOWER_BLUE, UPPER_BLUE, new Scalar(0, 0, 255), input);
 
                 result = rawResult;
                 telemetry.addData("rect angle", result != null ? result.angle : "nothing");
