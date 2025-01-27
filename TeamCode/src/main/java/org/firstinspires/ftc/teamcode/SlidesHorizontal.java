@@ -68,11 +68,11 @@ public class SlidesHorizontal {
     }
 
     public void setPower(double power){
-        if (((getLeft()+Math.signum(power)*-0.005)>=EXPANDEDL) || ((getRight()+Math.signum(power)*0.005)<=EXPANDEDR)) open();
-        else if (((getLeft()+Math.signum(power)*-0.005)<=CONTRACTEDL) || ((getRight()+Math.signum(power)*0.005)>=CONTRACTEDR)) close();
+        if (((getLeft()+Math.signum(power)*-0.01)>=EXPANDEDL) || ((getRight()+Math.signum(power)*0.01)<=EXPANDEDR)) open();
+        else if (((getLeft()+Math.signum(power)*-0.01)<=CONTRACTEDL) || ((getRight()+Math.signum(power)*0.01)>=CONTRACTEDR)) close();
         else {
-            setRight(getRight()+Math.signum(power)*0.005);
-            setLeft(getLeft()+Math.signum(power)*-0.005);
+            setRight(getRight()+Math.signum(power)*0.01);
+            setLeft(getLeft()+Math.signum(power)*-0.01);
             fsm = HSlides.MIDDLE;
         }
     }
