@@ -36,6 +36,13 @@ public class Intake {
 
     public IntakeState fsm = IntakeState.INTAKE_OPEN;
 
+    public double getClawOpen(){
+        return CLAW_OPEN;
+    }
+
+    public double getClawClosed(){
+        return CLAW_CLOSED;
+    }
     public boolean isSurveyOpen(){
         return (fsm == IntakeState.SURVEY_OPEN);
     }
