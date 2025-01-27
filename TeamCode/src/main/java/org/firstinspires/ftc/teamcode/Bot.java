@@ -111,13 +111,13 @@ public class Bot {
                 break;
             case TRANSFER:
                 vSlides.slidesMove(gamepad2.getRightY(), gamepad2.isDown(GamepadKeys.Button.B), telemetry);
-                if (rightTrigger.wasJustPressed())
+                if (!gamepad2.isDown(GamepadKeys.Button.B)&& gamepad2.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER)>0.1)
                     outtake.openBucket();
-                else if (rightTrigger.wasJustReleased())
+                else if (!gamepad2.isDown(GamepadKeys.Button.B))
                     outtake.closeBucket();
-                if(gamepad2.wasJustPressed(GamepadKeys.Button.A)){
+                if(gamepad2.isDown(GamepadKeys.Button.A)){
                     hSlides.close();
-                    vSlides.moveToLowerBound();
+                    vSlides.setPosition(0);
                     intake.posSurvey();
                     outtake.closeBucket();
                     fsm = FSM.INTAKE;
