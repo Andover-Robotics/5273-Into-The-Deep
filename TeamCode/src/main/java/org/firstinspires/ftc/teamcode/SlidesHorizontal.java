@@ -47,8 +47,8 @@ public class SlidesHorizontal {
     }
 
     public void setTransfer(){
-        setLeft(0.2233);
-        setRight(0.7739);
+        setLeft(0.0794);
+        setRight(0.9189);
     }
 
     public void setRight(double pos){
