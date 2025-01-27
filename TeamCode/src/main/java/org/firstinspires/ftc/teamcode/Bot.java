@@ -22,6 +22,8 @@ import java.time.temporal.TemporalField;
 /**
  * Represents the Bot.
  */
+
+//test commit for new branch
 public class Bot {
     private final Movement movement;
     private final SlidesHorizontal hSlides;
