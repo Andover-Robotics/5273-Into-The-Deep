@@ -21,7 +21,7 @@ public class Camera {
     // Makes sure that the rectangle is large enough and that it isn't noise
     private final double MIN_RECT = 1000;
     // How many pixels should be blended together
-    private final int GAUSSIAN_BLUR = 5;
+    private final int GAUSSIAN_BLUR = 9;
     // Used for camera streaming - make sure this matches the camera's resolution
     private final int CAMERA_WIDTH = 320;
     private final int CAMERA_HEIGHT = 240;
@@ -49,25 +49,29 @@ public class Camera {
 
         @Override
         public Mat processFrame(Mat input) {
-            rawResult = null;
+            synchronized (Camera.this) {
+                rawResult = null;
 
-            // Convert to HSV
-            Imgproc.cvtColor(input, hsv, Imgproc.COLOR_RGB2HSV);
+                // Convert to HSV
+                Imgproc.cvtColor(input, hsv, Imgproc.COLOR_RGB2HSV);
 
-            // Reduce noise
-            Imgproc.GaussianBlur(hsv, blurredImage, new Size(GAUSSIAN_BLUR, GAUSSIAN_BLUR), 0);
+                // Reduce noise
+                Imgproc.GaussianBlur(hsv, blurredImage, new Size(GAUSSIAN_BLUR, GAUSSIAN_BLUR), 0);
 
-            // Detect and process each color
-            processColor(blurredImage, LOWER_RED, UPPER_RED, new Scalar(255, 0, 0), input);
-            processColor(blurredImage, LOWER_YELLOW, UPPER_YELLOW, new Scalar(0, 255, 255), input);
-            processColor(blurredImage, LOWER_BLUE, UPPER_BLUE, new Scalar(0, 0, 255), input);
+                // Detect and process each color
+                processColor(blurredImage, LOWER_RED, UPPER_RED, new Scalar(255, 0, 0), input);
+                processColor(blurredImage, LOWER_YELLOW, UPPER_YELLOW, new Scalar(0, 255, 255), input);
+                processColor(blurredImage, LOWER_BLUE, UPPER_BLUE, new Scalar(0, 0, 255), input);
 
-            result = rawResult;
-            telemetry.addData("rect angle", result != null ? result.angle : "nothing");
-            telemetry.update();
-            return input;
+                result = rawResult;
+                telemetry.addData("rect angle", result != null ? result.angle : "nothing");
+                telemetry.update();
+                return input;
+            }
         }
-
+/* Angle Normalization: Adjust angles for "tall" rectangles by adding 90 degrees if the width is smaller than the height.
+Ensure Angles are within 0-360: Normalize the angles using modulo operations.
+These adjustments can help ensure that the angle is consistent and easier to understand across different detections.*/
         private void processColor(Mat hsvImage, Scalar lower, Scalar upper, Scalar drawColor, Mat input) {
             Core.inRange(hsvImage, lower, upper, mask);
 
@@ -83,19 +87,29 @@ public class Camera {
                 double area = moments.get_m00();
 
                 if (area >= MIN_RECT) {
+                    // Draw polygon on the frame
                     List<MatOfPoint> polygon = new ArrayList<MatOfPoint>() {{
                         add(new MatOfPoint(approx.toArray()));
                     }};
                     Imgproc.polylines(input, polygon, true, drawColor, 4);
 
-                    RotatedRect next = Imgproc.minAreaRect(contour2f);
-                    if (rawResult == null || next.size.area() > result.size.area()) rawResult = next;
+                    // Store the rotated rectangle
+                    result = Imgproc.minAreaRect(contour2f);
+
+                    // Normalize and print the angle for debugging
+                    double angle = result.angle;
+                    if (result.size.width < result.size.height) {
+                        angle = angle + 90; // adjust the angle for tall rectangles
+                    }
+                    angle = angle % 360; // ensure the angle is within 0-360
+                    System.out.println("Detected angle: " + angle);
                 }
             }
         }
     }
 
     public Camera(HardwareMap hardwareMap, Telemetry telemetry) {
+    synchronized (this) {
         WebcamName webcamName = hardwareMap.get(WebcamName.class, "webcam");
         OpenCvPipeline pipeline = new RectPipeline(telemetry);
         camera = OpenCvCameraFactory.getInstance().createWebcam(webcamName);
@@ -114,11 +128,15 @@ public class Camera {
         camera.setPipeline(pipeline);
     }
 
+    }
+
     public OpenCvCamera getCamera() {
         return camera;
     }
 
     public RotatedRect getResult() {
-        return result;
+        synchronized (this) {
+            return result;
+        }
     }
 }
