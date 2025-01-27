@@ -36,6 +36,25 @@ public class Intake {
 
     public IntakeState fsm = IntakeState.INTAKE_OPEN;
 
+    public boolean isSurveyOpen(){
+        return (fsm == IntakeState.SURVEY_OPEN);
+    }
+    public boolean isTransferOpen(){
+        return (fsm == IntakeState.TRANSFER_OPEN);
+    }
+    public boolean isIntakeOpen(){
+        return (fsm == IntakeState.INTAKE_OPEN);
+    }
+    public boolean isSurveyClosed(){
+        return (fsm == IntakeState.SURVEY_CLOSED);
+    }
+    public boolean isTransferClosed(){
+        return (fsm == IntakeState.TRANSFER_CLOSED);
+    }
+    public boolean isIntakeClosed(){
+        return (fsm == IntakeState.INTAKE_CLOSED);
+    }
+
     public void open(){
         claw.openClaw();
     }
