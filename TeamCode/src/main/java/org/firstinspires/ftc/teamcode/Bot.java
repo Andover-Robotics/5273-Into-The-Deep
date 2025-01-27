@@ -31,6 +31,8 @@ public class Bot {
     private final SlidesVertical vSlides;
     private final Outtake outtake;
     private final Camera camera;
+    private boolean hasSample = false;
+
 
     public enum FSM{
         STARTING,
@@ -70,7 +72,6 @@ public class Bot {
         final TriggerReader rightTrigger = new TriggerReader(gamepad2, GamepadKeys.Trigger.RIGHT_TRIGGER);
         movement.teleopTick(gamepad1.getLeftX(),gamepad1.getLeftY(),gamepad1.getRightX(), gamepad1.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER),telemetry);
         telemetry.addData("State: ",fsm);
-
         telemetry.addData("Vertical Slides Pos: ", vSlides.getEncoders());
         //telemetry.addData("Horizontal Slides Pos: ", hSlides.getPositions());
         switch(fsm){
@@ -79,7 +80,7 @@ public class Bot {
                   hSlides.close();
                   vSlides.resetEncoders();
                   vSlides.moveToLowerBound();
-                  intake.closeSurvey();
+                  intake.openSurvey();
                   outtake.closeBucket();
                   fsm = FSM.INTAKE;
                 }
@@ -87,25 +88,20 @@ public class Bot {
             case INTAKE:
                 hSlides.setPower(gamepad2.getLeftY());
                 intake.moveDiffyPos(gamepad2,telemetry);
+                boolean rightTriggerDown = gamepad2.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER)>0.1;
                 telemetry.addData("Intake State", intake.fsm);
-                if (intake.fsm == Intake.IntakeState.SURVEY_OPEN) intake.toSamplePosition();
-                if (gamepad2.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER)>0.1 && !(intake.fsm == Intake.IntakeState.INTAKE_OPEN)){
+                if (intake.isSurveyOpen()) intake.toSamplePosition();
+                if (rightTriggerDown && (intake.isSurveyOpen() || intake.isSurveyClosed())){
                     intake.open();
                     Thread.sleep(100);
                     intake.openIntake();
                     Thread.sleep(300);
                 }
-                else if (intake.fsm == Intake.IntakeState.SURVEY_OPEN || intake.fsm == Intake.IntakeState.INTAKE_CLOSED){
-                    intake.closeSurvey();
-                }
-                if (intake.fsm == Intake.IntakeState.INTAKE_OPEN && !(gamepad2.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER)>0.1)) {
+                if (intake.isIntakeOpen() && !(rightTriggerDown)) {
                     intake.close();
                     Thread.sleep(200);
-                    intake.closeIntake();
+                    intake.closeSurvey();
                 }
-                /*else if (!(intake.fsm == Intake.IntakeState.INTAKE_CLOSED || intake.fsm == Intake.IntakeState.SURVEY_CLOSED)&& !(gamepad2.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER)>0.1)){
-                    intake.openSurvey();
-                }*/
                 if(gamepad2.isDown(GamepadKeys.Button.B)) {
                     Thread thread = new Thread(() -> Actions.runBlocking(actionTransfer()));
                     thread.start();
