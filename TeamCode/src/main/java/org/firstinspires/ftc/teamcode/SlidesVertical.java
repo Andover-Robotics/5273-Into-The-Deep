@@ -19,6 +19,8 @@ public class SlidesVertical {
     //sets limits of slides extension
     private static final int UPPER_BOUND = -2979;
     private static final int LOWER_BOUND = 0;
+    private static final int BUCKET_POS = 0;
+    private static final int CLIP_POS = 0;
 
     public enum VSlides {
         LOWERED,  // Slides at the lower bound
@@ -33,6 +35,15 @@ public class SlidesVertical {
         if (getEncoders()<=LOWER_BOUND+5) fsm = VSlides.LOWERED;
         if (getEncoders()>=UPPER_BOUND-5) fsm = VSlides.RAISED;
         else fsm = VSlides.MIDDLE;
+    }
+
+    public void moveToBucketPos(){
+        fsm = VSlides.MIDDLE;
+        setPosition(BUCKET_POS);
+    }
+    public void moveToClipPos(){
+        fsm = VSlides.MIDDLE;
+        setPosition(CLIP_POS);
     }
 
     public void moveToLowerBound() {
