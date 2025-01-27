@@ -31,8 +31,9 @@ public class Movement {
         localizer = new ThreeDeadWheelLocalizer(map, PARAMS.inPerTick);
 
         //reversed motor to reflect installation
-        leftFront.setDirection(DcMotorSimple.Direction.REVERSE);
-        leftBack.setDirection(DcMotorSimple.Direction.REVERSE);
+
+        rightFront.setDirection(DcMotorSimple.Direction.REVERSE);
+        rightBack.setDirection(DcMotorSimple.Direction.REVERSE);
 
         leftFront.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         leftBack.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -43,7 +44,7 @@ public class Movement {
     // tick for teleop
 
     public void teleopTick(double leftStickX, double leftStickY, double rightStickX, double trigger, Telemetry telemetry){
-        double axial = -leftStickY * (1 - trigger * 0.75);  // Note: pushing stick forward gives negative value
+        double axial = leftStickY * (1 - trigger * 0.75);  // Note: pushing stick forward gives negative value
         double lateral = leftStickX * (1 - trigger * 0.75);
         double yaw = rightStickX * (1 - trigger * 0.75);
 
