@@ -36,11 +36,11 @@ public class Intake {
 
     public IntakeState fsm = IntakeState.INTAKE_OPEN;
 
-    public double getClawOpen(){
+    public static double getClawOpen(){
         return CLAW_OPEN;
     }
 
-    public double getClawClosed(){
+    public static double getClawClosed(){
         return CLAW_CLOSED;
     }
     public boolean isSurveyOpen(){
@@ -145,8 +145,7 @@ public class Intake {
     public double fourLPos(){
         return(fourL.getPosition());
     }
-    public static double getClawOpen() {return CLAW_OPEN;}
-    public static double getClawClosed() {return CLAW_CLOSED;}
+
     public double fourRPos(){
         return(fourR.getPosition());
     }
