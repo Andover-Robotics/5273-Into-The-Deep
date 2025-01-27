@@ -41,9 +41,11 @@ public class IntakeValueTester extends LinearOpMode {
             if (!start){
                 start = true;
                 hSlides.close();
+                vSlides.resetEncoders();
             }
             vSlides.slidesMove(gp2.getLeftY(), gp2.getButton(GamepadKeys.Button.B), telemetry);
             telemetry.addData("vSlides position",vSlides.getEncoders());
+            telemetry.addData("y left",gp2.getLeftY());
             if (gp1.getButton(GamepadKeys.Button.A)){
                 intake.posIntake();
             }
@@ -66,8 +68,9 @@ public class IntakeValueTester extends LinearOpMode {
             if (gp2.getRightY()>0) outtake.open();
             if (gp2.getRightY()<0) outtake.close();
 
-            intake.moveDiffyPos(gamepad1,telemetry);
+            intake.moveDiffyPos(gp1,telemetry);
             hSlides.setPower(gp1.getLeftY());
+            telemetry.addData("Vslides Position",vSlides.getEncoders());
             telemetry.addData("HSlides Left: ",hSlides.getLeft());
             telemetry.addData("HSlides Right: ",hSlides.getRight());
             telemetry.addData("Outtake Arm Position Left: ",intake.fourLPos());
