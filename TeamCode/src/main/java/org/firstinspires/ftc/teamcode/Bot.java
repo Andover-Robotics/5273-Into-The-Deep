@@ -121,6 +121,16 @@ public class Bot {
                     outtake.closeBucket();
                     fsm = FSM.INTAKE;
                 }
+                if(gamepad2.isDown(GamepadKeys.Button.Y)){
+                    outtake.closeBucket();
+                }
+
+                if(gamepad2.isDown(GamepadKeys.Button.B)){
+                    outtake.closeTransfer();
+                    Thread.sleep(500);
+                    intake.posTransfer();
+                    hSlides.close();
+                }
                 break;
         }
     }
