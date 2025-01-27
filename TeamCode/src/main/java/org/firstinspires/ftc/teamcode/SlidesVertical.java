@@ -17,7 +17,7 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 public class SlidesVertical {
     private final DcMotor slidesLeft, slidesRight;
     //sets limits of slides extension
-    private static final int UPPER_BOUND = 5200;
+    private static final int UPPER_BOUND = -2979;
     private static final int LOWER_BOUND = 0;
 
     public enum VSlides {
@@ -40,6 +40,13 @@ public class SlidesVertical {
         fsm = VSlides.LOWERED;
     }
 
+    public void resetEncoders(){
+        slidesRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        slidesLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        slidesRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        slidesLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+    }
+
     public void moveToUpperBound() {
         if(!(fsm== VSlides.RAISED)) setPosition(UPPER_BOUND);
         fsm = VSlides.RAISED;
@@ -48,7 +55,7 @@ public class SlidesVertical {
     public SlidesVertical(HardwareMap map) {
         slidesLeft = map.get(DcMotor.class, "slidesL");
         slidesRight = map.get(DcMotor.class, "slidesR");
-        slidesRight.setDirection(DcMotorSimple.Direction.REVERSE);
+        slidesLeft.setDirection(DcMotorSimple.Direction.REVERSE);
     }
 
     public void setPower(double power) {
@@ -65,12 +72,16 @@ public class SlidesVertical {
     public void slidesMove(double input, boolean overrideButton, Telemetry telemetry){
         int pos = getEncoders();
         telemetry.addData("Slides position: ",pos);
-        if(!overrideButton && ((pos > UPPER_BOUND && input > 0) || (pos < LOWER_BOUND && input < 0) )) {
+        if(!overrideButton && ((pos < UPPER_BOUND && input > 0))) {
             setPower(0);
-        }else{
-            setPower(input * 0.01); // temporarily extra slow
+        }else {
+            setPower(input); // temporarily extra slow
         }
         updateFSM();
+    }
+
+    public void transferToBucketPos(){
+        setPosition(117);
     }
 
     //moves based on position inputted
