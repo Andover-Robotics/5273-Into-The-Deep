@@ -12,8 +12,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Camera {
-    private final OpenCvPipeline pipeline = new RectPipeline();
     private OpenCvCamera camera;
+    private RotatedRect rawResult = null;
     private volatile RotatedRect result = null;
     // Factor to estimate a polygon with - shouldn't be too low because noise will impact
     // the image more, and shouldn't be too high, or otherwise detail is lost
@@ -41,10 +41,15 @@ public class Camera {
         private Mat hierarchy = new Mat();
         private MatOfPoint2f approx = new MatOfPoint2f();
         private MatOfPoint2f contour2f = new MatOfPoint2f();
+        private final Telemetry telemetry;
+
+        public RectPipeline(Telemetry tele) {
+            telemetry = tele;
+        }
 
         @Override
         public Mat processFrame(Mat input) {
-            result = null;
+            rawResult = null;
 
             // Convert to HSV
             Imgproc.cvtColor(input, hsv, Imgproc.COLOR_RGB2HSV);
@@ -57,6 +62,9 @@ public class Camera {
             processColor(blurredImage, LOWER_YELLOW, UPPER_YELLOW, new Scalar(0, 255, 255), input);
             processColor(blurredImage, LOWER_BLUE, UPPER_BLUE, new Scalar(0, 0, 255), input);
 
+            result = rawResult;
+            telemetry.addData("rect angle", result != null ? result.angle : "nothing");
+            telemetry.update();
             return input;
         }
 
@@ -81,7 +89,7 @@ public class Camera {
                     Imgproc.polylines(input, polygon, true, drawColor, 4);
 
                     RotatedRect next = Imgproc.minAreaRect(contour2f);
-                    if (result == null || next.size.area() > result.size.area()) result = next;
+                    if (rawResult == null || next.size.area() > result.size.area()) rawResult = next;
                 }
             }
         }
@@ -89,6 +97,7 @@ public class Camera {
 
     public Camera(HardwareMap hardwareMap, Telemetry telemetry) {
         WebcamName webcamName = hardwareMap.get(WebcamName.class, "webcam");
+        OpenCvPipeline pipeline = new RectPipeline(telemetry);
         camera = OpenCvCameraFactory.getInstance().createWebcam(webcamName);
         camera.openCameraDeviceAsync(new OpenCvCamera.AsyncCameraOpenListener() {
             @Override
