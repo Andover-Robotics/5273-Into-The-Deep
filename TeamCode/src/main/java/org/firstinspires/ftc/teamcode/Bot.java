@@ -87,6 +87,8 @@ public class Bot {
                 telemetry.addData("Intake State", intake.fsm);
                 if (intake.fsm == Intake.IntakeState.SURVEY_OPEN) intake.toSamplePosition();
                 if (gamepad2.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER)>0.1 && !(intake.fsm == Intake.IntakeState.INTAKE_OPEN)){
+                    intake.open();
+                    Thread.sleep(100);
                     intake.openIntake();
                     Thread.sleep(300);
                 }
@@ -94,15 +96,13 @@ public class Bot {
                     intake.closeSurvey();
                 }
                 if (intake.fsm == Intake.IntakeState.INTAKE_OPEN && !(gamepad2.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER)>0.1)) {
+                    intake.close();
+                    Thread.sleep(200);
                     intake.closeIntake();
-                    Thread.sleep(300);
                 }
                 /*else if (!(intake.fsm == Intake.IntakeState.INTAKE_CLOSED || intake.fsm == Intake.IntakeState.SURVEY_CLOSED)&& !(gamepad2.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER)>0.1)){
                     intake.openSurvey();
                 }*/
-                if(intake.fsm == Intake.IntakeState.INTAKE_OPEN && (gamepad2.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER)>0.1)){
-                    intake.moveDiffyPos(gamepad2,telemetry);
-                }
                 if(gamepad2.isDown(GamepadKeys.Button.B)) {
                     Thread thread = new Thread(() -> Actions.runBlocking(actionTransfer()));
                     thread.start();
