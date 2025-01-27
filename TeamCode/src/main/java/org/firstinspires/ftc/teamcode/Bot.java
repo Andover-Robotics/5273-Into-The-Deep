@@ -33,7 +33,8 @@ public class Bot {
     public enum FSM{
         STARTING,
         INTAKE,
-        TRANSFER
+        TRANSFER,
+        HANG
     }
     public FSM fsm = FSM.STARTING;
     /**
