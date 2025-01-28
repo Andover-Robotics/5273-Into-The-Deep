@@ -5,7 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.auto.PathMasterTheTestingNavigator;
 
-@Autonomous(name = "Quadrant 0", group = "Autonomous")
+@Autonomous(name = "Blue Alliance Left", group = "Autonomous")
 public class Quad0 extends LinearOpMode {
     @Override
     public void runOpMode() {
