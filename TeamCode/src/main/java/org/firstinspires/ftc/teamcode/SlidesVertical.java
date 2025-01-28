@@ -22,6 +22,12 @@ public class SlidesVertical {
     private static final int BUCKET_POS = 0;
     private static final int CLIP_POS = 0;
 
+    public SlidesVertical(HardwareMap map) {
+        slidesLeft = map.get(DcMotor.class, "slidesL");
+        slidesRight = map.get(DcMotor.class, "slidesR");
+        slidesLeft.setDirection(DcMotorSimple.Direction.REVERSE);
+    }
+
     public enum VSlides {
         LOWERED,  // Slides at the lower bound
         RAISED,  // Slides at the upper bound
@@ -63,11 +69,6 @@ public class SlidesVertical {
         fsm = VSlides.RAISED;
     }
 
-    public SlidesVertical(HardwareMap map) {
-        slidesLeft = map.get(DcMotor.class, "slidesL");
-        slidesRight = map.get(DcMotor.class, "slidesR");
-        slidesLeft.setDirection(DcMotorSimple.Direction.REVERSE);
-    }
 
     public void setPower(double power) {
         slidesLeft.setPower(power);
