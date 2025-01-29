@@ -21,7 +21,7 @@ public class SlidesHorizontal {
     private final Servo slidesLeft, slidesRight;
 
     private static final double EXPANDEDR = 0.5383, CONTRACTEDR = 1.0;
-    private static final double EXPANDEDL = 0.4567, CONTRACTEDL = 0.0;
+    private static final double EXPANDEDL = 0.4617, CONTRACTEDL = 0.0;
 
     public SlidesHorizontal(HardwareMap map) {
         slidesLeft = map.get(Servo.class, "slidesHL");
@@ -47,8 +47,8 @@ public class SlidesHorizontal {
     }
 
     public void setTransfer(){
-        setLeft(0.0794);
-        setRight(0.9189);
+        setLeft(0.155);
+        setRight(0.838);
     }
 
     public void setRight(double pos){
