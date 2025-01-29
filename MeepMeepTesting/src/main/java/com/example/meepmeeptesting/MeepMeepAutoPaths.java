@@ -67,6 +67,8 @@ public class MeepMeepAutoPaths {
         int xFactor = quadrant%3==0?1:-1;
         int yFactor = quadrant>=2?-1:1;
         return myBot.getDrive().actionBuilder(new Pose2d(10*xFactor, 60*yFactor, Math.toRadians(getAngle(270,quadrant))))
+                .strafeTo(new Vector2d(8 * xFactor, 33 * yFactor))
+                .waitSeconds(0.5)
                 .strafeTo(new Vector2d(40 * xFactor, 45 * yFactor))
                 .waitSeconds(1)
                 .strafeTo(new Vector2d(50 * xFactor, 45 * yFactor))
@@ -94,7 +96,9 @@ public class MeepMeepAutoPaths {
         int xFactor = quadrant%3==0?1:-1;
         int yFactor = quadrant>=2?-1:1;
         return myBot.getDrive().actionBuilder(new Pose2d(10*xFactor, 60*yFactor, Math.toRadians(getAngle(270,quadrant))))
-                .strafeTo(new Vector2d(48 * xFactor, 38 * yFactor))
+                .strafeToSplineHeading(new Vector2d(8 * xFactor, 33 * yFactor), Math.toRadians(getAngle(270, quadrant)))
+                .waitSeconds(0.5)
+                .strafeToSplineHeading(new Vector2d(48 * xFactor, 38 * yFactor), Math.toRadians(getAngle(270, quadrant)))
                 .waitSeconds(0.5)
                 .strafeToSplineHeading(new Vector2d(60 * xFactor, 60 * yFactor), Math.toRadians(getAngle(90, quadrant)))
                 .waitSeconds(0.5)
@@ -125,7 +129,9 @@ public class MeepMeepAutoPaths {
         int xFactor = quadrant%3==0?1:-1;
         int yFactor = quadrant>=2?-1:1;
         return myBot.getDrive().actionBuilder(new Pose2d(10*xFactor, 60*yFactor, Math.toRadians(getAngle(270,quadrant))))
-                .strafeTo(new Vector2d(48 * xFactor, 38 * yFactor))
+                .strafeToSplineHeading(new Vector2d(60 * xFactor, 60 * yFactor), Math.toRadians(getAngle(45, quadrant)))
+                .waitSeconds(0.5)
+                .strafeToSplineHeading(new Vector2d(48 * xFactor, 38 * yFactor), Math.toRadians(getAngle(270, quadrant)))
                 .waitSeconds(0.5)
                 .strafeToSplineHeading(new Vector2d(60 * xFactor, 60 * yFactor), Math.toRadians(getAngle(45, quadrant)))
                 .waitSeconds(0.5)

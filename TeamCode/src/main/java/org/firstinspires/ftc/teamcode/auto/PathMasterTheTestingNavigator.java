@@ -60,6 +60,9 @@ public class PathMasterTheTestingNavigator {
         int yFactor = quadrant>=2?-1:1;
 
         Action arcStrikeVelocity = mecanumDrive.actionBuilder(new Pose2d(10*xFactor, 60*yFactor, Math.toRadians(getAngle(270,quadrant))))
+                .strafeToSplineHeading(new Vector2d(60 * xFactor, 60 * yFactor), Math.toRadians(getAngle(45, quadrant)))
+                // output sample 0
+                .stopAndAdd(doOuttake())
                 .strafeTo(new Vector2d(48 * xFactor, 38 * yFactor))
                 // input sample 1
                 .stopAndAdd(doIntake())
