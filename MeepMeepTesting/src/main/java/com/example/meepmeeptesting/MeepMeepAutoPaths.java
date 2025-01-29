@@ -98,7 +98,8 @@ public class MeepMeepAutoPaths {
                 .strafeToSplineHeading(new Vector2d(8 * xFactor, 33 * yFactor), Math.toRadians(getAngle(270, quadrant)))
                 .waitSeconds(1)
                 .strafeToSplineHeading(new Vector2d(60 * xFactor, 60 * yFactor), Math.toRadians(getAngle(90, quadrant)))
-                //.waitSeconds(0.5)
+                .waitSeconds(1)
+                .turn(Math.toRadians(180))
                 .build();
     }
 
@@ -131,7 +132,8 @@ public class MeepMeepAutoPaths {
                 .strafeToSplineHeading(new Vector2d(8 * xFactor, 33 * yFactor), Math.toRadians(getAngle(270, quadrant)))
                 .waitSeconds(0.5)
                 .strafeToSplineHeading(new Vector2d(60 * xFactor, 60 * yFactor), Math.toRadians(getAngle(90, quadrant)))
-                //.waitSeconds(0.5)
+                .waitSeconds(1)
+                .turn(Math.toRadians(180))
                 .build();
     }
 
@@ -151,8 +153,9 @@ public class MeepMeepAutoPaths {
                 .waitSeconds(0.5)
                 .strafeToSplineHeading(new Vector2d(69 * xFactor, 38 * yFactor), Math.toRadians(getAngle(270, quadrant)))
                 .waitSeconds(0.5)
-                .strafeToSplineHeading(new Vector2d(60 * xFactor, 60 * yFactor), Math.toRadians(getAngle(45, quadrant)))
-                //.waitSeconds(0.5)
+                .strafeToSplineHeading(new Vector2d(60 * xFactor, 60 * yFactor), Math.toRadians(getAngle(90, quadrant)))
+                .waitSeconds(1)
+                .turn(Math.toRadians(180))
                 .build();
     }
 }

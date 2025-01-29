@@ -81,6 +81,9 @@ public class PathMasterTheTestingNavigator {
                 .strafeToSplineHeading(new Vector2d(60 * xFactor, 60 * yFactor), Math.toRadians(getAngle(45, quadrant)))
                 // output sample 3
                 .stopAndAdd(doOuttake())
+                .waitSeconds(1)
+                // turn around so its facing the field
+                .turn(Math.toRadians(180))
                 .build();
 
         opMode.waitForStart();
@@ -122,45 +125,4 @@ public class PathMasterTheTestingNavigator {
                 })
         );
     }
-
-    /*
-    public void intakeAndTransfer() throws InterruptedException {
-        //Intake intake = new Intake(hardwareMap, new Camera());
-
-        //intake.openIntake();
-        // open before you get there cus yeah timesave
-        //intake.posIntake();
-
-        //the wait should be there by being after the bot gets to the right pos
-        //intake.closeIntake();
-
-        //intake.looseClaw();
-
-        //intake.posTransfer();
-
-    }
-
-
-    public void transferAndTopBucket() throws InterruptedException {
-        Outtake outtake = new Outtake(hardwareMap);
-        SlidesVertical verticalSlides = new SlidesVertical(hardwareMap);
-
-        outtake.openTransfer();
-        Thread.sleep(1000);
-        outtake.close();
-
-        Thread.sleep(1000);
-
-        verticalSlides.moveToUpperBound();
-
-        outtake.closeBucket();
-
-        Thread.sleep(1000);
-
-        outtake.open();
-
-        verticalSlides.moveToLowerBound();
-    }
-
-     */
 }
