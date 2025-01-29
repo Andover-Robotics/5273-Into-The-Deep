@@ -9,6 +9,7 @@ import org.opencv.imgproc.*;
 import org.openftc.easyopencv.*;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class Camera {
@@ -26,12 +27,13 @@ public class Camera {
     private final int CAMERA_WIDTH = 320;
     private final int CAMERA_HEIGHT = 240;
     // HSV Bounds for red, yellow, and blue
-    private final Scalar LOWER_RED = new Scalar(0, 80, 25);
-    private final Scalar UPPER_RED = new Scalar(15, 255, 255);
+    private final Scalar LOWER_RED = new Scalar(125, 0, 0);
+    private final Scalar UPPER_RED = new Scalar(255, 60, 60);
     private final Scalar LOWER_YELLOW = new Scalar(20, 100, 100);
     private final Scalar UPPER_YELLOW = new Scalar(30, 255, 255);
     private final Scalar LOWER_BLUE = new Scalar(100, 100, 100);
     private final Scalar UPPER_BLUE = new Scalar(130, 255, 255);
+
 
     // OpenCV image processing
     class RectPipeline extends OpenCvPipeline {
@@ -51,6 +53,7 @@ public class Camera {
         @Override
         public Mat processFrame(Mat input) {
             synchronized (Camera.this) {
+                synchronized ()
                 rawResult = null;
 
                 // Convert to HSV
@@ -63,12 +66,24 @@ public class Camera {
 
                 // Detect and process each color
                 processColor(blurredImage2, LOWER_RED, UPPER_RED, new Scalar(255, 0, 0), input);
-                processColor(blurredImage2, LOWER_YELLOW, UPPER_YELLOW, new Scalar(0, 255, 255), input);
-                processColor(blurredImage2, LOWER_BLUE, UPPER_BLUE, new Scalar(0, 0, 255), input);
+                //processColor(blurredImage2, LOWER_YELLOW, UPPER_YELLOW, new Scalar(0, 255, 255), input);
+                //processColor(blurredImage2, LOWER_BLUE, UPPER_BLUE, new Scalar(0, 0, 255), input);
 
                 result = rawResult;
                 telemetry.addData("rect angle", result != null ? result.angle : "nothing");
-                telemetry.update();
+                telemetry.addData("avg",
+                        Core.mean(
+                                input.submat(100, 150, 100, 150)
+                        ).toString());
+                Core.MinMaxLocResult minMax = Core.minMaxLoc(input.submat(100, 150, 100, 150));
+                telemetry.addData("min",
+                        Arrays.toString(input.get((int) minMax.minLoc.y, (int) minMax.minLoc.x))
+                        );
+                telemetry.addData("max",
+                        Arrays.toString(input.get((int) minMax.maxLoc.y, (int) minMax.maxLoc.x))
+                );
+
+                Imgproc.rectangle(input, new Point(100, 100), new Point(150, 150), new Scalar(0, 255, 0), 2);
                 return input;
             }
         }
@@ -105,7 +120,6 @@ These adjustments can help ensure that the angle is consistent and easier to und
                         angle = angle + 90; // adjust the angle for tall rectangles
                     }
                     angle = angle % 360; // ensure the angle is within 0-360
-                    System.out.println("Detected angle: " + angle);
                 }
             }
         }

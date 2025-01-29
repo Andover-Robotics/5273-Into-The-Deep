@@ -13,10 +13,16 @@ import org.openftc.easyopencv.OpenCvCamera;
 public class WebcamTest extends LinearOpMode {
     @Override
     public void runOpMode() {
-        Claw claw = new Claw(hardwareMap, Intake.getClawOpen(), Intake.getClawClosed(), "iClaw", "iDiffL", "iDiffR", new Camera(hardwareMap, telemetry));
+        Camera camera = new Camera(hardwareMap, telemetry);
         waitForStart();
-        while (opModeIsActive()) {
-            if (gamepad2.b) claw.toSamplePosition();
-        };
+        while(opModeIsActive()){
+            RotatedRect rect = camera.getResult();
+            telemetry.addData("Rect", rect);
+            telemetry.update();
+        }
+        //Claw claw = new Claw(hardwareMap, Intake.getClawOpen(), Intake.getClawClosed(), "iClaw", "iDiffL", "iDiffR", );
+        //while (opModeIsActive()) {
+        //    if (gamepad2.b) claw.toSamplePosition();
+        //};
     }
 }
