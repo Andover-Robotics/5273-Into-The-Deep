@@ -18,6 +18,7 @@ public class WebcamTest extends LinearOpMode {
         while(opModeIsActive()){
             RotatedRect rect = camera.getResult();
             telemetry.addData("Rect", rect);
+
             telemetry.update();
         }
         //Claw claw = new Claw(hardwareMap, Intake.getClawOpen(), Intake.getClawClosed(), "iClaw", "iDiffL", "iDiffR", );
