@@ -115,7 +115,7 @@ public class PathMasterTheTestingNavigator {
                 new InstantAction(outtake::close),
                 new SleepAction(0.5),
                 new InstantAction(() -> {
-                    verticalSlides.moveToUpperBound();
+                    verticalSlides.moveToTopBucketPos();
                     outtake.closeBucket();
                 }),
                 new SleepAction(0.5),
