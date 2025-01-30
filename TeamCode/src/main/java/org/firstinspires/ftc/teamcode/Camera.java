@@ -13,8 +13,7 @@ import java.util.List;
 
 public class Camera {
     private OpenCvCamera camera;
-    private RotatedRect rawResult = null;
-    private volatile RotatedRect result = null;
+    private RotatedRect result = null;
     // Factor to estimate a polygon with - shouldn't be too low because noise will impact
     // the image more, and shouldn't be too high, or otherwise detail is lost
     private final double APPROX_FACTOR = 0.06;
@@ -32,6 +31,7 @@ public class Camera {
     private final Scalar UPPER_YELLOW = new Scalar(30, 255, 255);
     private final Scalar LOWER_BLUE = new Scalar(100, 80, 25);
     private final Scalar UPPER_BLUE = new Scalar(130, 255, 255);
+    double angle = -1;
 
     // OpenCV image processing
     class RectPipeline extends OpenCvPipeline {
@@ -51,7 +51,8 @@ public class Camera {
         @Override
         public Mat processFrame(Mat input) {
             synchronized (Camera.this) {
-                rawResult = null;
+                result = null;
+                angle = -1;
 
                 // Convert to HSV
                 Imgproc.cvtColor(input, hsv, Imgproc.COLOR_RGB2HSV);
@@ -66,7 +67,6 @@ public class Camera {
                 processColor(blurredImage2, LOWER_YELLOW, UPPER_YELLOW, new Scalar(255, 255, 0), input);
                 processColor(blurredImage2, LOWER_BLUE, UPPER_BLUE, new Scalar(0, 0, 255), input);
 
-                result = rawResult;
                 telemetry.addData("rect angle", result != null ? result.angle : "nothing");
                 telemetry.update();
                 return input;
@@ -105,12 +105,11 @@ public class Camera {
                     }
 
                     // Normalize and print the angle for debugging
-                    double angle = result.angle;
+                    angle = result.angle;
                     if (result.size.width < result.size.height) {
                         angle = angle + 90; // adjust the angle for tall rectangles
                     }
                     angle = angle % 360; // ensure the angle is within 0-360
-                    System.out.println("Detected angle: " + angle);
                 }
             }
         }
@@ -143,8 +142,10 @@ public class Camera {
     }
 
     public RotatedRect getResult() {
-        synchronized (this) {
-            return result;
-        }
+        return result;
+    }
+
+    public double getAngle() {
+        return angle;
     }
 }
