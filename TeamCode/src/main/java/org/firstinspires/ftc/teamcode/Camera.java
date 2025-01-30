@@ -63,7 +63,7 @@ public class Camera {
 
                 // Detect and process each color
                 processColor(blurredImage2, LOWER_RED, UPPER_RED, new Scalar(255, 0, 0), input);
-                processColor(blurredImage2, LOWER_YELLOW, UPPER_YELLOW, new Scalar(0, 255, 255), input);
+                processColor(blurredImage2, LOWER_YELLOW, UPPER_YELLOW, new Scalar(255, 255, 0), input);
                 processColor(blurredImage2, LOWER_BLUE, UPPER_BLUE, new Scalar(0, 0, 255), input);
 
                 result = rawResult;
@@ -98,6 +98,11 @@ public class Camera {
 
                     // Store the rotated rectangle
                     result = Imgproc.minAreaRect(contour2f);
+                    Point[] points = new Point[4];
+                    result.points(points);
+                    for (int i = 0; i < 4; i++) {
+                        Imgproc.line(input, points[i], points[(i + 1) % 4], drawColor, 4);
+                    }
 
                     // Normalize and print the angle for debugging
                     double angle = result.angle;
