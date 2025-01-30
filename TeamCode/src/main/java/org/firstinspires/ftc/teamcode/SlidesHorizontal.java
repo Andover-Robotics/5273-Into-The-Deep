@@ -20,12 +20,14 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 public class SlidesHorizontal {
     private final Servo slidesLeft, slidesRight;
 
-    private static final double EXPANDEDR = 0.5383, CONTRACTEDR = 1.0;
-    private static final double EXPANDEDL = 0.4617, CONTRACTEDL = 0.0;
+    private static final double EXPANDEDR = 0.4617, CONTRACTEDR = 0.0;
+    private static final double EXPANDEDL = 0.5383, CONTRACTEDL = 1.0;
+    private final Telemetry telemetry;
 
-    public SlidesHorizontal(HardwareMap map) {
+    public SlidesHorizontal(HardwareMap map, Telemetry tele) {
         slidesLeft = map.get(Servo.class, "slidesHL");
         slidesRight = map.get(Servo.class, "slidesHR");
+        telemetry = tele;
     }
 
     public enum HSlides {
@@ -67,14 +69,25 @@ public class SlidesHorizontal {
         return(slidesLeft.getPosition());
     }
 
+    private double clamp(double value, double bound1, double bound2) {
+        return bound1 < bound2
+                ? Math.max(bound1, Math.min(bound2, value))
+                : Math.max(bound2, Math.min(bound1, value));
+    }
+
     public void setPower(double power){
-        if (((getLeft()+Math.signum(power)*-0.01)>=EXPANDEDL) || ((getRight()+Math.signum(power)*0.01)<=EXPANDEDR)) open();
-        else if (((getLeft()+Math.signum(power)*-0.01)<=CONTRACTEDL) || ((getRight()+Math.signum(power)*0.01)>=CONTRACTEDR)) close();
-        else {
-            setRight(getRight()+Math.signum(power)*0.01);
-            setLeft(getLeft()+Math.signum(power)*-0.01);
-            fsm = HSlides.MIDDLE;
+        if(Math.abs(EXPANDEDL - CONTRACTEDL) - Math.abs(EXPANDEDR - CONTRACTEDR) > 0.01) {
+            throw new RuntimeException("The horizontal slides need equal range of motion");
         }
+
+        setRight(clamp(getRight() + power*0.01, CONTRACTEDR, EXPANDEDR));
+        setLeft(clamp(getLeft() + power*-0.01, CONTRACTEDL, EXPANDEDL));
+        if(getLeft() == EXPANDEDL || getRight() == EXPANDEDR) fsm = HSlides.OUT;
+        else if(getLeft() == CONTRACTEDL || getRight() == CONTRACTEDR) fsm = HSlides.IN;
+        else fsm = HSlides.MIDDLE;
+
+        telemetry.addData("Left Hslides", getLeft());
+        telemetry.addData("Right Hslides", getRight());
     }
 
     public void close() {

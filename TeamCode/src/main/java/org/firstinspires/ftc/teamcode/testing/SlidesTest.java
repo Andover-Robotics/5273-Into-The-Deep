@@ -11,7 +11,7 @@ public class SlidesTest extends LinearOpMode  {
     @Override
     public void runOpMode() {
         SlidesVertical vSlides = new SlidesVertical(hardwareMap);
-        SlidesHorizontal hSlides = new SlidesHorizontal(hardwareMap);
+        SlidesHorizontal hSlides = new SlidesHorizontal(hardwareMap, telemetry);
         waitForStart();
         while (opModeIsActive()) {
             //hSlides.slidesMove(gamepad2.left_stick_y, gamepad2.b, telemetry);

@@ -53,7 +53,6 @@ public class Camera {
         @Override
         public Mat processFrame(Mat input) {
             synchronized (Camera.this) {
-                synchronized ()
                 rawResult = null;
 
                 // Convert to HSV
@@ -82,6 +81,8 @@ public class Camera {
                 telemetry.addData("max",
                         Arrays.toString(input.get((int) minMax.maxLoc.y, (int) minMax.maxLoc.x))
                 );
+
+                telemetry.update();
 
                 Imgproc.rectangle(input, new Point(100, 100), new Point(150, 150), new Scalar(0, 255, 0), 2);
                 return input;

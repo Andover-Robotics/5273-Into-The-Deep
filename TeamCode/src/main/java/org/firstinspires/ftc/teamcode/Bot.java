@@ -50,7 +50,7 @@ public class Bot {
         camera = new Camera(hardwareMap, telemetry);
 
         // intake:
-        hSlides = new SlidesHorizontal(hardwareMap);
+        hSlides = new SlidesHorizontal(hardwareMap, telemetry);
         intake = new Intake(hardwareMap, camera);
 
         // outtake:

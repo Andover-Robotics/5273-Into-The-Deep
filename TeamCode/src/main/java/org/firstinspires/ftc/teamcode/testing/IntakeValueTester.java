@@ -34,7 +34,7 @@ public class IntakeValueTester extends LinearOpMode {
         intake = new Intake(hardwareMap,new Camera(hardwareMap, telemetry));
         outtake = new Outtake(hardwareMap);
         vSlides = new SlidesVertical(hardwareMap);
-        hSlides = new SlidesHorizontal(hardwareMap);
+        hSlides = new SlidesHorizontal(hardwareMap, telemetry);
         boolean start = false;
         waitForStart();
         while(opModeIsActive()){
