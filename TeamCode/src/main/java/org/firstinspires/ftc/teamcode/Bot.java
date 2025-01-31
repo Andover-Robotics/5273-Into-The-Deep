@@ -36,9 +36,10 @@ public class Bot {
 
     public enum FSM{
         STARTING,
-        INTAKE,
-        TRANSFER,
-        HANG
+        INTAKESAMPLE,
+        SCORESAMPLE,
+        INTAKESPECIMEN,
+        CLIPSPECIMEN
     }
     public FSM fsm = FSM.STARTING;
     /**
@@ -76,16 +77,21 @@ public class Bot {
         //telemetry.addData("Horizontal Slides Pos: ", hSlides.getPositions());
         switch(fsm){
             case STARTING:
+                vSlides.resetEncoders();
                 if(gamepad2.isDown(GamepadKeys.Button.A)){
                   hSlides.close();
-                  vSlides.resetEncoders();
-                  vSlides.moveToLowerBound();
                   intake.openSurvey();
                   outtake.closeBucket();
-                  fsm = FSM.INTAKE;
+                  fsm = FSM.INTAKESAMPLE;
+                }
+                if(gamepad2.isDown(GamepadKeys.Button.Y)){
+                  hSlides.close();
+                  intake.openSurvey();
+                  outtake.closeBucket();
+                  fsm = FSM.INTAKESPECIMEN;
                 }
                 break;
-            case INTAKE:
+            case INTAKESAMPLE:
                 hSlides.setPower(gamepad2.getLeftY());
                 intake.moveDiffyPos(gamepad2,telemetry);
                 boolean rightTriggerDown = gamepad2.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER)>0.1;
@@ -108,7 +114,7 @@ public class Bot {
                 }
                 telemetry.addData("Has sample: ",intake.hasSample());
                 break;
-            case TRANSFER:
+            case SCORESAMPLE:
                 vSlides.slidesMove(gamepad2.getRightY(), gamepad2.isDown(GamepadKeys.Button.B), telemetry);
                 if (!gamepad2.isDown(GamepadKeys.Button.B)&& gamepad2.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER)>0.1)
                     outtake.openBucket();
@@ -119,10 +125,7 @@ public class Bot {
                     vSlides.setPosition(0);
                     intake.posSurvey();
                     outtake.closeBucket();
-                    fsm = FSM.INTAKE;
-                }
-                if(gamepad2.isDown(GamepadKeys.Button.Y)){
-                    outtake.closeBucket();
+                    fsm = FSM.INTAKESAMPLE;
                 }
 
                 if(gamepad2.isDown(GamepadKeys.Button.B)){
@@ -164,7 +167,7 @@ public class Bot {
                 new SleepAction(1),
                 new InstantAction(hSlides::close),
                 new SleepAction(1),
-                new InstantAction(() -> fsm = FSM.TRANSFER));
+                new InstantAction(() -> fsm = FSM.SCORESAMPLE));
     }
 
     public SequentialAction actionIntakeSpecimen() {
@@ -176,7 +179,7 @@ public class Bot {
                 new InstantAction(vSlides::moveToRungClippingPos),
                 new SleepAction(0.5),
                 new InstantAction(outtake::posClip),
-                new InstantAction(() -> fsm = FSM.SPECIMENINTAKE)); // arnav do this
+                new InstantAction(() -> fsm = FSM.INTAKESPECIMEN)); // arnav do this
     }
 
     public SequentialAction actionOuttakeSpecimen() {
@@ -187,6 +190,6 @@ public class Bot {
                 new SleepAction(0.5),
                 new InstantAction(outtake::openClaw),
                 new InstantAction(vSlides::moveToLowerBound),
-                new InstantAction(()-> fsm = FSM.SPECIMENOUTTAKE));
+                new InstantAction(()-> fsm = FSM.CLIPSPECIMEN));
     }
 }
