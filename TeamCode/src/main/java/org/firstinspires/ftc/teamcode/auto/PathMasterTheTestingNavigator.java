@@ -62,25 +62,25 @@ public class PathMasterTheTestingNavigator {
         Action arcStrikeVelocity = mecanumDrive.actionBuilder(new Pose2d(10*xFactor, 60*yFactor, Math.toRadians(getAngle(270,quadrant))))
                 .strafeToSplineHeading(new Vector2d(60 * xFactor, 60 * yFactor), Math.toRadians(getAngle(45, quadrant)))
                 // output sample 0
-                .stopAndAdd(doOuttake())
+                .stopAndAdd(doOuttakeBucket())
                 .strafeTo(new Vector2d(48 * xFactor, 38 * yFactor))
                 // input sample 1
                 .stopAndAdd(doIntake())
                 .strafeToSplineHeading(new Vector2d(60 * xFactor, 60 * yFactor), Math.toRadians(getAngle(45, quadrant)))
                 // output sample 1
-                .stopAndAdd(doOuttake())
+                .stopAndAdd(doOuttakeBucket())
                 .strafeToSplineHeading(new Vector2d(58 * xFactor, 38 * yFactor), Math.toRadians(getAngle(270, quadrant)))
                 //input sample 2
                 .stopAndAdd(doIntake())
                 .strafeToSplineHeading(new Vector2d(60 * xFactor, 60 * yFactor), Math.toRadians(getAngle(45, quadrant)))
                 // output sample 2
-                .stopAndAdd(doOuttake())
+                .stopAndAdd(doOuttakeBucket())
                 .strafeToSplineHeading(new Vector2d(69 * xFactor, 38 * yFactor), Math.toRadians(getAngle(270, quadrant)))
                 // input sample 3
                 .stopAndAdd(doIntake())
                 .strafeToSplineHeading(new Vector2d(60 * xFactor, 60 * yFactor), Math.toRadians(getAngle(45, quadrant)))
                 // output sample 3
-                .stopAndAdd(doOuttake())
+                .stopAndAdd(doOuttakeBucket())
                 .waitSeconds(1)
                 // turn around so its facing the field
                 .turn(Math.toRadians(180))
@@ -107,7 +107,7 @@ public class PathMasterTheTestingNavigator {
         );
     }
 
-    private static Action doOuttake() {
+    private static Action doOuttakeBucket() {
         return new SequentialAction(
                 new SleepAction(0.5),
                 new InstantAction(outtake::openTransfer),
