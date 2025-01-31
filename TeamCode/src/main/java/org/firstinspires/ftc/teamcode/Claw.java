@@ -26,14 +26,15 @@ public class Claw {
      * Initializes a Claw instance.
      * @param hardwareMap {@link com.qualcomm.robotcore.hardware.HardwareMap}
      */
-    public Claw(@NonNull HardwareMap hardwareMap, double open, double closed, String name, String nameL, String nameR, Camera dCamera)
+    public Claw(@NonNull HardwareMap hardwareMap, double open, double closed, Camera Camera)
     {
-        servo = hardwareMap.get(Servo.class, name);
-        diffyRotator = new DiffyRotator(hardwareMap, nameL, nameR);
+        servo = hardwareMap.get(Servo.class, "iClaw");
+        roll = hardwareMap.get(Servo.class, "roll");
+        pitch = hardwareMap.get(Servo.class, "pitch");
         openPos = open;
         closedPos = closed;
         colorSensor = hardwareMap.get(ColorSensor.class, "colorSensor");
-        camera = dCamera;
+        camera = Camera;
     }
 
     public void clawRollPitch(double rollDeg, double pitchDeg) {
@@ -81,9 +82,9 @@ public class Claw {
         diffyRotator.teleopTick(gamepad,telemetry);
     }
 
-    public void setPositions(double lPos, double rPos){
-        diffyRotator.setLeft(lPos);
-        diffyRotator.setRight(rPos);
+    public void setPositions(double rollPos, double pitchPos){
+        diffyRotator.setRoll(rollPos);
+        diffyRotator.setPitch(pitchPos);
     }
 
     public void rollActiveClaw(boolean left, boolean right){
@@ -103,7 +104,8 @@ public class Claw {
             // TODO roll claw position down (after testing)
             double angle = result.angle;
             if (result.size.width > result.size.height) angle += 90;
-            clawRoll(angle);
+            // TODO fix the angling for new claw
+            //clawRoll(angle);
         }
     }
 
