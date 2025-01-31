@@ -64,13 +64,35 @@ public class Claw {
         return(servo.getPosition());
     }
 
-    public void positionalActiveClaw(GamepadEx gamepad, Telemetry telemetry){
-        diffyRotator.teleopTick(gamepad,telemetry);
+    public void positionalActiveRollPitch(GamepadEx gamepad , Telemetry telemetry) {
+        if (gamepad.isDown(GamepadKeys.Button.DPAD_UP)) {
+            roll.setPosition(roll.getPosition() + 0.01);
+        }
+        if (gamepad.isDown(GamepadKeys.Button.DPAD_DOWN)) {
+            roll.setPosition(roll.getPosition() - 0.01);
+        }
+        if (gamepad.isDown(GamepadKeys.Button.DPAD_LEFT)) {
+            pitch.setPosition(pitch.getPosition() + 0.01);
+        }
+        if (gamepad.isDown(GamepadKeys.Button.DPAD_RIGHT)) {
+            pitch.setPosition(pitch.getPosition() - 0.01);
+        }
+
+        telemetry.addData("roll position: ",roll.getPosition());
+        telemetry.addData("pitch position: ",pitch.getPosition());
     }
 
     public void setPositions(double rollPos, double pitchPos){
-        diffyRotator.setRoll(rollPos);
-        diffyRotator.setPitch(pitchPos);
+        roll.setPosition(rollPos);
+        pitch.setPosition(pitchPos);
+    }
+
+    public double getRoll(){
+        return roll.getPosition();
+    }
+
+    public double getPitch(){
+        return pitch.getPosition();
     }
 
     public RotatedRect getSample() {
