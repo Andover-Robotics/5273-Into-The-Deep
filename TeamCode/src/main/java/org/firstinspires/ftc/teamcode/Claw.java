@@ -95,17 +95,11 @@ public class Claw {
         return pitch.getPosition();
     }
 
-    public RotatedRect getSample() {
-        return camera.getResult();
-    }
     public void toSamplePosition() {
-        RotatedRect result = getSample();
-        if (result != null) {
-            // TODO roll claw position down (after testing)
-            double angle = result.angle;
-            if (result.size.width > result.size.height) angle += 90;
+        double result = camera.getAngle();
+        if (result != -1) {
             // TODO fix the angling for new claw
-            //clawRoll(angle);
+            roll.setPosition(result / 180);
         }
     }
 
