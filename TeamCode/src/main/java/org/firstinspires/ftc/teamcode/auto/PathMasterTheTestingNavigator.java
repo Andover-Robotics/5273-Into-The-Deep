@@ -96,7 +96,7 @@ public class PathMasterTheTestingNavigator {
     }
 
     private static Action doIntake() {
-        return bot.actionIntakeSpecimen();
+        return bot.actionIntake();
     }
 
     private static Action doOuttakeBucket() {
