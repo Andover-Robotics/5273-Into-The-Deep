@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
+import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.Servo;
@@ -17,7 +18,8 @@ import org.opencv.core.RotatedRect;
  */
 public class Claw {
     private final Servo servo;
-    private final DiffyRotator diffyRotator;
+    private final Servo roll;
+    private final Servo pitch;
     public static double openPos, closedPos;
     public final double LOOSE_POS = 0.04;
     private ColorSensor colorSensor;
@@ -36,15 +38,6 @@ public class Claw {
         colorSensor = hardwareMap.get(ColorSensor.class, "colorSensor");
         camera = Camera;
     }
-
-    public void clawRollPitch(double rollDeg, double pitchDeg) {
-        diffyRotator.rollPitch(rollDeg,pitchDeg);}
-
-    public void clawRoll(double rollDeg){
-        diffyRotator.rollToDegrees(rollDeg);}
-
-    public void clawPitch(double pitchDeg){
-        diffyRotator.pitchToDegrees(pitchDeg);}
 
     public void looseClaw(){
         servo.setPosition(LOOSE_POS);
@@ -67,13 +60,6 @@ public class Claw {
         servo.setPosition(pos);
     }
 
-    public double getRoll(){
-        return(diffyRotator.roll);
-    }
-    public double getPitch(){
-        return(diffyRotator.pitch);
-    }
-
     public double getClawPos(){
         return(servo.getPosition());
     }
@@ -87,14 +73,6 @@ public class Claw {
         diffyRotator.setPitch(pitchPos);
     }
 
-    public void rollActiveClaw(boolean left, boolean right){
-        if (left && !right) clawRoll(diffyRotator.roll+15);
-        else if (right && !left) clawRoll(diffyRotator.roll+15);
-    }
-    public void pitchActiveClaw(boolean up, boolean down){
-        if (up && !down) clawPitch(diffyRotator.roll+5);
-        else if (down && !up) clawPitch(diffyRotator.roll+5);
-    }
     public RotatedRect getSample() {
         return camera.getResult();
     }
