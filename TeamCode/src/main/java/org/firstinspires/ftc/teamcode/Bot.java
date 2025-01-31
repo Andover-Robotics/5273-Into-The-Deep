@@ -37,8 +37,10 @@ public class Bot {
 
     public enum FSM{
         STARTING,
-        INTAKE,
-        TRANSFER,
+        INTAKESAMPLE,
+        SCORESAMPLE,
+        INTAKESPECIMEN,
+        CLIPSPECIMEN,
         HANG
     }
     public FSM fsm = FSM.STARTING;
@@ -70,26 +72,33 @@ public class Bot {
      * @param telemetry {@link org.firstinspires.ftc.robotcore.external.Telemetry}
      */
     public void teleopTick(GamepadEx gamepad1, GamepadEx gamepad2, Telemetry telemetry) throws InterruptedException{
+        boolean rightTriggerDown = gamepad2.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER)>0.1;
         final TriggerReader rightTrigger = new TriggerReader(gamepad2, GamepadKeys.Trigger.RIGHT_TRIGGER);
         movement.teleopTick(gamepad1.getLeftX(),gamepad1.getLeftY(),gamepad1.getRightX(), gamepad1.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER),telemetry);
         telemetry.addData("State: ",fsm);
         telemetry.addData("Vertical Slides Pos: ", vSlides.getEncoders());
+        if (gamepad2.isDown(GamepadKeys.Button.X))
+            fsm = FSM.HANG;
         //telemetry.addData("Horizontal Slides Pos: ", hSlides.getPositions());
         switch(fsm){
             case STARTING:
+                vSlides.resetEncoders();
                 if(gamepad2.isDown(GamepadKeys.Button.A)){
                   hSlides.close();
-                  vSlides.resetEncoders();
-                  vSlides.moveToLowerBound();
                   intake.openSurvey();
                   outtake.closeBucket();
-                  fsm = FSM.INTAKE;
+                  fsm = FSM.INTAKESAMPLE;
+                }
+                if(gamepad2.isDown(GamepadKeys.Button.Y)){
+                  hSlides.close();
+                  intake.openSurvey();
+                  outtake.closeBucket();
+                  fsm = FSM.INTAKESPECIMEN;
                 }
                 break;
-            case INTAKE:
+            case INTAKESAMPLE:
                 hSlides.setPower(gamepad2.getLeftY());
                 intake.moveDiffyPos(gamepad2,telemetry);
-                boolean rightTriggerDown = gamepad2.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER)>0.1;
                 telemetry.addData("Intake State", intake.fsm);
                 if (intake.isSurveyOpen()) intake.toSamplePosition();
                 if (rightTriggerDown && (intake.isSurveyOpen() || intake.isSurveyClosed())){
@@ -109,8 +118,8 @@ public class Bot {
                 }
                 telemetry.addData("Has sample: ",intake.hasSample());
                 break;
-            case TRANSFER:
-                vSlides.slidesMove(gamepad2.getRightY(), gamepad2.isDown(GamepadKeys.Button.B), telemetry);
+            case SCORESAMPLE:
+                vSlides.slidesMove(gamepad2.getLeftY(), gamepad2.isDown(GamepadKeys.Button.B), telemetry);
                 if (!gamepad2.isDown(GamepadKeys.Button.B)&& gamepad2.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER)>0.1)
                     outtake.openBucket();
                 else if (!gamepad2.isDown(GamepadKeys.Button.B))
@@ -120,10 +129,7 @@ public class Bot {
                     vSlides.setPosition(0);
                     intake.posSurvey();
                     outtake.closeBucket();
-                    fsm = FSM.INTAKE;
-                }
-                if(gamepad2.isDown(GamepadKeys.Button.Y)){
-                    outtake.closeBucket();
+                    fsm = FSM.INTAKESAMPLE;
                 }
 
                 if(gamepad2.isDown(GamepadKeys.Button.B)){
@@ -133,6 +139,15 @@ public class Bot {
                     hSlides.close();
                 }
                 break;
+            case HANG:
+                outtake.closeTransfer();
+                hSlides.close();
+                intake.closeTransfer();
+                vSlides.slidesMove(gamepad2.getLeftY(), gamepad2.isDown(GamepadKeys.Button.B), telemetry);
+                if(rightTriggerDown){
+                    vSlides.moveToLowerBound();
+                }
+
         }
     }
 
@@ -165,7 +180,7 @@ public class Bot {
                 new SleepAction(1),
                 new InstantAction(hSlides::close),
                 new SleepAction(1),
-                new InstantAction(() -> fsm = FSM.TRANSFER));
+                new InstantAction(() -> fsm = FSM.SCORESAMPLE));
     }
 
     public Action actionIntake() { // using the intake claw
@@ -212,7 +227,7 @@ public class Bot {
                 new InstantAction(vSlides::moveToRungClippingPos),
                 new SleepAction(0.5),
                 new InstantAction(outtake::posClip),
-                new InstantAction(() -> fsm = FSM.SPECIMENINTAKE)); // arnav do this
+                new InstantAction(() -> fsm = FSM.INTAKESPECIMEN)); // arnav do this
     }
 
     public SequentialAction actionOuttakeSpecimen() {
@@ -223,6 +238,6 @@ public class Bot {
                 new SleepAction(0.5),
                 new InstantAction(outtake::openClaw),
                 new InstantAction(vSlides::moveToLowerBound),
-                new InstantAction(()-> fsm = FSM.SPECIMENOUTTAKE));
+                new InstantAction(()-> fsm = FSM.CLIPSPECIMEN));
     }
 }

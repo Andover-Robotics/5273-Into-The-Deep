@@ -109,7 +109,7 @@ public class Camera {
                     if (result.size.width < result.size.height) {
                         angle = angle + 90; // adjust the angle for tall rectangles
                     }
-                    angle = angle % 360; // ensure the angle is within 0-360
+                    angle = angle % 180; // ensure the angle is within 0-180
                 }
             }
         }
