@@ -92,8 +92,16 @@ public class SlidesVertical {
         updateFSM();
     }
 
-    public void transferToBucketPos(){
+    public void moveToTopBucketPos() {
         setPosition(117);
+    }
+
+    public void moveToRungClippingPos() {   // the highest one
+        setPosition(90);
+    }
+
+    public void clipSpecimenVertSlides() {  // pulls the vert slides down
+        setPosition(80);
     }
 
     //moves based on position inputted

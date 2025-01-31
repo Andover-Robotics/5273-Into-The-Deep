@@ -158,12 +158,35 @@ public class Bot {
                 new SleepAction(0.2),
                 new InstantAction(intake::openSurvey),
                 new SleepAction(1),
-                new InstantAction(vSlides::transferToBucketPos),
+                new InstantAction(vSlides::moveToTopBucketPos),
                 new SleepAction(1),
                 new InstantAction(outtake::closeBucket),
                 new SleepAction(1),
                 new InstantAction(hSlides::close),
                 new SleepAction(1),
                 new InstantAction(() -> fsm = FSM.TRANSFER));
+    }
+
+    public SequentialAction actionIntakeSpecimen() {
+        return new SequentialAction(
+                // the moving to lower bound should be done by the outtake method at the end
+                // open the claw before calling this method
+                new InstantAction(outtake::closeClaw),
+                new SleepAction(0.5),
+                new InstantAction(vSlides::moveToRungClippingPos),
+                new SleepAction(0.5),
+                new InstantAction(outtake::posClip),
+                new InstantAction(() -> fsm = FSM.SPECIMENINTAKE)); // arnav do this
+    }
+
+    public SequentialAction actionOuttakeSpecimen() {
+        return new SequentialAction(
+                // claw should be set to perfect clipping pos so all you need is to have bot flush with the
+                // bottom part of the submersible, and lowers vert slides
+                new InstantAction(vSlides::clipSpecimenVertSlides),
+                new SleepAction(0.5),
+                new InstantAction(outtake::openClaw),
+                new InstantAction(vSlides::moveToLowerBound),
+                new InstantAction(()-> fsm = FSM.SPECIMENOUTTAKE));
     }
 }
