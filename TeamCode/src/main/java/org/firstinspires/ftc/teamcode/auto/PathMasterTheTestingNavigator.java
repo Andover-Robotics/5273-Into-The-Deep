@@ -1,9 +1,6 @@
 package org.firstinspires.ftc.teamcode.auto;
 
 // RR-specific imports
-import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.hardwareMap;
-import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.telemetry;
-
 import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.roadrunner.Action;
 import com.acmerobotics.roadrunner.InstantAction;
@@ -50,8 +47,7 @@ public class PathMasterTheTestingNavigator {
     private static Intake intake;
     private static Outtake outtake;
     private static SlidesVertical verticalSlides;
-
-    private static Bot bot = new Bot(hardwareMap, telemetry);
+    private static Bot bot;
 
     public static void runOpMode(LinearOpMode opMode, int quadrant) {
         HardwareMap hardwareMap = opMode.hardwareMap;
@@ -62,6 +58,7 @@ public class PathMasterTheTestingNavigator {
         intake = new Intake(hardwareMap, new Camera(hardwareMap, telemetry));
         outtake = new Outtake(hardwareMap);
         verticalSlides = new SlidesVertical(hardwareMap);
+        bot = new Bot(hardwareMap, telemetry);
 
         int xFactor = quadrant % 3 == 0 ? 1 : -1;
         int yFactor = quadrant >= 2 ? -1 : 1;
