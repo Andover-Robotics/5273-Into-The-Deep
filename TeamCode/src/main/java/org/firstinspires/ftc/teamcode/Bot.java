@@ -200,7 +200,6 @@ public class Bot {
 
     public Action actionOuttakeBucket() {
         return new SequentialAction(
-                new SleepAction(0.5),
                 new InstantAction(outtake::openTransfer),
                 new SleepAction(0.5),
                 new InstantAction(outtake::close),
@@ -226,7 +225,7 @@ public class Bot {
                 new InstantAction(vSlides::moveToRungClippingPos),
                 new SleepAction(0.5),
                 new InstantAction(outtake::posClip),
-                new InstantAction(() -> fsm = FSM.INTAKESPECIMEN)); // arnav do this
+                new InstantAction(() -> fsm = FSM.INTAKESPECIMEN));
     }
 
     public SequentialAction actionOuttakeSpecimen() {
