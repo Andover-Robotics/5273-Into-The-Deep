@@ -1,6 +1,9 @@
 package org.firstinspires.ftc.teamcode.auto;
 
 // RR-specific imports
+import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.hardwareMap;
+import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.telemetry;
+
 import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.roadrunner.Action;
 import com.acmerobotics.roadrunner.InstantAction;
@@ -17,7 +20,9 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 //our special silly very important goofy classes (w rizz)
+import org.firstinspires.ftc.robotcore.external.Func;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.teamcode.Bot;
 import org.firstinspires.ftc.teamcode.Camera;
 import org.firstinspires.ftc.teamcode.Outtake;
 import org.firstinspires.ftc.teamcode.Intake;
@@ -46,7 +51,9 @@ public class PathMasterTheTestingNavigator {
     private static Outtake outtake;
     private static SlidesVertical verticalSlides;
 
-    public static void runOpMode(LinearOpMode opMode, int quadrant){
+    private static Bot bot = new Bot(hardwareMap, telemetry);
+
+    public static void runOpMode(LinearOpMode opMode, int quadrant) {
         HardwareMap hardwareMap = opMode.hardwareMap;
         Telemetry telemetry = opMode.telemetry;
 
@@ -56,10 +63,10 @@ public class PathMasterTheTestingNavigator {
         outtake = new Outtake(hardwareMap);
         verticalSlides = new SlidesVertical(hardwareMap);
 
-        int xFactor = quadrant%3==0?1:-1;
-        int yFactor = quadrant>=2?-1:1;
+        int xFactor = quadrant % 3 == 0 ? 1 : -1;
+        int yFactor = quadrant >= 2 ? -1 : 1;
 
-        Action arcStrikeVelocity = mecanumDrive.actionBuilder(new Pose2d(10*xFactor, 60*yFactor, Math.toRadians(getAngle(270,quadrant))))
+        Action arcStrikeVelocity = mecanumDrive.actionBuilder(new Pose2d(10 * xFactor, 60 * yFactor, Math.toRadians(getAngle(270, quadrant))))
                 .strafeToSplineHeading(new Vector2d(60 * xFactor, 60 * yFactor), Math.toRadians(getAngle(45, quadrant)))
                 // output sample 0
                 .stopAndAdd(doOuttakeBucket())
@@ -92,37 +99,18 @@ public class PathMasterTheTestingNavigator {
     }
 
     private static Action doIntake() {
-        return new SequentialAction(
-                new InstantAction(intake::openIntake),
-                new SleepAction(0.5),
-                new InstantAction(() -> {
-                    intake.posIntake();
-                    intake.closeIntake();
-                }),
-                new SleepAction(0.5),
-                new InstantAction(() -> {
-                    intake.looseClaw();
-                    intake.posTransfer();
-                })
-        );
+        return bot.actionIntakeSpecimen();
     }
 
     private static Action doOuttakeBucket() {
-        return new SequentialAction(
-                new SleepAction(0.5),
-                new InstantAction(outtake::openTransfer),
-                new SleepAction(0.5),
-                new InstantAction(outtake::close),
-                new SleepAction(0.5),
-                new InstantAction(() -> {
-                    verticalSlides.moveToTopBucketPos();
-                    outtake.closeBucket();
-                }),
-                new SleepAction(0.5),
-                new InstantAction(() -> {
-                    outtake.open();
-                    verticalSlides.moveToLowerBound();
-                })
-        );
+        return bot.actionOuttakeBucket();
+    }
+
+    private static Action doIntakeSpecimen() { //  specimen from wall
+        return bot.actionIntakeSpecimen();
+    }
+
+    private static Action doOuttakeSpecimen() { // clips to top rung
+        return bot.actionOuttakeSpecimen();
     }
 }

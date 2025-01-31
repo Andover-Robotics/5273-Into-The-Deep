@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode;
 
 import androidx.annotation.NonNull;
 
+import com.acmerobotics.roadrunner.Action;
 import com.acmerobotics.roadrunner.InstantAction;
 import com.acmerobotics.roadrunner.SequentialAction;
 import com.acmerobotics.roadrunner.SleepAction;
@@ -165,6 +166,41 @@ public class Bot {
                 new InstantAction(hSlides::close),
                 new SleepAction(1),
                 new InstantAction(() -> fsm = FSM.TRANSFER));
+    }
+
+    public Action actionIntake() { // using the intake claw
+        return new SequentialAction(
+                new InstantAction(intake::openIntake),
+                new SleepAction(0.5),
+                new InstantAction(() -> {
+                    intake.posIntake();
+                    intake.closeIntake();
+                }),
+                new SleepAction(0.5),
+                new InstantAction(() -> {
+                    intake.looseClaw();
+                    intake.posTransfer();
+                })
+        );
+    }
+
+    public Action actionOuttakeBucket() {
+        return new SequentialAction(
+                new SleepAction(0.5),
+                new InstantAction(outtake::openTransfer),
+                new SleepAction(0.5),
+                new InstantAction(outtake::close),
+                new SleepAction(0.5),
+                new InstantAction(() -> {
+                    vSlides.moveToTopBucketPos();
+                    outtake.closeBucket();
+                }),
+                new SleepAction(0.5),
+                new InstantAction(() -> {
+                    outtake.open();
+                    vSlides.moveToLowerBound();
+                })
+        );
     }
 
     public SequentialAction actionIntakeSpecimen() {
