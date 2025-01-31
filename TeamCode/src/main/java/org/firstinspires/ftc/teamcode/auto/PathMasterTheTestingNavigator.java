@@ -127,21 +127,21 @@ public class PathMasterTheTestingNavigator {
                 .strafeToSplineHeading(new Vector2d(40 * xFactor, 45 * yFactor), Math.toRadians(getAngle(90,quadrant)))
                 .waitSeconds(1)
                 //sweep
-                .stopAndAdd(sweep())
+                .stopAndAdd(doSweep())
                 .strafeToSplineHeading(new Vector2d(40 * xFactor, 45 * yFactor), Math.toRadians(getAngle(120,quadrant)))
                 .waitSeconds(1)
                 // go to sweep
                 .strafeToSplineHeading(new Vector2d(50 * xFactor, 45 * yFactor), Math.toRadians(getAngle(90,quadrant)))
                 .waitSeconds(1)
                 //sweep
-                .stopAndAdd(sweep())
+                .stopAndAdd(doSweep())
                 .strafeToSplineHeading(new Vector2d(50 * xFactor, 45 * yFactor), Math.toRadians(getAngle(120,quadrant)))
                 .waitSeconds(1)
                 // go to sweep
                 .strafeToSplineHeading(new Vector2d(60 * xFactor, 45 * yFactor), Math.toRadians(getAngle(90,quadrant)))
                 .waitSeconds(1)
                 // sweep
-                .stopAndAdd(sweep())
+                .stopAndAdd(doSweep())
                 .strafeToSplineHeading(new Vector2d(60 * xFactor, 45 * yFactor), Math.toRadians(getAngle(120,quadrant)))
                 .waitSeconds(1)
 
@@ -183,8 +183,8 @@ public class PathMasterTheTestingNavigator {
         Actions.runBlocking(arcStrikeVelocity);
     }
 
-    private static Action sweep() {
-        return null; // TODO should lower sweeping arm, wait, then raise arm
+    private static Action doSweep() {
+        return bot.actionSweep();
     }
 
     private static Action doIntake() {

@@ -240,4 +240,8 @@ public class Bot {
                 new InstantAction(vSlides::moveToLowerBound),
                 new InstantAction(()-> fsm = FSM.CLIPSPECIMEN));
     }
+
+    public Action actionSweep() {
+        return null; // TODO should lower sweeping arm, wait, then raise arm
+    }
 }
