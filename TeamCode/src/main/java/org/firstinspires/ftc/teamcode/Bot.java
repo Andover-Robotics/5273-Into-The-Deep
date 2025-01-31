@@ -74,7 +74,6 @@ public class Bot {
     public void teleopTick(GamepadEx gamepad1, GamepadEx gamepad2, Telemetry telemetry) throws InterruptedException{
         boolean rightTriggerDown = gamepad2.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER)>0.1;
         final TriggerReader rightTrigger = new TriggerReader(gamepad2, GamepadKeys.Trigger.RIGHT_TRIGGER);
-        movement.teleopTick(gamepad1.getLeftX(),gamepad1.getLeftY(),gamepad1.getRightX(), gamepad1.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER),telemetry);
         telemetry.addData("State: ",fsm);
         telemetry.addData("Vertical Slides Pos: ", vSlides.getEncoders());
         if (gamepad2.isDown(GamepadKeys.Button.X))
@@ -147,7 +146,7 @@ public class Bot {
                 if(rightTriggerDown){
                     vSlides.moveToLowerBound();
                 }
-
+                break;
         }
     }
 
