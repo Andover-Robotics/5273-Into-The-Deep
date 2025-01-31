@@ -32,8 +32,6 @@ public class Bot {
     private final SlidesVertical vSlides;
     private final Outtake outtake;
     private final Camera camera;
-    private boolean hasSample = false;
-
 
     public enum FSM{
         STARTING,
@@ -65,8 +63,12 @@ public class Bot {
         fsm = FSM.STARTING;
     }
 
+    public Movement getMovement(){
+        return movement;
+    }
+
     /**
-     * Runs one tick of the Teleop OpMode.
+     * Runs one tick of the Teleop OpMode, excluding movement, which is threaded separately
      * @param gamepad1 {@link com.qualcomm.robotcore.hardware.Gamepad} 1
      * @param gamepad2 {@link com.qualcomm.robotcore.hardware.Gamepad} 2
      * @param telemetry {@link org.firstinspires.ftc.robotcore.external.Telemetry}
@@ -80,7 +82,7 @@ public class Bot {
             fsm = FSM.HANG;
         //telemetry.addData("Horizontal Slides Pos: ", hSlides.getPositions());
         switch(fsm){
-            case STARTING:
+            case STARTING: // if just started
                 vSlides.resetEncoders();
                 if(gamepad2.isDown(GamepadKeys.Button.A)){
                   hSlides.close();
@@ -95,7 +97,7 @@ public class Bot {
                   fsm = FSM.INTAKESPECIMEN;
                 }
                 break;
-            case INTAKESAMPLE:
+            case INTAKESAMPLE: // direction control over horizontal slides and intake
                 hSlides.setPower(gamepad2.getLeftY());
                 intake.moveDiffyPos(gamepad2,telemetry);
                 telemetry.addData("Intake State", intake.fsm);
@@ -117,7 +119,7 @@ public class Bot {
                 }
                 telemetry.addData("Has sample: ",intake.hasSample());
                 break;
-            case SCORESAMPLE:
+            case SCORESAMPLE: // direct control over vertical slides and outtake
                 vSlides.slidesMove(gamepad2.getLeftY(), gamepad2.isDown(GamepadKeys.Button.B), telemetry);
                 if (!gamepad2.isDown(GamepadKeys.Button.B)&& gamepad2.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER)>0.1)
                     outtake.openBucket();
