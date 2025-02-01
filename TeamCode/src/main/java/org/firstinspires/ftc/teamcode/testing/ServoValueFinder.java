@@ -30,14 +30,16 @@ public class ServoValueFinder extends LinearOpMode {
         waitForStart();
         ServoGroup servo = getServo();
         while(opModeIsActive()){
-            if(gamepad2.b){
+            if(gamepad2.b) {
                 servo = getServo();
+            }else if(gamepad2.y){
+                servo.setPositions(0.5);
             }else if(gamepad2.dpad_up){
                 servo.Move(true);
             }else if(gamepad2.dpad_down){
                 servo.Move(false);
             }
-            telemetry.addData("Use controller 2\nUp and down dpad to move servo(s)\nB to go back to selection\n\nPos:", servo.getPositions());
+            telemetry.addData("Use controller 2\nUp and down dpad to move servo(s)\nY to go to 0.5 position\nB to go back to selection\n\nPos:", servo.getPositions());
             telemetry.update();
         }
     }
@@ -117,6 +119,11 @@ public class ServoValueFinder extends LinearOpMode {
                 result.append("\n\t").append(servoNames[i]).append(": ").append(servos[i].getPosition());
             }
             return result.toString();
+        }
+        public void setPositions(double pos){
+            for(Servo servo : servos){
+                servo.setPosition(pos);
+            }
         }
         private static ServoGroup makeServoPair(HardwareMap hardwareMap, String servo1, String servo2) {
             try{
