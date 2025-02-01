@@ -12,11 +12,14 @@ import org.openftc.easyopencv.OpenCvCamera;
 @TeleOp(name = "Luke", group = "Teleop")
 public class WebcamTest extends LinearOpMode {
     @Override
-    public void runOpMode() throws InterruptedException {
+    public void runOpMode() {
         Camera camera = new Camera(hardwareMap, telemetry);
         waitForStart();
         while(opModeIsActive()){
-            Thread.sleep(100);
+            RotatedRect rect = camera.getResult();
+            telemetry.addData("Rect", rect);
+            telemetry.addData("angle", rect != null ? camera.getAngle() : "god help me");
+            telemetry.update();
         }
         //Claw claw = new Claw(hardwareMap, Intake.getClawOpen(), Intake.getClawClosed(), "iClaw", "iDiffL", "iDiffR", );
         //while (opModeIsActive()) {

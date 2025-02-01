@@ -14,14 +14,12 @@ public class Intake {
     private static final double CLAW_OPEN = 0.1633, CLAW_CLOSED = 0.0094;
     private static final double FOURL_INTAKE = 0.06, FOURL_TRANSFER = 0.503, FOURL_SURVEY = 0.302;
     private static final double FOURR_INTAKE = 0.12, FOURR_TRANSFER = 1, FOURR_SURVEY = 0.64;
-    private static final double ROLL_HORIZONTAL = 0, ROLL_VERTICAL = 0;
-    private static final double PITCH_INTAKE = 0, PITCH_TRANSFER= 0, PITCH_SURVEY = 0;
 
     public Intake (HardwareMap map, Camera camera) {
         //intake = map.get(CRServo.class, "iServo");
         fourL = map.get(Servo.class, "fourIL");
         fourR = map.get(Servo.class, "fourIR");
-        claw = new Claw(map,CLAW_OPEN,CLAW_CLOSED,"iClaw", "iDiffL","iDiffR", camera);
+        claw = new Claw(map,CLAW_OPEN,CLAW_CLOSED, camera);
         fourR.setDirection(Servo.Direction.REVERSE);
     }
 
@@ -159,15 +157,6 @@ public class Intake {
     }
 
     public void moveDiffyPos(GamepadEx gamepad, Telemetry telemetry){
-        claw.positionalActiveClaw(gamepad,telemetry);
+        claw.positionalActiveRollPitch(gamepad,telemetry);
     }
-
-
-    public void movePitch(boolean l, boolean r){
-        claw.rollActiveClaw(l,r);
-    }
-    public void moveRoll(boolean u, boolean d){
-        claw.pitchActiveClaw(u,d);
-    }
-
 }

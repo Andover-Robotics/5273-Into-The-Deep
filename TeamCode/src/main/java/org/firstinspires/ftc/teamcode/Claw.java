@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
+import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.Servo;
@@ -17,7 +18,8 @@ import org.opencv.core.RotatedRect;
  */
 public class Claw {
     private final Servo servo;
-    private final DiffyRotator diffyRotator;
+    private final Servo roll;
+    private final Servo pitch;
     public static double openPos, closedPos;
     public final double LOOSE_POS = 0.04;
     private ColorSensor colorSensor;
@@ -26,24 +28,16 @@ public class Claw {
      * Initializes a Claw instance.
      * @param hardwareMap {@link com.qualcomm.robotcore.hardware.HardwareMap}
      */
-    public Claw(@NonNull HardwareMap hardwareMap, double open, double closed, String name, String nameL, String nameR, Camera dCamera)
+    public Claw(@NonNull HardwareMap hardwareMap, double open, double closed, Camera Camera)
     {
-        servo = hardwareMap.get(Servo.class, name);
-        diffyRotator = new DiffyRotator(hardwareMap, nameL, nameR);
+        servo = hardwareMap.get(Servo.class, "iClaw");
+        roll = hardwareMap.get(Servo.class, "roll");
+        pitch = hardwareMap.get(Servo.class, "pitch");
         openPos = open;
         closedPos = closed;
         colorSensor = hardwareMap.get(ColorSensor.class, "colorSensor");
-        camera = dCamera;
+        camera = Camera;
     }
-
-    public void clawRollPitch(double rollDeg, double pitchDeg) {
-        diffyRotator.rollPitch(rollDeg,pitchDeg);}
-
-    public void clawRoll(double rollDeg){
-        diffyRotator.rollToDegrees(rollDeg);}
-
-    public void clawPitch(double pitchDeg){
-        diffyRotator.pitchToDegrees(pitchDeg);}
 
     public void looseClaw(){
         servo.setPosition(LOOSE_POS);
@@ -66,44 +60,46 @@ public class Claw {
         servo.setPosition(pos);
     }
 
-    public double getRoll(){
-        return(diffyRotator.roll);
-    }
-    public double getPitch(){
-        return(diffyRotator.pitch);
-    }
-
     public double getClawPos(){
         return(servo.getPosition());
     }
 
-    public void positionalActiveClaw(GamepadEx gamepad, Telemetry telemetry){
-        diffyRotator.teleopTick(gamepad,telemetry);
+    public void positionalActiveRollPitch(GamepadEx gamepad , Telemetry telemetry) {
+        if (gamepad.isDown(GamepadKeys.Button.DPAD_UP)) {
+            roll.setPosition(roll.getPosition() + 0.01);
+        }
+        if (gamepad.isDown(GamepadKeys.Button.DPAD_DOWN)) {
+            roll.setPosition(roll.getPosition() - 0.01);
+        }
+        if (gamepad.isDown(GamepadKeys.Button.DPAD_LEFT)) {
+            pitch.setPosition(pitch.getPosition() + 0.01);
+        }
+        if (gamepad.isDown(GamepadKeys.Button.DPAD_RIGHT)) {
+            pitch.setPosition(pitch.getPosition() - 0.01);
+        }
+
+        telemetry.addData("roll position: ",roll.getPosition());
+        telemetry.addData("pitch position: ",pitch.getPosition());
     }
 
-    public void setPositions(double lPos, double rPos){
-        diffyRotator.setLeft(lPos);
-        diffyRotator.setRight(rPos);
+    public void setPositions(double rollPos, double pitchPos){
+        roll.setPosition(rollPos);
+        pitch.setPosition(pitchPos);
     }
 
-    public void rollActiveClaw(boolean left, boolean right){
-        if (left && !right) clawRoll(diffyRotator.roll+15);
-        else if (right && !left) clawRoll(diffyRotator.roll+15);
+    public double getRoll(){
+        return roll.getPosition();
     }
-    public void pitchActiveClaw(boolean up, boolean down){
-        if (up && !down) clawPitch(diffyRotator.roll+5);
-        else if (down && !up) clawPitch(diffyRotator.roll+5);
+
+    public double getPitch(){
+        return pitch.getPosition();
     }
-    public RotatedRect getSample() {
-        return camera.getResult();
-    }
+
     public void toSamplePosition() {
-        RotatedRect result = getSample();
-        if (result != null) {
-            // TODO roll claw position down (after testing)
-            double angle = result.angle;
-            if (result.size.width > result.size.height) angle += 90;
-            clawRoll(angle);
+        double result = camera.getAngle();
+        if (result != -1) {
+            // TODO fix the angling for new claw
+            roll.setPosition(result / 180);
         }
     }
 

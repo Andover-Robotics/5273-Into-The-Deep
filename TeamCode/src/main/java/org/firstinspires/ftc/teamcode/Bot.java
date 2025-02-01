@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode;
 
 import androidx.annotation.NonNull;
 
+import com.acmerobotics.roadrunner.Action;
 import com.acmerobotics.roadrunner.InstantAction;
 import com.acmerobotics.roadrunner.SequentialAction;
 import com.acmerobotics.roadrunner.SleepAction;
@@ -31,13 +32,13 @@ public class Bot {
     private final SlidesVertical vSlides;
     private final Outtake outtake;
     private final Camera camera;
-    private boolean hasSample = false;
-
 
     public enum FSM{
         STARTING,
-        INTAKE,
-        TRANSFER,
+        INTAKESAMPLE,
+        SCORESAMPLE,
+        INTAKESPECIMEN,
+        CLIPSPECIMEN,
         HANG
     }
     public FSM fsm = FSM.STARTING;
@@ -62,33 +63,43 @@ public class Bot {
         fsm = FSM.STARTING;
     }
 
+    public Movement getMovement(){
+        return movement;
+    }
+
     /**
-     * Runs one tick of the Teleop OpMode.
+     * Runs one tick of the Teleop OpMode, excluding movement, which is threaded separately
      * @param gamepad1 {@link com.qualcomm.robotcore.hardware.Gamepad} 1
      * @param gamepad2 {@link com.qualcomm.robotcore.hardware.Gamepad} 2
      * @param telemetry {@link org.firstinspires.ftc.robotcore.external.Telemetry}
      */
     public void teleopTick(GamepadEx gamepad1, GamepadEx gamepad2, Telemetry telemetry) throws InterruptedException{
+        boolean rightTriggerDown = gamepad2.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER)>0.1;
         final TriggerReader rightTrigger = new TriggerReader(gamepad2, GamepadKeys.Trigger.RIGHT_TRIGGER);
-        movement.teleopTick(gamepad1.getLeftX(),gamepad1.getLeftY(),gamepad1.getRightX(), gamepad1.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER),telemetry);
         telemetry.addData("State: ",fsm);
         telemetry.addData("Vertical Slides Pos: ", vSlides.getEncoders());
+        if (gamepad2.isDown(GamepadKeys.Button.X))
+            fsm = FSM.HANG;
         //telemetry.addData("Horizontal Slides Pos: ", hSlides.getPositions());
         switch(fsm){
-            case STARTING:
+            case STARTING: // if just started
+                vSlides.resetEncoders();
                 if(gamepad2.isDown(GamepadKeys.Button.A)){
                   hSlides.close();
-                  vSlides.resetEncoders();
-                  vSlides.moveToLowerBound();
                   intake.openSurvey();
                   outtake.closeBucket();
-                  fsm = FSM.INTAKE;
+                  fsm = FSM.INTAKESAMPLE;
+                }
+                if(gamepad2.isDown(GamepadKeys.Button.Y)){
+                  hSlides.close();
+                  intake.openSurvey();
+                  outtake.closeBucket();
+                  fsm = FSM.INTAKESPECIMEN;
                 }
                 break;
-            case INTAKE:
+            case INTAKESAMPLE: // direction control over horizontal slides and intake
                 hSlides.setPower(gamepad2.getLeftY());
                 intake.moveDiffyPos(gamepad2,telemetry);
-                boolean rightTriggerDown = gamepad2.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER)>0.1;
                 telemetry.addData("Intake State", intake.fsm);
                 if (intake.isSurveyOpen()) intake.toSamplePosition();
                 if (rightTriggerDown && (intake.isSurveyOpen() || intake.isSurveyClosed())){
@@ -108,8 +119,8 @@ public class Bot {
                 }
                 telemetry.addData("Has sample: ",intake.hasSample());
                 break;
-            case TRANSFER:
-                vSlides.slidesMove(gamepad2.getRightY(), gamepad2.isDown(GamepadKeys.Button.B), telemetry);
+            case SCORESAMPLE: // direct control over vertical slides and outtake
+                vSlides.slidesMove(gamepad2.getLeftY(), gamepad2.isDown(GamepadKeys.Button.B), telemetry);
                 if (!gamepad2.isDown(GamepadKeys.Button.B)&& gamepad2.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER)>0.1)
                     outtake.openBucket();
                 else if (!gamepad2.isDown(GamepadKeys.Button.B))
@@ -119,10 +130,7 @@ public class Bot {
                     vSlides.setPosition(0);
                     intake.posSurvey();
                     outtake.closeBucket();
-                    fsm = FSM.INTAKE;
-                }
-                if(gamepad2.isDown(GamepadKeys.Button.Y)){
-                    outtake.closeBucket();
+                    fsm = FSM.INTAKESAMPLE;
                 }
 
                 if(gamepad2.isDown(GamepadKeys.Button.B)){
@@ -130,6 +138,15 @@ public class Bot {
                     Thread.sleep(500);
                     intake.posTransfer();
                     hSlides.close();
+                }
+                break;
+            case HANG:
+                outtake.closeTransfer();
+                hSlides.close();
+                intake.closeTransfer();
+                vSlides.slidesMove(gamepad2.getLeftY(), gamepad2.isDown(GamepadKeys.Button.B), telemetry);
+                if(rightTriggerDown){
+                    vSlides.moveToLowerBound();
                 }
                 break;
         }
@@ -158,12 +175,73 @@ public class Bot {
                 new SleepAction(0.2),
                 new InstantAction(intake::openSurvey),
                 new SleepAction(1),
-                new InstantAction(vSlides::transferToBucketPos),
+                new InstantAction(vSlides::moveToTopBucketPos),
                 new SleepAction(1),
                 new InstantAction(outtake::closeBucket),
                 new SleepAction(1),
                 new InstantAction(hSlides::close),
                 new SleepAction(1),
-                new InstantAction(() -> fsm = FSM.TRANSFER));
+                new InstantAction(() -> fsm = FSM.SCORESAMPLE));
+    }
+
+    public Action actionIntake() { // using the intake claw
+        return new SequentialAction(
+                new InstantAction(intake::openIntake),
+                new SleepAction(0.5),
+                new InstantAction(() -> {
+                    intake.posIntake();
+                    intake.closeIntake();
+                }),
+                new SleepAction(0.5),
+                new InstantAction(() -> {
+                    intake.looseClaw();
+                    intake.posTransfer();
+                })
+        );
+    }
+
+    public Action actionOuttakeBucket() {
+        return new SequentialAction(
+                new InstantAction(outtake::openTransfer),
+                new SleepAction(0.5),
+                new InstantAction(outtake::close),
+                new SleepAction(0.5),
+                new InstantAction(() -> {
+                    vSlides.moveToTopBucketPos();
+                    outtake.closeBucket();
+                }),
+                new SleepAction(0.5),
+                new InstantAction(() -> {
+                    outtake.open();
+                    vSlides.moveToLowerBound();
+                })
+        );
+    }
+
+    public SequentialAction actionIntakeSpecimen() {
+        return new SequentialAction(
+                // the moving to lower bound should be done by the outtake method at the end
+                // open the claw before calling this method
+                new InstantAction(outtake::closeClaw),
+                new SleepAction(0.5),
+                new InstantAction(vSlides::moveToRungClippingPos),
+                new SleepAction(0.5),
+                new InstantAction(outtake::posClip),
+                new InstantAction(() -> fsm = FSM.INTAKESPECIMEN));
+    }
+
+    public SequentialAction actionOuttakeSpecimen() {
+        return new SequentialAction(
+                // claw should be set to perfect clipping pos so all you need is to have bot flush with the
+                // bottom part of the submersible, and lowers vert slides
+                new InstantAction(vSlides::clipSpecimenVertSlides),
+                new SleepAction(0.5),
+                new InstantAction(outtake::openClaw),
+                new InstantAction(vSlides::moveToLowerBound),
+                new InstantAction(()-> fsm = FSM.CLIPSPECIMEN));
+    }
+
+    public Action actionSweep() {
+        return null; // TODO should lower sweeping arm, wait, then raise arm
     }
 }
