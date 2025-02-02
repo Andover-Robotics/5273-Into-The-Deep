@@ -10,6 +10,6 @@ import org.firstinspires.ftc.teamcode.auto.PathMasterTheTestingNavigator;
 public class Quad2 extends LinearOpMode {
     @Override
     public void runOpMode() {
-        PathMasterTheTestingNavigator.runOpModeBucket(this, 2, new GamepadEx(gamepad2));
+        PathMasterTheTestingNavigator.runOpModeBucket(this, 2);
     }
 }

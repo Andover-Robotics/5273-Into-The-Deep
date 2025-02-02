@@ -49,15 +49,13 @@ public class Claw {
         DOWN_90
     }
 
-    private ButtonReader upGamepadReader;
-    private ButtonReader downGamepadReader;
 
     /**
      * Initializes a Claw instance.
      *
      * @param hardwareMap {@link com.qualcomm.robotcore.hardware.HardwareMap}
      */
-    public Claw(@NonNull HardwareMap hardwareMap, double open, double closed, Camera Camera, GamepadEx gamepad2) {
+    public Claw(@NonNull HardwareMap hardwareMap, double open, double closed, Camera Camera) {
         servo = hardwareMap.get(Servo.class, "iClaw");
         roll = hardwareMap.get(Servo.class, "roll");
         pitch = hardwareMap.get(Servo.class, "pitch");
@@ -65,8 +63,6 @@ public class Claw {
         closedPos = closed;
         colorSensor = hardwareMap.get(ColorSensor.class, "colorSensor");
         camera = Camera;
-        upGamepadReader = new ButtonReader(gamepad2, GamepadKeys.Button.DPAD_UP);
-        downGamepadReader = new ButtonReader(gamepad2, GamepadKeys.Button.DPAD_DOWN);
     }
 
     public void looseClaw() {
@@ -145,18 +141,6 @@ public class Claw {
         telemetry.addData("rollServo", roll.getPosition());
 
 
-//        if (gamepad.isDown(GamepadKeys.Button.DPAD_UP)) {
-//            roll.setPosition(roll.getPosition() + 0.01);
-//        }
-//        if (gamepad.isDown(GamepadKeys.Button.DPAD_DOWN)) {
-//            roll.setPosition(roll.getPosition() - 0.01);
-//        }
-//        if (gamepad.isDown(GamepadKeys.Button.DPAD_LEFT)) {
-//            pitch.setPosition(pitch.getPosition() + 0.01);
-//        }
-//        if (gamepad.isDown(GamepadKeys.Button.DPAD_RIGHT)) {
-//            pitch.setPosition(pitch.getPosition() - 0.01);
-//        }
 
         telemetry.addData("roll position: ", roll.getPosition());
         telemetry.addData("pitch position: ", pitch.getPosition());
@@ -166,8 +150,6 @@ public class Claw {
 //        roll.setPosition(rollPos);
 //        pitch.setPosition(pitchPos);
     }
-
-
 
     public double getRoll() {
         return roll.getPosition();

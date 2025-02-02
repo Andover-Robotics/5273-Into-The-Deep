@@ -44,16 +44,16 @@ public class PathMasterTheTestingNavigator {
     private static SlidesVertical verticalSlides;
     private static Bot bot;
 
-    public static void runOpModeBucket(LinearOpMode opMode, int quadrant, GamepadEx gp2) {
+    public static void runOpModeBucket(LinearOpMode opMode, int quadrant) {
         HardwareMap hardwareMap = opMode.hardwareMap;
         Telemetry telemetry = opMode.telemetry;
 
         MecanumDrive mecanumDrive = new MecanumDrive(hardwareMap, new Pose2d(-10, -60, Math.toRadians(90)));
 
-        intake = new Intake(hardwareMap, new Camera(hardwareMap, telemetry), gp2);
+        intake = new Intake(hardwareMap, new Camera(hardwareMap, telemetry));
         outtake = new Outtake(hardwareMap);
         verticalSlides = new SlidesVertical(hardwareMap);
-        bot = new Bot(hardwareMap, telemetry, gp2);
+        bot = new Bot(hardwareMap, telemetry);
 
         int xFactor = 1;
         int yFactor = 1;
@@ -103,16 +103,16 @@ public class PathMasterTheTestingNavigator {
         Actions.runBlocking(arcStrikeVelocity);
     }
 
-    public static void runOpModeSpecimen(LinearOpMode opMode, int quadrant, GamepadEx gp2) {
+    public static void runOpModeSpecimen(LinearOpMode opMode, int quadrant) {
         HardwareMap hardwareMap = opMode.hardwareMap;
         Telemetry telemetry = opMode.telemetry;
 
         MecanumDrive mecanumDrive = new MecanumDrive(hardwareMap, new Pose2d(-10, -60, Math.toRadians(90)));
 
-        intake = new Intake(hardwareMap, new Camera(hardwareMap, telemetry), gp2);
+        intake = new Intake(hardwareMap, new Camera(hardwareMap, telemetry));
         outtake = new Outtake(hardwareMap);
         verticalSlides = new SlidesVertical(hardwareMap);
-        bot = new Bot(hardwareMap, telemetry, gp2);
+        bot = new Bot(hardwareMap, telemetry);
 
         int xFactor = 1;
         int yFactor = 1;
