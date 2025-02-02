@@ -8,6 +8,7 @@ import com.acmerobotics.roadrunner.Vector2d;
 
 
 // Non-RR imports
+import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
@@ -43,16 +44,16 @@ public class PathMasterTheTestingNavigator {
     private static SlidesVertical verticalSlides;
     private static Bot bot;
 
-    public static void runOpModeBucket(LinearOpMode opMode, int quadrant) {
+    public static void runOpModeBucket(LinearOpMode opMode, int quadrant, GamepadEx gp2) {
         HardwareMap hardwareMap = opMode.hardwareMap;
         Telemetry telemetry = opMode.telemetry;
 
         MecanumDrive mecanumDrive = new MecanumDrive(hardwareMap, new Pose2d(-10, -60, Math.toRadians(90)));
 
-        intake = new Intake(hardwareMap, new Camera(hardwareMap, telemetry));
+        intake = new Intake(hardwareMap, new Camera(hardwareMap, telemetry), gp2);
         outtake = new Outtake(hardwareMap);
         verticalSlides = new SlidesVertical(hardwareMap);
-        bot = new Bot(hardwareMap, telemetry);
+        bot = new Bot(hardwareMap, telemetry, gp2);
 
         int xFactor = 1;
         int yFactor = 1;
@@ -102,16 +103,16 @@ public class PathMasterTheTestingNavigator {
         Actions.runBlocking(arcStrikeVelocity);
     }
 
-    public static void runOpModeSpecimen(LinearOpMode opMode, int quadrant) {
+    public static void runOpModeSpecimen(LinearOpMode opMode, int quadrant, GamepadEx gp2) {
         HardwareMap hardwareMap = opMode.hardwareMap;
         Telemetry telemetry = opMode.telemetry;
 
         MecanumDrive mecanumDrive = new MecanumDrive(hardwareMap, new Pose2d(-10, -60, Math.toRadians(90)));
 
-        intake = new Intake(hardwareMap, new Camera(hardwareMap, telemetry));
+        intake = new Intake(hardwareMap, new Camera(hardwareMap, telemetry), gp2);
         outtake = new Outtake(hardwareMap);
         verticalSlides = new SlidesVertical(hardwareMap);
-        bot = new Bot(hardwareMap, telemetry);
+        bot = new Bot(hardwareMap, telemetry, gp2);
 
         int xFactor = 1;
         int yFactor = 1;

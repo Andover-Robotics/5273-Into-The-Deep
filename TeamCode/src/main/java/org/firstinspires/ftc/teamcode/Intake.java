@@ -15,11 +15,11 @@ public class Intake {
     private static final double FOURL_INTAKE = 0.06, FOURL_TRANSFER = 0.503, FOURL_SURVEY = 0.302;
     private static final double FOURR_INTAKE = 0.12, FOURR_TRANSFER = 1, FOURR_SURVEY = 0.64;
 
-    public Intake (HardwareMap map, Camera camera) {
+    public Intake (HardwareMap map, Camera camera, GamepadEx gamepad2) {
         //intake = map.get(CRServo.class, "iServo");
         fourL = map.get(Servo.class, "fourIL");
         fourR = map.get(Servo.class, "fourIR");
-        claw = new Claw(map,CLAW_OPEN,CLAW_CLOSED, camera);
+        claw = new Claw(map,CLAW_OPEN,CLAW_CLOSED, camera, gamepad2);
         fourR.setDirection(Servo.Direction.REVERSE);
     }
 

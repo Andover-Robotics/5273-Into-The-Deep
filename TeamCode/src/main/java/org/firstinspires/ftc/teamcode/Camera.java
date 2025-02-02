@@ -67,8 +67,8 @@ public class Camera {
                 processColor(blurredImage2, LOWER_YELLOW, UPPER_YELLOW, new Scalar(255, 255, 0), input);
                 processColor(blurredImage2, LOWER_BLUE, UPPER_BLUE, new Scalar(0, 0, 255), input);
 
-                telemetry.addData("rect angle", result != null ? result.angle : "nothing");
-                telemetry.update();
+//                telemetry.addData("rect angle", result != null ? result.angle : "nothing");
+//                telemetry.update();
                 return input;
             }
         }

@@ -15,9 +15,9 @@ public class MainTeleop extends LinearOpMode {
      */
     @Override
     public void runOpMode() throws InterruptedException {
-        Bot bot = new Bot(hardwareMap, telemetry);
         GamepadEx gamepadEx1 = new GamepadEx(gamepad1);
         GamepadEx gamepadEx2 = new GamepadEx(gamepad2);
+        Bot bot = new Bot(hardwareMap, telemetry, gamepadEx2);
 
         Thread movementThread = new Thread(() -> { // thread movement separately so that Thread.sleep() can be safely called in bot.teleopTick()
             while (!Thread.currentThread().isInterrupted()) {
@@ -27,6 +27,8 @@ public class MainTeleop extends LinearOpMode {
         waitForStart();
         movementThread.start();
         while (opModeIsActive()) {
+            gamepadEx1.readButtons();
+            gamepadEx2.readButtons();
             bot.teleopTick(gamepadEx1, gamepadEx2, telemetry);
             telemetry.update();
         }

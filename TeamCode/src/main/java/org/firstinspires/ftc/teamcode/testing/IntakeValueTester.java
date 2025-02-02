@@ -31,7 +31,7 @@ public class IntakeValueTester extends LinearOpMode {
     public void runOpMode(){
         gp1 = new GamepadEx(gamepad1);
         gp2 = new GamepadEx(gamepad2);
-        intake = new Intake(hardwareMap,new Camera(hardwareMap, telemetry));
+        intake = new Intake(hardwareMap,new Camera(hardwareMap, telemetry), gp2);
         outtake = new Outtake(hardwareMap);
         vSlides = new SlidesVertical(hardwareMap);
         hSlides = new SlidesHorizontal(hardwareMap, telemetry);
