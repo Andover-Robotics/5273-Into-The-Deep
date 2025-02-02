@@ -1,14 +1,13 @@
 package org.firstinspires.ftc.teamcode;
 
-import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 public class Outtake {
     private final Servo fourL, fourR;
     private final Servo claw;
     private static final double CLAW_OPEN = 0.2028, CLAW_CLOSED = 0.0022;
-    private static final double FOURL_BUCKET = 0, FOURL_TRANSFER = 0.85, FOURL_CLIP = 35;
-    private static final double FOURR_BUCKET = 1, FOURR_TRANSFER = 0.15, FOURR_CLIP = 65;
+    private static final double ARML_BUCKET = 0.85222, ARML_TRANSFER = 0.75, ARML_CLIP = 0.909444;
+    private static final double ARMR_BUCKET = 0.14500, ARMR_TRANSFER = 0.25, ARMR_CLIP = 0.089444;
 
     public Outtake (HardwareMap map) {
         //intake = map.get(CRServo.class, "iServo");
@@ -49,8 +48,8 @@ public class Outtake {
     }
 
     public void posBucket(){
-        fourRTo(FOURR_BUCKET);
-        fourLTo(FOURL_BUCKET);
+        fourRTo(ARMR_BUCKET);
+        fourLTo(ARML_BUCKET);
     }
 
     public void openTransfer(){
@@ -66,8 +65,8 @@ public class Outtake {
     }
 
     public void posTransfer(){
-        fourLTo(FOURL_TRANSFER);
-        fourRTo(FOURR_TRANSFER);
+        fourLTo(ARML_TRANSFER);
+        fourRTo(ARMR_TRANSFER);
     }
     public void openClip(){
         posClip();
@@ -82,8 +81,8 @@ public class Outtake {
     }
 
     public void posClip(){
-        fourLTo(FOURL_CLIP);
-        fourRTo(FOURR_CLIP);
+        fourLTo(ARML_CLIP);
+        fourRTo(ARMR_CLIP);
     }
     public void open(){
         claw.setPosition(CLAW_OPEN);
