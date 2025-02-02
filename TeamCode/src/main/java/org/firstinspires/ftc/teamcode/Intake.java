@@ -79,7 +79,7 @@ public class Intake {
     public void posSurvey(){
         fourLTo(FOURL_SURVEY);
         fourRTo(FOURR_SURVEY);
-        claw.setPositions(0.7406,0.6394);
+        claw.setPositions(Claw.RollPosition.MIDDLE, Claw.PitchPosition.DOWN_90);
     }
     public void openIntake(){
         posIntake();
