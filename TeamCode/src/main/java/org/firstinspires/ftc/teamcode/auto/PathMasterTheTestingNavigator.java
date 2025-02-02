@@ -70,6 +70,7 @@ public class PathMasterTheTestingNavigator {
                 .stopAndAdd(doIntake())
                 .waitSeconds(1)
                 .strafeToSplineHeading(new Vector2d(60 * xFactor, 60 * yFactor), Math.toRadians(getAngle(45, quadrant)))
+                .stopAndAdd(doTransfer())
                 .waitSeconds(1)
                 // output sample 1
                 .stopAndAdd(doOuttakeBucket())
@@ -80,6 +81,7 @@ public class PathMasterTheTestingNavigator {
                 .stopAndAdd(doIntake())
                 .waitSeconds(1)
                 .strafeToSplineHeading(new Vector2d(60 * xFactor, 60 * yFactor), Math.toRadians(getAngle(45, quadrant)))
+                .stopAndAdd(doTransfer())
                 .waitSeconds(1)
                 // output sample 2
                 .stopAndAdd(doOuttakeBucket())
@@ -90,6 +92,7 @@ public class PathMasterTheTestingNavigator {
                 .stopAndAdd(doIntake())
                 .waitSeconds(1)
                 .strafeToSplineHeading(new Vector2d(60 * xFactor, 60 * yFactor), Math.toRadians(getAngle(45, quadrant)))
+                .stopAndAdd(doTransfer())
                 .waitSeconds(1)
                 // output sample 3
                 .stopAndAdd(doOuttakeBucket())
@@ -187,6 +190,8 @@ public class PathMasterTheTestingNavigator {
     private static Action doSweep() {
         return bot.actionSweep();
     }
+
+    private static Action doTransfer() { return bot.actionTransfer();}
 
     private static Action doIntake() {
         return bot.actionIntake();
