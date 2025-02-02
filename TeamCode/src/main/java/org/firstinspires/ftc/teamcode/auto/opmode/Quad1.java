@@ -9,6 +9,6 @@ import org.firstinspires.ftc.teamcode.auto.PathMasterTheTestingNavigator;
 public class Quad1 extends LinearOpMode {
     @Override
     public void runOpMode() {
-        PathMasterTheTestingNavigator.runOpModeBucket(this, 1);
+        PathMasterTheTestingNavigator.runOpModeSpecimen(this, 1);
     }
 }
