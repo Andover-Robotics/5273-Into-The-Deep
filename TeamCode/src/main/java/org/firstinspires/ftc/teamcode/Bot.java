@@ -46,13 +46,13 @@ public class Bot {
      * Initializes a Bot instance.
      * @param hardwareMap {@link com.qualcomm.robotcore.hardware.HardwareMap}
      */
-    public Bot(@NonNull HardwareMap hardwareMap, @NonNull Telemetry telemetry, GamepadEx gp2) {
+    public Bot(@NonNull HardwareMap hardwareMap, @NonNull Telemetry telemetry) {
         // initializations:
         camera = new Camera(hardwareMap, telemetry);
 
         // intake:
         hSlides = new SlidesHorizontal(hardwareMap, telemetry);
-        intake = new Intake(hardwareMap, camera, gp2);
+        intake = new Intake(hardwareMap, camera);
 
         // outtake:
         vSlides = new SlidesVertical(hardwareMap);
