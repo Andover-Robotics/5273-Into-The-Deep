@@ -163,6 +163,8 @@ public class Claw {
 //        pitch.setPosition(pitchPos);
     }
 
+
+
     public double getRoll() {
         return roll.getPosition();
     }
@@ -196,8 +198,8 @@ public class Claw {
             case MIDDLE:
                 pitch.setPosition(PITCH_MIDDLE);
                 break;
-            case UP_90:
-                pitch.setPosition(PITCH_90_UP);
+            case TRANSFER:
+                pitch.setPosition(PITCH_TRANSFER);
                 break;
             case DOWN_90:
                 pitch.setPosition(PITCH_90_DOWN);
