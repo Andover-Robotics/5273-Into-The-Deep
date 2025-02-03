@@ -3,7 +3,7 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 public class Outtake {
-    private final Servo fourL, fourR;
+    private final Servo armL, armR;
     private final Servo claw;
     private static final double CLAW_OPEN = 0.2028, CLAW_CLOSED = 0.0022;
     private static final double ARML_BUCKET = 0.85222, ARML_TRANSFER = 0.75, ARML_CLIP = 0.909444;
@@ -11,8 +11,8 @@ public class Outtake {
 
     public Outtake (HardwareMap map) {
         //intake = map.get(CRServo.class, "iServo");
-        fourL = map.get(Servo.class, "fourOL");
-        fourR = map.get(Servo.class, "fourOR");
+        armL = map.get(Servo.class, "fourOL");
+        armR = map.get(Servo.class, "fourOR");
         claw = map.get(Servo.class, "oClaw");
     }
     public enum OuttakeState {
@@ -40,11 +40,11 @@ public class Outtake {
 
 
     public double fourLPos(){
-        return(fourL.getPosition());
+        return(armL.getPosition());
     }
 
     public double fourRPos(){
-        return(fourR.getPosition());
+        return(armR.getPosition());
     }
 
     public void posBucket(){
@@ -91,10 +91,10 @@ public class Outtake {
         claw.setPosition(CLAW_CLOSED);
     }
     public void fourLTo(double position){
-        fourL.setPosition(position);
+        armL.setPosition(position);
     }
     public void fourRTo(double position){
-        fourR.setPosition(position);
+        armR.setPosition(position);
     }
 
     public void openClaw(){
