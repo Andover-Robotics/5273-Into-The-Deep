@@ -111,6 +111,29 @@ public class Bot {
 //                    thread.start();
 //                }
 //                telemetry.addData("Has sample: ",intake.hasSample());
+                telemetry.addData("arm i left", intake.fourLPos());
+                telemetry.addData("arm i right", intake.fourRPos());
+                //if (intake.isSurveyOpen()) intake.toSamplePosition();
+                if (rightTriggerDown && (intake.isSurveyOpen() || intake.isSurveyClosed())){
+                    intake.open();
+                    Thread.sleep(100);
+                    intake.openIntake();
+                    Thread.sleep(300);
+                }
+                if (intake.isIntakeOpen() && !(rightTriggerDown)) {
+                    intake.close();
+                    Thread.sleep(200);
+                    intake.closeSurvey();
+                }
+                if(gamepad2.isDown(GamepadKeys.Button.B)) {
+                    Thread thread = new Thread(() -> Actions.runBlocking(actionTransfer()));
+                    thread.start();
+                }
+                if(gamepad2.isDown(GamepadKeys.Button.Y)) {
+                    intake.openIntake();
+                    telemetry.addData("inIntakePos","");
+                }
+                telemetry.addData("Has sample: ",intake.hasSample());
                 break;
             case SCORESAMPLE: // direct control over vertical slides and outtake
                 vSlides.slidesMove(gamepad2.getLeftY(), gamepad2.isDown(GamepadKeys.Button.B), telemetry);
