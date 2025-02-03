@@ -26,7 +26,7 @@ public class Bot {
     private final Outtake outtake;
     private final Camera camera;
 
-    public enum FSM{
+    public enum FSM {
         STARTING,
         INTAKESAMPLE,
         SCORESAMPLE,
@@ -34,9 +34,12 @@ public class Bot {
         CLIPSPECIMEN,
         HANG
     }
+
     public FSM fsm = FSM.STARTING;
+
     /**
      * Initializes a Bot instance.
+     *
      * @param hardwareMap {@link com.qualcomm.robotcore.hardware.HardwareMap}
      */
     public Bot(@NonNull HardwareMap hardwareMap, @NonNull Telemetry telemetry) {
@@ -56,43 +59,45 @@ public class Bot {
         fsm = FSM.STARTING;
     }
 
-    public Movement getMovement(){
+    public Movement getMovement() {
         return movement;
     }
 
     /**
      * Runs one tick of the Teleop OpMode, excluding movement, which is threaded separately
-     * @param gamepad1 {@link com.qualcomm.robotcore.hardware.Gamepad} 1
-     * @param gamepad2 {@link com.qualcomm.robotcore.hardware.Gamepad} 2
+     *
+     * @param gamepad1  {@link com.qualcomm.robotcore.hardware.Gamepad} 1
+     * @param gamepad2  {@link com.qualcomm.robotcore.hardware.Gamepad} 2
      * @param telemetry {@link org.firstinspires.ftc.robotcore.external.Telemetry}
      */
-    public void teleopTick(GamepadEx gamepad1, GamepadEx gamepad2, Telemetry telemetry) throws InterruptedException{
-        boolean rightTriggerDown = gamepad2.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER)>0.1;
+
+    public void teleopTick(GamepadEx gamepad1, GamepadEx gamepad2, Telemetry telemetry) throws InterruptedException {
+        boolean rightTriggerDown = gamepad2.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER) > 0.1;
         final TriggerReader rightTrigger = new TriggerReader(gamepad2, GamepadKeys.Trigger.RIGHT_TRIGGER);
-        telemetry.addData("State: ",fsm);
+        telemetry.addData("State: ", fsm);
         telemetry.addData("Vertical Slides Pos: ", vSlides.getEncoders());
         if (gamepad2.isDown(GamepadKeys.Button.X))
             fsm = FSM.HANG;
         //telemetry.addData("Horizontal Slides Pos: ", hSlides.getPositions());
-        switch(fsm){
+        switch (fsm) {
             case STARTING: // if just started
                 vSlides.resetEncoders();
-                if(gamepad2.isDown(GamepadKeys.Button.A)){
-                  hSlides.close();
-                  intake.openSurvey();
-                  outtake.closeBucket();
-                  fsm = FSM.INTAKESAMPLE;
+                if (gamepad2.isDown(GamepadKeys.Button.A)) {
+                    hSlides.close();
+                    intake.openSurvey();
+                    outtake.closeBucket();
+                    fsm = FSM.INTAKESAMPLE;
                 }
-                if(gamepad2.isDown(GamepadKeys.Button.Y)){
-                  hSlides.close();
-                  intake.openSurvey();
-                  outtake.closeBucket();
-                  fsm = FSM.INTAKESPECIMEN;
+                if (gamepad2.isDown(GamepadKeys.Button.Y)) {
+                    hSlides.close();
+                    intake.openSurvey();
+                    outtake.closeBucket();
+                    fsm = FSM.INTAKESPECIMEN;
                 }
                 break;
             case INTAKESAMPLE: // direction control over horizontal slides and intake
                 hSlides.setPower(gamepad2.getLeftY());
-                intake.moveDiffyPos(gamepad2,telemetry);
+                intake.moveDiffyPos(gamepad2, telemetry);
                 telemetry.addData("Intake State", intake.fsm);
                 telemetry.addData("arm i left", intake.fourLPos());
                 telemetry.addData("arm i right", intake.fourRPos());
@@ -120,11 +125,11 @@ public class Bot {
                 break;
             case SCORESAMPLE: // direct control over vertical slides and outtake
                 vSlides.slidesMove(gamepad2.getLeftY(), gamepad2.isDown(GamepadKeys.Button.B), telemetry);
-                if (!gamepad2.isDown(GamepadKeys.Button.B)&& gamepad2.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER)>0.1)
+                if (!gamepad2.isDown(GamepadKeys.Button.B) && gamepad2.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER) > 0.1)
                     outtake.openBucket();
                 else if (!gamepad2.isDown(GamepadKeys.Button.B))
                     outtake.closeBucket();
-                if(gamepad2.isDown(GamepadKeys.Button.A)){
+                if (gamepad2.isDown(GamepadKeys.Button.A)) {
                     hSlides.close();
                     vSlides.setPosition(0);
                     intake.posSurvey();
@@ -132,7 +137,7 @@ public class Bot {
                     fsm = FSM.INTAKESAMPLE;
                 }
 
-                if(gamepad2.isDown(GamepadKeys.Button.B)){
+                if (gamepad2.isDown(GamepadKeys.Button.B)) {
                     outtake.closeTransfer();
                     Thread.sleep(500);
                     intake.posTransfer();
@@ -144,7 +149,7 @@ public class Bot {
                 hSlides.close();
                 intake.closeTransfer();
                 vSlides.slidesMove(gamepad2.getLeftY(), gamepad2.isDown(GamepadKeys.Button.B), telemetry);
-                if(rightTriggerDown){
+                if (rightTriggerDown) {
                     vSlides.moveToLowerBound();
                 }
                 break;
@@ -234,7 +239,7 @@ public class Bot {
                 new SleepAction(0.5),
                 new InstantAction(outtake::openClaw),
                 new InstantAction(vSlides::moveToLowerBound),
-                new InstantAction(()-> fsm = FSM.CLIPSPECIMEN));
+                new InstantAction(() -> fsm = FSM.CLIPSPECIMEN));
     }
 
     public Action actionSweep() {
