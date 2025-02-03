@@ -31,7 +31,7 @@ public class Claw {
     private static final double ROLL_45_CLOCKWISE = (ROLL_MIDDLE + ROLL_90_CLOCKWISE) / 2;
     private static final double ROLL_45_COUNTERCLOCKWISE = (ROLL_MIDDLE + ROLL_90_COUNTERCLOCKWISE) / 2;
     private static final double PITCH_MIDDLE = 0.556;
-    private static final double PITCH_90_UP = 0.197;
+    private static final double PITCH_TRANSFER = 0.0;
     private static final double PITCH_90_DOWN = 0.883;
     private int currentRoll = 0;
 
@@ -45,7 +45,7 @@ public class Claw {
 
     public enum PitchPosition {
         MIDDLE,
-        UP_90,
+        TRANSFER,
         DOWN_90
     }
 
