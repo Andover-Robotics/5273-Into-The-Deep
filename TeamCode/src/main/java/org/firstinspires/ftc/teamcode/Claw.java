@@ -92,7 +92,7 @@ public class Claw {
     }
 
     public void positionalActiveRollPitch(GamepadEx gamepad, Telemetry telemetry) {
-        if (gamepad.wasJustPressed(GamepadKeys.Button.DPAD_UP)) {
+        if (gamepad.wasJustPressed(GamepadKeys.Button.DPAD_LEFT)) {
             //move in 45 degree increments in the positive direction for currentRoll
             switch (currentRoll) {
                 case 0:
@@ -114,7 +114,7 @@ public class Claw {
                     currentRoll = 0;
                     break;
             }
-        } else if (gamepad.wasJustPressed(GamepadKeys.Button.DPAD_DOWN)) {
+        } else if (gamepad.wasJustPressed(GamepadKeys.Button.DPAD_RIGHT)) {
             //move in 45 degree increments in the negative direction for currentRoll
             switch (currentRoll) {
                 case 0:
@@ -141,6 +141,18 @@ public class Claw {
         telemetry.addData("rollServo", roll.getPosition());
 
 
+        if (gamepad.isDown(GamepadKeys.Button.DPAD_UP)) {
+            pitch.setPosition(pitch.getPosition() + 0.01);
+        }
+        if (gamepad.isDown(GamepadKeys.Button.DPAD_DOWN)) {
+            pitch.setPosition(pitch.getPosition() - 0.01);
+        }
+//        if (gamepad.isDown(GamepadKeys.Button.DPAD_LEFT)) {
+//            pitch.setPosition(pitch.getPosition() + 0.01);
+//        }
+//        if (gamepad.isDown(GamepadKeys.Button.DPAD_RIGHT)) {
+//            pitch.setPosition(pitch.getPosition() - 0.01);
+//        }
 
         telemetry.addData("roll position: ", roll.getPosition());
         telemetry.addData("pitch position: ", pitch.getPosition());
