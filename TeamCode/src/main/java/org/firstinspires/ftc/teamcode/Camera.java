@@ -77,7 +77,6 @@ public class Camera {
         These adjustments can help ensure that the angle is consistent and easier to understand across different detections.*/
         private void processColor(Mat hsvImage, Scalar lower, Scalar upper, Scalar drawColor, Mat input) {
             Core.inRange(hsvImage, lower, upper, mask);
-
             List<MatOfPoint> contours = new ArrayList<>();
             Imgproc.findContours(mask, contours, hierarchy, Imgproc.RETR_EXTERNAL, Imgproc.CHAIN_APPROX_SIMPLE);
 
