@@ -43,14 +43,6 @@ public class SlidesVertical {
         else fsm = VSlides.MIDDLE;
     }
 
-    public void moveToBucketPos(){
-        fsm = VSlides.MIDDLE;
-        setPosition(BUCKET_POS);
-    }
-    public void moveToClipPos(){
-        fsm = VSlides.MIDDLE;
-        setPosition(CLIP_POS);
-    }
 
     public void moveToLowerBound() {
         if(!(fsm == VSlides.LOWERED)) setPosition(LOWER_BOUND);
@@ -84,7 +76,7 @@ public class SlidesVertical {
     public void slidesMove(double input, boolean overrideButton, Telemetry telemetry){
         int pos = getEncoders();
         telemetry.addData("Slides position: ",pos);
-        if(!overrideButton && ((pos < UPPER_BOUND && input > 0))) {
+        if(!overrideButton && ((pos > UPPER_BOUND && input > 0) || (pos < LOWER_BOUND && input < 0) )) {
             setPower(0);
         }else {
             setPower(input); // temporarily extra slow
@@ -94,14 +86,17 @@ public class SlidesVertical {
 
     public void moveToTopBucketPos() {
         setPosition(117);
+        fsm = VSlides.MIDDLE;
     }
 
     public void moveToRungClippingPos() {   // the highest one
         setPosition(90);
+        fsm = VSlides.MIDDLE;
     }
 
     public void clipSpecimenVertSlides() {  // pulls the vert slides down
         setPosition(80);
+        fsm = VSlides.MIDDLE;
     }
 
     //moves based on position inputted
