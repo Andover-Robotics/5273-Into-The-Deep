@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
+import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
@@ -11,7 +12,7 @@ public class Intake {
     //private final CRServo intake;
     private final Servo fourL, fourR;
     private final Claw claw;
-    private static final double CLAW_OPEN = 0.1633, CLAW_CLOSED = 0.0094;
+    private static final double CLAW_OPEN = 0.3833, CLAW_CLOSED = 0.1456;
     private static final double FOURL_INTAKE = 0.06, FOURL_TRANSFER = 0.07, FOURL_SURVEY = 0.46277;
     private static final double FOURR_INTAKE = 0.99, FOURR_TRANSFER = 0.96, FOURR_SURVEY = 0.58277;
 
@@ -81,7 +82,9 @@ public class Intake {
         claw.setPositions(Claw.RollPosition.MIDDLE, Claw.PitchPosition.DOWN_90);
     }
     public void openIntake(){
-        posIntake();
+        fourR.setPosition(0.8644);
+        fourL.setPosition(0.1778);
+        claw.setPitch(1);
         claw.openClaw();
         fsm = IntakeState.INTAKE_OPEN;
     }
