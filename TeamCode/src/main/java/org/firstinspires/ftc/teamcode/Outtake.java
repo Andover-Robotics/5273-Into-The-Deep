@@ -68,6 +68,11 @@ public class Outtake {
         fourLTo(ARML_TRANSFER);
         fourRTo(ARMR_TRANSFER);
     }
+
+    public void posPreTransfer(){
+        fourLTo(0.593888);
+        fourRTo(0.402222);
+    }
     public void openClip(){
         posClip();
         openClaw();
@@ -78,6 +83,11 @@ public class Outtake {
         posClip();
         closeClaw();
         fsm = OuttakeState.CLIP_CLOSED;
+    }
+
+    public void posPreBucket(){
+        fourLTo(0.70000);
+        fourRTo(0.29444);
     }
 
     public void posClip(){
