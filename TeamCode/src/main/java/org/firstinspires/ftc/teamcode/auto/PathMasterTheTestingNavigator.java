@@ -58,11 +58,11 @@ public class PathMasterTheTestingNavigator {
         verticalSlides = new SlidesVertical(hardwareMap);
         bot = new Bot(hardwareMap, telemetry);
 
-        Action arcStrikeVelocity = mecanumDrive.actionBuilder(new Pose2d(0 , 0 , Math.toRadians(getAngle(270, quadrant))))
+        Action arcStrikeVelocity = mecanumDrive.actionBuilder(new Pose2d(0 , 0 , Math.toRadians(getAngle(90, quadrant))))
                 .strafeToSplineHeading(new Vector2d(50, 0), Math.toRadians(getAngle(90, quadrant)))
                 .build();
-                opMode.waitForStart();
-                Actions.runBlocking(arcStrikeVelocity);
+        opMode.waitForStart();
+        Actions.runBlocking(arcStrikeVelocity);
     }
 
     public static void runOpModeBucket(LinearOpMode opMode, int quadrant) {
