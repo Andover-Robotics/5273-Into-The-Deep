@@ -163,6 +163,28 @@ public class Bot {
                 }
                 if(gamepad2.wasJustPressed(GamepadKeys.Button.Y)) {
                     hSlides.close();
+                    intake.openSurvey();
+                    outtake.closeBucket();
+                    fsm = FSM.INTAKESAMPLE;
+                }
+                break;
+            case CLIPSPECIMEN:
+                vSlides.slidesMove(gamepad2.getLeftY(), gamepad2.isDown(GamepadKeys.Button.B), telemetry);
+                if(gamepad2.wasJustPressed(GamepadKeys.Button.B))
+                    Actions.runBlocking(actionOuttakeSpecimen());
+                if (gamepad2.wasJustPressed(GamepadKeys.Button.Y)) {
+                    hSlides.close();
+                    vSlides.setPosition(0);
+                    intake.posSurvey();
+                    outtake.closeBucket();
+                    fsm = FSM.INTAKESAMPLE;
+                }
+                if (gamepad2.wasJustPressed(GamepadKeys.Button.A)) {
+                    hSlides.close();
+                    vSlides.setPosition(0);
+                    intake.openSurvey();
+                    outtake.openClip();
+                    fsm = FSM.INTAKESPECIMEN;
                 }
                 break;
             case HANG:
