@@ -218,7 +218,21 @@ public class Claw {
         double result = camera.getAngle();
         if (result != -1) {
             // TODO fix the angling for new claw
-            roll.setPosition(result / 180);
+            int fixed = (int) Math.round(result / 45);
+            switch (fixed) {
+                case 1:
+                    roll.setPosition(ROLL_45_CLOCKWISE);
+                    break;
+                case 2:
+                    roll.setPosition(ROLL_90_CLOCKWISE);
+                    break;
+                case 3:
+                    roll.setPosition(ROLL_45_COUNTERCLOCKWISE);
+                    break;
+                default:
+                    roll.setPosition(ROLL_MIDDLE);
+                    break;
+            }
         }
     }
 
