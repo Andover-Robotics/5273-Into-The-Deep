@@ -22,7 +22,7 @@ public class Claw {
     private final Servo roll;
     private final Servo pitch;
     public static double openPos, closedPos;
-    public final double LOOSE_POS = 0.04;
+    public final double LOOSE_POS = 0.226;
     private ColorSensor colorSensor;
     private Camera camera;
     private static final double ROLL_MIDDLE = 0.5;
@@ -90,6 +90,8 @@ public class Claw {
     public double getClawPos() {
         return (servo.getPosition());
     }
+
+    public void setPitch(double pitchPos) {pitch.setPosition(pitchPos);}
 
     public void positionalActiveRollPitch(GamepadEx gamepad, Telemetry telemetry) {
         if (gamepad.wasJustPressed(GamepadKeys.Button.DPAD_LEFT)) {
