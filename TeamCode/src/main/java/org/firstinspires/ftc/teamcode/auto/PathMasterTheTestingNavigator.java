@@ -117,16 +117,26 @@ public class PathMasterTheTestingNavigator {
         verticalSlides = new SlidesVertical(hardwareMap);
         bot = new Bot(hardwareMap, telemetry);
 
+        int pixelOne = 46;
+        int pixelTwo = 58;
+        int pixelThree = 62;
+        int pushIn = 56;
+        int pixelY = 10;
         int xFactor = 1;
         int yFactor = 1;
+        Vector2d outtakeSpec = new Vector2d(8 * xFactor, 38 * yFactor);
+        Vector2d intakeSpec = new Vector2d(60 * xFactor, 60 * yFactor);
 
         Action arcStrikeVelocity = mecanumDrive.actionBuilder(new Pose2d(10 * xFactor, 60 * yFactor, Math.toRadians(getAngle(270, quadrant))))
-                .strafeToSplineHeading(new Vector2d(-16 * xFactor, 33 * yFactor), Math.toRadians(getAngle(90,quadrant)))
-                .waitSeconds(0.5)
+                //.strafeToSplineHeading(new Vector2d(-16 * xFactor, 33 * yFactor), Math.toRadians(getAngle(90,quadrant)))
+                //.waitSeconds(0.5)
                 // outtake specimen 0
-                .stopAndAdd(doOuttakeSpecimen())
-                .waitSeconds(1)
+                //.stopAndAdd(doOuttakeSpecimen()) //TODO tune outtaking specimens
+                //.waitSeconds(1)
                 // TODO figure out static claw positioning (left (90) or right (270))
+
+
+                /*
                 // go to sweep
                 .strafeToSplineHeading(new Vector2d(40 * xFactor, 45 * yFactor), Math.toRadians(getAngle(90,quadrant)))
                 .waitSeconds(1)
@@ -148,9 +158,10 @@ public class PathMasterTheTestingNavigator {
                 .stopAndAdd(doSweep())
                 .strafeToSplineHeading(new Vector2d(60 * xFactor, 45 * yFactor), Math.toRadians(getAngle(120,quadrant)))
                 .waitSeconds(1)
+                */
 
                 // intake specimen 1
-                .stopAndAdd(doIntakeSpecimen())
+                /*.stopAndAdd(doIntakeSpecimen())
                 .waitSeconds(1)
                 .strafeToSplineHeading(new Vector2d(-8 * xFactor, 33 * yFactor), Math.toRadians(getAngle(90, quadrant)))
                 .waitSeconds(1)
@@ -179,6 +190,37 @@ public class PathMasterTheTestingNavigator {
                 .waitSeconds(1)
                 .strafeToSplineHeading(new Vector2d(60 * xFactor, 60 * yFactor), Math.toRadians(getAngle(90, quadrant)))
                 // park
+                .turn(Math.toRadians(180))*/
+                .strafeToSplineHeading(outtakeSpec, Math.toRadians(getAngle(90,quadrant)))
+                .waitSeconds(0.5)
+                // TODO figure out static claw positioning (left (90) or right (270))
+                // Preloaded samples are at y = 24 inches, and the static claw is 12 inches long
+                .strafeTo(new Vector2d(20 * xFactor,33 * yFactor))
+                .strafeToSplineHeading(new Vector2d(pixelOne * xFactor, pixelY * yFactor),Math.toRadians(getAngle(270, quadrant)))
+                .waitSeconds(1)
+                // Human player zone is at y = 60 inches
+                .strafeTo(new Vector2d(pixelOne  * xFactor,pushIn * yFactor))
+                .strafeTo(new Vector2d(pixelOne * xFactor, pixelY * yFactor))
+                .strafeTo(new Vector2d(pixelTwo * xFactor, pixelY * yFactor))
+                .strafeTo(new Vector2d(pixelTwo * xFactor, pushIn * yFactor))
+                .strafeTo(new Vector2d(pixelTwo * xFactor, pixelY * yFactor))
+                .strafeTo(new Vector2d(pixelThree * xFactor, pixelY * yFactor))
+                .strafeTo(new Vector2d(pixelThree * xFactor, pushIn * yFactor))
+
+                .strafeToSplineHeading(intakeSpec, Math.toRadians(getAngle(270, quadrant)))
+                .waitSeconds(0.5)
+                .strafeToSplineHeading(outtakeSpec, Math.toRadians(getAngle(90, quadrant)))
+                .waitSeconds(1)
+                .strafeToSplineHeading(intakeSpec, Math.toRadians(getAngle(270, quadrant)))
+                .waitSeconds(0.5)
+                .strafeToSplineHeading(outtakeSpec, Math.toRadians(getAngle(90, quadrant)))
+                .waitSeconds(1)
+                .strafeToSplineHeading(intakeSpec, Math.toRadians(getAngle(270, quadrant)))
+                .waitSeconds(0.5)
+                .strafeToSplineHeading(outtakeSpec, Math.toRadians(getAngle(90, quadrant)))
+                .waitSeconds(1)
+                .strafeToSplineHeading(intakeSpec, Math.toRadians(getAngle(270, quadrant)))
+                .waitSeconds(1)
                 .turn(Math.toRadians(180))
                 .build();
 
