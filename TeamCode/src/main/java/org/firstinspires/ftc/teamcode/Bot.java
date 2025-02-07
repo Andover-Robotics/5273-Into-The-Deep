@@ -83,21 +83,23 @@ public class Bot {
         switch (fsm) {
             case STARTING: // if just started
                 vSlides.resetEncoders();
-                if (gamepad2.isDown(GamepadKeys.Button.A)) {
+                if (gamepad2.wasJustPressed(GamepadKeys.Button.A)) {
                     hSlides.close();
                     intake.openSurvey();
                     outtake.closeBucket();
                     fsm = FSM.INTAKESAMPLE;
                 }
-                if (gamepad2.isDown(GamepadKeys.Button.Y)) {
+                if (gamepad2.wasJustPressed(GamepadKeys.Button.Y)) {
                     hSlides.close();
                     intake.openSurvey();
-                    outtake.closeBucket();
+                    outtake.openClip();
                     fsm = FSM.INTAKESPECIMEN;
                 }
                 break;
             case INTAKESAMPLE: // direction control over horizontal slides and intake
+
                 hSlides.setPower(gamepad2.getLeftY());
+                telemetry.addData("is right trigger?: ",rightTriggerDown);
                 intake.moveDiffyPos(gamepad2, telemetry);
                 telemetry.addData("Intake State", intake.fsm);
                 telemetry.addData("arm i left", intake.fourLPos());
@@ -110,27 +112,36 @@ public class Bot {
                     Thread.sleep(300);
                 }
                 if (intake.isIntakeOpen() && !(rightTriggerDown)) {
-                    intake.close();
+                    intake.posIntake();
+                    Thread.sleep(100);
+                    intake.closeIntake();
                     Thread.sleep(200);
                     intake.closeSurvey();
                 }
-                if(gamepad2.isDown(GamepadKeys.Button.B)) {
+
+                if(gamepad2.wasJustPressed(GamepadKeys.Button.B)) {
                     Thread thread = new Thread(() -> Actions.runBlocking(actionTransfer()));
                     thread.start();
                 }
-                if(gamepad2.isDown(GamepadKeys.Button.Y)) {
-                    intake.openIntake();
-                    telemetry.addData("inIntakePos","");
+                if (gamepad2.wasJustPressed(GamepadKeys.Button.Y)) {
+                    hSlides.close();
+                    intake.openSurvey();
+                    outtake.openClip();
+                    fsm = FSM.INTAKESPECIMEN;
                 }
                 telemetry.addData("Has sample: ",intake.hasSample());
                 break;
             case SCORESAMPLE: // direct control over vertical slides and outtake
                 vSlides.slidesMove(gamepad2.getLeftY(), gamepad2.isDown(GamepadKeys.Button.B), telemetry);
-                if (!gamepad2.isDown(GamepadKeys.Button.B) && gamepad2.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER) > 0.1)
-                    outtake.openBucket();
+                outtake.posPreTransfer();
+                if (!gamepad2.isDown(GamepadKeys.Button.B) && gamepad2.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER) > 0.1) {
+                    Actions.runBlocking(actionOuttakeBucket());
+                }
                 else if (!gamepad2.isDown(GamepadKeys.Button.B))
                     outtake.closeBucket();
-                if (gamepad2.isDown(GamepadKeys.Button.A)) {
+
+
+                if (gamepad2.wasJustPressed(GamepadKeys.Button.A)) {
                     hSlides.close();
                     vSlides.setPosition(0);
                     intake.posSurvey();
