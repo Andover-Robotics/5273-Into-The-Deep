@@ -149,10 +149,19 @@ public class Bot {
                     fsm = FSM.INTAKESAMPLE;
                 }
 
-                if (gamepad2.isDown(GamepadKeys.Button.B)) {
-                    outtake.closeTransfer();
-                    Thread.sleep(500);
-                    intake.posTransfer();
+                if (gamepad2.wasJustPressed(GamepadKeys.Button.Y)) {
+                    hSlides.close();
+                    intake.openSurvey();
+                    outtake.openClip();
+                    fsm = FSM.INTAKESPECIMEN;
+                }
+                break;
+            case INTAKESPECIMEN:
+                if(gamepad2.wasJustPressed(GamepadKeys.Button.B)) {
+                    Actions.runBlocking(actionIntakeSpecimen());
+                    fsm = FSM.CLIPSPECIMEN;
+                }
+                if(gamepad2.wasJustPressed(GamepadKeys.Button.Y)) {
                     hSlides.close();
                 }
                 break;
@@ -164,8 +173,12 @@ public class Bot {
                 if (rightTriggerDown) {
                     vSlides.moveToLowerBound();
                 }
+                if (gamepad2.wasJustPressed(GamepadKeys.Button.A)){
+                    fsm = FSM.INTAKESAMPLE;
+                }
                 break;
         }
+        if (gamepad2.isDown(GamepadKeys.Button.X)) fsm = FSM.HANG;
     }
 
     public SequentialAction actionTransfer() {
