@@ -229,19 +229,12 @@ public class Bot {
 
     public Action actionOuttakeBucket() {
         return new SequentialAction(
-                new InstantAction(outtake::openTransfer),
+                new InstantAction(vSlides::moveToTopBucketPos),
+                new InstantAction(outtake::posPreTransfer),
                 new SleepAction(0.5),
-                new InstantAction(outtake::close),
+                new InstantAction(outtake::closeBucket),
                 new SleepAction(0.5),
-                new InstantAction(() -> {
-                    vSlides.moveToTopBucketPos();
-                    outtake.closeBucket();
-                }),
-                new SleepAction(0.5),
-                new InstantAction(() -> {
-                    outtake.open();
-                    vSlides.moveToLowerBound();
-                })
+                new InstantAction(outtake::open)
         );
     }
 
@@ -253,8 +246,8 @@ public class Bot {
                 new SleepAction(0.5),
                 new InstantAction(vSlides::moveToRungClippingPos),
                 new SleepAction(0.5),
-                new InstantAction(outtake::posClip),
-                new InstantAction(() -> fsm = FSM.INTAKESPECIMEN));
+                new InstantAction(outtake::posBucket),
+                new InstantAction(() -> fsm = FSM.CLIPSPECIMEN));
     }
 
     public SequentialAction actionOuttakeSpecimen() {
@@ -264,8 +257,7 @@ public class Bot {
                 new InstantAction(vSlides::clipSpecimenVertSlides),
                 new SleepAction(0.5),
                 new InstantAction(outtake::openClaw),
-                new InstantAction(vSlides::moveToLowerBound),
-                new InstantAction(() -> fsm = FSM.CLIPSPECIMEN));
+                new InstantAction(vSlides::moveToLowerBound));
     }
 
     public Action actionSweep() {
