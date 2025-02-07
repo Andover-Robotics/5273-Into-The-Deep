@@ -4,6 +4,7 @@ import static org.firstinspires.ftc.teamcode.auto.MecanumDrive.PARAMS;
 
 import androidx.annotation.NonNull;
 
+import com.acmerobotics.roadrunner.Pose2d;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -28,7 +29,7 @@ public class Movement {
         rightFront = map.get(DcMotor.class, "rightFront");
         rightBack = map.get(DcMotor.class, "rightBack");
 
-        localizer = new ThreeDeadWheelLocalizer(map, PARAMS.inPerTick);
+        localizer = new ThreeDeadWheelLocalizer(map, PARAMS.inPerTick,new Pose2d(0,0,0));
 
         //reversed motor to reflect installation
 
@@ -45,7 +46,7 @@ public class Movement {
 
     public void teleopTick(double leftStickX, double leftStickY, double rightStickX, double trigger, Telemetry telemetry){
         double axial = -leftStickY * (1 - trigger * 0.75);  // Note: pushing stick forward gives negative value
-        double lateral = leftStickX * (1 - trigger * 0.75);
+        double lateral = -leftStickX * (1 - trigger * 0.75);
         double yaw = -rightStickX * (1 - trigger * 0.75);
 
         // Combine the joystick requests for each axis-motion to determine each wheel's power.
