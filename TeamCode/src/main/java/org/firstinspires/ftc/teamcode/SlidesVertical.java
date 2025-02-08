@@ -21,8 +21,7 @@ public class SlidesVertical {
     //sets limits of slides extension
     private static final int UPPER_BOUND = 1520;
     private static final int LOWER_BOUND = 0;
-    private static final int BUCKET_POS = 0;
-    private static final int CLIP_POS = 0;
+    private static final int CLIP_POS = 919;
 
     public SlidesVertical(HardwareMap map) {
         slidesLeft = map.get(DcMotor.class, "slidesL");
@@ -108,18 +107,22 @@ public class SlidesVertical {
     }
 
     public void moveToTopBucketPos() {
-        setPosition(117);
+        setPosition(UPPER_BOUND);
         fsm = VSlides.MIDDLE;
     }
 
     public void moveToRungClippingPos() {   // the highest one
-        setPosition(90);
+    setPosition(CLIP_POS);
         fsm = VSlides.MIDDLE;
     }
 
-    public void clipSpecimenVertSlides() {  // pulls the vert slides down
-        setPosition(80);
+    public void clipSpecimenVertSlides() {  // pulls vert slides down to clip it
+        setPosition(CLIP_POS - 100);
         fsm = VSlides.MIDDLE;
+    }
+
+    public void goUpForSpecimenIntake() {
+        setPosition(LOWER_BOUND + 100);
     }
 
     //moves based on position inputted

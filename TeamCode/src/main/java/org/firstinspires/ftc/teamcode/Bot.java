@@ -280,7 +280,7 @@ public class Bot {
                 // open the claw before calling this method
                 new InstantAction(outtake::closeClaw),
                 new SleepAction(0.5),
-                new InstantAction(vSlides::moveToRungClippingPos),
+                new InstantAction(vSlides::goUpForSpecimenIntake),
                 new SleepAction(0.5),
                 new InstantAction(outtake::posBucket),
                 new InstantAction(() -> fsm = FSM.CLIPSPECIMEN));
@@ -290,6 +290,8 @@ public class Bot {
         return new SequentialAction(
                 // claw should be set to perfect clipping pos so all you need is to have bot flush with the
                 // bottom part of the submersible, and lowers vert slides
+                new InstantAction(vSlides::moveToRungClippingPos),
+                new SleepAction(0.5),
                 new InstantAction(vSlides::clipSpecimenVertSlides),
                 new SleepAction(0.5),
                 new InstantAction(outtake::openClaw),
