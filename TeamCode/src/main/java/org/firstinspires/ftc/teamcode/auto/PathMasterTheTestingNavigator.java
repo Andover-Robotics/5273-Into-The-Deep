@@ -187,7 +187,7 @@ public class PathMasterTheTestingNavigator {
                 // TODO figure out static claw positioning (left (90) or right (270))
                 // Preloaded samples are at y = 24 inches, and the static claw is 12 inches long
                 // Human player zone is at y = 60 inches
-                .strafeTo(new Vector2d(pixelOne-15  ,30 ))
+                .strafeToSplineHeading(new Vector2d(pixelOne-15  ,30 ), Math.toRadians(getAngle(90, quadrant)))
                 .strafeTo(new Vector2d(pixelOne , pixelY ))
                 .strafeTo(new Vector2d(pixelOne, pushIn))
                 .strafeTo(new Vector2d(pixelOne, pixelY))
@@ -197,7 +197,7 @@ public class PathMasterTheTestingNavigator {
                 .strafeTo(new Vector2d(pixelThree , pixelY ))
                 .strafeTo(new Vector2d(pixelThree , pushIn ))
 
-                .strafeToSplineHeading(intakeSpec, Math.toRadians(getAngle(90, quadrant)))
+                .strafeTo(intakeSpec)
                 .waitSeconds(0.5)
                 .strafeToSplineHeading(outtakeSpecInit, Math.toRadians(getAngle(270, quadrant)))
 
