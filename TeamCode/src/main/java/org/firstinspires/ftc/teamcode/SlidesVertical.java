@@ -15,9 +15,11 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
  * See {@link org.firstinspires.ftc.teamcode.auto.PathMasterTheTestingNavigator}
  */
 public class SlidesVertical {
+
+    private int holdTarget = 0;
     private final DcMotor slidesLeft, slidesRight;
     //sets limits of slides extension
-    private static final int UPPER_BOUND = -2979;
+    private static final int UPPER_BOUND = 1520;
     private static final int LOWER_BOUND = 0;
     private static final int BUCKET_POS = 0;
     private static final int CLIP_POS = 0;
@@ -73,15 +75,36 @@ public class SlidesVertical {
     }
 
     //simply moves up or down based on input from controller
-    public void slidesMove(double input, boolean overrideButton, Telemetry telemetry){
+    public void slidesMove(double input, boolean overrideButton, Telemetry telemetry) {
         int pos = getEncoders();
-        telemetry.addData("Slides position: ",pos);
-        if(!overrideButton && ((pos > UPPER_BOUND && input > 0) || (pos < LOWER_BOUND && input < 0) )) {
+        telemetry.addData("Slides position: ", pos);
+
+        if (!overrideButton && ((pos > UPPER_BOUND && input > 0) || (pos < LOWER_BOUND && input < 0))) {
             setPower(0);
-        }else {
-            setPower(input); // temporarily extra slow
+        } else {
+            setPower(input);
         }
+
+        if (Math.abs(input) < 0.05) {  // If no input from the controller
+            holdPosition();
+        } else {
+            holdTarget = getEncoders();  // Save position to hold
+        }
+
         updateFSM();
+    }
+
+    public void holdPosition() {
+        double kP = 0.002;  // Adjust based on testing
+        int error = holdTarget - getEncoders();
+
+        if (Math.abs(error) > 5) {  // Small tolerance
+            double power = kP * error;
+            power = Math.max(-0.2, Math.min(0.2, power));  // Limit power range
+            setPower(power);
+        } else {
+            setPower(0);  // Stop adjusting if within range
+        }
     }
 
     public void moveToTopBucketPos() {
