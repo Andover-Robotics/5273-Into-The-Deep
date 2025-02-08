@@ -12,7 +12,7 @@ public class Intake {
     //private final CRServo intake;
     private final Servo fourL, fourR;
     private final Claw claw;
-    private static final double CLAW_OPEN = 0.3833, CLAW_CLOSED = 0.1456;
+    private static final double CLAW_OPEN = 0.2461, CLAW_CLOSED = 0.0339;
     private static final double FOURL_INTAKE = 0.06, FOURL_TRANSFER = 0.0800, FOURL_SURVEY = 0.46277;
     private static final double FOURR_INTAKE = 0.99, FOURR_TRANSFER = 0.9544, FOURR_SURVEY = 0.58277;
 
