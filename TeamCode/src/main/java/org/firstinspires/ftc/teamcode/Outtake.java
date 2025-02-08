@@ -86,8 +86,8 @@ public class Outtake {
     }
 
     public void posPreBucket(){
-        fourLTo(0.70000);
-        fourRTo(0.29444);
+        fourLTo(0.712778);
+        fourRTo(0.276111);
     }
 
     public void posClip(){
