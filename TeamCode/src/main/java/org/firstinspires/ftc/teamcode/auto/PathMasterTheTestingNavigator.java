@@ -146,8 +146,9 @@ public class PathMasterTheTestingNavigator {
         int pixelY = 50;
         int quadrant = 0;
 
-        Vector2d outtakeSpec = new Vector2d(-2, 22 );
-        Vector2d intakeSpec = new Vector2d(50 , 0 );
+        //mid to sideplate7.5, mid to back7.168
+        Vector2d outtakeSpec = new Vector2d(-2, 40.832 );
+        Vector2d intakeSpec = new Vector2d(36 , 0 );
 
         // initial is 10 60
         Action arcStrikeVelocity = mecanumDrive.actionBuilder(new Pose2d(0 , 0 , Math.toRadians(getAngle(90, quadrant))))
@@ -162,7 +163,16 @@ public class PathMasterTheTestingNavigator {
                 .strafeTo(new Vector2d(pixelOne  ,pushIn ))
                 .strafeTo(new Vector2d(pixelOne , pixelY ))
                 .strafeTo(new Vector2d(pixelTwo , pixelY ))
+                .strafeTo(new Vector2d(pixelTwo , pushwo , pixelY ))
                 .strafeTo(new Vector2d(pixelTwo , pushIn ))
+                .strafeTo(new Vector2d(pixelTwo , pixelY ))
+                .strafeTo(new Vector2d(pixelThree , pixelY ))
+                .strafeTo(new Vector2d(pixelThree , pushIn ))
+
+                .strafeToSplineHeading(intakeSpec, Math.toRadians(getAngle(270, quadrant)))
+                .waitSeconds(0.5)
+                .strafeToSplineHeading(outtakeSpec, Math.toRadians(getAngle(270, quadrant)))
+                .waitSeconds(1)In ))
                 .strafeTo(new Vector2d(pixelTwo , pixelY ))
                 .strafeTo(new Vector2d(pixelThree , pixelY ))
                 .strafeTo(new Vector2d(pixelThree , pushIn ))
