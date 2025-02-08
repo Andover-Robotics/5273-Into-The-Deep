@@ -115,7 +115,7 @@ public class Bot {
                     intake.posIntake();
                     Thread.sleep(100);
                     intake.closeIntake();
-                    Thread.sleep(200);
+                    Thread.sleep(400);
                     intake.closeSurvey();
                 }
 
