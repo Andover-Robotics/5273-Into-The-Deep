@@ -133,13 +133,11 @@ public class Bot {
                 break;
             case SCORESAMPLE: // direct control over vertical slides and outtake
                 vSlides.slidesMove(gamepad2.getLeftY(), gamepad2.isDown(GamepadKeys.Button.B), telemetry);
-                outtake.posPreTransfer();
-                if (!gamepad2.isDown(GamepadKeys.Button.B) && gamepad2.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER) > 0.1) {
-                    Actions.runBlocking(actionOuttakeBucket());
-                }
+                outtake.posPreBucket();
+                if (!gamepad2.isDown(GamepadKeys.Button.B) && gamepad2.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER) > 0.1)
+                    outtake.open();
                 else if (!gamepad2.isDown(GamepadKeys.Button.B))
-                    outtake.closeBucket();
-
+                    outtake.close();
 
                 if (gamepad2.wasJustPressed(GamepadKeys.Button.A)) {
                     hSlides.close();
@@ -157,8 +155,11 @@ public class Bot {
                 }
                 break;
             case INTAKESPECIMEN:
+                outtake.openClip();
                 if(gamepad2.wasJustPressed(GamepadKeys.Button.B)) {
-                    Actions.runBlocking(actionIntakeSpecimen());
+                    outtake.close();
+                    Thread.sleep(200);
+                    outtake.posBucket();
                     fsm = FSM.CLIPSPECIMEN;
                 }
                 if(gamepad2.wasJustPressed(GamepadKeys.Button.Y)) {
@@ -169,9 +170,14 @@ public class Bot {
                 }
                 break;
             case CLIPSPECIMEN:
+                outtake.posBucket();
                 vSlides.slidesMove(gamepad2.getLeftY(), gamepad2.isDown(GamepadKeys.Button.B), telemetry);
-                if(gamepad2.wasJustPressed(GamepadKeys.Button.B))
-                    Actions.runBlocking(actionOuttakeSpecimen());
+                if(rightTriggerDown){
+                    outtake.open();
+                }
+                else{
+                    outtake.close();
+                }
                 if (gamepad2.wasJustPressed(GamepadKeys.Button.Y)) {
                     hSlides.close();
                     vSlides.setPosition(0);
