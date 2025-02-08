@@ -59,7 +59,7 @@ public class PathMasterTheTestingNavigator {
         int quadrant = 0;
 
         Action arcStrikeVelocity = mecanumDrive.actionBuilder(new Pose2d(0 , 0 , Math.toRadians(getAngle(90, quadrant))))
-                .strafeToSplineHeading(new Vector2d(-62, 0), Math.toRadians(getAngle(90, quadrant)))
+                .strafeTo(new Vector2d(-62, 0))
                 .build();
         opMode.waitForStart();
         Actions.runBlocking(arcStrikeVelocity);
@@ -78,7 +78,7 @@ public class PathMasterTheTestingNavigator {
         int quadrant = 0;
 
         Action arcStrikeVelocity = mecanumDrive.actionBuilder(new Pose2d(0 , 0 , Math.toRadians(getAngle(90, quadrant))))
-                .strafeToSplineHeading(new Vector2d(62, 0), Math.toRadians(getAngle(90, quadrant)))
+                .strafeTo(new Vector2d(62, 0))
                 .build();
         opMode.waitForStart();
         Actions.runBlocking(arcStrikeVelocity);
