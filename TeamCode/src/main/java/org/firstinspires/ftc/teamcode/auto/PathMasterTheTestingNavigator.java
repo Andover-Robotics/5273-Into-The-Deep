@@ -146,6 +146,7 @@ public class PathMasterTheTestingNavigator {
         int pixelY = 50;
         int quadrant = 0;
 
+        //
         //mid to sideplate7.5, mid to back7.168
         Vector2d outtakeSpec = new Vector2d(-2, 40.832 );
         Vector2d intakeSpec = new Vector2d(36 , 0 );
