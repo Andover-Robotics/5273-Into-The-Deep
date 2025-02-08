@@ -22,7 +22,7 @@ public class Claw {
     private final Servo roll;
     private final Servo pitch;
     public static double openPos, closedPos;
-    public final double LOOSE_POS = 0.226;
+    public final double LOOSE_POS = 0.1833;
     private ColorSensor colorSensor;
     private Camera camera;
     private static final double ROLL_MIDDLE = 0.5;
@@ -214,7 +214,7 @@ public class Claw {
         setPitch(pitchPosition);
     }
 
-    public void toSamplePosition() {
+    public boolean toSamplePosition() {
         double result = camera.getAngle();
         if (result != -1) {
             // TODO fix the angling for new claw
@@ -233,7 +233,9 @@ public class Claw {
                     roll.setPosition(ROLL_MIDDLE);
                     break;
             }
+            return true;
         }
+        return false;
     }
 
     // sample colors red, blue and yellow yellow = #FFFF00

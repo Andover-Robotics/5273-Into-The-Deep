@@ -13,8 +13,8 @@ public class Intake {
     private final Servo fourL, fourR;
     private final Claw claw;
     private static final double CLAW_OPEN = 0.3833, CLAW_CLOSED = 0.1456;
-    private static final double FOURL_INTAKE = 0.06, FOURL_TRANSFER = 0.07, FOURL_SURVEY = 0.46277;
-    private static final double FOURR_INTAKE = 0.99, FOURR_TRANSFER = 0.96, FOURR_SURVEY = 0.58277;
+    private static final double FOURL_INTAKE = 0.06, FOURL_TRANSFER = 0.0800, FOURL_SURVEY = 0.46277;
+    private static final double FOURR_INTAKE = 0.99, FOURR_TRANSFER = 0.9544, FOURR_SURVEY = 0.58277;
 
     public Intake (HardwareMap map, Camera camera) {
         //intake = map.get(CRServo.class, "iServo");
@@ -75,6 +75,9 @@ public class Intake {
         posSurvey();
         claw.closeClaw();
         fsm = IntakeState.SURVEY_CLOSED;
+    }
+    public void setPitchTransfer(){
+        claw.setPitch(0.2155555);
     }
     public void posSurvey(){
         fourLTo(FOURL_SURVEY);
@@ -151,8 +154,14 @@ public class Intake {
         return(fourR.getPosition());
     }
 
-    public void toSamplePosition() {
-        claw.toSamplePosition();
+    public void toSamplePosition() throws InterruptedException {
+        boolean worked = claw.toSamplePosition();
+        if (worked) {
+            Thread.sleep(100);
+            closeIntake();
+            Thread.sleep(400);
+            closeSurvey();
+        }
     }
 
     public boolean hasSample(){
