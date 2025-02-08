@@ -151,8 +151,14 @@ public class Intake {
         return(fourR.getPosition());
     }
 
-    public void toSamplePosition() {
-        claw.toSamplePosition();
+    public void toSamplePosition() throws InterruptedException {
+        boolean worked = claw.toSamplePosition();
+        if (worked) {
+            Thread.sleep(100);
+            closeIntake();
+            Thread.sleep(200);
+            closeSurvey();
+        }
     }
 
     public boolean hasSample(){

@@ -214,7 +214,7 @@ public class Claw {
         setPitch(pitchPosition);
     }
 
-    public void toSamplePosition() {
+    public boolean toSamplePosition() {
         double result = camera.getAngle();
         if (result != -1) {
             // TODO fix the angling for new claw
@@ -233,7 +233,9 @@ public class Claw {
                     roll.setPosition(ROLL_MIDDLE);
                     break;
             }
+            return true;
         }
+        return false;
     }
 
     // sample colors red, blue and yellow yellow = #FFFF00

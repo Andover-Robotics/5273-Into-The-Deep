@@ -97,26 +97,29 @@ public class Bot {
                 }
                 break;
             case INTAKESAMPLE: // direction control over horizontal slides and intake
-
                 hSlides.setPower(gamepad2.getLeftY());
                 telemetry.addData("is right trigger?: ",rightTriggerDown);
                 intake.moveDiffyPos(gamepad2, telemetry);
                 telemetry.addData("Intake State", intake.fsm);
                 telemetry.addData("arm i left", intake.fourLPos());
                 telemetry.addData("arm i right", intake.fourRPos());
-                //if (intake.isSurveyOpen()) intake.toSamplePosition();
                 if (rightTriggerDown && (intake.isSurveyOpen() || intake.isSurveyClosed())){
                     intake.open();
                     Thread.sleep(100);
                     intake.openIntake();
                     Thread.sleep(300);
                 }
-                if (intake.isIntakeOpen() && !(rightTriggerDown)) {
-                    intake.posIntake();
-                    Thread.sleep(100);
-                    intake.closeIntake();
-                    Thread.sleep(200);
-                    intake.closeSurvey();
+                if (intake.isIntakeOpen()) {
+                    if (gamepad2.getTrigger(GamepadKeys.Trigger.LEFT_TRIGGER) > 0.1) {
+                        intake.toSamplePosition();
+                        // Still need to press B later
+                    } else if (!rightTriggerDown) {
+                        intake.posIntake();
+                        Thread.sleep(100);
+                        intake.closeIntake();
+                        Thread.sleep(200);
+                        intake.closeSurvey();
+                    }
                 }
 
                 if(gamepad2.wasJustPressed(GamepadKeys.Button.B)) {
