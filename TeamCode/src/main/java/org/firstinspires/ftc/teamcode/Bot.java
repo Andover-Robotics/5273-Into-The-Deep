@@ -117,7 +117,7 @@ public class Bot {
                         intake.posIntake();
                         Thread.sleep(100);
                         intake.closeIntake();
-                        Thread.sleep(200);
+                        Thread.sleep(400);
                         intake.closeSurvey();
                     }
                 }
@@ -136,13 +136,11 @@ public class Bot {
                 break;
             case SCORESAMPLE: // direct control over vertical slides and outtake
                 vSlides.slidesMove(gamepad2.getLeftY(), gamepad2.isDown(GamepadKeys.Button.B), telemetry);
-                outtake.posPreTransfer();
-                if (!gamepad2.isDown(GamepadKeys.Button.B) && gamepad2.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER) > 0.1) {
-                    Actions.runBlocking(actionOuttakeBucket());
-                }
+                outtake.posPreBucket();
+                if (!gamepad2.isDown(GamepadKeys.Button.B) && gamepad2.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER) > 0.1)
+                    outtake.open();
                 else if (!gamepad2.isDown(GamepadKeys.Button.B))
-                    outtake.closeBucket();
-
+                    outtake.close();
 
                 if (gamepad2.wasJustPressed(GamepadKeys.Button.A)) {
                     hSlides.close();
@@ -160,8 +158,11 @@ public class Bot {
                 }
                 break;
             case INTAKESPECIMEN:
+                outtake.openClip();
                 if(gamepad2.wasJustPressed(GamepadKeys.Button.B)) {
-                    Actions.runBlocking(actionIntakeSpecimen());
+                    outtake.close();
+                    Thread.sleep(200);
+                    outtake.posBucket();
                     fsm = FSM.CLIPSPECIMEN;
                 }
                 if(gamepad2.wasJustPressed(GamepadKeys.Button.Y)) {
@@ -172,9 +173,14 @@ public class Bot {
                 }
                 break;
             case CLIPSPECIMEN:
+                outtake.posBucket();
                 vSlides.slidesMove(gamepad2.getLeftY(), gamepad2.isDown(GamepadKeys.Button.B), telemetry);
-                if(gamepad2.wasJustPressed(GamepadKeys.Button.B))
-                    Actions.runBlocking(actionOuttakeSpecimen());
+                if(rightTriggerDown){
+                    outtake.open();
+                }
+                else{
+                    outtake.close();
+                }
                 if (gamepad2.wasJustPressed(GamepadKeys.Button.Y)) {
                     hSlides.close();
                     vSlides.setPosition(0);
@@ -208,19 +214,22 @@ public class Bot {
 
     public SequentialAction actionTransfer() {
         return new SequentialAction(
-                new InstantAction(outtake::closeBucket),
+                new InstantAction(outtake::close),
+                new InstantAction(outtake::posPreBucket),
                 new InstantAction(intake::closeSurvey),
                 new SleepAction(0.2),
                 new InstantAction(vSlides::moveToLowerBound),
                 new InstantAction(hSlides::close),
                 new SleepAction(0.2),
-                new InstantAction(intake::closeTransfer),
+                new InstantAction(outtake::openTransfer),
                 new SleepAction(0.25),
                 new InstantAction(intake::looseClaw),
                 new SleepAction(0.2),
-                new InstantAction(outtake::posPreTransfer),
+                new InstantAction(intake::posTransfer),
+                new SleepAction(1),
                 new SleepAction(0.1),
-                new InstantAction(outtake::openTransfer),
+                new InstantAction(intake::setPitchTransfer),
+                new SleepAction(1),
                 new SleepAction(0.25),
                 new InstantAction(outtake::closeClaw),
                 new SleepAction(0.1),
@@ -229,7 +238,9 @@ public class Bot {
                 new InstantAction(intake::openSurvey),
                 //new SleepAction(1),
                 //new InstantAction(vSlides::moveToTopBucketPos),
-                new InstantAction(outtake::closeBucket),
+                new InstantAction(outtake::close),
+                new SleepAction(1),
+                new InstantAction(outtake::posPreBucket),
                 new SleepAction(1),
                 new InstantAction(hSlides::close),
                 new SleepAction(1),
