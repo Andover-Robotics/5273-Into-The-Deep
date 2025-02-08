@@ -159,7 +159,7 @@ public class Intake {
         if (worked) {
             Thread.sleep(100);
             closeIntake();
-            Thread.sleep(200);
+            Thread.sleep(400);
             closeSurvey();
         }
     }
