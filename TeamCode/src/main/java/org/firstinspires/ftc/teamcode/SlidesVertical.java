@@ -97,7 +97,7 @@ public class SlidesVertical {
         double kP = 0.002;  // Adjust based on testing
         int error = holdTarget - getEncoders();
 
-        if (Math.abs(error) > 5) {  // Small tolerance
+        if (Math.abs(error) > 5 && getEncoders()>750) {  // Small tolerance
             double power = kP * error;
             power = Math.max(-0.2, Math.min(0.2, power));  // Limit power range
             setPower(power);
