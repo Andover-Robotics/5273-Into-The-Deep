@@ -6,10 +6,10 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.auto.PathMasterTheTestingNavigator;
 
-@Autonomous(name = "Park", group = "Autonomous")
-public class Park extends LinearOpMode {
+@Autonomous(name = "BucketPark", group = "Autonomous")
+public class BucketPark extends LinearOpMode {
     @Override
     public void runOpMode() {
-        PathMasterTheTestingNavigator.runOpModePark(this);
+        PathMasterTheTestingNavigator.runOpModeBucketPark(this);
     }
 }
