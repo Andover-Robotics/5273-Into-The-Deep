@@ -47,7 +47,7 @@ public class PathMasterTheTestingNavigator {
     private static SlidesVertical verticalSlides;
     private static Bot bot;
 
-    public static void runOpModePark(LinearOpMode opMode, int quadrant) {
+    public static void runOpModePark(LinearOpMode opMode) {
         HardwareMap hardwareMap = opMode.hardwareMap;
         Telemetry telemetry = opMode.telemetry;
 
@@ -57,6 +57,7 @@ public class PathMasterTheTestingNavigator {
         outtake = new Outtake(hardwareMap);
         verticalSlides = new SlidesVertical(hardwareMap);
         bot = new Bot(hardwareMap, telemetry);
+        int quadrant = 0;
 
         Action arcStrikeVelocity = mecanumDrive.actionBuilder(new Pose2d(0 , 0 , Math.toRadians(getAngle(90, quadrant))))
                 .strafeToSplineHeading(new Vector2d(50, 0), Math.toRadians(getAngle(90, quadrant)))
@@ -65,7 +66,7 @@ public class PathMasterTheTestingNavigator {
         Actions.runBlocking(arcStrikeVelocity);
     }
 
-    public static void runOpModeBucket(LinearOpMode opMode, int quadrant) {
+    public static void runOpModeBucket(LinearOpMode opMode) {
         HardwareMap hardwareMap = opMode.hardwareMap;
         Telemetry telemetry = opMode.telemetry;
 
@@ -75,7 +76,8 @@ public class PathMasterTheTestingNavigator {
         outtake = new Outtake(hardwareMap);
         verticalSlides = new SlidesVertical(hardwareMap);
         bot = new Bot(hardwareMap, telemetry);
-
+        // just set quadrant to some random value because it's easier than manually replacing them all and it doesn't matter what it is
+        int quadrant = 0;
 
         // 10 60 is initial
         Action arcStrikeVelocity = mecanumDrive.actionBuilder(new Pose2d(0 , 0 , Math.toRadians(getAngle(90, quadrant))))
@@ -84,7 +86,7 @@ public class PathMasterTheTestingNavigator {
                 // output sample 0
                 .stopAndAdd(doOuttakeBucket())
                 .waitSeconds(1)
-                .strafeTo(new Vector2d(-38 , 22 ))
+                .strafeToSplineHeading(new Vector2d(-38 , 22 ), Math.toRadians(getAngle(90, quadrant)))
                 .waitSeconds(1)
                 // input sample 1
                 .stopAndAdd(doIntake())
@@ -126,7 +128,7 @@ public class PathMasterTheTestingNavigator {
         Actions.runBlocking(arcStrikeVelocity);
     }
 
-    public static void runOpModeSpecimen(LinearOpMode opMode, int quadrant) {
+    public static void runOpModeSpecimen(LinearOpMode opMode) {
         HardwareMap hardwareMap = opMode.hardwareMap;
         Telemetry telemetry = opMode.telemetry;
 
@@ -142,6 +144,7 @@ public class PathMasterTheTestingNavigator {
         int pixelThree = 52;
         int pushIn = 4;
         int pixelY = 50;
+        int quadrant = 0;
 
         Vector2d outtakeSpec = new Vector2d(-2, 22 );
         Vector2d intakeSpec = new Vector2d(50 , 0 );

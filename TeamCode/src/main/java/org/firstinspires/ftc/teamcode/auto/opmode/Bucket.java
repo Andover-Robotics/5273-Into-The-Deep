@@ -1,15 +1,14 @@
 package org.firstinspires.ftc.teamcode.auto.opmode;
 
-import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.auto.PathMasterTheTestingNavigator;
 
-@Autonomous(name = "Red Alliance Left", group = "Autonomous")
-public class Quad2 extends LinearOpMode {
+@Autonomous(name = "Bucket", group = "Autonomous")
+public class Bucket extends LinearOpMode {
     @Override
     public void runOpMode() {
-        PathMasterTheTestingNavigator.runOpModeBucket(this, 2);
+        PathMasterTheTestingNavigator.runOpModeBucket(this);
     }
 }

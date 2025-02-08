@@ -10,6 +10,6 @@ import org.firstinspires.ftc.teamcode.auto.PathMasterTheTestingNavigator;
 public class Park extends LinearOpMode {
     @Override
     public void runOpMode() {
-        PathMasterTheTestingNavigator.runOpModePark(this, 0);
+        PathMasterTheTestingNavigator.runOpModePark(this);
     }
 }
