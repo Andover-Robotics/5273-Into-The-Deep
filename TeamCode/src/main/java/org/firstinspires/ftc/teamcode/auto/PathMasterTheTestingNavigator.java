@@ -23,24 +23,6 @@ import org.firstinspires.ftc.teamcode.SlidesVertical;
  * Yet another OpMode, this time for Autonomous - the names are intentional (and great), don't mess with them
  */
 public class PathMasterTheTestingNavigator {
-    private static int getAngle(int angle, int quadrant) {
-        return angle;
-        /*
-        switch (quadrant) {
-            case 0:
-                return angle;
-            case 1:
-                return 180 - angle;
-            case 2:
-                return 180 + angle;
-            case 3:
-                return 360 - angle;
-            default:
-                return 0;
-        }
-         */
-    }
-
     private static Intake intake;
     private static Outtake outtake;
     private static SlidesVertical verticalSlides;
@@ -56,9 +38,9 @@ public class PathMasterTheTestingNavigator {
         outtake = new Outtake(hardwareMap);
         verticalSlides = new SlidesVertical(hardwareMap);
         bot = new Bot(hardwareMap, telemetry);
-        int quadrant = 0;
 
-        Action arcStrikeVelocity = mecanumDrive.actionBuilder(new Pose2d(0 , 0 , Math.toRadians(getAngle(90, quadrant))))
+
+        Action arcStrikeVelocity = mecanumDrive.actionBuilder(new Pose2d(0 , 0 , Math.toRadians(90)))
                 .strafeTo(new Vector2d(-62, 0))
                 .build();
         opMode.waitForStart();
@@ -75,9 +57,8 @@ public class PathMasterTheTestingNavigator {
         outtake = new Outtake(hardwareMap);
         verticalSlides = new SlidesVertical(hardwareMap);
         bot = new Bot(hardwareMap, telemetry);
-        int quadrant = 0;
 
-        Action arcStrikeVelocity = mecanumDrive.actionBuilder(new Pose2d(0 , 0 , Math.toRadians(getAngle(90, quadrant))))
+        Action arcStrikeVelocity = mecanumDrive.actionBuilder(new Pose2d(0 , 0 , Math.toRadians(90)))
                 .strafeTo(new Vector2d(62, 0))
                 .build();
         opMode.waitForStart();
@@ -95,7 +76,6 @@ public class PathMasterTheTestingNavigator {
         verticalSlides = new SlidesVertical(hardwareMap);
         bot = new Bot(hardwareMap, telemetry);
         // just set quadrant to some random value because it's easier than manually replacing them all and it doesn't matter what it is
-        int quadrant = 0;
 
         Vector2d intakeBucket1 = new Vector2d(-42.5, 44 );
         Vector2d intakeBucket2 = new Vector2d(-61, 44);
@@ -103,41 +83,41 @@ public class PathMasterTheTestingNavigator {
 
         Vector2d outtakeBucket = new Vector2d(-58, 0 );
 
-        Action arcStrikeVelocity = mecanumDrive.actionBuilder(new Pose2d(0 , 0 , Math.toRadians(getAngle(90, quadrant))))
-                .strafeToSplineHeading(outtakeBucket, Math.toRadians(getAngle(45, quadrant)))
+        Action arcStrikeVelocity = mecanumDrive.actionBuilder(new Pose2d(0 , 0 , Math.toRadians(90)))
+                .strafeToSplineHeading(outtakeBucket, Math.toRadians(45))
                 .waitSeconds(1)
                 // output sample 0
                 .stopAndAdd(doOuttakeBucket())
                 .waitSeconds(1)
-                .strafeToSplineHeading(intakeBucket1, Math.toRadians(getAngle(90, quadrant)))
+                .strafeToSplineHeading(intakeBucket1, Math.toRadians(90 ))
                 .waitSeconds(1)
                 // input sample 1
                 .stopAndAdd(doIntake())
                 .waitSeconds(1)
-                .strafeToSplineHeading(outtakeBucket, Math.toRadians(getAngle(45, quadrant)))
+                .strafeToSplineHeading(outtakeBucket, Math.toRadians(45))
                 .stopAndAdd(doTransfer())
                 .waitSeconds(1)
                 // output sample 1
                 .stopAndAdd(doOuttakeBucket())
                 .waitSeconds(1)
-                .strafeToSplineHeading(intakeBucket2, Math.toRadians(getAngle(90, quadrant)))
+                .strafeToSplineHeading(intakeBucket2, Math.toRadians(90))
                 .waitSeconds(1)
                 //input sample 2
                 .stopAndAdd(doIntake())
                 .waitSeconds(1)
-                .strafeToSplineHeading(outtakeBucket, Math.toRadians(getAngle(45, quadrant)))
+                .strafeToSplineHeading(outtakeBucket, Math.toRadians(45))
                 .stopAndAdd(doTransfer())
                 .waitSeconds(1)
                 // output sample 2
                 .stopAndAdd(doOuttakeBucket())
                 .waitSeconds(1)
-                .strafeToSplineHeading(new Vector2d(-62, 0), Math.toRadians(getAngle(90, quadrant)))
-                /*.strafeToSplineHeading(intakeBucket3, Math.toRadians(getAngle(90, quadrant)))
+                .strafeToSplineHeading(new Vector2d(-62, 0), Math.toRadians(90))
+                /*.strafeToSplineHeading(intakeBucket3, Math.toRadians((90, ))
                 .waitSeconds(1)
                 // input sample 3
                 .stopAndAdd(doIntake())
                 .waitSeconds(1)
-                .strafeToSplineHeading(outtakeBucket, Math.toRadians(getAngle(45, quadrant)))
+                .strafeToSplineHeading(outtakeBucket, Math.toRadians((45, ))
                 .stopAndAdd(doTransfer())
                 .waitSeconds(1)
                 // output sample 3
@@ -168,7 +148,7 @@ public class PathMasterTheTestingNavigator {
         int pixelThree = 65;
         int pushIn = 10;
         int pixelY = 50;
-        int quadrant = 0;
+
 
         //mid to sideplate7.5, mid to back7.168
         Vector2d outtakeSpecInit = new Vector2d(-12, 40.832 );
@@ -179,15 +159,15 @@ public class PathMasterTheTestingNavigator {
         Vector2d intakeSpec = new Vector2d(36 , 0 );
 
         // initial is 10 60
-        Action arcStrikeVelocity = mecanumDrive.actionBuilder(new Pose2d(0 , 0 , Math.toRadians(getAngle(90, quadrant))))
-                .strafeToSplineHeading(outtakeSpecInit, Math.toRadians(getAngle(270,quadrant)))
+        Action arcStrikeVelocity = mecanumDrive.actionBuilder(new Pose2d(0 , 0 , Math.toRadians(90)))
+                .strafeToSplineHeading(outtakeSpecInit, Math.toRadians(270)
                 .waitSeconds(1)
 		        .stopAndAdd(doOuttakeSpecimen())
                 .waitSeconds(1)
                 // TODO figure out static claw positioning (left (90) or right (270))
                 // Preloaded samples are at y = 24 inches, and the static claw is 12 inches long
                 // Human player zone is at y = 60 inches
-                .strafeToSplineHeading(new Vector2d(pixelOne-15  ,30 ), Math.toRadians(getAngle(90, quadrant)))
+                .strafeToSplineHeading(new Vector2d(pixelOne-15  ,30 ), Math.toRadians(90)
                 .strafeTo(new Vector2d(pixelOne , pixelY ))
                 .strafeTo(new Vector2d(pixelOne, pushIn))
                 .strafeTo(new Vector2d(pixelOne, pixelY))
@@ -199,34 +179,34 @@ public class PathMasterTheTestingNavigator {
 
                 .strafeTo(intakeSpec)
                 .waitSeconds(0.5)
-                .strafeToSplineHeading(outtakeSpecInit, Math.toRadians(getAngle(270, quadrant)))
+                .strafeToSplineHeading(outtakeSpecInit, Math.toRadians(270)
 
 
-                .strafeToSplineHeading(intakeSpec, Math.toRadians(getAngle(90, quadrant)))
+                .strafeToSplineHeading(intakeSpec, Math.toRadians(90))
                 .waitSeconds(1)
                 .stopAndAdd(doIntakeSpecimen())
                 .waitSeconds(1)
-                .strafeToSplineHeading(outtakeSpec1, Math.toRadians(getAngle(270, quadrant)))
+                .strafeToSplineHeading(outtakeSpec1, Math.toRadians(270))
                 .waitSeconds(1)
                 .stopAndAdd(doOuttakeSpecimen())
                 .waitSeconds(1)
-                .strafeToSplineHeading(intakeSpec, Math.toRadians(getAngle(90, quadrant)))
+                .strafeToSplineHeading(intakeSpec, Math.toRadians(90))
                 .waitSeconds(1)
                 .stopAndAdd(doIntakeSpecimen())
                 .waitSeconds(1)
-                .strafeToSplineHeading(outtakeSpec2, Math.toRadians(getAngle(270, quadrant)))
+                .strafeToSplineHeading(outtakeSpec2, Math.toRadians(270))
                 .waitSeconds(1)
                 .stopAndAdd(doOuttakeSpecimen())
                 .waitSeconds(1)
-                .strafeToSplineHeading(intakeSpec, Math.toRadians(getAngle(90, quadrant)))
+                .strafeToSplineHeading(intakeSpec, Math.toRadians(90))
                 .waitSeconds(1)
                 .stopAndAdd(doIntakeSpecimen())
                 .waitSeconds(1)
-                .strafeToSplineHeading(outtakeSpec3, Math.toRadians(getAngle(270, quadrant)))
+                .strafeToSplineHeading(outtakeSpec3, Math.toRadians(270))
                 .waitSeconds(1)
                 .stopAndAdd((doOuttakeSpecimen()))
                 .waitSeconds(1)
-                .strafeToSplineHeading(new Vector2d(62, 0), Math.toRadians(getAngle(90, quadrant)))
+                .strafeToSplineHeading(new Vector2d(62, 0), Math.toRadians(90))
                 .build();
 
         opMode.waitForStart();

@@ -20,7 +20,6 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 //test commit for new branch
 public class Bot {
-    private final Movement movement;
     private final SlidesHorizontal hSlides;
     private final Intake intake;
     private final SlidesVertical vSlides;
@@ -55,14 +54,10 @@ public class Bot {
         vSlides = new SlidesVertical(hardwareMap);
         outtake = new Outtake(hardwareMap);
 
-        movement = new Movement(hardwareMap);
 
         fsm = FSM.STARTING;
     }
 
-    public Movement getMovement() {
-        return movement;
-    }
 
     /**
      * Runs one tick of the Teleop OpMode, excluding movement, which is threaded separately
