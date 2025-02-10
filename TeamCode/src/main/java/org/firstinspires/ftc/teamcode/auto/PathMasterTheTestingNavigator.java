@@ -160,14 +160,14 @@ public class PathMasterTheTestingNavigator {
 
         // initial is 10 60
         Action arcStrikeVelocity = mecanumDrive.actionBuilder(new Pose2d(0 , 0 , Math.toRadians(90)))
-                .strafeToSplineHeading(outtakeSpecInit, Math.toRadians(270)
+                .strafeToSplineHeading(outtakeSpecInit, Math.toRadians(270))
                 .waitSeconds(1)
 		        .stopAndAdd(doOuttakeSpecimen())
                 .waitSeconds(1)
                 // TODO figure out static claw positioning (left (90) or right (270))
                 // Preloaded samples are at y = 24 inches, and the static claw is 12 inches long
                 // Human player zone is at y = 60 inches
-                .strafeToSplineHeading(new Vector2d(pixelOne-15  ,30 ), Math.toRadians(90)
+                .strafeToSplineHeading(new Vector2d(pixelOne-15  ,30 ), Math.toRadians(90))
                 .strafeTo(new Vector2d(pixelOne , pixelY ))
                 .strafeTo(new Vector2d(pixelOne, pushIn))
                 .strafeTo(new Vector2d(pixelOne, pixelY))
@@ -178,10 +178,11 @@ public class PathMasterTheTestingNavigator {
                 .strafeTo(new Vector2d(pixelThree , pushIn ))
 
                 .strafeTo(intakeSpec)
-                .waitSeconds(0.5)
-                .strafeToSplineHeading(outtakeSpecInit, Math.toRadians(270)
-
-
+                .waitSeconds(1)
+                .strafeToSplineHeading(outtakeSpecInit, Math.toRadians(270))
+                .waitSeconds(1)
+                .stopAndAdd(doOuttakeSpecimen())
+                .waitSeconds(1)
                 .strafeToSplineHeading(intakeSpec, Math.toRadians(90))
                 .waitSeconds(1)
                 .stopAndAdd(doIntakeSpecimen())
