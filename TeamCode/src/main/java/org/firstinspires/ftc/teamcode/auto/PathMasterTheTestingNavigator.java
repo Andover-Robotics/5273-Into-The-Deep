@@ -77,11 +77,11 @@ public class PathMasterTheTestingNavigator {
         bot = new Bot(hardwareMap, telemetry);
         // just set quadrant to some random value because it's easier than manually replacing them all and it doesn't matter what it is
 
-        Vector2d intakeBucket1 = new Vector2d(-42.5, 44 );
-        Vector2d intakeBucket2 = new Vector2d(-61, 44);
-        //Vector2d intakeBucket3 = new Vector2d(-70, 40.832 );
+        Vector2d intakeSample1 = new Vector2d(-42.5, 34 );
+        Vector2d intakeSample2 = new Vector2d(-52, 34);
+        //Vector2d intakeSample3 = new Vector2d(-54, 36 );
 
-        Vector2d outtakeBucket = new Vector2d(-58, 0 );
+        Vector2d outtakeBucket = new Vector2d(-50, 5 );
 
         Action arcStrikeVelocity = mecanumDrive.actionBuilder(new Pose2d(0 , 0 , Math.toRadians(90)))
                 .strafeToSplineHeading(outtakeBucket, Math.toRadians(45))
@@ -89,7 +89,7 @@ public class PathMasterTheTestingNavigator {
                 // output sample 0
                 .stopAndAdd(doOuttakeBucket())
                 .waitSeconds(1)
-                .strafeToSplineHeading(intakeBucket1, Math.toRadians(90 ))
+                .strafeToSplineHeading(intakeSample1, Math.toRadians(90 ))
                 .waitSeconds(1)
                 // input sample 1
                 .stopAndAdd(doIntake())
@@ -100,7 +100,7 @@ public class PathMasterTheTestingNavigator {
                 // output sample 1
                 .stopAndAdd(doOuttakeBucket())
                 .waitSeconds(1)
-                .strafeToSplineHeading(intakeBucket2, Math.toRadians(90))
+                .strafeToSplineHeading(intakeSample2, Math.toRadians(90))
                 .waitSeconds(1)
                 //input sample 2
                 .stopAndAdd(doIntake())
@@ -112,12 +112,13 @@ public class PathMasterTheTestingNavigator {
                 .stopAndAdd(doOuttakeBucket())
                 .waitSeconds(1)
                 .strafeToSplineHeading(new Vector2d(-62, 0), Math.toRadians(90))
-                /*.strafeToSplineHeading(intakeBucket3, Math.toRadians((90, ))
+                /*.strafeToSplineHeading(intakeSample3, Math.toRadians(135))
+                //make claw turn clockwise 45 degrees
                 .waitSeconds(1)
                 // input sample 3
                 .stopAndAdd(doIntake())
                 .waitSeconds(1)
-                .strafeToSplineHeading(outtakeBucket, Math.toRadians((45, ))
+                .strafeToSplineHeading(outtakeBucket, Math.toRadians(45))
                 .stopAndAdd(doTransfer())
                 .waitSeconds(1)
                 // output sample 3
