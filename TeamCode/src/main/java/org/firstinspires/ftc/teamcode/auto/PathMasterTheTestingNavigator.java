@@ -10,11 +10,13 @@ import com.acmerobotics.roadrunner.Vector2d;
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.Servo;
 
 //our special silly very important goofy classes (w rizz)
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.Bot;
 import org.firstinspires.ftc.teamcode.Camera;
+import org.firstinspires.ftc.teamcode.Claw;
 import org.firstinspires.ftc.teamcode.Outtake;
 import org.firstinspires.ftc.teamcode.Intake;
 import org.firstinspires.ftc.teamcode.SlidesVertical;
@@ -79,7 +81,7 @@ public class PathMasterTheTestingNavigator {
 
         Vector2d intakeSample1 = new Vector2d(-42.5, 34 );
         Vector2d intakeSample2 = new Vector2d(-52, 34);
-        //Vector2d intakeSample3 = new Vector2d(-54, 36 );
+        Vector2d intakeSample3 = new Vector2d(-54, 36 );
 
         Vector2d outtakeBucket = new Vector2d(-50, 5 );
 
@@ -112,8 +114,8 @@ public class PathMasterTheTestingNavigator {
                 .stopAndAdd(doOuttakeBucket())
                 .waitSeconds(1)
                 .strafeToSplineHeading(new Vector2d(-62, 0), Math.toRadians(90))
-                /*.strafeToSplineHeading(intakeSample3, Math.toRadians(135))
-                //make claw turn clockwise 45 degrees
+                .strafeToSplineHeading(intakeSample3, Math.toRadians(135))
+                .stopAndAdd(bot.clawRoll45())
                 .waitSeconds(1)
                 // input sample 3
                 .stopAndAdd(doIntake())
@@ -123,7 +125,7 @@ public class PathMasterTheTestingNavigator {
                 .waitSeconds(1)
                 // output sample 3
                 .stopAndAdd(doOuttakeBucket())
-                .waitSeconds(1)*/
+                .waitSeconds(1)
                 // turn around so its facing the field
                 .build();
 

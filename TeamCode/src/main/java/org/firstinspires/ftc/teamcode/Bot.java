@@ -296,4 +296,10 @@ public class Bot {
     public Action actionSweep() {
         return null; // TODO should lower sweeping arm, wait, then raise arm
     }
+
+    public Action clawRoll45() {
+        return new SequentialAction(
+                new InstantAction(intake::clawRoll45)
+                );
+    }
 }
