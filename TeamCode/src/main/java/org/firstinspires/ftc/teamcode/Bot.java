@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
+import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.hardwareMap;
+
 import androidx.annotation.NonNull;
 
 import com.acmerobotics.roadrunner.Action;
@@ -11,6 +13,7 @@ import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.arcrobotics.ftclib.gamepad.TriggerReader;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
@@ -25,7 +28,9 @@ public class Bot {
     private final SlidesVertical vSlides;
     private final Outtake outtake;
     private final Camera camera;
+    private final Servo sweepServo;
 
+    private static final double SWEEP_UP = 0, SWEEP_DOWN = 1;
     public enum FSM {
         STARTING,
         INTAKESAMPLE,
@@ -53,6 +58,10 @@ public class Bot {
         // outtake:
         vSlides = new SlidesVertical(hardwareMap);
         outtake = new Outtake(hardwareMap);
+
+        // sweep:
+        sweepServo = hardwareMap.get(Servo.class, "Sweep");
+
 
 
         fsm = FSM.STARTING;
@@ -294,11 +303,15 @@ public class Bot {
     }
 
     public Action actionSweepArmUp() {
-        return null; // TODO should lower sweeping arm
+        return new SequentialAction(
+                new InstantAction(() -> sweepServo.setPosition(SWEEP_UP))
+        );
     }
 
     public Action actionSweepArmDown() {
-        return null; // TODO should raise sweeping arm
+        return new SequentialAction(
+                new InstantAction(() -> sweepServo.setPosition(SWEEP_DOWN))
+        );
     }
 
     public Action clawRoll45() {
