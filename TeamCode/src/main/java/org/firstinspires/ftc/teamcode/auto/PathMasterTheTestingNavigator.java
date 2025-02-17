@@ -53,14 +53,14 @@ public class PathMasterTheTestingNavigator {
         HardwareMap hardwareMap = opMode.hardwareMap;
         Telemetry telemetry = opMode.telemetry;
 
-        MecanumDrive mecanumDrive = new MecanumDrive(hardwareMap, new Pose2d(0, 0, Math.toRadians(90)));
+        MecanumDrive mecanumDrive = new MecanumDrive(hardwareMap, new Pose2d(0, 0, Math.toRadians(270)));
 
         intake = new Intake(hardwareMap, new Camera(hardwareMap, telemetry));
         outtake = new Outtake(hardwareMap);
         verticalSlides = new SlidesVertical(hardwareMap);
         bot = new Bot(hardwareMap, telemetry);
 
-        Action arcStrikeVelocity = mecanumDrive.actionBuilder(new Pose2d(0 , 0 , Math.toRadians(90)))
+        Action arcStrikeVelocity = mecanumDrive.actionBuilder(new Pose2d(0 , 0 , Math.toRadians(270)))
                 .strafeTo(new Vector2d(55, 0))
                 .build();
         opMode.waitForStart();
@@ -136,7 +136,7 @@ public class PathMasterTheTestingNavigator {
         HardwareMap hardwareMap = opMode.hardwareMap;
         Telemetry telemetry = opMode.telemetry;
 
-        MecanumDrive mecanumDrive = new MecanumDrive(hardwareMap, new Pose2d(0, 0, Math.toRadians(90)));
+        MecanumDrive mecanumDrive = new MecanumDrive(hardwareMap, new Pose2d(0, 0, Math.toRadians(270)));
 
         intake = new Intake(hardwareMap, new Camera(hardwareMap, telemetry));
         outtake = new Outtake(hardwareMap);
@@ -144,20 +144,20 @@ public class PathMasterTheTestingNavigator {
         bot = new Bot(hardwareMap, telemetry);
 
         // push positions
-        int pixelOne = 40;
-        int pixelTwo = 50;
-        int pixelThree = 65;
-        int pushIn = 10;
-        int pixelY = 50;
+        int pixelOne = 35;
+        int pixelTwo = 45;
+        int pixelThree = 55;
+        int pushIn = 14;
+        int pixelY = 55;
 
-        Vector2d outtakeSpecInit = new Vector2d(-12, 40.832 );
-        Vector2d outtakeSpec1 = new Vector2d(-8, 40.832 );
-        Vector2d outtakeSpec2 = new Vector2d(-4, 40.832 );
-        Vector2d outtakeSpec3 = new Vector2d(-0, 40.832 );
+        Vector2d outtakeSpecInit = new Vector2d(-6, 28.832 );
+        Vector2d outtakeSpec1 = new Vector2d(-4, 28.832 );
+        Vector2d outtakeSpec2 = new Vector2d(-2, 28.832 );
+        Vector2d outtakeSpec3 = new Vector2d(-0, 28.832 );
 
         Vector2d intakeSpec = new Vector2d(36 , 0 );
 
-        Action arcStrikeVelocity = mecanumDrive.actionBuilder(new Pose2d(0 , 0 , Math.toRadians(90)))
+        Action arcStrikeVelocity = mecanumDrive.actionBuilder(new Pose2d(0 , 0 , Math.toRadians(270)))
                 .strafeToSplineHeading(outtakeSpecInit, Math.toRadians(270))
                 .waitSeconds(1)
 		        // .stopAndAdd(doOuttakeSpecimen())
@@ -189,8 +189,9 @@ public class PathMasterTheTestingNavigator {
                     */
 
                 // push
-                .strafeToSplineHeading(new Vector2d(pixelOne-15  ,30 ), Math.toRadians(90))
-                .strafeTo(new Vector2d(pixelOne , pixelY ))
+                .splineTo(new Vector2d(pixelOne-18,28 ), Math.toRadians(180))
+                .splineTo(new Vector2d(pixelOne-18, pixelY), Math.toRadians(270))
+                .strafeTo(new Vector2d(pixelOne , pixelY))
                 .strafeTo(new Vector2d(pixelOne, pushIn))
                 .strafeTo(new Vector2d(pixelOne, pixelY))
                 .strafeTo(new Vector2d(pixelTwo , pixelY ))
