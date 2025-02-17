@@ -78,11 +78,11 @@ public class PathMasterTheTestingNavigator {
         verticalSlides = new SlidesVertical(hardwareMap);
         bot = new Bot(hardwareMap, telemetry);
 
-        Vector2d intakeSample1 = new Vector2d(-42.5, 34 );
-        Vector2d intakeSample2 = new Vector2d(-52, 34);
-        Vector2d intakeSample3 = new Vector2d(-54, 36 );
+        Vector2d intakeSample1 = new Vector2d(-40.5, 29 );
+        Vector2d intakeSample2 = new Vector2d(-50, 29);
+        Vector2d intakeSample3 = new Vector2d(-52, 31 );
 
-        Vector2d outtakeBucket = new Vector2d(-50, 5 );
+        Vector2d outtakeBucket = new Vector2d(-45, 10 );
 
         Action arcStrikeVelocity = mecanumDrive.actionBuilder(new Pose2d(0 , 0 , Math.toRadians(90)))
                 .strafeToSplineHeading(outtakeBucket, Math.toRadians(45))
