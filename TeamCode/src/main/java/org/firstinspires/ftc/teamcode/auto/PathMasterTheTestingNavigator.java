@@ -78,9 +78,9 @@ public class PathMasterTheTestingNavigator {
         verticalSlides = new SlidesVertical(hardwareMap);
         bot = new Bot(hardwareMap, telemetry);
 
-        Vector2d intakeSample1 = new Vector2d(-40.5, 29 );
-        Vector2d intakeSample2 = new Vector2d(-50, 29);
-        Vector2d intakeSample3 = new Vector2d(-52, 31 );
+        Vector2d intakeSample1 = new Vector2d(-40.5, 24 );
+        Vector2d intakeSample2 = new Vector2d(-50, 24);
+        Vector2d intakeSample3 = new Vector2d(-52, 26);
 
         Vector2d outtakeBucket = new Vector2d(-45, 10 );
 
@@ -112,7 +112,7 @@ public class PathMasterTheTestingNavigator {
                 // output sample 2
                 // .stopAndAdd(doOuttakeBucket())
                 .waitSeconds(1)
-                .strafeToSplineHeading(new Vector2d(-62, 0), Math.toRadians(90))
+                //.strafeToSplineHeading(new Vector2d(-45, 0), Math.toRadians(90))
                 .strafeToSplineHeading(intakeSample3, Math.toRadians(135))
                 // .stopAndAdd(bot.clawRoll45())
                 .waitSeconds(1)
