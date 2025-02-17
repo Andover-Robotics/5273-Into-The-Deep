@@ -78,11 +78,11 @@ public class PathMasterTheTestingNavigator {
         verticalSlides = new SlidesVertical(hardwareMap);
         bot = new Bot(hardwareMap, telemetry);
 
-        Vector2d intakeSample1 = new Vector2d(-40.5, 24 );
-        Vector2d intakeSample2 = new Vector2d(-50, 24);
-        Vector2d intakeSample3 = new Vector2d(-52, 26);
+        Vector2d intakeSample1 = new Vector2d(-38.5, 22 );
+        Vector2d intakeSample2 = new Vector2d(-50.5, 22);
+        Vector2d intakeSample3 = new Vector2d(-50.5, 24);
 
-        Vector2d outtakeBucket = new Vector2d(-45, 10 );
+        Vector2d outtakeBucket = new Vector2d(-44.5, 10 );
 
         Action arcStrikeVelocity = mecanumDrive.actionBuilder(new Pose2d(0 , 0 , Math.toRadians(90)))
                 .strafeToSplineHeading(outtakeBucket, Math.toRadians(45))
@@ -93,7 +93,7 @@ public class PathMasterTheTestingNavigator {
                 .strafeToSplineHeading(intakeSample1, Math.toRadians(90 ))
                 .waitSeconds(1)
                 // input sample 1
-                // .stopAndAdd(doIntake())
+                .stopAndAdd(doIntake())
                 .waitSeconds(1)
                 .strafeToSplineHeading(outtakeBucket, Math.toRadians(45))
                 // .stopAndAdd(doTransfer())
@@ -104,7 +104,7 @@ public class PathMasterTheTestingNavigator {
                 .strafeToSplineHeading(intakeSample2, Math.toRadians(90))
                 .waitSeconds(1)
                 //input sample 2
-                // .stopAndAdd(doIntake())
+                .stopAndAdd(doIntake())
                 .waitSeconds(1)
                 .strafeToSplineHeading(outtakeBucket, Math.toRadians(45))
                 // .stopAndAdd(doTransfer())
@@ -112,12 +112,11 @@ public class PathMasterTheTestingNavigator {
                 // output sample 2
                 // .stopAndAdd(doOuttakeBucket())
                 .waitSeconds(1)
-                //.strafeToSplineHeading(new Vector2d(-45, 0), Math.toRadians(90))
                 .strafeToSplineHeading(intakeSample3, Math.toRadians(135))
                 // .stopAndAdd(bot.clawRoll45())
                 .waitSeconds(1)
                 // input sample 3
-                // .stopAndAdd(doIntake())
+                .stopAndAdd(doIntake())
                 .waitSeconds(1)
                 .strafeToSplineHeading(outtakeBucket, Math.toRadians(45))
                 // .stopAndAdd(doTransfer())
