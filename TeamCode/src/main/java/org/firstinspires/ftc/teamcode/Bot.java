@@ -293,8 +293,12 @@ public class Bot {
                 new InstantAction(vSlides::moveToLowerBound));
     }
 
-    public Action actionSweep() {
-        return null; // TODO should lower sweeping arm, wait, then raise arm
+    public Action actionSweepArmUp() {
+        return null; // TODO should lower sweeping arm
+    }
+
+    public Action actionSweepArmDown() {
+        return null; // TODO should raise sweeping arm
     }
 
     public Action clawRoll45() {

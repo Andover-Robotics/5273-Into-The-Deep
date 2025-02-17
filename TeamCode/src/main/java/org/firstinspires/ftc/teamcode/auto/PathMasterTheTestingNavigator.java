@@ -77,7 +77,6 @@ public class PathMasterTheTestingNavigator {
         outtake = new Outtake(hardwareMap);
         verticalSlides = new SlidesVertical(hardwareMap);
         bot = new Bot(hardwareMap, telemetry);
-        // just set quadrant to some random value because it's easier than manually replacing them all and it doesn't matter what it is
 
         Vector2d intakeSample1 = new Vector2d(-42.5, 34 );
         Vector2d intakeSample2 = new Vector2d(-52, 34);
@@ -145,15 +144,13 @@ public class PathMasterTheTestingNavigator {
         verticalSlides = new SlidesVertical(hardwareMap);
         bot = new Bot(hardwareMap, telemetry);
 
-        
+        // push positions
         int pixelOne = 40;
         int pixelTwo = 50;
         int pixelThree = 65;
         int pushIn = 10;
         int pixelY = 50;
 
-
-        //mid to sideplate7.5, mid to back7.168
         Vector2d outtakeSpecInit = new Vector2d(-12, 40.832 );
         Vector2d outtakeSpec1 = new Vector2d(-8, 40.832 );
         Vector2d outtakeSpec2 = new Vector2d(-4, 40.832 );
@@ -161,15 +158,38 @@ public class PathMasterTheTestingNavigator {
 
         Vector2d intakeSpec = new Vector2d(36 , 0 );
 
-        // initial is 10 60
         Action arcStrikeVelocity = mecanumDrive.actionBuilder(new Pose2d(0 , 0 , Math.toRadians(90)))
                 .strafeToSplineHeading(outtakeSpecInit, Math.toRadians(270))
                 .waitSeconds(1)
 		        .stopAndAdd(doOuttakeSpecimen())
                 .waitSeconds(1)
-                // TODO figure out static claw positioning (left (90) or right (270))
-                // Preloaded samples are at y = 24 inches, and the static claw is 12 inches long
-                // Human player zone is at y = 60 inches
+
+
+
+                /* Sweep
+                // getting these arm down and up timings with the movements optimized is good
+                // this is kinda assuming the sweep arm servo is really fast, may need to add more waits
+                .strafeToSplineHeading(new Vector2d(18,45), Math.toRadians(90))     // ready for first sweep
+                .waitSeconds(1)
+                .stopAndAdd(sweepDown())
+                .strafeToSplineHeading(new Vector2d(10,35), Math.toRadians(0))      // first sweep
+                .waitSeconds(1)
+                .stopAndAdd(sweepUp())
+                .strafeToSplineHeading(new Vector2d(30,45), Math.toRadians(90))     // ready for second sweep
+                .waitSeconds(1)
+                .stopAndAdd(sweepDown())
+                .strafeToSplineHeading(new Vector2d(30, 35), Math.toRadians(0))     // second sweep
+                .waitSeconds(1)
+                .stopAndAdd(sweepUp())
+                .strafeToSplineHeading(new Vector2d(42, 45), Math.toRadians(90))    // ready for third sweep
+                .waitSeconds(1)
+                .stopAndAdd(sweepDown())
+                .strafeToSplineHeading(new Vector2d(42, 35), Math.toRadians(0))     // third sweep
+                .waitSeconds(1)
+                .stopAndAdd(sweepUp())
+                    */
+
+                // push
                 .strafeToSplineHeading(new Vector2d(pixelOne-15  ,30 ), Math.toRadians(90))
                 .strafeTo(new Vector2d(pixelOne , pixelY ))
                 .strafeTo(new Vector2d(pixelOne, pushIn))
@@ -218,8 +238,12 @@ public class PathMasterTheTestingNavigator {
         Actions.runBlocking(arcStrikeVelocity);
     }
 
-    private static Action doSweep() {
-        return bot.actionSweep();
+    private static Action sweepDown() {
+        return bot.actionSweepArmDown();
+    }
+
+    private static Action sweepUp() {
+        return bot.actionSweepArmUp();
     }
 
     private static Action doTransfer() { return bot.actionTransfer();}
