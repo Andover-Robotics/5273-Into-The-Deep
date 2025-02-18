@@ -155,7 +155,7 @@ public class PathMasterTheTestingNavigator {
         Vector2d outtakeSpec2 = new Vector2d(-2, 28.832 );
         Vector2d outtakeSpec3 = new Vector2d(-0, 28.832 );
 
-        Vector2d intakeSpec = new Vector2d(32 , 5 );
+        Vector2d intakeSpec = new Vector2d(32 , 4 );
 
         Action arcStrikeVelocity = mecanumDrive.actionBuilder(new Pose2d(0 , 0 , Math.toRadians(270)))
                 .strafeToSplineHeading(outtakeSpecInit, Math.toRadians(270))
@@ -200,11 +200,7 @@ public class PathMasterTheTestingNavigator {
                 .strafeTo(new Vector2d(pixelThree , pixelY ))
                 .strafeTo(new Vector2d(pixelThree , pushIn ))
 
-                .strafeTo(intakeSpec)
-                .waitSeconds(1)
-                .strafeToSplineHeading(outtakeSpecInit, Math.toRadians(270))
-                .waitSeconds(1)
-                // .stopAndAdd(doOuttakeSpecimen())
+
                 .waitSeconds(1)
                 .strafeToSplineHeading(intakeSpec, Math.toRadians(90))
                 .waitSeconds(1)
