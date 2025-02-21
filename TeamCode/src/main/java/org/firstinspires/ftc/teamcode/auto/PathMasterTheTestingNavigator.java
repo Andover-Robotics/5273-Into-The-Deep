@@ -199,8 +199,9 @@ public class PathMasterTheTestingNavigator {
                 .strafeTo(new Vector2d(pixelTwo , pixelY ))
                 .strafeTo(new Vector2d(pixelThree , pixelY ))
                 .strafeTo(new Vector2d(pixelThree , pushIn ))
+                .strafeTo(new Vector2d(pixelTwo, 8)) // temporary, just so park is more consistent maybe a little
 
-
+                /*
                 .waitSeconds(1)
                 .strafeToSplineHeading(intakeSpec, Math.toRadians(90))
                 .waitSeconds(1)
@@ -227,7 +228,7 @@ public class PathMasterTheTestingNavigator {
                 // .stopAndAdd((doOuttakeSpecimen()))
                 .waitSeconds(1)
                 .strafeToSplineHeading(new Vector2d(62, 0), Math.toRadians(90))
-                .build();
+                */.build();
 
         opMode.waitForStart();
 
