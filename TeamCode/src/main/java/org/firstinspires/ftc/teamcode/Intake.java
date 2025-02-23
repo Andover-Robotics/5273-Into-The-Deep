@@ -87,7 +87,7 @@ public class Intake {
     }
 
     public void setPitchTransfer() {
-        claw.setPitch(0.2155555);
+        claw.setPitch(Claw.PitchPosition.TRANSFER);
     }
 
     public void posSurvey() {
@@ -97,9 +97,9 @@ public class Intake {
     }
 
     public void openIntake() {
-        fourR.setPosition(0.8644);
-        fourL.setPosition(0.1778);
-        claw.setPitch(1);
+        fourR.setPosition(0.31);
+        fourL.setPosition(0.38);
+        claw.setPitch(0.0944);
         claw.openClaw();
         fsm = IntakeState.INTAKE_OPEN;
     }
