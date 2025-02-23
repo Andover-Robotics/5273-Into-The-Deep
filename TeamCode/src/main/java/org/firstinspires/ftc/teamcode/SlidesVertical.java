@@ -19,11 +19,22 @@ import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
 public class SlidesVertical {
 
     private int holdTarget = 0;
-    private final DcMotor slidesLeft, slidesRight;
+    private final MotorEx slidesLeft, slidesRight;
     //sets limits of slides extension
     private static final int UPPER_BOUND = 2680;
-    private static final int LOWER_BOUND = 0;
+    private static final int STORAGE = -5;
     private static final int CLIP_POS = 919;
+    public PIDFController pidfController;
+    public static double p = 0.015, i = 0, d = 0, f = 0, staticF = 0.25;  //tune these later (thanks lightning for placeholders)
+    private final double tolerance = 10, powerUp = 0.1, powerDown = 0.05, powerMin =0.2, manualDivide = 1 ;
+    public  double target = 0;
+    private double power;
+    private final OpMode opMode;
+    public double manualPower = 0;
+    public boolean goingDown = false;
+    private double profiler_init_time = 0;
+    MotionProfiler profiler = new MotionProfiler(30000,20000);
+
 
     public SlidesVertical(HardwareMap map) {
         slidesLeft = map.get(DcMotor.class, "slidesL");
