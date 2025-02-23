@@ -220,9 +220,10 @@ public class Bot {
         return new SequentialAction(
                 new InstantAction(outtake::close),
                 new InstantAction(outtake::posPreBucket),
-                new InstantAction(intake::closeSurvey),
+                new InstantAction(intake::closeIntake),
                 new SleepAction(0.2),
                 new InstantAction(vSlides::moveToLowerBound),
+                new InstantAction(intake::setPitchTransfer),
                 new InstantAction(hSlides::close),
                 new SleepAction(0.2),
                 new InstantAction(outtake::openTransfer),
@@ -230,10 +231,6 @@ public class Bot {
                 new InstantAction(intake::looseClaw),
                 new SleepAction(0.2),
                 new InstantAction(intake::posTransfer),
-                new SleepAction(1),
-                new SleepAction(0.1),
-                new InstantAction(intake::setPitchTransfer),
-                new SleepAction(1),
                 new SleepAction(0.25),
                 new InstantAction(outtake::closeClaw),
                 new SleepAction(0.1),
@@ -243,11 +240,10 @@ public class Bot {
                 //new SleepAction(1),
                 //new InstantAction(vSlides::moveToTopBucketPos),
                 new InstantAction(outtake::close),
-                new SleepAction(1),
+                new SleepAction(0.1),
                 new InstantAction(outtake::posPreBucket),
-                new SleepAction(1),
                 new InstantAction(hSlides::close),
-                new SleepAction(1),
+                new SleepAction(0.1),
                 new InstantAction(() -> fsm = FSM.SCORESAMPLE));
     }
 
