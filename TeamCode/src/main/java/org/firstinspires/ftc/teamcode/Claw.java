@@ -22,7 +22,7 @@ public class Claw {
     private final Servo roll;
     private final Servo pitch;
     public static double openPos, closedPos;
-    public final double LOOSE_POS = 0.0894;
+    public final double LOOSE_POS = 0.29722;
     private ColorSensor colorSensor;
     private Camera camera;
     private static final double ROLL_MIDDLE = 0.5;
