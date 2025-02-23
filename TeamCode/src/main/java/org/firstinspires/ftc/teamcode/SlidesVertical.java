@@ -19,14 +19,14 @@ public class SlidesVertical {
     private int holdTarget = 0;
     private final DcMotor slidesLeft, slidesRight;
     //sets limits of slides extension
-    private static final int UPPER_BOUND = 1520;
+    private static final int UPPER_BOUND = 2680;
     private static final int LOWER_BOUND = 0;
     private static final int CLIP_POS = 919;
 
     public SlidesVertical(HardwareMap map) {
         slidesLeft = map.get(DcMotor.class, "slidesL");
         slidesRight = map.get(DcMotor.class, "slidesR");
-        slidesLeft.setDirection(DcMotorSimple.Direction.REVERSE);
+        slidesRight.setDirection(DcMotorSimple.Direction.REVERSE);
     }
 
     public enum VSlides {
