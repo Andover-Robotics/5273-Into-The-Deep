@@ -36,19 +36,21 @@ public class SlidesVertical {
     MotionProfiler profiler = new MotionProfiler(30000,20000);
 
 
-    public SlidesVertical(HardwareMap map) {
-        slidesLeft = map.get(DcMotor.class, "slidesL");
-        slidesRight = map.get(DcMotor.class, "slidesR");
-        slidesRight.setDirection(DcMotorSimple.Direction.REVERSE);
-    }
+    public SlidesVertical(OpMode running) {
+        opMode = running;
+        slidesLeft = new MotorEx(opMode.hardwareMap, "slidesL", Motor.GoBILDA.RPM_312);
+        slidesRight = new MotorEx(opMode.hardwareMap, "slidesR", Motor.GoBILDA.RPM_312);
+        slidesLeft.setInverted(false);
+        slidesRight.setInverted(true);
+        pidfController = new PIDFController(p, i, d, f);
+        pidfController.setTolerance(tolerance);
+        pidfController.setSetPoint(0);
+        slidesRight.setRunMode(Motor.RunMode.RawPower);
+        slidesLeft.setZeroPowerBehavior(Motor.ZeroPowerBehavior.BRAKE);
+        slidesRight.setRunMode(Motor.RunMode.RawPower);
+        slidesLeft.setZeroPowerBehavior(Motor.ZeroPowerBehavior.BRAKE);
 
-    public enum VSlides {
-        LOWERED,  // Slides at the lower bound
-        RAISED,  // Slides at the upper bound
-        MIDDLE //Slides in the middle
     }
-
-    public VSlides fsm = VSlides.LOWERED;
 
     //makes sure FSM is updated based on encoder positions
     public void updateFSM(){
