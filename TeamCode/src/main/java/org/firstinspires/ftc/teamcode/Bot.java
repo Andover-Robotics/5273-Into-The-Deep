@@ -1,7 +1,5 @@
 package org.firstinspires.ftc.teamcode;
 
-import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.hardwareMap;
-
 import androidx.annotation.NonNull;
 
 import com.acmerobotics.roadrunner.Action;
@@ -12,6 +10,7 @@ import com.acmerobotics.roadrunner.ftc.Actions;
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.arcrobotics.ftclib.gamepad.TriggerReader;
+import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
@@ -47,7 +46,7 @@ public class Bot {
      *
      * @param hardwareMap {@link com.qualcomm.robotcore.hardware.HardwareMap}
      */
-    public Bot(@NonNull HardwareMap hardwareMap, @NonNull Telemetry telemetry) {
+    public Bot(OpMode opMode, @NonNull HardwareMap hardwareMap, @NonNull Telemetry telemetry) {
         // initializations:
         camera = new Camera(hardwareMap, telemetry);
 
@@ -56,7 +55,7 @@ public class Bot {
         intake = new Intake(hardwareMap, camera);
 
         // outtake:
-        vSlides = new SlidesVertical(hardwareMap);
+        vSlides = new SlidesVertical(opMode);
         outtake = new Outtake(hardwareMap);
 
         // sweep:

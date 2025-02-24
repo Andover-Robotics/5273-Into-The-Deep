@@ -74,7 +74,7 @@ public class SlidesVertical {
     }
 */
 
-    public int getEncoders() {
+    public int getEncodersAverage() {
         return (int)((slidesLeft.getCurrentPosition() + slidesRight.getCurrentPosition()) / 2);
     }
 
