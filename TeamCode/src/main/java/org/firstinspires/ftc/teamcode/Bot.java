@@ -77,12 +77,8 @@ public class Bot {
 
     public void teleopTick(GamepadEx gamepad1, GamepadEx gamepad2, Telemetry telemetry) throws InterruptedException {
         boolean rightTriggerDown = gamepad2.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER) > 0.1;
-        final TriggerReader rightTrigger = new TriggerReader(gamepad2, GamepadKeys.Trigger.RIGHT_TRIGGER);
-        telemetry.addData("State: ", fsm);
-        telemetry.addData("Vertical Slides Pos: ", vSlides.getEncodersAverage());
         if (gamepad2.isDown(GamepadKeys.Button.X))
             fsm = FSM.HANG;
-        //telemetry.addData("Horizontal Slides Pos: ", hSlides.getPositions());
         switch (fsm) {
             case STARTING: // if just started
                 vSlides.resetEncoders();
@@ -101,11 +97,8 @@ public class Bot {
                 break;
             case INTAKESAMPLE: // direction control over horizontal slides and intake
                 hSlides.setPower(gamepad2.getLeftY());
-                telemetry.addData("is right trigger?: ",rightTriggerDown);
                 intake.moveDiffyPos(gamepad2, telemetry);
                 telemetry.addData("Intake State", intake.fsm);
-                telemetry.addData("arm i left", intake.fourLPos());
-                telemetry.addData("arm i right", intake.fourRPos());
                 if (rightTriggerDown && (intake.isSurveyOpen() || intake.isSurveyClosed())){
                     intake.open();
                     Thread.sleep(100);
@@ -212,7 +205,9 @@ public class Bot {
                 }
                 break;
         }
-        if (gamepad2.isDown(GamepadKeys.Button.X)) fsm = FSM.HANG;
+        vSlides.periodic();
+        telemetry.addData("State: ", fsm);
+        telemetry.addData("Vertical Slides Pos: ", vSlides.getEncodersAverage());
     }
 
     public SequentialAction actionTransfer() {
