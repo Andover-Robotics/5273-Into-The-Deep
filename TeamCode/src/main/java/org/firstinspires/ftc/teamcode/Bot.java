@@ -317,4 +317,9 @@ public class Bot {
                 new InstantAction(intake::clawRoll45)
                 );
     }
+    public Action closeHori() {
+        return new SequentialAction(
+                new InstantAction(hSlides::close)
+                );
+    }
 }

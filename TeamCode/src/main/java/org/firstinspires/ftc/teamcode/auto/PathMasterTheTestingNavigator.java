@@ -86,13 +86,16 @@ public class PathMasterTheTestingNavigator {
 
         Action arcStrikeVelocity = mecanumDrive.actionBuilder(new Pose2d(0 , 0 , Math.toRadians(90)))
                 .stopAndAdd(intakePosition())
+                .stopAndAdd(bot.closeHori())
                 .strafeToSplineHeading(outtakeBucket, Math.toRadians(45))
                 .waitSeconds(1)
                 // output sample 0
                 //.stopAndAdd(doOuttakeBucket())
                 .waitSeconds(1)
                 .strafeToSplineHeading(intakeSample1, Math.toRadians(90 ))
+                .stopAndAdd(bot.closeHori())
                 .waitSeconds(1)
+                .stopAndAdd(bot.closeHori())
                 // input sample 1
                 .stopAndAdd(doIntake())
                 .waitSeconds(1)
@@ -103,8 +106,10 @@ public class PathMasterTheTestingNavigator {
                 //.stopAndAdd(doOuttakeBucket())
                 .waitSeconds(1)
                 .strafeToSplineHeading(intakeSample2, Math.toRadians(90))
+                .stopAndAdd(bot.closeHori())
                 .waitSeconds(1)
                 //input sample 2
+                .stopAndAdd(bot.closeHori())
                 .stopAndAdd(doIntake())
                 .waitSeconds(1)
                 .strafeToSplineHeading(outtakeBucket, Math.toRadians(45))
@@ -115,6 +120,7 @@ public class PathMasterTheTestingNavigator {
                 .waitSeconds(1)
                 .strafeToSplineHeading(intakeSample3, Math.toRadians(135))
                 .stopAndAdd(bot.clawRoll45())
+                .stopAndAdd(bot.closeHori())
                 .waitSeconds(1)
                 //input sample 3
                 .stopAndAdd(doIntake())
