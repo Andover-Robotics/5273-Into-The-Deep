@@ -78,9 +78,9 @@ public class PathMasterTheTestingNavigator {
         verticalSlides = new SlidesVertical(opMode);
         bot = new Bot(opMode,hardwareMap, telemetry);
 
-        Vector2d intakeSample1 = new Vector2d(-38, 24);
-        Vector2d intakeSample2 = new Vector2d(-50, 24);
-        Vector2d intakeSample3 = new Vector2d(-51, 26);
+        Vector2d intakeSample1 = new Vector2d(-39.5, 26);
+        Vector2d intakeSample2 = new Vector2d(-51.5, 26);
+        Vector2d intakeSample3 = new Vector2d(-52.5, 28);
 
         Vector2d outtakeBucket = new Vector2d(-44.5, 10 );
 
