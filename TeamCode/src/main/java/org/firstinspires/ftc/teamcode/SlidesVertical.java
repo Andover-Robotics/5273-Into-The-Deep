@@ -101,7 +101,7 @@ public class SlidesVertical {
             setPower(0);  // Stop adjusting if within range
         }
     }
-
+*/
     public void moveToTopBucketPos() {
         setPosition(UPPER_BOUND);
     }
@@ -120,20 +120,18 @@ public class SlidesVertical {
 
     //moves based on position inputted
     public void setPosition(int targetPosition) {
-        final int TOLERANCE = 5;
-        int error = targetPosition - getEncoders();
+        slidesLeft.setRunMode(Motor.RunMode.RawPower);
+        slidesLeft.setZeroPowerBehavior(Motor.ZeroPowerBehavior.BRAKE);
+        slidesRight.setRunMode(Motor.RunMode.RawPower);
+        slidesRight.setZeroPowerBehavior(Motor.ZeroPowerBehavior.BRAKE);
 
-        if (Math.abs(error) > TOLERANCE) {
-            double power = Math.max(0.1, Math.min(1.0, Math.abs(error) / 1000.0));
-            if (error > 0) {
-                setPower(power);
-            } else {
-                setPower(-power);
-            }
-        } else {
-            setPower(0);
-        }
-        updateFSM();
+        pidfController = new PIDFController(p, i, d, f);
+        pidfController.setTolerance(TOLERANCE);
+        resetProfiler();
+        profiler.init_new_profile(slidesLeft.getCurrentPosition(), targetPosition);
+        profile_init_time = opMode.time;
+        goingDown = targetPosition > target;
+        target = targetPosition;
     }
 
 
