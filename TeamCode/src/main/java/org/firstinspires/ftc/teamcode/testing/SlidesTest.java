@@ -10,12 +10,12 @@ import org.firstinspires.ftc.teamcode.SlidesVertical;
 public class SlidesTest extends LinearOpMode  {
     @Override
     public void runOpMode() {
-        SlidesVertical vSlides = new SlidesVertical(hardwareMap);
+        SlidesVertical vSlides = new SlidesVertical(this);
         SlidesHorizontal hSlides = new SlidesHorizontal(hardwareMap, telemetry);
         waitForStart();
         while (opModeIsActive()) {
             //hSlides.slidesMove(gamepad2.left_stick_y, gamepad2.b, telemetry);
-            vSlides.slidesMove(gamepad2.right_stick_y, gamepad2.b, telemetry);
+            vSlides.slidesMove(gamepad2.right_stick_y);
         }
     }
 }

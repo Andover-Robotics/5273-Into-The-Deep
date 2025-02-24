@@ -33,7 +33,7 @@ public class IntakeValueTester extends LinearOpMode {
         gp2 = new GamepadEx(gamepad2);
         intake = new Intake(hardwareMap,new Camera(hardwareMap, telemetry));
         outtake = new Outtake(hardwareMap);
-        vSlides = new SlidesVertical(hardwareMap);
+        vSlides = new SlidesVertical(this);
         hSlides = new SlidesHorizontal(hardwareMap, telemetry);
         boolean start = false;
         waitForStart();
@@ -43,8 +43,8 @@ public class IntakeValueTester extends LinearOpMode {
                 hSlides.close();
                 vSlides.resetEncoders();
             }
-            vSlides.slidesMove(gp2.getLeftY(), gp2.getButton(GamepadKeys.Button.B), telemetry);
-            telemetry.addData("vSlides position",vSlides.getEncoders());
+            vSlides.slidesMove(gp2.getLeftY());
+            telemetry.addData("vSlides position",vSlides.getEncodersAverage());
             telemetry.addData("y left",gp2.getLeftY());
             if (gp1.getButton(GamepadKeys.Button.A)){
                 intake.posIntake();
@@ -70,7 +70,8 @@ public class IntakeValueTester extends LinearOpMode {
 
             intake.moveDiffyPos(gp1,telemetry);
             hSlides.setPower(gp1.getLeftY());
-            telemetry.addData("Vslides Position",vSlides.getEncoders());
+            vSlides.periodic();
+            telemetry.addData("Vslides Position",vSlides.getEncodersAverage());
             telemetry.addData("HSlides Left: ",hSlides.getLeft());
             telemetry.addData("HSlides Right: ",hSlides.getRight());
             telemetry.addData("Outtake Arm Position Left: ",intake.fourLPos());
