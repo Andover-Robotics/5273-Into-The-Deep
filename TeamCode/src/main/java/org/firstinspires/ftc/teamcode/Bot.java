@@ -80,7 +80,7 @@ public class Bot {
         boolean rightTriggerDown = gamepad2.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER) > 0.1;
         final TriggerReader rightTrigger = new TriggerReader(gamepad2, GamepadKeys.Trigger.RIGHT_TRIGGER);
         telemetry.addData("State: ", fsm);
-        telemetry.addData("Vertical Slides Pos: ", vSlides.getEncoders());
+        telemetry.addData("Vertical Slides Pos: ", vSlides.getEncodersAverage());
         if (gamepad2.isDown(GamepadKeys.Button.X))
             fsm = FSM.HANG;
         //telemetry.addData("Horizontal Slides Pos: ", hSlides.getPositions());
@@ -139,7 +139,7 @@ public class Bot {
                 telemetry.addData("Has sample: ",intake.hasSample());
                 break;
             case SCORESAMPLE: // direct control over vertical slides and outtake
-                vSlides.slidesMove(gamepad2.getLeftY(), gamepad2.isDown(GamepadKeys.Button.B), telemetry);
+                vSlides.slidesMove(gamepad2.getLeftY());
                 outtake.posPreBucket();
                 if (!gamepad2.isDown(GamepadKeys.Button.B) && gamepad2.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER) > 0.1)
                     outtake.open();
@@ -178,7 +178,7 @@ public class Bot {
                 break;
             case CLIPSPECIMEN:
                 outtake.posBucket();
-                vSlides.slidesMove(gamepad2.getLeftY(), gamepad2.isDown(GamepadKeys.Button.B), telemetry);
+                vSlides.slidesMove(gamepad2.getLeftY());
                 if(rightTriggerDown){
                     outtake.open();
                 }
@@ -204,7 +204,7 @@ public class Bot {
                 outtake.closeTransfer();
                 hSlides.close();
                 intake.closeTransfer();
-                vSlides.slidesMove(gamepad2.getLeftY(), gamepad2.isDown(GamepadKeys.Button.B), telemetry);
+                vSlides.slidesMove(gamepad2.getLeftY());
                 if (rightTriggerDown) {
                     vSlides.moveToLowerBound();
                 }
