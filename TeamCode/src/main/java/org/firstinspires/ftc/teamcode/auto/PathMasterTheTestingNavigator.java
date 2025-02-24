@@ -53,14 +53,14 @@ public class PathMasterTheTestingNavigator {
         HardwareMap hardwareMap = opMode.hardwareMap;
         Telemetry telemetry = opMode.telemetry;
 
-        MecanumDrive mecanumDrive = new MecanumDrive(hardwareMap, new Pose2d(0, 0, Math.toRadians(90)));
+        MecanumDrive mecanumDrive = new MecanumDrive(hardwareMap, new Pose2d(0, 0, Math.toRadians(270)));
 
         intake = new Intake(hardwareMap, new Camera(hardwareMap, telemetry));
         outtake = new Outtake(hardwareMap);
         verticalSlides = new SlidesVertical(opMode);
         bot = new Bot(opMode,hardwareMap, telemetry);
 
-        Action arcStrikeVelocity = mecanumDrive.actionBuilder(new Pose2d(0 , 0 , Math.toRadians(90)))
+        Action arcStrikeVelocity = mecanumDrive.actionBuilder(new Pose2d(0 , 0 , Math.toRadians(270)))
                 .strafeTo(new Vector2d(55, 0))
                 .build();
         opMode.waitForStart();
@@ -88,7 +88,7 @@ public class PathMasterTheTestingNavigator {
                 .strafeToSplineHeading(outtakeBucket, Math.toRadians(45))
                 .waitSeconds(1)
                 // output sample 0
-                //stopAndAdd(doOuttakeBucket())
+                //.stopAndAdd(doOuttakeBucket())
                 .waitSeconds(1)
                 .strafeToSplineHeading(intakeSample1, Math.toRadians(90 ))
                 .waitSeconds(1)
@@ -99,7 +99,7 @@ public class PathMasterTheTestingNavigator {
                 .stopAndAdd(doTransfer())
                 .waitSeconds(1)
                 // output sample 1
-                // .stopAndAdd(doOuttakeBucket())
+                //.stopAndAdd(doOuttakeBucket())
                 .waitSeconds(1)
                 .strafeToSplineHeading(intakeSample2, Math.toRadians(90))
                 .waitSeconds(1)
@@ -110,7 +110,7 @@ public class PathMasterTheTestingNavigator {
                 .stopAndAdd(doTransfer())
                 .waitSeconds(1)
                 // output sample 2
-                // .stopAndAdd(doOuttakeBucket())
+                //.stopAndAdd(doOuttakeBucket())
                 .waitSeconds(1)
                 .strafeToSplineHeading(intakeSample3, Math.toRadians(135))
                 .stopAndAdd(bot.clawRoll45())
@@ -122,7 +122,7 @@ public class PathMasterTheTestingNavigator {
                 .stopAndAdd(doTransfer())
                 .waitSeconds(1)
                 // output sample 3
-                // .stopAndAdd(doOuttakeBucket())
+                //.stopAndAdd(doOuttakeBucket())
                 .waitSeconds(1)
                 // turn around so its facing the field
                 .build();
@@ -162,7 +162,7 @@ public class PathMasterTheTestingNavigator {
                 .waitSeconds(1)
 
 
-		        // .stopAndAdd(doOuttakeSpecimen())
+		        .stopAndAdd(doOuttakeSpecimen())
                 .waitSeconds(1)
 
 
@@ -211,7 +211,7 @@ public class PathMasterTheTestingNavigator {
                 .waitSeconds(1)
                 .strafeToSplineHeading(outtakeSpec1, Math.toRadians(270))
                 .waitSeconds(1)
-                // .stopAndAdd(doOuttakeSpecimen())
+                .stopAndAdd(doOuttakeSpecimen())
                 .waitSeconds(1)
                 .strafeToSplineHeading(intakeSpec, Math.toRadians(90))
                 .waitSeconds(1)
@@ -219,7 +219,7 @@ public class PathMasterTheTestingNavigator {
                 .waitSeconds(1)
                 .strafeToSplineHeading(outtakeSpec2, Math.toRadians(270))
                 .waitSeconds(1)
-                // .stopAndAdd(doOuttakeSpecimen())
+                .stopAndAdd(doOuttakeSpecimen())
                 .waitSeconds(1)
                 .strafeToSplineHeading(intakeSpec, Math.toRadians(90))
                 .waitSeconds(1)
