@@ -140,4 +140,48 @@ public class SlidesVertical {
         }
         updateFSM();
     }
+
+
+    public double getCurrent() {
+        return slidesLeft.motorEx.getCurrent(CurrentUnit.MILLIAMPS) + slidesRight.motorEx.getCurrent(CurrentUnit.MILLIAMPS);
+    }
+
+
+    public int getPosition() {
+        return slidesLeft.getCurrentPosition();
+    }
+
+    public void resetProfiler() {
+        profiler = new MotionProfiler(30000, 20000);
+    }
+
+
+    public void periodic() {
+        slidesRight.setInverted(false);
+        slidesLeft.setInverted(true);
+        pidfController.setPIDF(p, i, d, f);
+        double dt = opMode.time - profile_init_time;
+        if (!profiler.isOver()) {
+            pidfController.setSetPoint(profiler.motion_profile_pos(dt));
+            power = powerUp * pidfController.calculate(slidesLeft.getCurrentPosition());
+            if (goingDown) {
+                power = powerDown * pidfController.calculate(slidesLeft.getCurrentPosition());
+            }
+            slidesLeft.set(power);
+            slidesRight.set(power);
+        } else {
+            if (profiler.isDone()) {
+                profiler = new MotionProfiler(30000, 20000);
+            }
+            if (manualPower != 0) {
+                pidfController.setSetPoint(slidesLeft.getCurrentPosition());
+                slidesLeft.set(manualPower / manualDivide);
+                slidesRight.set(manualPower / manualDivide);
+            } else {
+                power = staticF * pidfController.calculate(slidesLeft.getCurrentPosition());
+                slidesLeft.set(power);
+                slidesRight.set(power);
+            }
+        }
+    }
 }
