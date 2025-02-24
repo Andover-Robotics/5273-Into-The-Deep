@@ -27,14 +27,15 @@ public class SlidesVertical {
     private static final int STORAGE = -5;
     private static final int CLIP_POS = 919;
     public PIDFController pidfController;
+    public final int TOLERANCE = 10;
     public static double p = 0.015, i = 0, d = 0, f = 0, staticF = 0.25;  //tune these later (thanks lightning for placeholders)
-    private final double tolerance = 10, powerUp = 0.1, powerDown = 0.05, powerMin =0.2, manualDivide = 1 ;
+    private final double powerUp = 0.1, powerDown = 0.05, powerMin =0.2, manualDivide = 1 ;
     public  double target = 0;
     private double power;
     private final OpMode opMode;
     public double manualPower = 0;
     public boolean goingDown = false;
-    private double profiler_init_time = 0;
+    private double profile_init_time = 0;
     MotionProfiler profiler = new MotionProfiler(30000,20000);
 
 
@@ -45,13 +46,12 @@ public class SlidesVertical {
         slidesLeft.setInverted(false);
         slidesRight.setInverted(true);
         pidfController = new PIDFController(p, i, d, f);
-        pidfController.setTolerance(tolerance);
+        pidfController.setTolerance(TOLERANCE);
         pidfController.setSetPoint(0);
         slidesRight.setRunMode(Motor.RunMode.RawPower);
         slidesLeft.setZeroPowerBehavior(Motor.ZeroPowerBehavior.BRAKE);
         slidesRight.setRunMode(Motor.RunMode.RawPower);
         slidesLeft.setZeroPowerBehavior(Motor.ZeroPowerBehavior.BRAKE);
-
     }
 
     //makes sure FSM is updated based on encoder positions
