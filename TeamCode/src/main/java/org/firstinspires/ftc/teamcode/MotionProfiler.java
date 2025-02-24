@@ -5,19 +5,19 @@ public class MotionProfiler {
     private boolean isOver = true;
     private boolean isDone = false;
     private double tempMaxAccel, tempMaxVel;
-    private double start_pos, final_pos, distance, accelerationDt, halfwayDistance, accelerationDistance, newMaxVelocity, deacceleration_dt, cruiseDistance, cruiseDt, deaccelerationTime, entire_dt;
+    private double startPos, finalPos, distance, accelerationDt, halfwayDistance, accelerationDistance, newMaxVelocity, deacceleration_dt, cruiseDistance, cruiseDt, deaccelerationTime, entire_dt;
     public MotionProfiler(double MAX_VELOCITY, double MAX_ACCELERATION){
         this.MAX_ACCELERATION = MAX_ACCELERATION;
         this.MAX_VELOCITY = MAX_VELOCITY;
     }
     //bro lightning did a python coder make this
     public void initNewProfile(double startPos, double finalPos){
-        this.start_pos = startPos;
-        this.final_pos = finalPos;
+        this.startPos = startPos;
+        this.finalPos = finalPos;
         isOver = false;
-
         distance = finalPos-startPos;
 
+        // if we are going in a backwards direction then max velocity and accelerations have to be backwards too
         if(distance < 0){
             tempMaxVel = -MAX_VELOCITY;
             tempMaxAccel = -MAX_ACCELERATION;
@@ -59,13 +59,13 @@ public class MotionProfiler {
         if (currentDt > entire_dt) {
             isOver = true;
             isDone = true;
-            return final_pos;
+            return finalPos;
         }
 
         // if we're accelerating
         if (currentDt < accelerationDt)
             // use the kinematic equation for acceleration
-            return start_pos + 0.5 * tempMaxAccel * currentDt * currentDt;
+            return startPos + 0.5 * tempMaxAccel * currentDt * currentDt;
 
             // if we're cruising
         else if (currentDt < deaccelerationTime) {
@@ -73,7 +73,7 @@ public class MotionProfiler {
             double cruiseCurrentDt = currentDt - accelerationDt;
 
             // use the kinematic equation for constant velocity
-            return start_pos + accelerationDistance + newMaxVelocity * cruiseCurrentDt;
+            return startPos + accelerationDistance + newMaxVelocity * cruiseCurrentDt;
         }
 
         // if we're decelerating
@@ -83,26 +83,26 @@ public class MotionProfiler {
             deaccelerationTime = currentDt - deaccelerationTime;
 
             // use the kinematic equations to calculate the instantaneous desired position
-            return start_pos + accelerationDistance + cruiseDistance + newMaxVelocity * deaccelerationTime - 0.5 * tempMaxAccel * deaccelerationTime * deaccelerationTime;
+            return startPos + accelerationDistance + cruiseDistance + newMaxVelocity * deaccelerationTime - 0.5 * tempMaxAccel * deaccelerationTime * deaccelerationTime;
         }
     }
 
     public double motionProfileVel(double currentDt) {
-//
+        //velocity should be 0 after everything has been finished
         if (currentDt > entire_dt)
             return 0;
 
-        // if we're accelerating
+        // if we're accelerating then the velocity should be accel * elapsed time (basic physics equation)
         if (currentDt < accelerationDt)
             // use the kinematic equation for acceleration
             return tempMaxAccel *currentDt;
 
-            // if we're cruising
+            // if we're cruising then it should be running at the set velocity
         else if (currentDt < deaccelerationTime) {
             return newMaxVelocity;
         }
 
-        // if we're decelerating
+        // if we're decelerating then do it based on the newMaxVelocity and how long the decel has been happening
         else {
             deaccelerationTime = currentDt - deaccelerationTime;
 
@@ -111,8 +111,10 @@ public class MotionProfiler {
         }
     }
 
+    //returns the amount that you should accelerate by for the current profiler
     public double motionProfileAccel(double currentDt) {
 
+        //if the movement time has passed then you shouldn't accelerate anymore
         if (currentDt > entire_dt)
             return 0;
 
@@ -121,13 +123,12 @@ public class MotionProfiler {
             // use the kinematic equation for acceleration
             return tempMaxAccel;
 
-            // if we're cruising
+        // if we're cruising then theres no need to accelerate
         else if (currentDt < deaccelerationTime) {
-
             return 0;
         }
 
-        // if we're decelerating
+        // only other possibility is if we're decelerating, accelerate the negative amount
         else {
             // use the kinematic equations to calculate the instantaneous desired position
             return -tempMaxAccel;
