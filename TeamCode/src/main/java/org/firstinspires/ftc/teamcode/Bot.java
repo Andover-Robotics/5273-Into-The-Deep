@@ -306,6 +306,12 @@ public class Bot {
         );
     }
 
+    public Action actionIntakePos() {
+        return new SequentialAction(
+                new InstantAction(() -> intake.openSurvey())
+        );
+    }
+
     public Action clawRoll45() {
         return new SequentialAction(
                 new InstantAction(intake::clawRoll45)

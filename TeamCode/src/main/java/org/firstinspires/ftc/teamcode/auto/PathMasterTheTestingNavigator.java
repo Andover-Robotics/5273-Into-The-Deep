@@ -85,6 +85,7 @@ public class PathMasterTheTestingNavigator {
         Vector2d outtakeBucket = new Vector2d(-44.5, 10 );
 
         Action arcStrikeVelocity = mecanumDrive.actionBuilder(new Pose2d(0 , 0 , Math.toRadians(90)))
+                .stopAndAdd(intakePosition())
                 .strafeToSplineHeading(outtakeBucket, Math.toRadians(45))
                 .waitSeconds(1)
                 // output sample 0
@@ -262,4 +263,6 @@ public class PathMasterTheTestingNavigator {
     private static Action doOuttakeSpecimen() { // clips to top rung
         return bot.actionOuttakeSpecimen();
     }
+
+    private static Action intakePosition(){ return bot.actionIntakePos();}
 }
