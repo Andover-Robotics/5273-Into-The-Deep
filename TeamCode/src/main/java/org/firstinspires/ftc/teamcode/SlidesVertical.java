@@ -59,11 +59,9 @@ public class SlidesVertical {
         fsm = VSlides.LOWERED;
     }
 
-    public void resetEncoders(){
-        slidesRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        slidesLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        slidesRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        slidesLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+    public void resetEncoders() {
+        slidesLeft.resetEncoder();
+        slidesRight.resetEncoder();
     }
 
     public void moveToUpperBound() {
