@@ -1,18 +1,11 @@
 package org.firstinspires.ftc.teamcode;
 
-import androidx.annotation.NonNull;
-
 import com.arcrobotics.ftclib.hardware.motors.Motor;
 import com.arcrobotics.ftclib.hardware.motors.MotorEx;
-import com.acmerobotics.roadrunner.Action;
 import com.arcrobotics.ftclib.controller.PIDFController;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
-import com.acmerobotics.dashboard.config.Config;
-import com.qualcomm.robotcore.hardware.HardwareMap;
-import org.firstinspires.ftc.robotcore.external.Telemetry;
-import org.firstinspires.ftc.robotcore.external.navigation.CurrentUnit;
 
-import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
+import org.firstinspires.ftc.robotcore.external.navigation.CurrentUnit;
 
 /**
  * The Slides mechanism, representing both Slide motors.
@@ -128,7 +121,7 @@ public class SlidesVertical {
         pidfController = new PIDFController(p, i, d, f);
         pidfController.setTolerance(TOLERANCE);
         resetProfiler();
-        profiler.init_new_profile(slidesLeft.getCurrentPosition(), targetPosition);
+        profiler.initNewProfile(slidesLeft.getCurrentPosition(), targetPosition);
         profile_init_time = opMode.time;
         goingDown = targetPosition > target;
         target = targetPosition;
@@ -155,7 +148,7 @@ public class SlidesVertical {
         pidfController.setPIDF(p, i, d, f);
         double dt = opMode.time - profile_init_time;
         if (!profiler.isOver()) {
-            pidfController.setSetPoint(profiler.motion_profile_pos(dt));
+            pidfController.setSetPoint(profiler.motionProfilePos(dt));
             power = powerUp * pidfController.calculate(slidesLeft.getCurrentPosition());
             if (goingDown) {
                 power = powerDown * pidfController.calculate(slidesLeft.getCurrentPosition());

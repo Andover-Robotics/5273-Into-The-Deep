@@ -1,127 +1,128 @@
 package org.firstinspires.ftc.teamcode;
 
 public class MotionProfiler {
-    public MotionProfiler(double max_velocity, double max_acceleration){
-        this.max_acceleration = max_acceleration;
-        this.max_velocity = max_velocity;
-    }
-    private final double max_velocity, max_acceleration;
+    private final double MAX_VELOCITY, MAX_ACCELERATION;
     private boolean isOver = true;
     private boolean isDone = false;
-    private double temp_max_accel, temp_max_vel;
-    private double start_pos, final_pos, distance, acceleration_dt, halfway_distance, acceleration_distance, new_max_velocity, deacceleration_dt, cruise_distance, cruise_dt, deacceleration_time, entire_dt;
-    public void init_new_profile(double start_pos, double final_pos){
-        this.start_pos = start_pos;
-        this.final_pos = final_pos;
+    private double tempMaxAccel, tempMaxVel;
+    private double start_pos, final_pos, distance, accelerationDt, halfwayDistance, accelerationDistance, newMaxVelocity, deacceleration_dt, cruiseDistance, cruiseDt, deaccelerationTime, entire_dt;
+    public MotionProfiler(double MAX_VELOCITY, double MAX_ACCELERATION){
+        this.MAX_ACCELERATION = MAX_ACCELERATION;
+        this.MAX_VELOCITY = MAX_VELOCITY;
+    }
+    //bro lightning did a python coder make this
+    public void initNewProfile(double startPos, double finalPos){
+        this.start_pos = startPos;
+        this.final_pos = finalPos;
         isOver = false;
 
-        distance = final_pos-start_pos;
+        distance = finalPos-startPos;
 
         if(distance < 0){
-            temp_max_vel = -max_velocity;
-            temp_max_accel = -max_acceleration;
+            tempMaxVel = -MAX_VELOCITY;
+            tempMaxAccel = -MAX_ACCELERATION;
         }else{
-            temp_max_accel = max_acceleration;
-            temp_max_vel = max_velocity;
+            tempMaxAccel = MAX_ACCELERATION;
+            tempMaxVel = MAX_VELOCITY;
         }
 
         // calculate the time it takes to accelerate to max velocity
-        acceleration_dt = temp_max_vel / temp_max_accel;
+        accelerationDt = tempMaxVel / tempMaxAccel;
 
         // If we can't accelerate to max velocity in the given distance, we'll accelerate as much as possible
-        halfway_distance = distance / 2;
-        acceleration_distance = 0.5 * temp_max_accel * acceleration_dt * acceleration_dt;
+        halfwayDistance = distance / 2;
+        accelerationDistance = 0.5 * tempMaxAccel * accelerationDt * accelerationDt;
 
-        if (Math.abs(acceleration_distance) > Math.abs(halfway_distance)) {
-            acceleration_dt = Math.sqrt(Math.abs(halfway_distance / (0.5 * temp_max_accel)));
+        if (Math.abs(accelerationDistance) > Math.abs(halfwayDistance)) {
+            accelerationDt = Math.sqrt(Math.abs(halfwayDistance / (0.5 * tempMaxAccel)));
         }
-        acceleration_distance = 0.5 * temp_max_accel * acceleration_dt * acceleration_dt;
+        accelerationDistance = 0.5 * tempMaxAccel * accelerationDt * accelerationDt;
 
         // recalculate max velocity based on the time we have to accelerate and decelerate
-        new_max_velocity = temp_max_accel * acceleration_dt;
+        newMaxVelocity = tempMaxAccel * accelerationDt;
 
         // we decelerate at the same rate as we accelerate
-        deacceleration_dt = acceleration_dt;
+        deacceleration_dt = accelerationDt;
 
         // calculate the time that we're at max velocity
-        cruise_distance = distance - 2 * acceleration_distance;
-        cruise_dt = cruise_distance / new_max_velocity;
-        deacceleration_time = acceleration_dt + cruise_dt;
+        cruiseDistance = distance - 2 * accelerationDistance;
+        cruiseDt = cruiseDistance / newMaxVelocity;
+        deaccelerationTime = accelerationDt + cruiseDt;
 
         // check if we're still in the motion profile
-        entire_dt = acceleration_dt + cruise_dt + deacceleration_dt;
+        entire_dt = accelerationDt + cruiseDt + deacceleration_dt;
     }
 
-    public double motion_profile_pos(double current_dt) {
+    public double motionProfilePos(double currentDt) {
 //        Return the current reference position based on the given motion profile times, maximum acceleration, velocity, and current time.
 
-        if (current_dt > entire_dt) {
+        if (currentDt > entire_dt) {
             isOver = true;
             isDone = true;
             return final_pos;
         }
 
         // if we're accelerating
-        if (current_dt < acceleration_dt)
+        if (currentDt < accelerationDt)
             // use the kinematic equation for acceleration
-            return start_pos + 0.5 * temp_max_accel * current_dt * current_dt;
+            return start_pos + 0.5 * tempMaxAccel * currentDt * currentDt;
 
             // if we're cruising
-        else if (current_dt < deacceleration_time) {
-            acceleration_distance = 0.5 * temp_max_accel * acceleration_dt * acceleration_dt;
-            double cruise_current_dt = current_dt - acceleration_dt;
+        else if (currentDt < deaccelerationTime) {
+            accelerationDistance = 0.5 * tempMaxAccel * accelerationDt * accelerationDt;
+            double cruiseCurrentDt = currentDt - accelerationDt;
 
             // use the kinematic equation for constant velocity
-            return start_pos + acceleration_distance + new_max_velocity * cruise_current_dt;
+            return start_pos + accelerationDistance + newMaxVelocity * cruiseCurrentDt;
         }
 
         // if we're decelerating
         else {
-            acceleration_distance = 0.5 * temp_max_accel * acceleration_dt * acceleration_dt;
-            cruise_distance = new_max_velocity * cruise_dt;
-            deacceleration_time = current_dt - deacceleration_time;
+            accelerationDistance = 0.5 * tempMaxAccel * accelerationDt * accelerationDt;
+            cruiseDistance = newMaxVelocity * cruiseDt;
+            deaccelerationTime = currentDt - deaccelerationTime;
 
             // use the kinematic equations to calculate the instantaneous desired position
-            return start_pos + acceleration_distance + cruise_distance + new_max_velocity * deacceleration_time - 0.5 * temp_max_accel * deacceleration_time * deacceleration_time;
+            return start_pos + accelerationDistance + cruiseDistance + newMaxVelocity * deaccelerationTime - 0.5 * tempMaxAccel * deaccelerationTime * deaccelerationTime;
         }
     }
 
-    public double motion_profile_vel(double current_dt) {
+    public double motionProfileVel(double currentDt) {
 //
-        if (current_dt > entire_dt)
+        if (currentDt > entire_dt)
             return 0;
 
         // if we're accelerating
-        if (current_dt < acceleration_dt)
+        if (currentDt < accelerationDt)
             // use the kinematic equation for acceleration
-            return temp_max_accel*current_dt;
+            return tempMaxAccel *currentDt;
 
             // if we're cruising
-        else if (current_dt < deacceleration_time) {
-            return new_max_velocity;
+        else if (currentDt < deaccelerationTime) {
+            return newMaxVelocity;
         }
 
         // if we're decelerating
         else {
-            deacceleration_time = current_dt - deacceleration_time;
+            deaccelerationTime = currentDt - deaccelerationTime;
 
             // use the kinematic equations to calculate the instantaneous desired position
-            return new_max_velocity-deacceleration_time;
+            return newMaxVelocity - deaccelerationTime;
         }
     }
 
-    public double motion_profile_accel(double current_dt) {
+    public double motionProfileAccel(double currentDt) {
 
-        if (current_dt > entire_dt)
+        if (currentDt > entire_dt)
             return 0;
 
         // if we're accelerating
-        if (current_dt < acceleration_dt)
+        if (currentDt < accelerationDt)
             // use the kinematic equation for acceleration
-            return temp_max_accel;
+            return tempMaxAccel;
 
             // if we're cruising
-        else if (current_dt < deacceleration_time) {
+        else if (currentDt < deaccelerationTime) {
 
             return 0;
         }
@@ -129,11 +130,11 @@ public class MotionProfiler {
         // if we're decelerating
         else {
             // use the kinematic equations to calculate the instantaneous desired position
-            return -temp_max_accel;
+            return -tempMaxAccel;
         }
     }
 
-    public double getEntire_dt(){
+    public double getEntireDt(){
         return entire_dt;
     }
 
