@@ -212,17 +212,13 @@ public class Bot {
 
     public SequentialAction actionTransfer() {
         return new SequentialAction(
-                new InstantAction(outtake::close),
-                new InstantAction(outtake::posPreBucket),
+                new InstantAction(outtake::openTransfer),
                 new InstantAction(intake::closeIntake),
+                new InstantAction(intake::setPitchTransfer),
+                new InstantAction(intake::looseClaw),
                 new SleepAction(0.2),
                 new InstantAction(vSlides::moveToLowerBound),
-                new InstantAction(intake::setPitchTransfer),
                 new InstantAction(hSlides::close),
-                new SleepAction(0.2),
-                new InstantAction(outtake::openTransfer),
-                new SleepAction(0.25),
-                new InstantAction(intake::looseClaw),
                 new SleepAction(0.2),
                 new InstantAction(intake::posTransfer),
                 new SleepAction(0.25),
