@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.auto;
 // RR-specific imports
 import com.acmerobotics.roadrunner.Action;
+import com.acmerobotics.roadrunner.InstantAction;
 import com.acmerobotics.roadrunner.Pose2d;
 import com.acmerobotics.roadrunner.ftc.Actions;
 import com.acmerobotics.roadrunner.Vector2d;
@@ -78,9 +79,9 @@ public class PathMasterTheTestingNavigator {
         verticalSlides = new SlidesVertical(opMode);
         bot = new Bot(opMode,hardwareMap, telemetry);
 
-        Vector2d intakeSample1 = new Vector2d(-15.5, 26);
-        Vector2d intakeSample2 = new Vector2d(-27.5, 26);
-        Vector2d intakeSample3 = new Vector2d(-28.5, 28);
+        Vector2d intakeSample1 = new Vector2d(-17.5, 26);
+        Vector2d intakeSample2 = new Vector2d(-29.5, 26);
+        Vector2d intakeSample3 = new Vector2d(-27, 36.7);
 
         Vector2d outtakeBucket = new Vector2d(-20.5, 10 );
 
@@ -92,7 +93,7 @@ public class PathMasterTheTestingNavigator {
                 // output sample 0
                 //.stopAndAdd(doOuttakeBucket())
                 .waitSeconds(1)
-                .strafeToSplineHeading(intakeSample1, Math.toRadians(90 ))
+                .strafeToSplineHeading(intakeSample1, Math.toRadians(90))
                 .stopAndAdd(bot.closeHori())
                 .waitSeconds(1)
                 .stopAndAdd(bot.closeHori())
@@ -118,8 +119,8 @@ public class PathMasterTheTestingNavigator {
                 // output sample 2
                 //.stopAndAdd(doOuttakeBucket())
                 .waitSeconds(1)
-                .strafeToSplineHeading(intakeSample3, Math.toRadians(135))
-                .stopAndAdd(bot.clawRoll45())
+                .strafeToSplineHeading(intakeSample3, Math.toRadians(180))
+                .stopAndAdd(bot.clawRoll90())
                 .stopAndAdd(bot.closeHori())
                 .waitSeconds(1)
                 //input sample 3
@@ -130,6 +131,7 @@ public class PathMasterTheTestingNavigator {
                 .waitSeconds(1)
                 // output sample 3
                 //.stopAndAdd(doOuttakeBucket())
+                .stopAndAdd(outtake::openTransfer)
                 .waitSeconds(1)
                 // turn around so its facing the field
                 .build();
