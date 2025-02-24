@@ -67,12 +67,12 @@ public class SlidesVertical {
         setPosition(UPPER_BOUND);
     }
 
-
+/*
     public void setPower(double power) {
-        slidesLeft.setPower(power);
+        slidesLeft.(power);
         slidesRight.setPower(power);
     }
-
+*/
 
     public int getEncoders() {
         return (int)((slidesLeft.getCurrentPosition() + slidesRight.getCurrentPosition()) / 2);
