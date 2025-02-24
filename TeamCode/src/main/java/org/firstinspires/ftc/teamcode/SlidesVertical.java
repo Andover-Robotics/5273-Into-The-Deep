@@ -54,14 +54,6 @@ public class SlidesVertical {
         slidesLeft.setZeroPowerBehavior(Motor.ZeroPowerBehavior.BRAKE);
     }
 
-    //makes sure FSM is updated based on encoder positions
-    public void updateFSM(){
-        if (getEncoders()<=LOWER_BOUND+5) fsm = VSlides.LOWERED;
-        if (getEncoders()>=UPPER_BOUND-5) fsm = VSlides.RAISED;
-        else fsm = VSlides.MIDDLE;
-    }
-
-
     public void moveToLowerBound() {
         if(!(fsm == VSlides.LOWERED)) setPosition(LOWER_BOUND);
         fsm = VSlides.LOWERED;
@@ -100,14 +92,6 @@ public class SlidesVertical {
         } else {
             setPower(input);
         }
-
-        if (Math.abs(input) < 0.05) {  // If no input from the controller
-            holdPosition();
-        } else {
-            holdTarget = getEncoders();  // Save position to hold
-        }
-
-        updateFSM();
     }
 
     public void holdPosition() {
@@ -125,17 +109,14 @@ public class SlidesVertical {
 
     public void moveToTopBucketPos() {
         setPosition(UPPER_BOUND);
-        fsm = VSlides.MIDDLE;
     }
 
     public void moveToRungClippingPos() {   // the highest one
     setPosition(CLIP_POS);
-        fsm = VSlides.MIDDLE;
     }
 
     public void clipSpecimenVertSlides() {  // pulls vert slides down to clip it
         setPosition(CLIP_POS - 100);
-        fsm = VSlides.MIDDLE;
     }
 
     public void goUpForSpecimenIntake() {
