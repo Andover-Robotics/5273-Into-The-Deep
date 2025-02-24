@@ -55,8 +55,7 @@ public class SlidesVertical {
     }
 
     public void moveToLowerBound() {
-        if(!(fsm == VSlides.LOWERED)) setPosition(LOWER_BOUND);
-        fsm = VSlides.LOWERED;
+        setPosition(STORAGE);
     }
 
     public void resetEncoders() {
@@ -65,8 +64,7 @@ public class SlidesVertical {
     }
 
     public void moveToUpperBound() {
-        if(!(fsm== VSlides.RAISED)) setPosition(UPPER_BOUND);
-        fsm = VSlides.RAISED;
+        setPosition(UPPER_BOUND);
     }
 
 
@@ -118,7 +116,7 @@ public class SlidesVertical {
     }
 
     public void goUpForSpecimenIntake() {
-        setPosition(LOWER_BOUND + 100);
+        setPosition(STORAGE + 100);
     }
 
     //moves based on position inputted
