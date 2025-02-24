@@ -312,9 +312,9 @@ public class Bot {
         );
     }
 
-    public Action clawRoll45() {
+    public Action clawRoll90() {
         return new SequentialAction(
-                new InstantAction(intake::clawRoll45)
+                new InstantAction(intake::clawRoll90)
                 );
     }
     public Action closeHori() {
