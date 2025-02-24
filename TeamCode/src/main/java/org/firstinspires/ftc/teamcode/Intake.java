@@ -188,7 +188,7 @@ public class Intake {
         claw.positionalActiveRollPitch(gamepad, telemetry);
     }
 
-    public void clawRoll45() {
-        claw.rollIt45();
+    public void clawRoll90() {
+        claw.rollIt90();
     }
 }
