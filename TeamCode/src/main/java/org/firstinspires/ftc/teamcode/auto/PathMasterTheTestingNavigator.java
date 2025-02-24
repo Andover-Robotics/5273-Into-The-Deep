@@ -38,8 +38,8 @@ public class PathMasterTheTestingNavigator {
 
         intake = new Intake(hardwareMap, new Camera(hardwareMap, telemetry));
         outtake = new Outtake(hardwareMap);
-        verticalSlides = new SlidesVertical(hardwareMap);
-        bot = new Bot(hardwareMap, telemetry);
+        verticalSlides = new SlidesVertical(opMode);
+        bot = new Bot(opMode,hardwareMap, telemetry);
 
 
         Action arcStrikeVelocity = mecanumDrive.actionBuilder(new Pose2d(0 , 0 , Math.toRadians(90)))
@@ -57,8 +57,8 @@ public class PathMasterTheTestingNavigator {
 
         intake = new Intake(hardwareMap, new Camera(hardwareMap, telemetry));
         outtake = new Outtake(hardwareMap);
-        verticalSlides = new SlidesVertical(hardwareMap);
-        bot = new Bot(hardwareMap, telemetry);
+        verticalSlides = new SlidesVertical(opMode);
+        bot = new Bot(opMode,hardwareMap, telemetry);
 
         Action arcStrikeVelocity = mecanumDrive.actionBuilder(new Pose2d(0 , 0 , Math.toRadians(90)))
                 .strafeTo(new Vector2d(55, 0))
@@ -75,8 +75,8 @@ public class PathMasterTheTestingNavigator {
 
         intake = new Intake(hardwareMap, new Camera(hardwareMap, telemetry));
         outtake = new Outtake(hardwareMap);
-        verticalSlides = new SlidesVertical(hardwareMap);
-        bot = new Bot(hardwareMap, telemetry);
+        verticalSlides = new SlidesVertical(opMode);
+        bot = new Bot(opMode,hardwareMap, telemetry);
 
         Vector2d intakeSample1 = new Vector2d(-38.5, 22 );
         Vector2d intakeSample2 = new Vector2d(-50.5, 22);
@@ -140,8 +140,8 @@ public class PathMasterTheTestingNavigator {
 
         intake = new Intake(hardwareMap, new Camera(hardwareMap, telemetry));
         outtake = new Outtake(hardwareMap);
-        verticalSlides = new SlidesVertical(hardwareMap);
-        bot = new Bot(hardwareMap, telemetry);
+        verticalSlides = new SlidesVertical(opMode);
+        bot = new Bot(opMode,hardwareMap, telemetry);
 
         // push positions
         int pixelOne = 35;
