@@ -88,7 +88,7 @@ public class PathMasterTheTestingNavigator {
                 .strafeToSplineHeading(outtakeBucket, Math.toRadians(45))
                 .waitSeconds(1)
                 // output sample 0
-                // .stopAndAdd(doOuttakeBucket())
+                //stopAndAdd(doOuttakeBucket())
                 .waitSeconds(1)
                 .strafeToSplineHeading(intakeSample1, Math.toRadians(90 ))
                 .waitSeconds(1)
@@ -96,7 +96,7 @@ public class PathMasterTheTestingNavigator {
                 .stopAndAdd(doIntake())
                 .waitSeconds(1)
                 .strafeToSplineHeading(outtakeBucket, Math.toRadians(45))
-                // .stopAndAdd(doTransfer())
+                .stopAndAdd(doTransfer())
                 .waitSeconds(1)
                 // output sample 1
                 // .stopAndAdd(doOuttakeBucket())
@@ -107,19 +107,19 @@ public class PathMasterTheTestingNavigator {
                 .stopAndAdd(doIntake())
                 .waitSeconds(1)
                 .strafeToSplineHeading(outtakeBucket, Math.toRadians(45))
-                // .stopAndAdd(doTransfer())
+                .stopAndAdd(doTransfer())
                 .waitSeconds(1)
                 // output sample 2
                 // .stopAndAdd(doOuttakeBucket())
                 .waitSeconds(1)
                 .strafeToSplineHeading(intakeSample3, Math.toRadians(135))
-                // .stopAndAdd(bot.clawRoll45())
+                .stopAndAdd(bot.clawRoll45())
                 .waitSeconds(1)
-                // input sample 3
+                //input sample 3
                 .stopAndAdd(doIntake())
                 .waitSeconds(1)
                 .strafeToSplineHeading(outtakeBucket, Math.toRadians(45))
-                // .stopAndAdd(doTransfer())
+                .stopAndAdd(doTransfer())
                 .waitSeconds(1)
                 // output sample 3
                 // .stopAndAdd(doOuttakeBucket())
@@ -160,6 +160,8 @@ public class PathMasterTheTestingNavigator {
         Action arcStrikeVelocity = mecanumDrive.actionBuilder(new Pose2d(0 , 0 , Math.toRadians(270)))
                 .strafeToSplineHeading(outtakeSpecInit, Math.toRadians(270))
                 .waitSeconds(1)
+
+
 		        // .stopAndAdd(doOuttakeSpecimen())
                 .waitSeconds(1)
 

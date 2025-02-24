@@ -1,11 +1,13 @@
 package org.firstinspires.ftc.teamcode;
 
 public class MotionProfiler {
+
     private final double MAX_VELOCITY, MAX_ACCELERATION;
     private boolean isOver = true;
     private boolean isDone = false;
     private double tempMaxAccel, tempMaxVel;
-    private double startPos, finalPos, distance, accelerationDt, halfwayDistance, accelerationDistance, newMaxVelocity, deacceleration_dt, cruiseDistance, cruiseDt, deaccelerationTime, entire_dt;
+    private double startPos, finalPos, distance, accelerationDt, halfwayDistance, accelerationDistance, newMaxVelocity, deaccelerationDt, cruiseDistance, cruiseDt, deaccelerationTime, entireDt;
+
     public MotionProfiler(double MAX_VELOCITY, double MAX_ACCELERATION){
         this.MAX_ACCELERATION = MAX_ACCELERATION;
         this.MAX_VELOCITY = MAX_VELOCITY;
@@ -42,7 +44,7 @@ public class MotionProfiler {
         newMaxVelocity = tempMaxAccel * accelerationDt;
 
         // we decelerate at the same rate as we accelerate
-        deacceleration_dt = accelerationDt;
+        deaccelerationDt = accelerationDt;
 
         // calculate the time that we're at max velocity
         cruiseDistance = distance - 2 * accelerationDistance;
@@ -50,13 +52,13 @@ public class MotionProfiler {
         deaccelerationTime = accelerationDt + cruiseDt;
 
         // check if we're still in the motion profile
-        entire_dt = accelerationDt + cruiseDt + deacceleration_dt;
+        entireDt = accelerationDt + cruiseDt + deaccelerationDt;
     }
 
     public double motionProfilePos(double currentDt) {
 //        Return the current reference position based on the given motion profile times, maximum acceleration, velocity, and current time.
 
-        if (currentDt > entire_dt) {
+        if (currentDt > entireDt) {
             isOver = true;
             isDone = true;
             return finalPos;
@@ -89,7 +91,7 @@ public class MotionProfiler {
 
     public double motionProfileVel(double currentDt) {
         //velocity should be 0 after everything has been finished
-        if (currentDt > entire_dt)
+        if (currentDt > entireDt)
             return 0;
 
         // if we're accelerating then the velocity should be accel * elapsed time (basic physics equation)
@@ -115,7 +117,7 @@ public class MotionProfiler {
     public double motionProfileAccel(double currentDt) {
 
         //if the movement time has passed then you shouldn't accelerate anymore
-        if (currentDt > entire_dt)
+        if (currentDt > entireDt)
             return 0;
 
         // if we're accelerating
@@ -136,7 +138,7 @@ public class MotionProfiler {
     }
 
     public double getEntireDt(){
-        return entire_dt;
+        return entireDt;
     }
 
     public boolean isOver(){

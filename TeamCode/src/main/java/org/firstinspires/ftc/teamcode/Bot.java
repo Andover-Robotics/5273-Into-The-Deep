@@ -243,6 +243,8 @@ public class Bot {
 
     public Action actionIntake() { // using the intake claw
         return new SequentialAction(
+                new InstantAction(intake::open),
+                new SleepAction(0.1),
                 new InstantAction(intake::openIntake),
                 new SleepAction(0.5),
                 new InstantAction(() -> {
