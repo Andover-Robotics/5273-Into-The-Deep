@@ -79,17 +79,16 @@ public class SlidesVertical {
     }
 
     //simply moves up or down based on input from controller
-    public void slidesMove(double input, boolean overrideButton, Telemetry telemetry) {
-        int pos = getEncoders();
-        telemetry.addData("Slides position: ", pos);
-
-        if (!overrideButton && ((pos > UPPER_BOUND && input > 0) || (pos < LOWER_BOUND && input < 0))) {
-            setPower(0);
+    public void slidesMove(double input) {
+        if (input > powerMin || input < -powerMin) {
+            manualPower = input;
         } else {
-            setPower(input);
+            manualPower = 0;
         }
     }
 
+    // scrappy holdposition replaced with more useful periodic method (thanks lightning!!!)
+    /*
     public void holdPosition() {
         double kP = 0.002;  // Adjust based on testing
         int error = holdTarget - getEncoders();
