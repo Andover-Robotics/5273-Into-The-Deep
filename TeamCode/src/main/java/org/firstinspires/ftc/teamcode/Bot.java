@@ -305,6 +305,12 @@ public class Bot {
         );
     }
 
+    public Action actionOuttakeTransfer() {
+        return new SequentialAction(
+                new InstantAction(() -> outtake.openTransfer())
+        );
+    }
+
     public Action clawRoll90() {
         return new SequentialAction(
                 new InstantAction(intake::clawRoll90)
