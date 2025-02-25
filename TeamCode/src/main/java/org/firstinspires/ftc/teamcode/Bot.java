@@ -85,7 +85,7 @@ public class Bot {
                 if (gamepad2.wasJustPressed(GamepadKeys.Button.A)) {
                     hSlides.close();
                     intake.openSurvey();
-                    outtake.closeBucket();
+                    outtake.openTransfer();
                     fsm = FSM.INTAKESAMPLE;
                 }
                 if (gamepad2.wasJustPressed(GamepadKeys.Button.Y)) {
@@ -117,7 +117,6 @@ public class Bot {
                         intake.closeSurvey();
                     }
                 }
-
                 if(gamepad2.wasJustPressed(GamepadKeys.Button.B)) {
                     Thread thread = new Thread(() -> Actions.runBlocking(actionTransfer()));
                     thread.start();
@@ -161,7 +160,7 @@ public class Bot {
                     outtake.posBucket();
                     fsm = FSM.CLIPSPECIMEN;
                 }
-                if(gamepad2.wasJustPressed(GamepadKeys.Button.Y)) {
+                if(gamepad2.wasJustPressed(GamepadKeys.Button.A)) {
                     hSlides.close();
                     intake.openSurvey();
                     outtake.closeBucket();
@@ -177,14 +176,14 @@ public class Bot {
                 else{
                     outtake.close();
                 }
-                if (gamepad2.wasJustPressed(GamepadKeys.Button.Y)) {
+                if (gamepad2.wasJustPressed(GamepadKeys.Button.A)) {
                     hSlides.close();
                     vSlides.setPosition(0);
                     intake.posSurvey();
                     outtake.closeBucket();
                     fsm = FSM.INTAKESAMPLE;
                 }
-                if (gamepad2.wasJustPressed(GamepadKeys.Button.A)) {
+                if (gamepad2.wasJustPressed(GamepadKeys.Button.Y)) {
                     hSlides.close();
                     vSlides.setPosition(0);
                     intake.openSurvey();
