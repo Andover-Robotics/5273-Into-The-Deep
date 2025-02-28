@@ -92,8 +92,7 @@ public class PathMasterTheTestingNavigator {
                 .strafeToSplineHeading(outtakeBucket, Math.toRadians(45))
                 .waitSeconds(1)
                 // output sample 0
-                //.stopAndAdd(doOuttakeBucket())
-                .waitSeconds(1)
+                .stopAndAdd(doOuttakeBucket())
                 .strafeToSplineHeading(intakeSample1, Math.toRadians(90))
                 .stopAndAdd(bot.closeHori())
                 .waitSeconds(1)
@@ -105,7 +104,7 @@ public class PathMasterTheTestingNavigator {
                 .stopAndAdd(doTransfer())
                 .waitSeconds(1)
                 // output sample 1
-                //.stopAndAdd(doOuttakeBucket())
+                .stopAndAdd(doOuttakeBucket())
                 .waitSeconds(1)
                 .strafeToSplineHeading(intakeSample2, Math.toRadians(90))
                 .stopAndAdd(bot.closeHori())
@@ -118,7 +117,7 @@ public class PathMasterTheTestingNavigator {
                 .stopAndAdd(doTransfer())
                 .waitSeconds(1)
                 // output sample 2
-                //.stopAndAdd(doOuttakeBucket())
+                .stopAndAdd(doOuttakeBucket())
                 .waitSeconds(1)
                 .strafeToSplineHeading(intakeSample3, Math.toRadians(180))
                 .stopAndAdd(bot.clawRoll90())
@@ -131,7 +130,7 @@ public class PathMasterTheTestingNavigator {
                 .stopAndAdd(doTransfer())
                 .waitSeconds(1)
                 // output sample 3
-                //.stopAndAdd(doOuttakeBucket())
+                .stopAndAdd(doOuttakeBucket())
                 .stopAndAdd(outtake::openTransfer)
                 .waitSeconds(1)
                 // turn around so its facing the field
@@ -170,13 +169,8 @@ public class PathMasterTheTestingNavigator {
         Action arcStrikeVelocity = mecanumDrive.actionBuilder(new Pose2d(0 , 0 , Math.toRadians(270)))
                 .strafeToSplineHeading(outtakeSpecInit, Math.toRadians(270))
                 .waitSeconds(1)
-
-
 		        .stopAndAdd(doOuttakeSpecimen())
                 .waitSeconds(1)
-
-
-
                 /* Sweep
                 // getting these arm down and up timings with the movements optimized is good
                 // this is kinda assuming the sweep arm servo is really fast, may need to add more waits
