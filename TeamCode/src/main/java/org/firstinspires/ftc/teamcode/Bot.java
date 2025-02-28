@@ -96,6 +96,7 @@ public class Bot {
                 }
                 break;
             case INTAKESAMPLE: // direction control over horizontal slides and intake
+                outtake.openTransfer();
                 hSlides.setPower(gamepad2.getLeftY());
                 intake.moveDiffyPos(gamepad2, telemetry);
                 telemetry.addData("Intake State", intake.fsm);
@@ -130,16 +131,12 @@ public class Bot {
                 telemetry.addData("Has sample: ",intake.hasSample());
                 break;
             case SCORESAMPLE: // direct control over vertical slides and outtake
-                vSlides.slidesMove(gamepad2.getLeftY());
+                vSlides.moveToTopBucketPos();
                 outtake.posPreBucket();
-                if (!gamepad2.isDown(GamepadKeys.Button.B) && gamepad2.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER) > 0.1)
-                    outtake.open();
-                else if (!gamepad2.isDown(GamepadKeys.Button.B))
-                    outtake.close();
 
                 if (gamepad2.wasJustPressed(GamepadKeys.Button.A)) {
                     hSlides.close();
-                    vSlides.setPosition(0);
+                    vSlides.moveToLowerBound();
                     intake.posSurvey();
                     outtake.closeBucket();
                     fsm = FSM.INTAKESAMPLE;
@@ -147,6 +144,7 @@ public class Bot {
 
                 if (gamepad2.wasJustPressed(GamepadKeys.Button.Y)) {
                     hSlides.close();
+                    vSlides.moveToLowerBound();
                     intake.openSurvey();
                     outtake.openClip();
                     fsm = FSM.INTAKESPECIMEN;
@@ -256,8 +254,7 @@ public class Bot {
         return new SequentialAction(
                 new InstantAction(vSlides::moveToTopBucketPos),
                 new InstantAction(outtake::posPreTransfer),
-                new SleepAction(0.5),
-                new InstantAction(outtake::closeBucket),
+                new SleepAction(1),
                 new SleepAction(0.5),
                 new InstantAction(outtake::open)
         );
