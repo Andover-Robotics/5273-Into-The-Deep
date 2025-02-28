@@ -14,9 +14,13 @@ public class WebcamTest extends LinearOpMode {
     @Override
     public void runOpMode() {
         Camera camera = new Camera(hardwareMap, telemetry);
+        Claw claw = new Claw(hardwareMap, 0, 0, camera);
         waitForStart();
         while(opModeIsActive()){
             RotatedRect rect = camera.getResult();
+
+            if (gamepad2.b) claw.toSamplePosition();
+
             telemetry.addData("Rect", rect);
             telemetry.addData("angle", rect != null ? camera.getAngle() : "god help me");
             telemetry.update();

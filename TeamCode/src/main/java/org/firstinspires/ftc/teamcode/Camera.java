@@ -96,19 +96,22 @@ public class Camera {
                     Imgproc.polylines(input, polygon, true, drawColor, 4);
 
                     // Store the rotated rectangle
-                    result = Imgproc.minAreaRect(contour2f);
+                    RotatedRect resultTemp = Imgproc.minAreaRect(contour2f);
                     Point[] points = new Point[4];
-                    result.points(points);
+                    resultTemp.points(points);
                     for (int i = 0; i < 4; i++) {
                         Imgproc.line(input, points[i], points[(i + 1) % 4], drawColor, 4);
                     }
 
                     // Normalize and print the angle for debugging
-                    angle = result.angle;
-                    if (result.size.width < result.size.height) {
-                        angle = angle + 90; // adjust the angle for tall rectangles
+                    if (result == null || resultTemp.size.area() > result.size.area()) {
+                        result = resultTemp;
+                        angle = resultTemp.angle;
+                        if (resultTemp.size.width >= resultTemp.size.height) {
+                            angle = angle + 90; // adjust the angle for tall rectangles
+                        }
+                        angle = angle % 180; // ensure the angle is within 0-180
                     }
-                    angle = angle % 180; // ensure the angle is within 0-180
                 }
             }
         }
