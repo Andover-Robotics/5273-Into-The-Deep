@@ -36,8 +36,8 @@ public class SlidesVertical {
         opMode = running;
         slidesLeft = new MotorEx(opMode.hardwareMap, "slidesL", Motor.GoBILDA.RPM_312);
         slidesRight = new MotorEx(opMode.hardwareMap, "slidesR", Motor.GoBILDA.RPM_312);
-        slidesLeft.setInverted(false);
-        slidesRight.setInverted(true);
+        slidesRight.setInverted(false);
+        slidesLeft.setInverted(true);
         pidfController = new PIDFController(p, i, d, f);
         pidfController.setTolerance(TOLERANCE);
         pidfController.setSetPoint(0);
@@ -120,6 +120,7 @@ public class SlidesVertical {
 
         pidfController = new PIDFController(p, i, d, f);
         pidfController.setTolerance(TOLERANCE);
+        pidfController.setSetPoint(targetPosition);
         resetProfiler();
         profiler.initNewProfile(slidesLeft.getCurrentPosition(), targetPosition);
         profile_init_time = opMode.time;
@@ -169,5 +170,7 @@ public class SlidesVertical {
                 slidesRight.set(power);
             }
         }
+        opMode.telemetry.addData("slides periodic", "yes");
+        opMode.telemetry.update();
     }
 }

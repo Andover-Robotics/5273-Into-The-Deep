@@ -131,7 +131,7 @@ public class Bot {
                 telemetry.addData("Has sample: ",intake.hasSample());
                 break;
             case SCORESAMPLE: // direct control over vertical slides and outtake
-                vSlides.moveToTopBucketPos();
+                vSlides.moveToUpperBound();
                 outtake.posPreBucket();
 
                 if (gamepad2.wasJustPressed(GamepadKeys.Button.A)) {
@@ -217,7 +217,7 @@ public class Bot {
                 new InstantAction(hSlides::close),
                 new SleepAction(0.2),
                 new InstantAction(intake::posTransfer),
-                new SleepAction(0.2),
+                new SleepAction(1),
                 new InstantAction(outtake::closeClaw),
                 new SleepAction(0.07),
                 new InstantAction(intake::open),
@@ -228,6 +228,7 @@ public class Bot {
                 new SleepAction(0.1),
                 new InstantAction(outtake::posPreBucket),
                 new InstantAction(hSlides::close),
+                new InstantAction(vSlides::moveToTopBucketPos),
                 new SleepAction(0.1),
                 new InstantAction(() -> fsm = FSM.SCORESAMPLE));
     }
@@ -253,7 +254,7 @@ public class Bot {
     public Action actionOuttakeBucket() {
         return new SequentialAction(
                 new InstantAction(vSlides::moveToTopBucketPos),
-                new InstantAction(outtake::posPreTransfer),
+                new InstantAction(outtake::posPreBucket),
                 new SleepAction(1),
                 new SleepAction(0.5),
                 new InstantAction(outtake::open)

@@ -80,8 +80,8 @@ public class PathMasterTheTestingNavigator {
         bot = new Bot(opMode,hardwareMap, telemetry);
 
         Vector2d intakeSample1 = new Vector2d(-17, 26);
-        Vector2d intakeSample2 = new Vector2d(-29, 26);
-        Vector2d intakeSample3 = new Vector2d(-26.5, 36.7);
+        Vector2d intakeSample2 = new Vector2d(-29.25, 26);
+        Vector2d intakeSample3 = new Vector2d(-26.75, 36.7);
 
         Vector2d outtakeBucket = new Vector2d(-20, 10 );
 
