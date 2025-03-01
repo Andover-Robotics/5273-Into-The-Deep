@@ -253,9 +253,7 @@ public class Bot {
                 new InstantAction(vSlides::moveToTopBucketPos),
                 new InstantAction(outtake::posPreBucket),
                 new SleepAction(1),
-                new SleepAction(0.5),
                 new InstantAction(outtake::open),
-                new SleepAction(0.7),
                 new InstantAction(vSlides::moveToLowerBound)
         );
     }
