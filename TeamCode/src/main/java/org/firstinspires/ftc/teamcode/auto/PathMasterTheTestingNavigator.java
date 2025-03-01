@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.auto;
 // RR-specific imports
 import com.acmerobotics.roadrunner.Action;
 import com.acmerobotics.roadrunner.InstantAction;
+import com.acmerobotics.roadrunner.ParallelAction;
 import com.acmerobotics.roadrunner.Pose2d;
 import com.acmerobotics.roadrunner.ftc.Actions;
 import com.acmerobotics.roadrunner.Vector2d;
@@ -74,9 +75,9 @@ public class PathMasterTheTestingNavigator {
 
         MecanumDrive mecanumDrive = new MecanumDrive(hardwareMap, new Pose2d(0, 0, Math.toRadians(90)));
 
-        intake = new Intake(hardwareMap, new Camera(hardwareMap, telemetry));
-        outtake = new Outtake(hardwareMap);
-        verticalSlides = new SlidesVertical(opMode);
+        //intake = new Intake(hardwareMap, new Camera(hardwareMap, telemetry));
+        //outtake = new Outtake(hardwareMap);
+        //verticalSlides = new SlidesVertical(opMode);
         bot = new Bot(opMode,hardwareMap, telemetry);
 
         Vector2d intakeSample1 = new Vector2d(-17, 26);
@@ -88,11 +89,9 @@ public class PathMasterTheTestingNavigator {
         Action arcStrikeVelocity = mecanumDrive.actionBuilder(new Pose2d(0 , 0 , Math.toRadians(90)))
                 .stopAndAdd(intakePosition())
                 .stopAndAdd(bot.closeHori())
-                .stopAndAdd(bot.actionOuttakeTransfer())
                 .strafeToSplineHeading(outtakeBucket, Math.toRadians(45))
-                .waitSeconds(1)
-                // output sample 0
                 .stopAndAdd(doOuttakeBucket())
+                // output sample 1
                 .strafeToSplineHeading(intakeSample1, Math.toRadians(90))
                 .stopAndAdd(bot.closeHori())
                 .waitSeconds(1)
@@ -100,12 +99,11 @@ public class PathMasterTheTestingNavigator {
                 // input sample 1
                 .stopAndAdd(doIntake())
                 .waitSeconds(1)
-                .strafeToSplineHeading(outtakeBucket, Math.toRadians(45))
                 .stopAndAdd(doTransfer())
+                .strafeToSplineHeading(outtakeBucket, Math.toRadians(45))
                 .waitSeconds(1)
                 // output sample 1
                 .stopAndAdd(doOuttakeBucket())
-                .waitSeconds(1)
                 .strafeToSplineHeading(intakeSample2, Math.toRadians(90))
                 .stopAndAdd(bot.closeHori())
                 .waitSeconds(1)
@@ -113,12 +111,11 @@ public class PathMasterTheTestingNavigator {
                 .stopAndAdd(bot.closeHori())
                 .stopAndAdd(doIntake())
                 .waitSeconds(1)
-                .strafeToSplineHeading(outtakeBucket, Math.toRadians(45))
                 .stopAndAdd(doTransfer())
+                .strafeToSplineHeading(outtakeBucket, Math.toRadians(45))
                 .waitSeconds(1)
                 // output sample 2
                 .stopAndAdd(doOuttakeBucket())
-                .waitSeconds(1)
                 .strafeToSplineHeading(intakeSample3, Math.toRadians(180))
                 .stopAndAdd(bot.clawRoll90())
                 .stopAndAdd(bot.closeHori())
@@ -126,19 +123,20 @@ public class PathMasterTheTestingNavigator {
                 //input sample 3
                 .stopAndAdd(doIntake())
                 .waitSeconds(1)
-                .strafeToSplineHeading(outtakeBucket, Math.toRadians(45))
                 .stopAndAdd(doTransfer())
+                .strafeToSplineHeading(outtakeBucket, Math.toRadians(45))
                 .waitSeconds(1)
                 // output sample 3
                 .stopAndAdd(doOuttakeBucket())
-                .stopAndAdd(outtake::openTransfer)
-                .waitSeconds(1)
                 // turn around so its facing the field
                 .build();
 
         opMode.waitForStart();
 
-        Actions.runBlocking(arcStrikeVelocity);
+        Actions.runBlocking(new ParallelAction(
+                arcStrikeVelocity,
+                bot.slidesPeriodic()
+        ));
     }
 
     public static void runOpModeSpecimen(LinearOpMode opMode) {
@@ -242,7 +240,10 @@ public class PathMasterTheTestingNavigator {
 
         opMode.waitForStart();
 
-        Actions.runBlocking(arcStrikeVelocity);
+        Actions.runBlocking(new ParallelAction(
+                arcStrikeVelocity,
+                bot.slidesPeriodic()
+        ));
     }
 
     private static Action sweepDown() {
