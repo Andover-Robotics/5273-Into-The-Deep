@@ -1,7 +1,6 @@
 package org.firstinspires.ftc.teamcode.auto;
 // RR-specific imports
 import com.acmerobotics.roadrunner.Action;
-import com.acmerobotics.roadrunner.InstantAction;
 import com.acmerobotics.roadrunner.ParallelAction;
 import com.acmerobotics.roadrunner.Pose2d;
 import com.acmerobotics.roadrunner.ftc.Actions;
@@ -9,7 +8,6 @@ import com.acmerobotics.roadrunner.Vector2d;
 
 
 // Non-RR imports
-import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
@@ -17,19 +15,14 @@ import com.qualcomm.robotcore.hardware.Servo;
 //our special silly very important goofy classes (w rizz)
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.Bot;
-import org.firstinspires.ftc.teamcode.Camera;
-import org.firstinspires.ftc.teamcode.Claw;
-import org.firstinspires.ftc.teamcode.Outtake;
-import org.firstinspires.ftc.teamcode.Intake;
-import org.firstinspires.ftc.teamcode.SlidesVertical;
+
+
+
 
 /**
  * Yet another OpMode, this time for Autonomous - the names are intentional (and great), don't mess with them
  */
 public class PathMasterTheTestingNavigator {
-    private static Intake intake;
-    private static Outtake outtake;
-    private static SlidesVertical verticalSlides;
     private static Bot bot;
 
     public static void runOpModeBucketPark(LinearOpMode opMode) {
@@ -38,9 +31,6 @@ public class PathMasterTheTestingNavigator {
 
         MecanumDrive mecanumDrive = new MecanumDrive(hardwareMap, new Pose2d(0, 0, Math.toRadians(90)));
 
-        intake = new Intake(hardwareMap, new Camera(hardwareMap, telemetry));
-        outtake = new Outtake(hardwareMap);
-        verticalSlides = new SlidesVertical(opMode);
         bot = new Bot(opMode,hardwareMap, telemetry);
 
 
@@ -57,9 +47,6 @@ public class PathMasterTheTestingNavigator {
 
         MecanumDrive mecanumDrive = new MecanumDrive(hardwareMap, new Pose2d(0, 0, Math.toRadians(270)));
 
-        intake = new Intake(hardwareMap, new Camera(hardwareMap, telemetry));
-        outtake = new Outtake(hardwareMap);
-        verticalSlides = new SlidesVertical(opMode);
         bot = new Bot(opMode,hardwareMap, telemetry);
 
         Action arcStrikeVelocity = mecanumDrive.actionBuilder(new Pose2d(0 , 0 , Math.toRadians(270)))
@@ -75,9 +62,6 @@ public class PathMasterTheTestingNavigator {
 
         MecanumDrive mecanumDrive = new MecanumDrive(hardwareMap, new Pose2d(0, 0, Math.toRadians(90)));
 
-        //intake = new Intake(hardwareMap, new Camera(hardwareMap, telemetry));
-        //outtake = new Outtake(hardwareMap);
-        //verticalSlides = new SlidesVertical(opMode);
         bot = new Bot(opMode,hardwareMap, telemetry);
 
         Vector2d intakeSample1 = new Vector2d(-17, 26);
@@ -145,9 +129,6 @@ public class PathMasterTheTestingNavigator {
 
         MecanumDrive mecanumDrive = new MecanumDrive(hardwareMap, new Pose2d(0, 0, Math.toRadians(270)));
 
-        intake = new Intake(hardwareMap, new Camera(hardwareMap, telemetry));
-        outtake = new Outtake(hardwareMap);
-        verticalSlides = new SlidesVertical(opMode);
         bot = new Bot(opMode,hardwareMap, telemetry);
 
         // push positions
