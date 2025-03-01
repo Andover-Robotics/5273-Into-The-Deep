@@ -1,5 +1,9 @@
 package org.firstinspires.ftc.teamcode;
 
+import androidx.annotation.NonNull;
+
+import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
+import com.acmerobotics.roadrunner.Action;
 import com.arcrobotics.ftclib.hardware.motors.Motor;
 import com.arcrobotics.ftclib.hardware.motors.MotorEx;
 import com.arcrobotics.ftclib.controller.PIDFController;
@@ -172,5 +176,16 @@ public class SlidesVertical {
         }
         opMode.telemetry.addData("slides periodic", "yes");
         opMode.telemetry.update();
+    }
+
+    public Action periodicAction() {
+        class PeriodicAction implements Action {
+            @Override
+            public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+                periodic();
+                return true;
+            }
+        }
+        return new PeriodicAction();
     }
 }
