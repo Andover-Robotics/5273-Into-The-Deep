@@ -251,7 +251,7 @@ public class Bot {
 
     public Action actionOuttakeBucket() {
         return new SequentialAction(
-                new InstantAction(vSlides::moveToTopBucketPos),
+                new InstantAction(vSlides::toTopBucket),
                 new InstantAction(outtake::posPreTransfer),
                 new SleepAction(1),
                 new SleepAction(0.5),
