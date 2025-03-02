@@ -261,14 +261,13 @@ public class Bot {
 
     public SequentialAction actionIntakeSpecimen() {
         return new SequentialAction(
-                // the moving to lower bound should be done by the outtake method at the end
-                // open the claw before calling this method
-                new InstantAction(outtake::closeClaw),
-                new SleepAction(0.5),
-                new InstantAction(vSlides::goUpForSpecimenIntake),
-                new SleepAction(0.5),
-                new InstantAction(outtake::posBucket),
-                new InstantAction(() -> fsm = FSM.CLIPSPECIMEN));
+            // the moving to lower bound should be done by the outtake method at the end
+            // open the claw before calling this method
+            new InstantAction(outtake::close),
+            new SleepAction(0.2),
+            new InstantAction(outtake::posBucket),
+            new InstantAction(vSlides::toClipTop),
+            new InstantAction(() -> fsm = FSM.CLIPSPECIMEN));
     }
 
     public SequentialAction actionOuttakeSpecimen() {
