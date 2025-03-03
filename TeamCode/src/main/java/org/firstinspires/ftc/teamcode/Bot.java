@@ -27,7 +27,6 @@ public class Bot {
     private final SlidesVertical vSlides;
     private final Outtake outtake;
     private final Camera camera;
-    private final Servo sweepServo;
 
     private static final double SWEEP_UP = 0, SWEEP_DOWN = 1;
     public enum FSM {
