@@ -38,21 +38,6 @@ public class SlidesHorizontal {
 
     public HSlides fsm = HSlides.IN;
 
-    public void setBothPosition(double position) {
-        slidesLeft.setPosition(position);
-        slidesRight.setPosition(position);
-    }
-
-    public void setPreTransfer(){
-        setLeft(0.36);
-        setRight(0.6389);
-    }
-
-    public void setTransfer(){
-        setLeft(0.155);
-        setRight(0.838);
-    }
-
     public void setRight(double pos){
         slidesRight.setPosition(pos);
     }
