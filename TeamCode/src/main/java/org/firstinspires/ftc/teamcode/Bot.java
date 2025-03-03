@@ -9,6 +9,7 @@ import com.acmerobotics.roadrunner.SleepAction;
 import com.acmerobotics.roadrunner.ftc.Actions;
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.arcrobotics.ftclib.gamepad.GamepadKeys;
+import com.arcrobotics.ftclib.gamepad.TriggerReader;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
@@ -214,7 +215,7 @@ public class Bot {
                 new InstantAction(hSlides::close),
                 new SleepAction(0.2),
                 new InstantAction(intake::posTransfer),
-                new SleepAction(0.2),
+                new SleepAction(1),
                 new InstantAction(outtake::closeClaw),
                 new SleepAction(0.07),
                 new InstantAction(intake::open),
@@ -252,8 +253,10 @@ public class Bot {
                 new InstantAction(vSlides::toTopBucket),
                 new InstantAction(outtake::posPreTransfer),
                 new SleepAction(1),
+                new InstantAction(outtake::open),
                 new SleepAction(0.5),
-                new InstantAction(outtake::open)
+                new InstantAction(outtake::posPreTransfer),
+                new InstantAction(vSlides::toStorage)
         );
     }
 
@@ -310,5 +313,9 @@ public class Bot {
         return new SequentialAction(
                 new InstantAction(hSlides::close)
                 );
+    }
+
+    public Action slidesPeriodic() {
+        return vSlides.periodicAction();
     }
 }

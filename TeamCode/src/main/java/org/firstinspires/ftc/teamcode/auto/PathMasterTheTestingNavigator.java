@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.auto;
 // RR-specific imports
 import com.acmerobotics.roadrunner.Action;
+import com.acmerobotics.roadrunner.ParallelAction;
 import com.acmerobotics.roadrunner.Pose2d;
 import com.acmerobotics.roadrunner.ftc.Actions;
 import com.acmerobotics.roadrunner.Vector2d;
@@ -9,22 +10,19 @@ import com.acmerobotics.roadrunner.Vector2d;
 // Non-RR imports
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.Servo;
 
 //our special silly very important goofy classes (w rizz)
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.Bot;
-import org.firstinspires.ftc.teamcode.Camera;
-import org.firstinspires.ftc.teamcode.Outtake;
-import org.firstinspires.ftc.teamcode.Intake;
-import org.firstinspires.ftc.teamcode.SlidesVertical;
+
+
+
 
 /**
  * Yet another OpMode, this time for Autonomous - the names are intentional (and great), don't mess with them
  */
 public class PathMasterTheTestingNavigator {
-    private static Intake intake;
-    private static Outtake outtake;
-    private static SlidesVertical verticalSlides;
     private static Bot bot;
 
     public static void runOpModeBucketPark(LinearOpMode opMode) {
@@ -33,9 +31,6 @@ public class PathMasterTheTestingNavigator {
 
         MecanumDrive mecanumDrive = new MecanumDrive(hardwareMap, new Pose2d(0, 0, Math.toRadians(90)));
 
-        intake = new Intake(hardwareMap, new Camera(hardwareMap, telemetry));
-        outtake = new Outtake(hardwareMap);
-        verticalSlides = new SlidesVertical(opMode);
         bot = new Bot(opMode,hardwareMap, telemetry);
 
 
@@ -52,9 +47,6 @@ public class PathMasterTheTestingNavigator {
 
         MecanumDrive mecanumDrive = new MecanumDrive(hardwareMap, new Pose2d(0, 0, Math.toRadians(270)));
 
-        intake = new Intake(hardwareMap, new Camera(hardwareMap, telemetry));
-        outtake = new Outtake(hardwareMap);
-        verticalSlides = new SlidesVertical(opMode);
         bot = new Bot(opMode,hardwareMap, telemetry);
 
         Action arcStrikeVelocity = mecanumDrive.actionBuilder(new Pose2d(0 , 0 , Math.toRadians(270)))
@@ -70,25 +62,20 @@ public class PathMasterTheTestingNavigator {
 
         MecanumDrive mecanumDrive = new MecanumDrive(hardwareMap, new Pose2d(0, 0, Math.toRadians(90)));
 
-        intake = new Intake(hardwareMap, new Camera(hardwareMap, telemetry));
-        outtake = new Outtake(hardwareMap);
-        verticalSlides = new SlidesVertical(opMode);
         bot = new Bot(opMode,hardwareMap, telemetry);
 
-        Vector2d intakeSample1 = new Vector2d(-17.5, 26);
-        Vector2d intakeSample2 = new Vector2d(-29.5, 26);
-        Vector2d intakeSample3 = new Vector2d(-27, 36.7);
+        Vector2d intakeSample1 = new Vector2d(-17, 26);
+        Vector2d intakeSample2 = new Vector2d(-29.25, 26);
+        Vector2d intakeSample3 = new Vector2d(-26.75, 36.7);
 
-        Vector2d outtakeBucket = new Vector2d(-20.5, 10 );
+        Vector2d outtakeBucket = new Vector2d(-20, 10 );
 
         Action arcStrikeVelocity = mecanumDrive.actionBuilder(new Pose2d(0 , 0 , Math.toRadians(90)))
                 .stopAndAdd(intakePosition())
                 .stopAndAdd(bot.closeHori())
-                .stopAndAdd(bot.actionOuttakeTransfer())
                 .strafeToSplineHeading(outtakeBucket, Math.toRadians(45))
-                .waitSeconds(1)
-                // output sample 0
                 .stopAndAdd(doOuttakeBucket())
+                // output sample 1
                 .strafeToSplineHeading(intakeSample1, Math.toRadians(90))
                 .stopAndAdd(bot.closeHori())
                 .waitSeconds(1)
@@ -96,12 +83,11 @@ public class PathMasterTheTestingNavigator {
                 // input sample 1
                 .stopAndAdd(doIntake())
                 .waitSeconds(1)
-                .strafeToSplineHeading(outtakeBucket, Math.toRadians(45))
                 .stopAndAdd(doTransfer())
+                .strafeToSplineHeading(outtakeBucket, Math.toRadians(45))
                 .waitSeconds(1)
                 // output sample 1
                 .stopAndAdd(doOuttakeBucket())
-                .waitSeconds(1)
                 .strafeToSplineHeading(intakeSample2, Math.toRadians(90))
                 .stopAndAdd(bot.closeHori())
                 .waitSeconds(1)
@@ -109,12 +95,11 @@ public class PathMasterTheTestingNavigator {
                 .stopAndAdd(bot.closeHori())
                 .stopAndAdd(doIntake())
                 .waitSeconds(1)
-                .strafeToSplineHeading(outtakeBucket, Math.toRadians(45))
                 .stopAndAdd(doTransfer())
+                .strafeToSplineHeading(outtakeBucket, Math.toRadians(45))
                 .waitSeconds(1)
                 // output sample 2
                 .stopAndAdd(doOuttakeBucket())
-                .waitSeconds(1)
                 .strafeToSplineHeading(intakeSample3, Math.toRadians(180))
                 .stopAndAdd(bot.clawRoll90())
                 .stopAndAdd(bot.closeHori())
@@ -122,19 +107,20 @@ public class PathMasterTheTestingNavigator {
                 //input sample 3
                 .stopAndAdd(doIntake())
                 .waitSeconds(1)
-                .strafeToSplineHeading(outtakeBucket, Math.toRadians(45))
                 .stopAndAdd(doTransfer())
+                .strafeToSplineHeading(outtakeBucket, Math.toRadians(45))
                 .waitSeconds(1)
                 // output sample 3
                 .stopAndAdd(doOuttakeBucket())
-                .stopAndAdd(outtake::openTransfer)
-                .waitSeconds(1)
                 // turn around so its facing the field
                 .build();
 
         opMode.waitForStart();
 
-        Actions.runBlocking(arcStrikeVelocity);
+        Actions.runBlocking(new ParallelAction(
+                arcStrikeVelocity,
+                bot.slidesPeriodic()
+        ));
     }
 
     public static void runOpModeSpecimen(LinearOpMode opMode) {
@@ -143,9 +129,6 @@ public class PathMasterTheTestingNavigator {
 
         MecanumDrive mecanumDrive = new MecanumDrive(hardwareMap, new Pose2d(0, 0, Math.toRadians(270)));
 
-        intake = new Intake(hardwareMap, new Camera(hardwareMap, telemetry));
-        outtake = new Outtake(hardwareMap);
-        verticalSlides = new SlidesVertical(opMode);
         bot = new Bot(opMode,hardwareMap, telemetry);
 
         // push positions
@@ -165,8 +148,13 @@ public class PathMasterTheTestingNavigator {
         Action arcStrikeVelocity = mecanumDrive.actionBuilder(new Pose2d(0 , 0 , Math.toRadians(270)))
                 .strafeToSplineHeading(outtakeSpecInit, Math.toRadians(270))
                 .waitSeconds(1)
+
+
 		        .stopAndAdd(doOuttakeSpecimen())
                 .waitSeconds(1)
+
+
+
                 /* Sweep
                 // getting these arm down and up timings with the movements optimized is good
                 // this is kinda assuming the sweep arm servo is really fast, may need to add more waits
@@ -233,7 +221,10 @@ public class PathMasterTheTestingNavigator {
 
         opMode.waitForStart();
 
-        Actions.runBlocking(arcStrikeVelocity);
+        Actions.runBlocking(new ParallelAction(
+                arcStrikeVelocity,
+                bot.slidesPeriodic()
+        ));
     }
 
     private static Action sweepDown() {
@@ -247,7 +238,7 @@ public class PathMasterTheTestingNavigator {
     private static Action doTransfer() { return bot.actionTransfer();}
 
     private static Action doIntake() {
-        return bot.actionIntakeSample();
+        return bot.actionIntake();
     }
 
     private static Action doOuttakeBucket() {
@@ -259,7 +250,7 @@ public class PathMasterTheTestingNavigator {
     }
 
     private static Action doOuttakeSpecimen() { // clips to top rung
-        return bot.actionClipSpecimen();
+        return bot.actionOuttakeSpecimen();
     }
 
     private static Action intakePosition(){ return bot.actionIntakePos();}

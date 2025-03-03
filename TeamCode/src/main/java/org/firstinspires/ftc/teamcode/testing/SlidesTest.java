@@ -13,9 +13,14 @@ public class SlidesTest extends LinearOpMode  {
         SlidesVertical vSlides = new SlidesVertical(this);
         SlidesHorizontal hSlides = new SlidesHorizontal(hardwareMap, telemetry);
         waitForStart();
+        vSlides.resetEncoders();
         while (opModeIsActive()) {
             //hSlides.slidesMove(gamepad2.left_stick_y, gamepad2.b, telemetry);
-            vSlides.slidesMove(gamepad2.right_stick_y);
+            vSlides.slidesMove(gamepad2.left_stick_y);
+            if(gamepad2.a) vSlides.moveToUpperBound();
+            if(gamepad2.b) vSlides.moveToLowerBound();
+            if (gamepad2.x) vSlides.moveToRungClippingPos();
+            vSlides.periodic();
         }
     }
 }
