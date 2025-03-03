@@ -180,7 +180,7 @@ public class Bot {
                 }
                 if (gamepad2.wasJustPressed(GamepadKeys.Button.Y)) {
                     hSlides.close();
-                    vSlides.setPosition(0);
+                    vSlides.toStorage();
                     intake.openSurvey();
                     outtake.openClip();
                     fsm = FSM.INTAKESPECIMEN;
@@ -192,7 +192,7 @@ public class Bot {
                 intake.closeTransfer();
                 vSlides.slidesMove(gamepad2.getLeftY());
                 if (rightTriggerDown) {
-                    vSlides.moveToLowerBound();
+                    vSlides.toStorage();
                 }
                 if (gamepad2.wasJustPressed(GamepadKeys.Button.A)){
                     fsm = FSM.INTAKESAMPLE;
@@ -210,7 +210,7 @@ public class Bot {
                 new InstantAction(intake::closeIntake),
                 new InstantAction(intake::setPitchTransfer),
                 new InstantAction(intake::looseClaw),
-                new InstantAction(vSlides::moveToLowerBound),
+                new InstantAction(vSlides::toStorage),
                 new InstantAction(hSlides::close),
                 new SleepAction(0.2),
                 new InstantAction(intake::posTransfer),
@@ -221,7 +221,7 @@ public class Bot {
                 new SleepAction(0.07),
                 new InstantAction(intake::openSurvey),
                 //new SleepAction(1),
-                //new InstantAction(vSlides::moveToTopBucketPos),
+                new InstantAction(vSlides::toTopBucket),
                 new SleepAction(0.1),
                 new InstantAction(outtake::posPreBucket),
                 new InstantAction(hSlides::close),
@@ -229,7 +229,7 @@ public class Bot {
                 new InstantAction(() -> fsm = FSM.SCORESAMPLE));
     }
 
-    public Action actionIntake() { // using the intake claw
+    public Action actionIntakeSample() { // using the intake claw
         return new SequentialAction(
                 new InstantAction(intake::open),
                 new SleepAction(0.1),
