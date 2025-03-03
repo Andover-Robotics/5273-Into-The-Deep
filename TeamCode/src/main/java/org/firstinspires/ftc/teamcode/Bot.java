@@ -168,12 +168,8 @@ public class Bot {
                 break;
             case CLIPSPECIMEN:
                 outtake.posBucket();
-                vSlides.slidesMove(gamepad2.getLeftY());
-                if(rightTriggerDown){
-                    outtake.open();
-                }
-                else{
-                    outtake.close();
+                if(gamepad2.wasJustPressed(GamepadKeys.Button.B)){
+                    Actions.runBlocking(actionClipSpecimen());
                 }
                 if (gamepad2.wasJustPressed(GamepadKeys.Button.A)) {
                     hSlides.middle();
