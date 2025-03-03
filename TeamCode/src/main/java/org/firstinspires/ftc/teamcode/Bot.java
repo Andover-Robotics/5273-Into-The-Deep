@@ -82,7 +82,7 @@ public class Bot {
             case STARTING: // if just started
                 vSlides.resetEncoders();
                 if (gamepad2.wasJustPressed(GamepadKeys.Button.A)) {
-                    hSlides.close();
+                    hSlides.middle();
                     intake.openSurvey();
                     outtake.openTransfer();
                     fsm = FSM.INTAKESAMPLE;
@@ -136,6 +136,7 @@ public class Bot {
                 if (gamepad2.wasJustPressed(GamepadKeys.Button.A)) {
                     hSlides.close();
                     vSlides.moveToLowerBound();
+                    hSlides.middle();
                     intake.posSurvey();
                     outtake.closeBucket();
                     fsm = FSM.INTAKESAMPLE;
@@ -159,6 +160,7 @@ public class Bot {
                 }
                 if(gamepad2.wasJustPressed(GamepadKeys.Button.A)) {
                     hSlides.close();
+                    hSlides.middle();
                     intake.openSurvey();
                     outtake.closeBucket();
                     fsm = FSM.INTAKESAMPLE;
@@ -176,6 +178,7 @@ public class Bot {
                 if (gamepad2.wasJustPressed(GamepadKeys.Button.A)) {
                     hSlides.close();
                     vSlides.setPosition(0);
+                    hSlides.middle();
                     intake.posSurvey();
                     outtake.closeBucket();
                     fsm = FSM.INTAKESAMPLE;
