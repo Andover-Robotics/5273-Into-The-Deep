@@ -1,6 +1,5 @@
 package org.firstinspires.ftc.teamcode.auto;
 // RR-specific imports
-import android.net.UrlQuerySanitizer;
 
 import com.acmerobotics.roadrunner.Action;
 import com.acmerobotics.roadrunner.ParallelAction;
@@ -14,7 +13,6 @@ import com.acmerobotics.roadrunner.Vector2d;
 // Non-RR imports
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.HardwareMap;
-import com.qualcomm.robotcore.hardware.Servo;
 
 //our special silly very important goofy classes (w rizz)
 import org.firstinspires.ftc.robotcore.external.Telemetry;
@@ -160,22 +158,22 @@ public class PathMasterTheTestingNavigator {
 
                 .strafeToSplineHeading(new Vector2d(0,45), Math.toRadians(90))     // ready for first sweep
                 .waitSeconds(1)
-                .stopAndAdd(sweepOut())
+                .stopAndAdd(sweepOutIntake())
                 .strafeToSplineHeading(new Vector2d(0,35), Math.toRadians(0))      // first sweep
                 .waitSeconds(1)
-                .stopAndAdd(sweepIn())
+                .stopAndAdd(sweepInIntake())
                 .strafeToSplineHeading(new Vector2d(11.25,45), Math.toRadians(90))     // ready for second sweep
                 .waitSeconds(1)
-                .stopAndAdd(sweepOut())
+                .stopAndAdd(sweepOutIntake())
                 .strafeToSplineHeading(new Vector2d(11.25, 35), Math.toRadians(0))     // second sweep
                 .waitSeconds(1)
-                .stopAndAdd(sweepIn())
+                .stopAndAdd(sweepInIntake())
                 .strafeToSplineHeading(new Vector2d(23.5, 45), Math.toRadians(90))    // ready for third sweep
                 .waitSeconds(1)
-                .stopAndAdd(sweepOut())
+                .stopAndAdd(sweepOutIntake())
                 .strafeToSplineHeading(new Vector2d(23.5, 35), Math.toRadians(0))     // third sweep
                 .waitSeconds(1)
-                .stopAndAdd(sweepIn())
+                .stopAndAdd(sweepInIntake())
                 .waitSeconds(1)
 
                 /*
@@ -230,11 +228,19 @@ public class PathMasterTheTestingNavigator {
         ));
     }
 
-    private static Action sweepOut() {
+    public Action actionSweepArmUp() {
+        return bot.actionSweepArmUp();
+    }
+
+    public Action actionSweepArmDown() {
+        return bot.actionSweepArmDown();
+    }
+
+    private static Action sweepOutIntake() {
         return bot.actionSweepOut();
     }
 
-    private static Action sweepIn() {
+    private static Action sweepInIntake() {
         return bot.actionSweepIn();
     }
 

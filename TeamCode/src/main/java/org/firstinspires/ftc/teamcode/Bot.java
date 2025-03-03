@@ -27,6 +27,7 @@ public class Bot {
     private final SlidesVertical vSlides;
     private final Outtake outtake;
     private final Camera camera;
+    private final Servo sweepServo;
 
     private static final double SWEEP_UP = 0, SWEEP_DOWN = 1;
     public enum FSM {
@@ -57,7 +58,7 @@ public class Bot {
         vSlides = new SlidesVertical(opMode);
         outtake = new Outtake(hardwareMap);
 
-
+        sweepServo = hardwareMap.get(Servo.class, "Sweep");
 
         fsm = FSM.STARTING;
     }
@@ -282,11 +283,22 @@ public class Bot {
                 new InstantAction(outtake::openClaw));
     }
 
-    public Action actionSweepOut() {
+    public Action actionSweepArmUp() {
+        return new SequentialAction(
+                new InstantAction(() -> sweepServo.setPosition(SWEEP_UP))
+        );
+    }
+
+    public Action actionSweepArmDown() {
+        return new SequentialAction(
+                new InstantAction(() -> sweepServo.setPosition(SWEEP_DOWN))
+        );
+    }
+    public Action actionSweepOut() { // intake arm sweep
         return new InstantAction(hSlides::middle);
     }
 
-    public Action actionSweepIn() {
+    public Action actionSweepIn() { // intake arm sweep
         return new InstantAction(hSlides::close);
     }
 
