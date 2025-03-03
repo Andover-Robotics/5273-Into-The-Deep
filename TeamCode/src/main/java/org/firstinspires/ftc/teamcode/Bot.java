@@ -143,10 +143,9 @@ public class Bot {
                     outtake.closeBucket();
                     fsm = FSM.INTAKESAMPLE;
                 }
-
                 if (gamepad2.wasJustPressed(GamepadKeys.Button.Y)) {
                     hSlides.close();
-                    vSlides.moveToLowerBound();
+                    vSlides.toStorage();
                     intake.openSurvey();
                     outtake.openClip();
                     Thread.sleep(1000);
@@ -157,10 +156,7 @@ public class Bot {
             case INTAKESPECIMEN:
                 outtake.openClip();
                 if(gamepad2.wasJustPressed(GamepadKeys.Button.B)) {
-                    outtake.close();
-                    Thread.sleep(200);
-                    outtake.posBucket();
-                    fsm = FSM.CLIPSPECIMEN;
+                    Actions.runBlocking(actionIntakeSpecimen());
                 }
                 if(gamepad2.wasJustPressed(GamepadKeys.Button.A)) {
                     vSlides.toStorage();
