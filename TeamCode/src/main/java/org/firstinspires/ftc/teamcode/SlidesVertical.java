@@ -17,8 +17,8 @@ public class SlidesVertical {
     private final MotorEx slidesLeft, slidesRight;
     //sets limits of slides extension
     private static final int UPPER_BOUND = -2985;
-    private static final int STORAGE = -5;
-    private static final int CLIP_POS = 919;
+    private static final int STORAGE = 5;
+    private static final int CLIP_POS = -1000;
     public PIDFController pidfController;
     public final int TOLERANCE = 10;
     public static double p = 0.015, i = 0, d = 0, f = 0, staticF = 0.25;  //tune these later (thanks lightning for placeholders)
@@ -47,17 +47,13 @@ public class SlidesVertical {
         slidesLeft.setZeroPowerBehavior(Motor.ZeroPowerBehavior.BRAKE);
     }
 
-    public void moveToLowerBound() {
+    public void toStorage() {
         setPosition(STORAGE);
     }
 
     public void resetEncoders() {
         slidesLeft.resetEncoder();
         slidesRight.resetEncoder();
-    }
-
-    public void moveToUpperBound() {
-        setPosition(UPPER_BOUND);
     }
 
 /*
@@ -95,20 +91,16 @@ public class SlidesVertical {
         }
     }
 */
-    public void moveToTopBucketPos() {
+    public void toTopBucket() {
         setPosition(UPPER_BOUND);
     }
 
-    public void moveToRungClippingPos() {   // the highest one
+    public void toClipTop() {   // the highest one
     setPosition(CLIP_POS);
     }
 
-    public void clipSpecimenVertSlides() {  // pulls vert slides down to clip it
-        setPosition(CLIP_POS - 100);
-    }
-
-    public void goUpForSpecimenIntake() {
-        setPosition(STORAGE + 100);
+    public void toClipBottom() {  // pulls vert slides down to clip it
+        setPosition(CLIP_POS + 300);
     }
 
     //moves based on position inputted
