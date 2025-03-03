@@ -20,8 +20,8 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 public class SlidesHorizontal {
     private final Servo slidesLeft, slidesRight;
 
-    private static final double EXPANDEDR = 0.4617, CONTRACTEDR = 0.0;
-    private static final double EXPANDEDL = 0.5383, CONTRACTEDL = 1.0;
+    private static final double EXPANDEDR = 0.4617, CONTRACTEDR = 0.2206, MIDDLER = 0.37;
+    private static final double EXPANDEDL = 0.5383, CONTRACTEDL = 0.7744, MIDDLEL = 0.6244;
     private final Telemetry telemetry;
 
     public SlidesHorizontal(HardwareMap map, Telemetry tele) {
@@ -76,10 +76,6 @@ public class SlidesHorizontal {
     }
 
     public void setPower(double power){
-        if(Math.abs(EXPANDEDL - CONTRACTEDL) - Math.abs(EXPANDEDR - CONTRACTEDR) > 0.01) {
-            throw new RuntimeException("The horizontal slides need equal range of motion");
-        }
-
         setRight(clamp(getRight() + power*0.01, CONTRACTEDR, EXPANDEDR));
         setLeft(clamp(getLeft() + power*-0.01, CONTRACTEDL, EXPANDEDL));
         if(getLeft() == EXPANDEDL || getRight() == EXPANDEDR) fsm = HSlides.OUT;
@@ -94,6 +90,11 @@ public class SlidesHorizontal {
         setRight(CONTRACTEDR);
         setLeft(CONTRACTEDL);
         fsm = HSlides.IN;
+    }
+
+    public void middle() {
+        setRight(MIDDLER);
+        setLeft(MIDDLEL);
     }
 
     public void open() {
