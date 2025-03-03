@@ -238,7 +238,7 @@ public class PathMasterTheTestingNavigator {
     private static Action doTransfer() { return bot.actionTransfer();}
 
     private static Action doIntake() {
-        return bot.actionIntake();
+        return bot.actionIntakeSample();
     }
 
     private static Action doOuttakeBucket() {
@@ -250,7 +250,7 @@ public class PathMasterTheTestingNavigator {
     }
 
     private static Action doOuttakeSpecimen() { // clips to top rung
-        return bot.actionOuttakeSpecimen();
+        return bot.actionClipSpecimen();
     }
 
     private static Action intakePosition(){ return bot.actionIntakePos();}
