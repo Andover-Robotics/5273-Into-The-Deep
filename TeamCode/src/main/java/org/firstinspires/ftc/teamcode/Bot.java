@@ -58,9 +58,6 @@ public class Bot {
         vSlides = new SlidesVertical(opMode);
         outtake = new Outtake(hardwareMap);
 
-        // sweep:
-        sweepServo = hardwareMap.get(Servo.class, "Sweep");
-
 
 
         fsm = FSM.STARTING;
@@ -271,6 +268,12 @@ public class Bot {
             new InstantAction(() -> fsm = FSM.CLIPSPECIMEN));
     }
 
+    public SequentialAction actionSpecPos() {
+        return new SequentialAction(
+                new InstantAction(vSlides::toClipTop)
+        );
+    }
+
     public SequentialAction actionClipSpecimen() {
         return new SequentialAction(
                 // claw should be set to perfect clipping pos so all you need is to have bot flush with the
@@ -280,27 +283,27 @@ public class Bot {
                 new InstantAction(outtake::openClaw));
     }
 
-    public Action actionSweepArmUp() {
-        return new SequentialAction(
-                new InstantAction(() -> sweepServo.setPosition(SWEEP_UP))
-        );
+    public Action actionSweepOut() {
+        return new InstantAction(hSlides::middle);
     }
 
-    public Action actionSweepArmDown() {
-        return new SequentialAction(
-                new InstantAction(() -> sweepServo.setPosition(SWEEP_DOWN))
-        );
+    public Action actionSweepIn() {
+        return new InstantAction(hSlides::close);
+    }
+
+    public Action periodicSweep() {
+        return hSlides.sweepPeriodic();
     }
 
     public Action actionIntakePos() {
         return new SequentialAction(
-                new InstantAction(() -> intake.openSurvey())
+                new InstantAction(intake::openSurvey)
         );
     }
 
     public Action actionOuttakeTransfer() {
         return new SequentialAction(
-                new InstantAction(() -> outtake.openTransfer())
+                new InstantAction(outtake::openTransfer)
         );
     }
 
