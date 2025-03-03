@@ -1,23 +1,19 @@
 package org.firstinspires.ftc.teamcode.auto;
 // RR-specific imports
 import com.acmerobotics.roadrunner.Action;
-import com.acmerobotics.roadrunner.InstantAction;
 import com.acmerobotics.roadrunner.Pose2d;
 import com.acmerobotics.roadrunner.ftc.Actions;
 import com.acmerobotics.roadrunner.Vector2d;
 
 
 // Non-RR imports
-import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.HardwareMap;
-import com.qualcomm.robotcore.hardware.Servo;
 
 //our special silly very important goofy classes (w rizz)
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.Bot;
 import org.firstinspires.ftc.teamcode.Camera;
-import org.firstinspires.ftc.teamcode.Claw;
 import org.firstinspires.ftc.teamcode.Outtake;
 import org.firstinspires.ftc.teamcode.Intake;
 import org.firstinspires.ftc.teamcode.SlidesVertical;
@@ -251,7 +247,7 @@ public class PathMasterTheTestingNavigator {
     private static Action doTransfer() { return bot.actionTransfer();}
 
     private static Action doIntake() {
-        return bot.actionIntake();
+        return bot.actionIntakeSample();
     }
 
     private static Action doOuttakeBucket() {
@@ -263,7 +259,7 @@ public class PathMasterTheTestingNavigator {
     }
 
     private static Action doOuttakeSpecimen() { // clips to top rung
-        return bot.actionOuttakeSpecimen();
+        return bot.actionClipSpecimen();
     }
 
     private static Action intakePosition(){ return bot.actionIntakePos();}
