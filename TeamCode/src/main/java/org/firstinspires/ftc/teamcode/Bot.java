@@ -100,6 +100,7 @@ public class Bot {
                 intake.moveDiffyPos(gamepad2, telemetry);
                 telemetry.addData("Intake State", intake.fsm);
                 if (rightTriggerDown && (intake.isSurveyOpen() || intake.isSurveyClosed())){
+                    vSlides.resetEncoders();
                     intake.open();
                     Thread.sleep(100);
                     intake.openIntake();
@@ -130,13 +131,11 @@ public class Bot {
                 telemetry.addData("Has sample: ",intake.hasSample());
                 break;
             case SCORESAMPLE: // direct control over vertical slides and outtake
-                vSlides.moveToTopBucketPos();
                 outtake.posPreBucket();
 
                 if (gamepad2.wasJustPressed(GamepadKeys.Button.A)) {
-                    hSlides.close();
-                    vSlides.moveToLowerBound();
                     hSlides.middle();
+                    vSlides.toStorage();
                     intake.posSurvey();
                     outtake.closeBucket();
                     fsm = FSM.INTAKESAMPLE;
@@ -147,6 +146,8 @@ public class Bot {
                     vSlides.moveToLowerBound();
                     intake.openSurvey();
                     outtake.openClip();
+                    Thread.sleep(1000);
+                    vSlides.resetEncoders();
                     fsm = FSM.INTAKESPECIMEN;
                 }
                 break;
@@ -159,7 +160,7 @@ public class Bot {
                     fsm = FSM.CLIPSPECIMEN;
                 }
                 if(gamepad2.wasJustPressed(GamepadKeys.Button.A)) {
-                    hSlides.close();
+                    vSlides.toStorage();
                     hSlides.middle();
                     intake.openSurvey();
                     outtake.closeBucket();
@@ -176,9 +177,8 @@ public class Bot {
                     outtake.close();
                 }
                 if (gamepad2.wasJustPressed(GamepadKeys.Button.A)) {
-                    hSlides.close();
-                    vSlides.setPosition(0);
                     hSlides.middle();
+                    vSlides.toStorage();
                     intake.posSurvey();
                     outtake.closeBucket();
                     fsm = FSM.INTAKESAMPLE;
