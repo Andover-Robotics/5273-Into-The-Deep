@@ -25,8 +25,8 @@ public class SlidesVertical {
     private static final int CLIP_POS = -1000;
     public PIDFController pidfController;
     public final int TOLERANCE = 10;
-    public static double p = 0.015, i = 0, d = 0, f = 0, staticF = 0.25;  //tune these later (thanks lightning for placeholders)
-    private final double powerUp = 0.1, powerDown = 0.05, powerMin =0.2, manualDivide = 1 ;
+    public static double p = 0.015, i = 0, d = 0, f = 0, staticF = 0.025;  //tune these later (thanks lightning for placeholders)
+    private final double powerUp = 0.01, powerDown = 0.005, powerMin =0.02, manualDivide = 10 ;
     public  double target = 0;
     private double power;
     private final OpMode opMode;
