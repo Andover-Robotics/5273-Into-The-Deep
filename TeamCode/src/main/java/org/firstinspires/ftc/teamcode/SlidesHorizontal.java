@@ -22,7 +22,6 @@ public class SlidesHorizontal {
 
     private static final double EXPANDEDR = 0.4617, CONTRACTEDR = 0.2206, MIDDLER = 0.37;
     private static final double EXPANDEDL = 0.5383, CONTRACTEDL = 0.7744, MIDDLEL = 0.6244;
-    private boolean moveOut = false;
     private final Telemetry telemetry;
 
     public SlidesHorizontal(HardwareMap map, Telemetry tele) {
@@ -73,14 +72,12 @@ public class SlidesHorizontal {
     }
 
     public void close() {
-        moveOut = false;
         setRight(CONTRACTEDR);
         setLeft(CONTRACTEDL);
         fsm = HSlides.IN;
     }
 
     public void middle() {
-        moveOut = true;
         setRight(MIDDLER);
         setLeft(MIDDLEL);
     }
@@ -89,9 +86,7 @@ public class SlidesHorizontal {
         class SlidesAction implements Action {
             @Override
             public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-                if (moveOut) {
-                    middle();
-                }
+                close();
                 return true;
             }
         }
