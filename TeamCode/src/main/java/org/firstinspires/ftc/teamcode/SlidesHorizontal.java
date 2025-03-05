@@ -82,7 +82,7 @@ public class SlidesHorizontal {
         setLeft(MIDDLEL);
     }
 
-    public Action sweepPeriodic() {
+    public Action horizPeriodicClosed() {
         class SlidesAction implements Action {
             @Override
             public boolean run(@NonNull TelemetryPacket telemetryPacket) {
