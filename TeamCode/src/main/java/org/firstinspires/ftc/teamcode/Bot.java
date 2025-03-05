@@ -306,8 +306,8 @@ public class Bot {
         return new InstantAction(hSlides::close);
     }
 
-    public Action periodicSweep() {
-        return hSlides.sweepPeriodic();
+    public Action periodicHorizSlidesClosed() {
+        return hSlides.horizPeriodicClosed();
     }
 
     public Action actionIntakePos() {
