@@ -22,11 +22,11 @@ public class SlidesVertical {
     //sets limits of slides extension
     private static final int UPPER_BOUND = -2985;
     private static final int STORAGE = 5;
-    private static final int CLIP_POS = -1000;
+    private static final int CLIP_POS = -2600;
     public PIDFController pidfController;
     public final int TOLERANCE = 10;
     public static double p = 0.015, i = 0, d = 0, f = 0, staticF = 0.025;  //tune these later (thanks lightning for placeholders)
-    private final double powerUp = 0.01, powerDown = 0.005, powerMin =0.02, manualDivide = 10 ;
+    private final double powerUp = 0.1, powerDown = 0.05, powerMin =0.2, manualDivide = 1;
     public  double target = 0;
     private double power;
     private final OpMode opMode;
@@ -138,6 +138,9 @@ public class SlidesVertical {
         profiler = new MotionProfiler(30000, 20000);
     }
 
+    public void slidesDown() {
+        setPosition(0);
+    }
 
     public void periodic() {
         slidesRight.setInverted(false);
