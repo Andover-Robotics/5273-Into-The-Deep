@@ -138,7 +138,7 @@ public class PathMasterTheTestingNavigator {
         // push positions
         int pixelOne = 14;
         int pixelTwo = 24;
-        int pixelThree = 34;
+        int pixelThree = 32;
         int pushIn = 10;
         int pixelY = 48;
 
@@ -147,7 +147,7 @@ public class PathMasterTheTestingNavigator {
         Vector2d outtakeSpec2 = new Vector2d(-18, 28.832 );
         Vector2d outtakeSpec3 = new Vector2d(-16, 28.832 );
 
-        Vector2d intakeSpec = new Vector2d(12 , 6 );
+        Vector2d intakeSpec = new Vector2d(11 , 6 );
 
         Action arcStrikeVelocity = mecanumDrive.actionBuilder(new Pose2d(0 , 0 , Math.toRadians(270)))
                 .strafeToSplineHeading(outtakeSpecInit, Math.toRadians(270))
@@ -195,7 +195,6 @@ public class PathMasterTheTestingNavigator {
                 .strafeToSplineHeading(intakeSpec, Math.toRadians(90))
                 .waitSeconds(1)
                 .stopAndAdd(doIntakeSpecimen())
-                .waitSeconds(1)
                 .strafeToSplineHeading(outtakeSpec1, Math.toRadians(270))
                 .waitSeconds(1)
                 .stopAndAdd(doOuttakeSpecimen())
@@ -204,7 +203,6 @@ public class PathMasterTheTestingNavigator {
                 .strafeToSplineHeading(intakeSpec, Math.toRadians(90))
                 .waitSeconds(1)
                 .stopAndAdd(doIntakeSpecimen())
-                .waitSeconds(1)
                 .strafeToSplineHeading(outtakeSpec2, Math.toRadians(270))
                 .waitSeconds(1)
                 .stopAndAdd(doOuttakeSpecimen())
@@ -213,7 +211,6 @@ public class PathMasterTheTestingNavigator {
                 .strafeToSplineHeading(intakeSpec, Math.toRadians(90))
                 .waitSeconds(1)
                 .stopAndAdd(doIntakeSpecimen())
-                .waitSeconds(1)
                 .strafeToSplineHeading(outtakeSpec3, Math.toRadians(270))
                 .waitSeconds(1)
                 .stopAndAdd(doOuttakeSpecimen())
@@ -228,7 +225,7 @@ public class PathMasterTheTestingNavigator {
         Actions.runBlocking(new ParallelAction(
                 arcStrikeVelocity,
                 bot.slidesPeriodic(),
-                bot.periodicSweep()
+                bot.periodicHorizSlidesClosed()
         ));
     }
 
