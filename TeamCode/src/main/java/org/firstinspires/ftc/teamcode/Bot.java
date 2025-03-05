@@ -98,7 +98,6 @@ public class Bot {
                 intake.moveDiffyPos(gamepad2, telemetry);
                 telemetry.addData("Intake State", intake.fsm);
                 if (rightTriggerDown && (intake.isSurveyOpen() || intake.isSurveyClosed())){
-                    vSlides.resetEncoders();
                     intake.open();
                     Thread.sleep(100);
                     intake.openIntake();
@@ -309,6 +308,10 @@ public class Bot {
         );
     }
 
+    public Action actionArmBucketPos() {
+        return new InstantAction(outtake::posBucket);
+    }
+
     public Action actionOuttakeTransfer() {
         return new SequentialAction(
                 new InstantAction(outtake::openTransfer)
@@ -324,6 +327,10 @@ public class Bot {
         return new SequentialAction(
                 new InstantAction(hSlides::close)
                 );
+    }
+
+    public Action vertSlidesToBottom() {
+        return new InstantAction(vSlides::toStorage);
     }
 
     public Action slidesPeriodic() {
