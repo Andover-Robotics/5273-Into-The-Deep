@@ -17,9 +17,9 @@ public class SlidesTest extends LinearOpMode  {
         while (opModeIsActive()) {
             //hSlides.slidesMove(gamepad2.left_stick_y, gamepad2.b, telemetry);
             vSlides.slidesMove(gamepad2.left_stick_y);
-            if(gamepad2.a) vSlides.moveToUpperBound();
-            if(gamepad2.b) vSlides.moveToLowerBound();
-            if (gamepad2.x) vSlides.moveToRungClippingPos();
+            //if(gamepad2.a) vSlides.moveToUpperBound();
+            //if(gamepad2.b) vSlides.moveToLowerBound();
+            //if (gamepad2.x) vSlides.moveToRungClippingPos();
             vSlides.periodic();
         }
     }
