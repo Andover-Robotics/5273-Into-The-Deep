@@ -283,6 +283,10 @@ public class Bot {
                 new InstantAction(outtake::openClaw));
     }
 
+    public Action slidesDown() {
+        return new InstantAction(vSlides::slidesDown);
+    }
+
     public Action actionSweepArmUp() {
         return new SequentialAction(
                 new InstantAction(() -> sweepServo.setPosition(SWEEP_UP))
