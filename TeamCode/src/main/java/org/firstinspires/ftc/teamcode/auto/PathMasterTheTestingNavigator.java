@@ -136,27 +136,27 @@ public class PathMasterTheTestingNavigator {
         bot = new Bot(opMode,hardwareMap, telemetry);
 
         // push positions
-        int pixelOne = 35;
-        int pixelTwo = 45;
-        int pixelThree = 55;
-        int pushIn = 16;
-        int pixelY = 55;
+        int pixelOne = 14;
+        int pixelTwo = 24;
+        int pixelThree = 34;
+        int pushIn = 10;
+        int pixelY = 48;
 
-        Vector2d outtakeSpecInit = new Vector2d(-6, 28.832 );
-        Vector2d outtakeSpec1 = new Vector2d(-4, 28.832 );
-        Vector2d outtakeSpec2 = new Vector2d(-2, 28.832 );
-        Vector2d outtakeSpec3 = new Vector2d(-0, 28.832 );
+        Vector2d outtakeSpecInit = new Vector2d(-22, 28.832 );
+        Vector2d outtakeSpec1 = new Vector2d(-20, 28.832 );
+        Vector2d outtakeSpec2 = new Vector2d(-18, 28.832 );
+        Vector2d outtakeSpec3 = new Vector2d(-16, 28.832 );
 
-        Vector2d intakeSpec = new Vector2d(32 , 4 );
+        Vector2d intakeSpec = new Vector2d(12 , 6 );
 
         Action arcStrikeVelocity = mecanumDrive.actionBuilder(new Pose2d(0 , 0 , Math.toRadians(270)))
-
                 .strafeToSplineHeading(outtakeSpecInit, Math.toRadians(270))
                 .waitSeconds(1)
 		        .stopAndAdd(doOuttakeSpecimen())
                 .waitSeconds(1)
+                .stopAndAdd(slidesDown())
 
-                .strafeToSplineHeading(new Vector2d(0,45), Math.toRadians(90))     // ready for first sweep
+                /*.strafeToSplineHeading(new Vector2d(0,45), Math.toRadians(90))     // ready for first sweep
                 .waitSeconds(1)
                 .stopAndAdd(sweepOutIntake())
                 .strafeToSplineHeading(new Vector2d(0,35), Math.toRadians(0))      // first sweep
@@ -174,9 +174,9 @@ public class PathMasterTheTestingNavigator {
                 .strafeToSplineHeading(new Vector2d(23.5, 35), Math.toRadians(0))     // third sweep
                 .waitSeconds(1)
                 .stopAndAdd(sweepInIntake())
-                .waitSeconds(1)
+                .waitSeconds(1)*/
 
-                /*
+
                 // push
                 .strafeTo(new Vector2d(pixelOne-8,24 ))
                 .strafeTo(new Vector2d(pixelOne-8, pixelY))
@@ -188,7 +188,8 @@ public class PathMasterTheTestingNavigator {
                 .strafeTo(new Vector2d(pixelTwo , pixelY ))
                 .strafeTo(new Vector2d(pixelThree , pixelY ))
                 .strafeTo(new Vector2d(pixelThree , pushIn ))
-                */
+                .waitSeconds(1)
+
 
 
                 .strafeToSplineHeading(intakeSpec, Math.toRadians(90))
@@ -199,6 +200,7 @@ public class PathMasterTheTestingNavigator {
                 .waitSeconds(1)
                 .stopAndAdd(doOuttakeSpecimen())
                 .waitSeconds(1)
+                .stopAndAdd(bot.slidesDown())
                 .strafeToSplineHeading(intakeSpec, Math.toRadians(90))
                 .waitSeconds(1)
                 .stopAndAdd(doIntakeSpecimen())
@@ -207,14 +209,16 @@ public class PathMasterTheTestingNavigator {
                 .waitSeconds(1)
                 .stopAndAdd(doOuttakeSpecimen())
                 .waitSeconds(1)
+                .stopAndAdd(bot.slidesDown())
                 .strafeToSplineHeading(intakeSpec, Math.toRadians(90))
                 .waitSeconds(1)
                 .stopAndAdd(doIntakeSpecimen())
                 .waitSeconds(1)
                 .strafeToSplineHeading(outtakeSpec3, Math.toRadians(270))
                 .waitSeconds(1)
-                .stopAndAdd((doOuttakeSpecimen()))
+                .stopAndAdd(doOuttakeSpecimen())
                 .waitSeconds(1)
+                .stopAndAdd(bot.slidesDown())
                 .strafeToSplineHeading(new Vector2d(38, 0), Math.toRadians(90))
                 .stopAndAdd(outtakeTransferPos())
                 .build();
@@ -268,6 +272,10 @@ public class PathMasterTheTestingNavigator {
                 new SleepAction(1),
                 bot.actionClipSpecimen()
         );
+    }
+
+    private static Action slidesDown() {
+        return bot.slidesDown();
     }
 
     private static Action intakePosition(){ return bot.actionIntakePos();}
