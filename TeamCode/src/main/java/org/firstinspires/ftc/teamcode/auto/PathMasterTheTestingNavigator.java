@@ -151,33 +151,33 @@ public class PathMasterTheTestingNavigator {
 
         Action arcStrikeVelocity = mecanumDrive.actionBuilder(new Pose2d(0 , 0 , Math.toRadians(270)))
                 .strafeToSplineHeading(outtakeSpecInit, Math.toRadians(270))
-                .waitSeconds(1)
 		        .stopAndAdd(doOuttakeSpecimen())
                 .waitSeconds(1)
                 .stopAndAdd(slidesDown())
 
-                /*.strafeToSplineHeading(new Vector2d(0,45), Math.toRadians(90))     // ready for first sweep
+                .splineToSplineHeading(new Pose2d(0, 28, Math.toRadians(180)), Math.toRadians(90))
+                .splineToSplineHeading(new Pose2d(6,30, Math.toRadians(60)), Math.toRadians(90))     // ready for first sweep
                 .waitSeconds(1)
-                .stopAndAdd(sweepOutIntake())
-                .strafeToSplineHeading(new Vector2d(0,35), Math.toRadians(0))      // first sweep
+                .stopAndAdd(actionSweepArmDown())
+                .strafeToLinearHeading(new Vector2d(6,15), Math.toRadians(0))      // first sweep
                 .waitSeconds(1)
-                .stopAndAdd(sweepInIntake())
-                .strafeToSplineHeading(new Vector2d(11.25,45), Math.toRadians(90))     // ready for second sweep
+                .stopAndAdd(actionSweepArmUp())
+                .splineToSplineHeading(new Pose2d(12,30, Math.toRadians(60)), Math.toRadians(90))     // ready for second sweep
                 .waitSeconds(1)
-                .stopAndAdd(sweepOutIntake())
-                .strafeToSplineHeading(new Vector2d(11.25, 35), Math.toRadians(0))     // second sweep
+                .stopAndAdd(actionSweepArmDown())
+                .strafeToLinearHeading(new Vector2d(12, 15), Math.toRadians(0))     // second sweep
                 .waitSeconds(1)
-                .stopAndAdd(sweepInIntake())
-                .strafeToSplineHeading(new Vector2d(23.5, 45), Math.toRadians(90))    // ready for third sweep
+                .stopAndAdd(actionSweepArmUp())
+                .splineToSplineHeading(new Pose2d(16, 30, Math.toRadians(60)), Math.toRadians(90))    // ready for third sweep
                 .waitSeconds(1)
-                .stopAndAdd(sweepOutIntake())
-                .strafeToSplineHeading(new Vector2d(23.5, 35), Math.toRadians(0))     // third sweep
+                .stopAndAdd(actionSweepArmDown())
+                .strafeToLinearHeading(new Vector2d(16, 15), Math.toRadians(0))     // third sweep
                 .waitSeconds(1)
-                .stopAndAdd(sweepInIntake())
-                .waitSeconds(1)*/
+                .stopAndAdd(actionSweepArmUp())
 
 
                 // push
+                /*
                 .strafeTo(new Vector2d(pixelOne-8,24 ))
                 .strafeTo(new Vector2d(pixelOne-8, pixelY))
                 .strafeTo(new Vector2d(pixelOne , pixelY))
@@ -188,31 +188,23 @@ public class PathMasterTheTestingNavigator {
                 .strafeTo(new Vector2d(pixelTwo , pixelY ))
                 .strafeTo(new Vector2d(pixelThree , pixelY ))
                 .strafeTo(new Vector2d(pixelThree , pushIn ))
-                .waitSeconds(1)
-
-
+                */
 
                 .strafeToSplineHeading(intakeSpec, Math.toRadians(90))
-                .waitSeconds(1)
                 .stopAndAdd(doIntakeSpecimen())
                 .strafeToSplineHeading(outtakeSpec1, Math.toRadians(270))
-                .waitSeconds(1)
                 .stopAndAdd(doOuttakeSpecimen())
                 .waitSeconds(1)
                 .stopAndAdd(bot.slidesDown())
                 .strafeToSplineHeading(intakeSpec, Math.toRadians(90))
-                .waitSeconds(1)
                 .stopAndAdd(doIntakeSpecimen())
                 .strafeToSplineHeading(outtakeSpec2, Math.toRadians(270))
-                .waitSeconds(1)
                 .stopAndAdd(doOuttakeSpecimen())
                 .waitSeconds(1)
                 .stopAndAdd(bot.slidesDown())
                 .strafeToSplineHeading(intakeSpec, Math.toRadians(90))
-                .waitSeconds(1)
                 .stopAndAdd(doIntakeSpecimen())
                 .strafeToSplineHeading(outtakeSpec3, Math.toRadians(270))
-                .waitSeconds(1)
                 .stopAndAdd(doOuttakeSpecimen())
                 .waitSeconds(1)
                 .stopAndAdd(bot.slidesDown())
@@ -229,20 +221,12 @@ public class PathMasterTheTestingNavigator {
         ));
     }
 
-    public Action actionSweepArmUp() {
+    public static Action actionSweepArmUp() {
         return bot.actionSweepArmUp();
     }
 
-    public Action actionSweepArmDown() {
+    public static Action actionSweepArmDown() {
         return bot.actionSweepArmDown();
-    }
-
-    private static Action sweepOutIntake() {
-        return bot.actionSweepOut();
-    }
-
-    private static Action sweepInIntake() {
-        return bot.actionSweepIn();
     }
 
     private static Action doTransfer() { return bot.actionTransfer();}

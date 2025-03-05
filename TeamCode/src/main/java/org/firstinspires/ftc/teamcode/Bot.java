@@ -279,7 +279,7 @@ public class Bot {
                 // claw should be set to perfect clipping pos so all you need is to have bot flush with the
                 // bottom part of the submersible, and lowers vert slides
                 new InstantAction(vSlides::toClipBottom),
-                new SleepAction(0.5),
+                new SleepAction(0.3),
                 new InstantAction(outtake::openClaw));
     }
 
@@ -297,13 +297,6 @@ public class Bot {
         return new SequentialAction(
                 new InstantAction(() -> sweepServo.setPosition(SWEEP_DOWN))
         );
-    }
-    public Action actionSweepOut() { // intake arm sweep
-        return new InstantAction(hSlides::middle);
-    }
-
-    public Action actionSweepIn() { // intake arm sweep
-        return new InstantAction(hSlides::close);
     }
 
     public Action periodicHorizSlidesClosed() {
