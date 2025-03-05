@@ -82,6 +82,17 @@ public class SlidesHorizontal {
         setLeft(MIDDLEL);
     }
 
+    public Action horizPeriodicClosed() {
+        class SlidesAction implements Action {
+            @Override
+            public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+                close();
+                return true;
+            }
+        }
+        return new SlidesAction();
+    }
+
     public void open() {
         setRight(EXPANDEDR);
         setLeft(EXPANDEDL);

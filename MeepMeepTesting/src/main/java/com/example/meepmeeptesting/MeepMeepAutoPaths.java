@@ -42,7 +42,7 @@ public class MeepMeepAutoPaths {
         RoadRunnerBotEntity bot = new DefaultBotBuilder(meepMeep)
                 .setConstraints(60, 60, Math.toRadians(180), Math.toRadians(180), 15)
                 // TODO make this accurate
-                .setDimensions(15, 15)
+                .setDimensions(14.8, 17.3)
                 .setColorScheme(quadrant>= 2?new ColorSchemeRedDark() : new ColorSchemeBlueDark())
                 .build();
         Action action = null;
@@ -60,13 +60,7 @@ public class MeepMeepAutoPaths {
     }
 
     private static int getAngle(int angle, int quadrant) {
-        switch(quadrant) {
-            case 0: return angle;
-            case 1: return 180-angle;
-            case 2: return 180+angle;
-            case 3: return 360-angle;
-            default: return 0;
-        }
+        return angle;
     }
 
     private static Action getPark(RoadRunnerBotEntity myBot, int quadrant) {
@@ -90,13 +84,10 @@ public class MeepMeepAutoPaths {
         Vector2d intakeSpec = new Vector2d(60 * xFactor, 60 * yFactor);
 
         return myBot.getDrive().actionBuilder(new Pose2d(10*xFactor, 60*yFactor, Math.toRadians(getAngle(270,quadrant))))
-                .strafeToSplineHeading(outtakeSpec, Math.toRadians(getAngle(90,quadrant)))
-                .waitSeconds(0.5)
-                // TODO figure out static claw positioning (left (90) or right (270))
-                // Preloaded samples are at y = 24 inches, and the static claw is 12 inches long
+                .strafeToSplineHeading(outtakeSpec, Math.toRadians(getAngle(270,quadrant)))
+                .waitSeconds(1.5)
                 .strafeTo(new Vector2d(20 * xFactor,33 * yFactor))
-                .strafeToSplineHeading(new Vector2d(pixelOne * xFactor, pixelY * yFactor),Math.toRadians(getAngle(270, quadrant)))
-                .waitSeconds(1)
+                .splineTo(new Vector2d(pixelOne * xFactor, pixelY * yFactor),Math.toRadians(getAngle(270, quadrant)))
                 // Human player zone is at y = 60 inches
                 .strafeTo(new Vector2d(pixelOne  * xFactor,pushIn * yFactor))
                 .strafeTo(new Vector2d(pixelOne * xFactor, pixelY * yFactor))
@@ -106,21 +97,19 @@ public class MeepMeepAutoPaths {
                 .strafeTo(new Vector2d(pixelThree * xFactor, pixelY * yFactor))
                 .strafeTo(new Vector2d(pixelThree * xFactor, pushIn * yFactor))
 
-                .strafeToSplineHeading(intakeSpec, Math.toRadians(getAngle(270, quadrant)))
-                .waitSeconds(0.5)
-                .strafeToSplineHeading(outtakeSpec, Math.toRadians(getAngle(90, quadrant)))
-                .waitSeconds(1)
-                .strafeToSplineHeading(intakeSpec, Math.toRadians(getAngle(270, quadrant)))
-                .waitSeconds(0.5)
-                .strafeToSplineHeading(outtakeSpec, Math.toRadians(getAngle(90, quadrant)))
-                .waitSeconds(1)
-                .strafeToSplineHeading(intakeSpec, Math.toRadians(getAngle(270, quadrant)))
-                .waitSeconds(0.5)
-                .strafeToSplineHeading(outtakeSpec, Math.toRadians(getAngle(90, quadrant)))
-                .waitSeconds(1)
-                .strafeToSplineHeading(intakeSpec, Math.toRadians(getAngle(270, quadrant)))
-                .waitSeconds(1)
-                .turn(Math.toRadians(180))
+                .strafeToSplineHeading(intakeSpec, Math.toRadians(getAngle(90, quadrant)))
+                .waitSeconds(0.7)
+                .strafeToSplineHeading(outtakeSpec, Math.toRadians(getAngle(270, quadrant)))
+                .waitSeconds(1.5)
+                .strafeToSplineHeading(intakeSpec, Math.toRadians(getAngle(90, quadrant)))
+                .waitSeconds(0.7)
+                .strafeToSplineHeading(outtakeSpec, Math.toRadians(getAngle(270, quadrant)))
+                .waitSeconds(1.5)
+                .strafeToSplineHeading(intakeSpec, Math.toRadians(getAngle(90, quadrant)))
+                .waitSeconds(0.7)
+                .strafeToSplineHeading(outtakeSpec, Math.toRadians(getAngle(270, quadrant)))
+                .waitSeconds(1.5)
+                .strafeToSplineHeading(intakeSpec, Math.toRadians(getAngle(90, quadrant)))
                 .build();
     }
 
