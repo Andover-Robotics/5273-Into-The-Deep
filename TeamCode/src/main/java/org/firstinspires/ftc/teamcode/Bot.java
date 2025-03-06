@@ -247,16 +247,21 @@ public class Bot {
         );
     }
 
-    public Action actionOuttakeBucket() {
+    public Action actionOuttakeBucketOne() {
         return new SequentialAction(
                 new InstantAction(vSlides::toTopBucket),
-                new InstantAction(outtake::posPreTransfer),
-                new SleepAction(1),
+                new SleepAction(2.5),
+                new InstantAction(outtake::posPreTransfer)
+        );
+    }
+
+    public Action actionOuttakeBucketTwo() {
+        return new SequentialAction(
                 new InstantAction(outtake::open),
                 new SleepAction(0.5),
                 new InstantAction(outtake::posPreTransfer),
                 new InstantAction(vSlides::toStorage)
-        );
+        )
     }
 
     public SequentialAction actionIntakeSpecimen() {
