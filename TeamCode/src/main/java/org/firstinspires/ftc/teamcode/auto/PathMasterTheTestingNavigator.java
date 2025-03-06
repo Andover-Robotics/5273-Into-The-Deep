@@ -75,8 +75,9 @@ public class PathMasterTheTestingNavigator {
         Action arcStrikeVelocity = mecanumDrive.actionBuilder(new Pose2d(0 , 0 , Math.toRadians(90)))
                 .stopAndAdd(intakePosition())
                 .stopAndAdd(bot.closeHori())
-                .strafeToSplineHeading(outtakeBucket, Math.toRadians(45))
                 .stopAndAdd(doOuttakeBucketOne())
+                //.strafeToSplineHeading(outtakeBucket, Math.toRadians(45))
+                //.waitSeconds(1)
                 .strafeTo(new Vector2d(-27, 3))
                 .stopAndAdd(doOuttakeBucketTwo())
                 // output sample 1
@@ -90,6 +91,7 @@ public class PathMasterTheTestingNavigator {
                 .stopAndAdd(doTransfer())
                 .strafeToSplineHeading(outtakeBucket, Math.toRadians(45))
                 .stopAndAdd(doOuttakeBucketOne())
+                .waitSeconds(1)
                 .strafeTo(new Vector2d(-27, 3))
                 .stopAndAdd(doOuttakeBucketTwo())
                 // output sample 1
@@ -103,6 +105,7 @@ public class PathMasterTheTestingNavigator {
                 .stopAndAdd(doTransfer())
                 .strafeToSplineHeading(outtakeBucket, Math.toRadians(45))
                 .stopAndAdd(doOuttakeBucketOne())
+                .waitSeconds(1)
                 .strafeTo(new Vector2d(-27, 3))
                 .stopAndAdd(doOuttakeBucketTwo())                // output sample 2
                 .strafeToSplineHeading(intakeSample3, Math.toRadians(180))
@@ -115,6 +118,7 @@ public class PathMasterTheTestingNavigator {
                 .stopAndAdd(doTransfer())
                 .strafeToSplineHeading(outtakeBucket, Math.toRadians(45))
                 .stopAndAdd(doOuttakeBucketOne())
+                .waitSeconds(1)
                 .strafeTo(new Vector2d(-27, 3))
                 .stopAndAdd(doOuttakeBucketTwo())
                 // output sample 3
@@ -151,7 +155,7 @@ public class PathMasterTheTestingNavigator {
         Vector2d outtakeSpec2 = new Vector2d(-17, 28.5 );
         Vector2d outtakeSpec3 = new Vector2d(-15.5, 28.5 );
 
-        Vector2d intakeSpec = new Vector2d(25 , 6 );
+        Vector2d intakeSpec = new Vector2d(24 , 7 );
 
         Action arcStrikeVelocity = mecanumDrive.actionBuilder(new Pose2d(0 , 0 , Math.toRadians(270)))
                 .stopAndAdd(bot.vertSlidesToBottom())
