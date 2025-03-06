@@ -249,7 +249,7 @@ public class PathMasterTheTestingNavigator {
     }
 
     private static Action doOuttakeBucketTwo() {
-        return bot.actionOuttakeBucketTwo()
+        return bot.actionOuttakeBucketTwo();
     }
 
 

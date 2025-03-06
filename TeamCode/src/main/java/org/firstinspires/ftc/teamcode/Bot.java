@@ -261,7 +261,7 @@ public class Bot {
                 new SleepAction(0.5),
                 new InstantAction(outtake::posPreTransfer),
                 new InstantAction(vSlides::toStorage)
-        )
+        );
     }
 
     public SequentialAction actionIntakeSpecimen() {
