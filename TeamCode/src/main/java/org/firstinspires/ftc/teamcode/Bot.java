@@ -29,7 +29,7 @@ public class Bot {
     private final Camera camera;
     private final Servo sweepServo;
 
-    private static final double SWEEP_UP = 1, SWEEP_DOWN = 0;
+    private static final double SWEEP_UP = 0.5, SWEEP_DOWN = 0;
     public enum FSM {
         STARTING,
         INTAKESAMPLE,
