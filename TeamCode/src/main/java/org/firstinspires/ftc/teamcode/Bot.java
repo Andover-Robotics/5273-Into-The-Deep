@@ -29,7 +29,7 @@ public class Bot {
     private final Camera camera;
     private final Servo sweepServo;
 
-    private static final double SWEEP_UP = 0, SWEEP_DOWN = 1;
+    private static final double SWEEP_UP = 1, SWEEP_DOWN = 0;
     public enum FSM {
         STARTING,
         INTAKESAMPLE,
@@ -165,6 +165,9 @@ public class Bot {
                 break;
             case CLIPSPECIMEN:
                 outtake.posBucket();
+                if(gamepad2.wasJustPressed(GamepadKeys.Button.X)){
+                    Actions.runBlocking(actionSpecPos());
+                }
                 if(gamepad2.wasJustPressed(GamepadKeys.Button.B)){
                     Actions.runBlocking(actionClipSpecimen());
                 }
