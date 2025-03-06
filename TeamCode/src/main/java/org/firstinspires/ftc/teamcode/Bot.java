@@ -291,7 +291,7 @@ public class Bot {
     }
 
     public Action slidesDown() {
-        return new InstantAction(vSlides::slidesDown);
+        return new InstantAction(vSlides::toStorage);
     }
 
     public Action actionSweepArmUp() {

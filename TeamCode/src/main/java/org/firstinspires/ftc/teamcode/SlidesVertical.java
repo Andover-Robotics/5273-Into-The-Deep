@@ -53,6 +53,7 @@ public class SlidesVertical {
 
     public void toStorage() {
         setPosition(STORAGE);
+        resetEncoders();
     }
 
     public void resetEncoders() {
@@ -136,10 +137,6 @@ public class SlidesVertical {
 
     public void resetProfiler() {
         profiler = new MotionProfiler(30000, 20000);
-    }
-
-    public void slidesDown() {
-        setPosition(0);
     }
 
     public void periodic() {
