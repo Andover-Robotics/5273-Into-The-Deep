@@ -26,7 +26,7 @@ public class MeepMeepAutoPaths {
         RoadRunnerBotEntity myBot3 = quickBot(meepMeep,3, 1);
         //RoadRunnerBotEntity myBot3a = quickBot(meepMeep,3, 1);
 
-        meepMeep.setBackground(MeepMeep.Background.FIELD_INTO_THE_DEEP_JUICE_DARK)
+        meepMeep.setBackground(MeepMeep.Background.FIELD_INTO_THE_DEEP_JUICE_LIGHT)
                 .setDarkMode(true)
                 .setBackgroundAlpha(0.95f)
                 .addEntity(myBot)
