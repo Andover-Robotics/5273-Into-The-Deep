@@ -249,17 +249,18 @@ public class Bot {
 
     public Action actionOuttakeBucketOne() {
         return new SequentialAction(
-                new InstantAction(vSlides::toTopBucket),
-                new SleepAction(2.5),
-                new InstantAction(outtake::posPreTransfer)
+                new InstantAction(outtake::closeTransfer),
+                new InstantAction(vSlides::toTopBucket)
         );
     }
 
     public Action actionOuttakeBucketTwo() {
         return new SequentialAction(
+                new InstantAction(outtake::posPreBucket),
+                new SleepAction(.5),
                 new InstantAction(outtake::open),
                 new SleepAction(0.5),
-                new InstantAction(outtake::posPreTransfer),
+                new InstantAction(outtake::openTransfer),
                 new InstantAction(vSlides::toStorage)
         );
     }
@@ -310,9 +311,10 @@ public class Bot {
         return hSlides.horizPeriodicClosed();
     }
 
-    public Action actionIntakePos() {
+    public Action actionStartAxons() {
         return new SequentialAction(
-                new InstantAction(intake::openSurvey)
+                new InstantAction(intake::closeIntake),
+                new InstantAction(outtake::closeTransfer)
         );
     }
 
