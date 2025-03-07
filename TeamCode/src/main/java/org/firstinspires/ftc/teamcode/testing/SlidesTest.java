@@ -20,6 +20,9 @@ public class SlidesTest extends LinearOpMode  {
             //if(gamepad2.a) vSlides.moveToUpperBound();
             //if(gamepad2.b) vSlides.moveToLowerBound();
             //if (gamepad2.x) vSlides.moveToRungClippingPos();
+            if(gamepad2.a) vSlides.toTopBucket();
+            if(gamepad2.b) vSlides.toStorage();
+            if (gamepad2.x) vSlides.toClipTop();
             vSlides.periodic();
         }
     }
