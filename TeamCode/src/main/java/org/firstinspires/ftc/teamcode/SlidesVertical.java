@@ -53,7 +53,6 @@ public class SlidesVertical {
 
     public void toStorage() {
         setPosition(STORAGE);
-        resetEncoders();
     }
 
     public void resetEncoders() {
