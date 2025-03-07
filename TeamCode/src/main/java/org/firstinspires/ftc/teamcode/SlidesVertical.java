@@ -21,8 +21,8 @@ public class SlidesVertical {
     private final MotorEx slidesLeft, slidesRight;
     //sets limits of slides extension
     private static final int UPPER_BOUND = -2985;
-    private static final int STORAGE = 5;
-    private static final int CLIP_POS = -2600;
+    private static final int STORAGE = 20;
+    private static final int CLIP_POS = -1500;
     public PIDFController pidfController;
     public final int TOLERANCE = 10;
     public static double p = 0.015, i = 0, d = 0, f = 0, staticF = 0.025;  //tune these later (thanks lightning for placeholders)
@@ -53,6 +53,7 @@ public class SlidesVertical {
 
     public void toStorage() {
         setPosition(STORAGE);
+        resetEncoders();
     }
 
     public void resetEncoders() {
@@ -104,7 +105,7 @@ public class SlidesVertical {
     }
 
     public void toClipBottom() {  // pulls vert slides down to clip it
-        setPosition(CLIP_POS + 300);
+        setPosition(CLIP_POS + 200);
     }
 
     //moves based on position inputted
@@ -136,10 +137,6 @@ public class SlidesVertical {
 
     public void resetProfiler() {
         profiler = new MotionProfiler(30000, 20000);
-    }
-
-    public void slidesDown() {
-        setPosition(0);
     }
 
     public void periodic() {

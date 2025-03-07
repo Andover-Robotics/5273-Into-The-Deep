@@ -29,7 +29,7 @@ public class Bot {
     private final Camera camera;
     private final Servo sweepServo;
 
-    private static final double SWEEP_UP = 0, SWEEP_DOWN = 1;
+    private static final double SWEEP_UP = 0.5, SWEEP_DOWN = 0;
     public enum FSM {
         STARTING,
         INTAKESAMPLE,
@@ -98,7 +98,6 @@ public class Bot {
                 intake.moveDiffyPos(gamepad2, telemetry);
                 telemetry.addData("Intake State", intake.fsm);
                 if (rightTriggerDown && (intake.isSurveyOpen() || intake.isSurveyClosed())){
-                    vSlides.resetEncoders();
                     intake.open();
                     Thread.sleep(100);
                     intake.openIntake();
@@ -166,6 +165,9 @@ public class Bot {
                 break;
             case CLIPSPECIMEN:
                 outtake.posBucket();
+                if(gamepad2.wasJustPressed(GamepadKeys.Button.X)){
+                    Actions.runBlocking(actionSpecPos());
+                }
                 if(gamepad2.wasJustPressed(GamepadKeys.Button.B)){
                     Actions.runBlocking(actionClipSpecimen());
                 }
@@ -245,11 +247,16 @@ public class Bot {
         );
     }
 
-    public Action actionOuttakeBucket() {
+    public Action actionOuttakeBucketOne() {
         return new SequentialAction(
                 new InstantAction(vSlides::toTopBucket),
-                new InstantAction(outtake::posPreTransfer),
-                new SleepAction(1),
+                new SleepAction(2.5),
+                new InstantAction(outtake::posPreTransfer)
+        );
+    }
+
+    public Action actionOuttakeBucketTwo() {
+        return new SequentialAction(
                 new InstantAction(outtake::open),
                 new SleepAction(0.5),
                 new InstantAction(outtake::posPreTransfer),
@@ -279,12 +286,12 @@ public class Bot {
                 // claw should be set to perfect clipping pos so all you need is to have bot flush with the
                 // bottom part of the submersible, and lowers vert slides
                 new InstantAction(vSlides::toClipBottom),
-                new SleepAction(0.5),
+                new SleepAction(0.3),
                 new InstantAction(outtake::openClaw));
     }
 
     public Action slidesDown() {
-        return new InstantAction(vSlides::slidesDown);
+        return new InstantAction(vSlides::toStorage);
     }
 
     public Action actionSweepArmUp() {
@@ -298,13 +305,6 @@ public class Bot {
                 new InstantAction(() -> sweepServo.setPosition(SWEEP_DOWN))
         );
     }
-    public Action actionSweepOut() { // intake arm sweep
-        return new InstantAction(hSlides::middle);
-    }
-
-    public Action actionSweepIn() { // intake arm sweep
-        return new InstantAction(hSlides::close);
-    }
 
     public Action periodicHorizSlidesClosed() {
         return hSlides.horizPeriodicClosed();
@@ -314,6 +314,10 @@ public class Bot {
         return new SequentialAction(
                 new InstantAction(intake::openSurvey)
         );
+    }
+
+    public Action actionArmBucketPos() {
+        return new InstantAction(outtake::posBucket);
     }
 
     public Action actionOuttakeTransfer() {
@@ -331,6 +335,10 @@ public class Bot {
         return new SequentialAction(
                 new InstantAction(hSlides::close)
                 );
+    }
+
+    public Action vertSlidesToBottom() {
+        return new InstantAction(vSlides::toStorage);
     }
 
     public Action slidesPeriodic() {
