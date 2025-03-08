@@ -152,6 +152,9 @@ public class Bot {
                 break;
             case INTAKESPECIMEN:
                 outtake.openClip();
+                 if(gamepad2.wasJustPressed(GamepadKeys.Button.RIGHT_BUMPER)){
+                                    vSlides.toStorage();
+                                }
                 if(gamepad2.wasJustPressed(GamepadKeys.Button.B)) {
                     Actions.runBlocking(actionIntakeSpecimen());
                 }
