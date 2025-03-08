@@ -286,7 +286,9 @@ public class Bot {
     }
 
     public Action actionToStorage() {
-        return new InstantAction(vSlides::toStorage);
+        return new SequentialAction((
+                new InstantAction(vSlides::toStorage)
+        ));
     }
 
     public SequentialAction actionIntakeSpecimenDown() {
