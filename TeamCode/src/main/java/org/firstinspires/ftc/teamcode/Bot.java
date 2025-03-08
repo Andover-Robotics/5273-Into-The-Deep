@@ -206,7 +206,6 @@ public class Bot {
                 new InstantAction(outtake::posPreTransfer),
                 new InstantAction(intake::closeIntake),
                 new InstantAction(intake::setPitchTransfer),
-                new InstantAction(intake::setPitchTransfer),
                 new InstantAction(intake::looseClaw),
                 new InstantAction(vSlides::toStorage),
                 new InstantAction(hSlides::middle),
@@ -229,6 +228,29 @@ public class Bot {
                 new InstantAction(() -> fsm = FSM.SCORESAMPLE));
     }
 
+
+    public SequentialAction actionTransferNoSlides() {
+        return new SequentialAction(
+                new InstantAction(outtake::posPreTransfer),
+                new InstantAction(intake::setPitchTransfer),
+                new InstantAction(vSlides::toStorage),
+                new InstantAction(hSlides::middle),
+                new SleepAction(0.2),
+                new InstantAction(intake::posTransfer),
+                new InstantAction(hSlides::close),
+                new SleepAction(0.5),
+                new InstantAction(outtake::openTransfer),
+                new SleepAction(0.25),
+                new InstantAction(outtake::closeClaw),
+                new SleepAction(0.25),
+                new InstantAction(intake::open),
+                new SleepAction(0.4),
+                new InstantAction(intake::openSurvey),
+                new InstantAction(hSlides::close)
+        );
+    }
+
+
     public Action actionIntakeSample() { // using the intake claw
         return new SequentialAction(
                 new InstantAction(intake::open),
@@ -249,7 +271,6 @@ public class Bot {
 
     public Action actionOuttakeBucketOne() {
         return new SequentialAction(
-                new InstantAction(outtake::closeTransfer),
                 new InstantAction(vSlides::toTopBucket)
         );
     }
@@ -260,9 +281,12 @@ public class Bot {
                 new SleepAction(.5),
                 new InstantAction(outtake::open),
                 new SleepAction(0.5),
-                new InstantAction(outtake::openTransfer),
-                new InstantAction(vSlides::toStorage)
+                new InstantAction(outtake::openTransfer)
         );
+    }
+
+    public Action actionToStorage() {
+        return new InstantAction(vSlides::toStorage);
     }
 
     public SequentialAction actionIntakeSpecimenDown() {
@@ -331,7 +355,7 @@ public class Bot {
 
     public Action actionStartAxons() {
         return new SequentialAction(
-                new InstantAction(intake::closeIntake),
+                new InstantAction(intake::openSurvey),
                 new InstantAction(outtake::closeTransfer)
         );
     }
@@ -363,5 +387,9 @@ public class Bot {
 
     public Action slidesPeriodic() {
         return vSlides.periodicAction();
+    }
+
+    public Action looseHori() {
+        return new InstantAction(hSlides::loose);
     }
 }

@@ -22,6 +22,7 @@ public class SlidesHorizontal {
 
     private static final double EXPANDEDR = 0.4617, CONTRACTEDR = 0.2206, MIDDLER = 0.37;
     private static final double EXPANDEDL = 0.5383, CONTRACTEDL = 0.7744, MIDDLEL = 0.6244;
+    private static final double LOOSEL = 0.75277778, LOOSER = 0.27777778;
     private final Telemetry telemetry;
 
     public SlidesHorizontal(HardwareMap map, Telemetry tele) {
@@ -75,6 +76,11 @@ public class SlidesHorizontal {
         setRight(CONTRACTEDR);
         setLeft(CONTRACTEDL);
         fsm = HSlides.IN;
+    }
+
+    public void loose() {
+        setRight(LOOSER);
+        setLeft(LOOSEL);
     }
 
     public void middle() {
