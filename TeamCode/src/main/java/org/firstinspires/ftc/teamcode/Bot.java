@@ -115,8 +115,7 @@ public class Bot {
                     }
                 }
                 if(gamepad2.wasJustPressed(GamepadKeys.Button.B)) {
-                    Thread thread = new Thread(() -> Actions.runBlocking(actionTransfer()));
-                    thread.start();
+                    Actions.runBlocking(actionTransfer());
                 }
                 if (gamepad2.wasJustPressed(GamepadKeys.Button.Y)) {
                     hSlides.close();
@@ -214,13 +213,13 @@ public class Bot {
                 new SleepAction(0.2),
                 new InstantAction(intake::posTransfer),
                 new InstantAction(hSlides::close),
-                new SleepAction(1),
+                new SleepAction(0.5),
                 new InstantAction(outtake::openTransfer),
-                new SleepAction(1),
+                new SleepAction(0.25),
                 new InstantAction(outtake::closeClaw),
-                new SleepAction(0.7),
+                new SleepAction(0.25),
                 new InstantAction(intake::open),
-                new SleepAction(0.7),
+                new SleepAction(0.4),
                 new InstantAction(intake::openSurvey),
                 new InstantAction(vSlides::toTopBucket),
                 new SleepAction(0.1),
