@@ -18,6 +18,7 @@ public class SlidesTest extends LinearOpMode  {
         Bot bot = new Bot(this,hardwareMap,telemetry);
         SlidesVertical vSlides = new SlidesVertical(this);
         SlidesHorizontal hSlides = new SlidesHorizontal(hardwareMap, telemetry);
+        GamepadEx gamepadx = new GamepadEx(gamepad1);
         waitForStart();
         vSlides.resetEncoders();
         while (opModeIsActive()) {
