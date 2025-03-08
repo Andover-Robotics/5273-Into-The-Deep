@@ -1,7 +1,5 @@
 package org.firstinspires.ftc.teamcode.testing;
 
-import android.transition.Slide;
-
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
@@ -10,13 +8,9 @@ import org.firstinspires.ftc.teamcode.Intake;
 import org.firstinspires.ftc.teamcode.Outtake;
 import org.firstinspires.ftc.teamcode.SlidesHorizontal;
 import org.firstinspires.ftc.teamcode.SlidesVertical;
-import com.arcrobotics.ftclib.command.button.GamepadButton;
-import com.arcrobotics.ftclib.command.button.Trigger;
+
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.arcrobotics.ftclib.gamepad.GamepadKeys;
-import com.arcrobotics.ftclib.gamepad.TriggerReader;
-import com.arcrobotics.ftclib.gamepad.GamepadKeys;
-import com.qualcomm.robotcore.hardware.Gamepad;
 
 @TeleOp(name = "Intake Value Tester", group = "Teleop")
 public class IntakeValueTester extends LinearOpMode {
@@ -60,7 +54,7 @@ public class IntakeValueTester extends LinearOpMode {
 
             }
             if (gp2.getButton(GamepadKeys.Button.B)){
-                outtake.posBucket();
+                outtake.posRungClip();
             }
             if (gp1.getRightY()>0) intake.open();
             if (gp1.getRightY()==0) intake.looseClaw();

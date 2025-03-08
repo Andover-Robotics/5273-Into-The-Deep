@@ -9,7 +9,6 @@ import com.acmerobotics.roadrunner.SleepAction;
 import com.acmerobotics.roadrunner.ftc.Actions;
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.arcrobotics.ftclib.gamepad.GamepadKeys;
-import com.arcrobotics.ftclib.gamepad.TriggerReader;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
@@ -167,7 +166,7 @@ public class Bot {
                 }
                 break;
             case CLIPSPECIMEN:
-                outtake.posBucket();
+                outtake.posRungClip();
                 if(gamepad2.wasJustPressed(GamepadKeys.Button.B)){
                     Actions.runBlocking(actionClipSpecimen());
                 }
@@ -269,7 +268,7 @@ public class Bot {
             // open the claw before calling this method
             new InstantAction(outtake::close),
             new SleepAction(0.2),
-            new InstantAction(outtake::posBucket),
+            new InstantAction(outtake::posRungClip),
             new InstantAction(vSlides::toClipBottom),
             new InstantAction(() -> fsm = FSM.CLIPSPECIMEN));
     }
@@ -321,7 +320,7 @@ public class Bot {
     }
 
     public Action actionArmBucketPos() {
-        return new InstantAction(outtake::posBucket);
+        return new InstantAction(outtake::posRungClip);
     }
 
     public Action actionOuttakeTransfer() {
