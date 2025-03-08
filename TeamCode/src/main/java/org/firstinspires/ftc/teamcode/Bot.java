@@ -283,9 +283,9 @@ public class Bot {
     public SequentialAction actionClipSpecimen() {
         return new SequentialAction(
                 // claw should be set to perfect clipping pos so all you need is to have bot flush with the
-                // bottom part of the submersible, and lowers vert slides
-                new InstantAction(vSlides::toClipBottom),
-                new SleepAction(0.3),
+                // bottom part of the submersible, and brings higher vert slides
+                new InstantAction(vSlides::toClipTop),
+                new SleepAction(1),
                 new InstantAction(outtake::openClaw));
     }
 
