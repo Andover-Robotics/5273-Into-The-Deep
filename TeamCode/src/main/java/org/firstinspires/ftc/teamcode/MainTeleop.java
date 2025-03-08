@@ -25,6 +25,13 @@ public class MainTeleop extends LinearOpMode {
                 movement.teleopTick(gamepadEx1.getLeftX(),gamepadEx1.getLeftY(),gamepadEx1.getRightX(), gamepadEx1.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER),telemetry);
             }
         });
+
+        Thread vSlidesPeriodic = new Thread(() -> { // thread periodics separately so that Thread.sleep() can be safely called in bot.teleopTick()
+            while (!Thread.currentThread().isInterrupted()) {
+                bot.runPeriodic();
+            }
+        });
+
         waitForStart();
         movementThread.start();
         while (opModeIsActive()) {
