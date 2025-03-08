@@ -145,7 +145,7 @@ public class Bot {
                     vSlides.toStorage();
                     intake.openSurvey();
                     outtake.openClip();
-                    Thread.sleep(1000);
+                    Thread.sleep(2000);
                     vSlides.resetEncoders();
                     fsm = FSM.INTAKESPECIMEN;
                 }
