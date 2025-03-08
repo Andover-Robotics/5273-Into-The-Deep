@@ -75,6 +75,12 @@ public class PathMasterTheTestingNavigator {
         Action arcStrikeVelocity = mecanumDrive.actionBuilder(new Pose2d(0 , 0 , Math.toRadians(90)))
                 .stopAndAdd(startAxons())
                 .stopAndAdd(bot.closeHori())
+                .stopAndAdd(new ParallelAction(
+                                doOuttakeBucketOne(),
+                                mecanumDrive.actionBuilder(new Pose2d(0, 0, Math.toRadians(90)))
+                                    .strafeToSplineHeading(new Vector2d(-27.2, 2.8), Math.toRadians(45))
+                                    .build()
+                                    ))
                 .stopAndAdd(doOuttakeBucketOne())
                 .strafeToSplineHeading(new Vector2d(-27.2, 2.8), Math.toRadians(45))
                 .stopAndAdd(doOuttakeBucketTwo())
