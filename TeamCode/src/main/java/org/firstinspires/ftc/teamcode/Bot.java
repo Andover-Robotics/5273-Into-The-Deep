@@ -137,7 +137,7 @@ public class Bot {
                     hSlides.middle();
                     vSlides.toStorage();
                     intake.posSurvey();
-                    outtake.closeBucket();
+                    outtake.openTransfer();
                     fsm = FSM.INTAKESAMPLE;
                 }
                 if (gamepad2.wasJustPressed(GamepadKeys.Button.Y)) {
@@ -162,7 +162,7 @@ public class Bot {
                     vSlides.toStorage();
                     hSlides.middle();
                     intake.openSurvey();
-                    outtake.closeBucket();
+                    outtake.openTransfer();
                     fsm = FSM.INTAKESAMPLE;
                 }
                 break;
@@ -178,7 +178,7 @@ public class Bot {
                     hSlides.middle();
                     vSlides.toStorage();
                     intake.posSurvey();
-                    outtake.closeBucket();
+                    outtake.openTransfer();
                     fsm = FSM.INTAKESAMPLE;
                 }
                 if (gamepad2.wasJustPressed(GamepadKeys.Button.Y)) {
