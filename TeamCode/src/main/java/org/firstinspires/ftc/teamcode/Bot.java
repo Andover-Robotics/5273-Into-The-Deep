@@ -280,6 +280,10 @@ public class Bot {
         );
     }
 
+    public void runPeriodic(){
+        vSlides.periodic();
+    }
+
     public SequentialAction actionClipSpecimen() {
         return new SequentialAction(
                 // claw should be set to perfect clipping pos so all you need is to have bot flush with the
