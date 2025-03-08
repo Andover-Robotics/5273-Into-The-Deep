@@ -6,8 +6,8 @@ public class Outtake {
     private final Servo armL, armR;
     private final Servo claw;
     private static final double CLAW_OPEN = 0.1472, CLAW_CLOSED = 0.00;
-    private static final double ARML_BUCKET = 0.81611, ARML_TRANSFER = 0.185, ARML_CLIP = .8755555;
-    private static final double ARMR_BUCKET = 0.18055, ARMR_TRANSFER = 0.81167, ARMR_CLIP = 0.122277;
+    private static final double ARML_BUCKET = 0.27880, ARML_TRANSFER = 0.185, ARML_CLIP = 0.908333;
+    private static final double ARMR_BUCKET = 0.71500, ARMR_TRANSFER = 0.81167, ARMR_CLIP = 0.08722;
 
     public Outtake (HardwareMap map) {
         //intake = map.get(CRServo.class, "iServo");
