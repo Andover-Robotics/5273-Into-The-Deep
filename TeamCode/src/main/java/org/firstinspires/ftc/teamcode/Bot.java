@@ -199,7 +199,6 @@ public class Bot {
                 }
                 break;
         }
-        vSlides.periodic();
         telemetry.addData("State: ", fsm);
         telemetry.addData("Vertical Slides Pos: ", vSlides.getEncodersAverage());
     }
