@@ -34,6 +34,7 @@ public class MainTeleop extends LinearOpMode {
 
         waitForStart();
         movementThread.start();
+        vSlidesPeriodic.start();
         while (opModeIsActive()) {
             gamepadEx1.readButtons();
             gamepadEx2.readButtons();
@@ -41,5 +42,6 @@ public class MainTeleop extends LinearOpMode {
             telemetry.update();
         }
         movementThread.interrupt();
+        vSlidesPeriodic.interrupt();
     }
 }
