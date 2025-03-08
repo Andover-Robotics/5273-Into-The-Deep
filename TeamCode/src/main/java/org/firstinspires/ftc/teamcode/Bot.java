@@ -150,9 +150,6 @@ public class Bot {
                 break;
             case INTAKESPECIMEN:
                 outtake.openClip();
-                 if(gamepad2.wasJustPressed(GamepadKeys.Button.RIGHT_BUMPER)){
-                                    vSlides.toStorage();
-                                }
                 if(gamepad2.wasJustPressed(GamepadKeys.Button.B)) {
                     Actions.runBlocking(actionIntakeSpecimenDown());
                 }
@@ -196,6 +193,9 @@ public class Bot {
                     fsm = FSM.INTAKESAMPLE;
                 }
                 break;
+        }
+        if(gamepad2.wasJustPressed(GamepadKeys.Button.RIGHT_BUMPER)){
+            vSlides.toStorage();
         }
         telemetry.addData("State: ", fsm);
         telemetry.addData("Vertical Slides Pos: ", vSlides.getEncodersAverage());
