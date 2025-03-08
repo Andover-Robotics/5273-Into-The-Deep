@@ -155,7 +155,7 @@ public class Bot {
                                     vSlides.toStorage();
                                 }
                 if(gamepad2.wasJustPressed(GamepadKeys.Button.B)) {
-                    Actions.runBlocking(actionIntakeSpecimen());
+                    Actions.runBlocking(actionIntakeSpecimenDown());
                 }
                 if(gamepad2.wasJustPressed(GamepadKeys.Button.A)) {
                     vSlides.toStorage();
@@ -168,7 +168,7 @@ public class Bot {
             case CLIPSPECIMEN:
                 outtake.posRungClip();
                 if(gamepad2.wasJustPressed(GamepadKeys.Button.B)){
-                    Actions.runBlocking(actionClipSpecimen());
+                    Actions.runBlocking(actionClipSpecimenDownUp());
                 }
                 if (gamepad2.wasJustPressed(GamepadKeys.Button.A)) {
                     hSlides.middle();
@@ -262,7 +262,7 @@ public class Bot {
         );
     }
 
-    public SequentialAction actionIntakeSpecimen() {
+    public SequentialAction actionIntakeSpecimenDown() {
         return new SequentialAction(
             // the moving to lower bound should be done by the outtake method at the end
             // open the claw before calling this method
@@ -273,21 +273,35 @@ public class Bot {
             new InstantAction(() -> fsm = FSM.CLIPSPECIMEN));
     }
 
-    public SequentialAction actionSpecPos() {
+    public SequentialAction actionIntakeSpecimenUp() {
         return new SequentialAction(
-                new InstantAction(vSlides::toClipTop)
-        );
+                new InstantAction(outtake::close),
+                new SleepAction(0.2),
+                new InstantAction(outtake::posRungClip),
+                new InstantAction(vSlides::toClipTop));
+    }
+
+
+    public InstantAction actionSpecPosUp() {
+        return new InstantAction(vSlides::toClipTop);
     }
 
     public void runPeriodic(){
         vSlides.periodic();
     }
 
-    public SequentialAction actionClipSpecimen() {
+    public SequentialAction actionClipSpecimenDownUp() {
         return new SequentialAction(
                 // claw should be set to perfect clipping pos so all you need is to have bot flush with the
                 // bottom part of the submersible, and brings higher vert slides
                 new InstantAction(vSlides::toClipTop),
+                new SleepAction(1),
+                new InstantAction(outtake::openClaw));
+    }
+
+    public SequentialAction actionClipSpecimenUpDown() {
+        return new SequentialAction(
+                new InstantAction(vSlides::toClipBottom),
                 new SleepAction(1),
                 new InstantAction(outtake::openClaw));
     }

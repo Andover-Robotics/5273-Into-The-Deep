@@ -261,17 +261,15 @@ public class PathMasterTheTestingNavigator {
         return bot.actionOuttakeBucketTwo();
     }
 
-
     private static Action doIntakeSpecimen() { //  specimen from wall
-        return bot.actionIntakeSpecimen();
+        return bot.actionIntakeSpecimenUp();
     }
 
     private static Action doOuttakeSpecimen() { // clips to top rung
         return new SequentialAction(
                 bot.actionArmBucketPos(),
-                bot.actionSpecPos(),
                 new SleepAction(5),
-                bot.actionClipSpecimen()
+                bot.actionClipSpecimenUpDown()
         );
     }
 

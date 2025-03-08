@@ -1,12 +1,10 @@
 package org.firstinspires.ftc.teamcode.testing;
 
-import com.acmerobotics.roadrunner.Action;
 import com.acmerobotics.roadrunner.ftc.Actions;
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.Gamepad;
 
 import org.firstinspires.ftc.teamcode.Bot;
 import org.firstinspires.ftc.teamcode.SlidesHorizontal;
@@ -23,8 +21,8 @@ public class SlidesTest extends LinearOpMode  {
         vSlides.resetEncoders();
         while (opModeIsActive()) {
             vSlides.slidesMove(gamepadx.getLeftY());
-            if(gamepadx.wasJustPressed(GamepadKeys.Button.A)) Actions.runBlocking(bot.actionSpecPos());
-            if(gamepadx.wasJustPressed(GamepadKeys.Button.B)) Actions.runBlocking(bot.actionClipSpecimen());
+            if(gamepadx.wasJustPressed(GamepadKeys.Button.A)) Actions.runBlocking(bot.actionSpecPosUp());
+            if(gamepadx.wasJustPressed(GamepadKeys.Button.B)) Actions.runBlocking(bot.actionClipSpecimenDownUp());
             if (gamepadx.wasJustPressed(GamepadKeys.Button.X)) Actions.runBlocking(bot.slidesDown());
             vSlides.periodic();
             gamepadx.readButtons();
