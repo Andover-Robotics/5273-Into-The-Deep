@@ -270,7 +270,7 @@ public class Bot {
             new InstantAction(outtake::close),
             new SleepAction(0.2),
             new InstantAction(outtake::posBucket),
-            new InstantAction(vSlides::toClipTop),
+            new InstantAction(vSlides::toClipBottom),
             new InstantAction(() -> fsm = FSM.CLIPSPECIMEN));
     }
 
