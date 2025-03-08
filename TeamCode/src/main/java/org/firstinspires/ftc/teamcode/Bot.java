@@ -204,19 +204,23 @@ public class Bot {
 
     public SequentialAction actionTransfer() {
         return new SequentialAction(
-                new InstantAction(outtake::openTransfer),
+                new InstantAction(outtake::posPreTransfer),
                 new InstantAction(intake::closeIntake),
+                new InstantAction(intake::setPitchTransfer),
                 new InstantAction(intake::setPitchTransfer),
                 new InstantAction(intake::looseClaw),
                 new InstantAction(vSlides::toStorage),
-                new InstantAction(hSlides::close),
+                new InstantAction(hSlides::middle),
                 new SleepAction(0.2),
                 new InstantAction(intake::posTransfer),
+                new InstantAction(hSlides::close),
+                new SleepAction(1),
+                new InstantAction(outtake::openTransfer),
                 new SleepAction(1),
                 new InstantAction(outtake::closeClaw),
-                new SleepAction(0.07),
+                new SleepAction(0.7),
                 new InstantAction(intake::open),
-                new SleepAction(0.07),
+                new SleepAction(0.7),
                 new InstantAction(intake::openSurvey),
                 new InstantAction(vSlides::toTopBucket),
                 new SleepAction(0.1),
@@ -333,7 +337,7 @@ public class Bot {
         );
     }
 
-    public Action actionArmBucketPos() {
+    public Action actionArmRungBottomPos() {
         return new InstantAction(outtake::posRungClip);
     }
 
