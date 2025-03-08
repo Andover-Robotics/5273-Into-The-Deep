@@ -83,16 +83,10 @@ public class PathMasterTheTestingNavigator {
                                     ))
                 .stopAndAdd(doOuttakeBucketTwo())
                 // output sample 1
-                .stopAndAdd(new ParallelAction(
-                            mecanumDrive.actionBuilder(new Pose2d(-27, 3, Math.toRadians(45)))
-                                    .strafeToSplineHeading(intakeSample1, Math.toRadians(90))
-                                    .waitSeconds(1)
-                                            .build(),
-                            bot.actionToStorage(),
-                            bot.looseHori()
-                ))
-
-                .waitSeconds(.5)
+                .strafeToSplineHeading(intakeSample1, Math.toRadians(90))
+                .stopAndAdd(bot.actionToStorage())
+                .stopAndAdd(bot.looseHori())
+                .waitSeconds(1)
                 // input sample 1
                 .stopAndAdd(doIntake())
                 .waitSeconds(.5)
@@ -103,15 +97,10 @@ public class PathMasterTheTestingNavigator {
                 .strafeToSplineHeading(new Vector2d(-27, 3), Math.toRadians(45))
                 .stopAndAdd(doOuttakeBucketTwo())
                 // output sample 1
-                .stopAndAdd(new ParallelAction(
-                        mecanumDrive.actionBuilder(new Pose2d(-27, 3, Math.toRadians(45)))
-                                .strafeToSplineHeading(intakeSample2, Math.toRadians(90))
-                                .waitSeconds(.5)
-                                .stopAndAdd(bot.actionToStorage())
-                                .build(),
-                                bot.looseHori()
-                        ))
-                .waitSeconds(.5)
+                .strafeToSplineHeading(intakeSample2, Math.toRadians(90))
+                .stopAndAdd(bot.actionToStorage())
+                .stopAndAdd(bot.looseHori())
+                .waitSeconds(1)
                 //input sample 2
                 .stopAndAdd(doIntake())
                 .waitSeconds(.5)
@@ -121,17 +110,13 @@ public class PathMasterTheTestingNavigator {
                 .stopAndAdd(doOuttakeBucketOne())
                 .strafeToSplineHeading(new Vector2d(-27, 3), Math.toRadians(45))
                 .stopAndAdd(doOuttakeBucketTwo())
+                .waitSeconds(.5)
+                .stopAndAdd(bot.actionToStorage())
+                .stopAndAdd(bot.looseHori())
+                .stopAndAdd(bot.clawRoll90())
                 // output sample 2
                 .strafeToSplineHeading(new Vector2d(-27, 34.5), Math.toRadians(180))
-                .stopAndAdd(new ParallelAction(
-                        mecanumDrive.actionBuilder(new Pose2d(-27, 34.5, Math.toRadians(180)))
-                                .strafeToSplineHeading(intakeSample3, Math.toRadians(90))
-                                .waitSeconds(.5)
-                                .build(),
-                                bot.actionToStorage(),
-                                bot.looseHori(),
-                                bot.clawRoll90()
-                        ))
+                .strafeToSplineHeading(intakeSample3, Math.toRadians(90))
                 .waitSeconds(.5)
                 //input sample 3
                 .stopAndAdd(doIntake())
@@ -143,14 +128,10 @@ public class PathMasterTheTestingNavigator {
                 .strafeToSplineHeading(new Vector2d(-27, 3), Math.toRadians(45))
                 .stopAndAdd(doOuttakeBucketTwo())
                 // output sample 3
-                .stopAndAdd(new ParallelAction(
-                        mecanumDrive.actionBuilder(new Pose2d(-27, 3, Math.toRadians(45)))
-                                .strafeToSplineHeading(new Vector2d(0, -38), Math.toRadians(90))
-                                .waitSeconds(.5)
-                                .build(),
-                                bot.actionToStorage(),
-                                outtakeTransferPos()
-                        ))
+                .strafeToSplineHeading(new Vector2d(0, -38), Math.toRadians(90))
+                .waitSeconds(.5)
+                .stopAndAdd(bot.actionToStorage())
+                .stopAndAdd(outtakeTransferPos())
                 .build();
 
         opMode.waitForStart();
