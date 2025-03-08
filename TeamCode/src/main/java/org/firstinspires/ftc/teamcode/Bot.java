@@ -219,7 +219,6 @@ public class Bot {
                 new InstantAction(intake::open),
                 new SleepAction(0.07),
                 new InstantAction(intake::openSurvey),
-                //new SleepAction(1),
                 new InstantAction(vSlides::toTopBucket),
                 new SleepAction(0.1),
                 new InstantAction(outtake::posPreBucket),
