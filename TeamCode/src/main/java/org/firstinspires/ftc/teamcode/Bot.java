@@ -168,9 +168,6 @@ public class Bot {
                 break;
             case CLIPSPECIMEN:
                 outtake.posBucket();
-                if(gamepad2.wasJustPressed(GamepadKeys.Button.X)){
-                    Actions.runBlocking(actionSpecPos());
-                }
                 if(gamepad2.wasJustPressed(GamepadKeys.Button.B)){
                     Actions.runBlocking(actionClipSpecimen());
                 }
