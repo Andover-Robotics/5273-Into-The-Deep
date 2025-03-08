@@ -104,7 +104,7 @@ public class SlidesVertical {
     }
 
     public void toClipBottom() {  // pulls vert slides down to clip it
-        setPosition(CLIP_POS + 200);
+        setPosition(CLIP_POS + 800);
     }
 
     //moves based on position inputted
