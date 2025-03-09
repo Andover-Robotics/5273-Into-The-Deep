@@ -22,7 +22,7 @@ public class MainTeleop extends LinearOpMode {
 
         Thread movementThread = new Thread(() -> { // thread movement separately so that Thread.sleep() can be safely called in bot.teleopTick()
             while (!Thread.currentThread().isInterrupted()) {
-                movement.teleopTick(gamepadEx1.getLeftX(),gamepadEx1.getLeftY(),gamepadEx1.getRightX(), gamepadEx1.wasJustPressed(GamepadKeys.Button.RIGHT_BUMPER),telemetry);
+                movement.teleopTick(gamepadEx1.getLeftX(),gamepadEx1.getLeftY(),gamepadEx1.getRightX(), telemetry);//,gamepadEx1.wasJustPressed(GamepadKeys.Button.RIGHT_BUMPER),telemetry);
             }
         });
 

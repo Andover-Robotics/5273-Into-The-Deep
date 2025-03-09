@@ -44,8 +44,8 @@ public class Movement {
 
     // tick for teleop
 
-    public void teleopTick(double leftStickX, double leftStickY, double rightStickX, boolean toggle, Telemetry telemetry){
-        double trigger = toggle ? 0.5 : 1.0;
+    public void teleopTick(double leftStickX, double leftStickY, double rightStickX,/* boolean toggle,*/ Telemetry telemetry){
+        double trigger = 0;// toggle ? 0.5 : 1.0;
         double axial = -leftStickY * (1 - trigger * 0.8);  // Note: pushing stick forward gives negative value
         double lateral = -leftStickX * (1 - trigger * 0.8);
         double yaw = -rightStickX * (1 - trigger * 0.3);
