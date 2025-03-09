@@ -127,7 +127,7 @@ public class Bot {
                 break;
             case SCORESAMPLE: // direct control over vertical slides and outtake
                 outtake.posPreBucket();
-                if (gamepad2.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER) > 0.1)
+                if (gamepad2.getTrigger(GamepadKeys.Trigger.LEFT_TRIGGER) > 0.1)
                     outtake.open();
                 else
                     outtake.close();
