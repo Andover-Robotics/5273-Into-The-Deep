@@ -67,9 +67,9 @@ public class PathMasterTheTestingNavigator {
 
         bot = new Bot(opMode,hardwareMap, telemetry);
 
-        Vector2d intakeSample1 = new Vector2d(-18.5, 26.5);
+        Vector2d intakeSample1 = new Vector2d(-20, 26.5);
         Vector2d intakeSample2 = new Vector2d(-29, 24.75);
-        Vector2d intakeSample3 = new Vector2d(-27.25, 35.5);
+        Vector2d intakeSample3 = new Vector2d(-27.5, 35.5);
 
         //Vector2d outtakeBucket = new Vector2d(-25, 5);
 
@@ -105,7 +105,7 @@ public class PathMasterTheTestingNavigator {
                                 new SleepAction(.5),
                                 doSlidesUpBucket()
                         ),
-                        mecanumDrive.actionBuilder(new Pose2d(-18.5, 26.5, Math.toRadians(90)))
+                        mecanumDrive.actionBuilder(new Pose2d(-20, 26.5, Math.toRadians(90)))
                                 .strafeToSplineHeading(new Vector2d(-25.5, 4.5), Math.toRadians(45))
                                 .build()
                 ))
@@ -159,7 +159,7 @@ public class PathMasterTheTestingNavigator {
                                 new SleepAction(.5),
                                 doSlidesUpBucket()
                         ),
-                        mecanumDrive.actionBuilder(new Pose2d(-27.25, 35.5, Math.toRadians(90)))
+                        mecanumDrive.actionBuilder(new Pose2d(-27.5, 35.5, Math.toRadians(90)))
                                 .strafeToSplineHeading(new Vector2d(-26, 4), Math.toRadians(45))
                                 .build()
                 ))
