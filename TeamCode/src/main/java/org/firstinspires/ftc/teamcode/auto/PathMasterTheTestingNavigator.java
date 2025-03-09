@@ -106,7 +106,7 @@ public class PathMasterTheTestingNavigator {
                                 doSlidesUpBucket()
                         ),
                         mecanumDrive.actionBuilder(new Pose2d(-18.5, 26.5, Math.toRadians(90)))
-                                .strafeToSplineHeading(new Vector2d(-26.5, 3.5), Math.toRadians(45))
+                                .strafeToSplineHeading(new Vector2d(-26, 4), Math.toRadians(45))
                                 .build()
                 ))
                 .stopAndAdd(doOuttakeBucket())
@@ -117,7 +117,7 @@ public class PathMasterTheTestingNavigator {
                                 new SleepAction(0.25),
                                 slidesDown()
                         ),
-                        mecanumDrive.actionBuilder(new Pose2d(-26.5, 3.5, Math.toRadians(45)))
+                        mecanumDrive.actionBuilder(new Pose2d(-26, 4, Math.toRadians(45)))
                                 .strafeToSplineHeading(intakeSample2, Math.toRadians(90))
                                 .build()
                 ))
@@ -132,7 +132,7 @@ public class PathMasterTheTestingNavigator {
                                 doSlidesUpBucket()
                         ),
                         mecanumDrive.actionBuilder(new Pose2d(-29, 24.75, Math.toRadians(90)))
-                                .strafeToSplineHeading(new Vector2d(-26.5, 3.5), Math.toRadians(45))
+                                .strafeToSplineHeading(new Vector2d(-26, 4), Math.toRadians(45))
                                 .build()
                 ))
                 .stopAndAdd(doOuttakeBucket())
@@ -144,7 +144,7 @@ public class PathMasterTheTestingNavigator {
                                 new SleepAction(0.25),
                                 slidesDown()
                         ),
-                        mecanumDrive.actionBuilder(new Pose2d(-26.5, 3.5, Math.toRadians(45)))
+                        mecanumDrive.actionBuilder(new Pose2d(-26, 4, Math.toRadians(45)))
                                 .strafeToSplineHeading(new Vector2d(-25, 37), Math.toRadians(180))
                                 .strafeToSplineHeading(intakeSample3, Math.toRadians(180))
                                 .build()
