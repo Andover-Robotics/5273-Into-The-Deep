@@ -66,7 +66,7 @@ public class PathMasterTheTestingNavigator {
         bot = new Bot(opMode,hardwareMap, telemetry);
 
         Vector2d intakeSample1 = new Vector2d(-19.5, 26.5);
-        Vector2d intakeSample2 = new Vector2d(-29, 24.75);
+        Vector2d intakeSample2 = new Vector2d(-29, 24.5);
         Vector2d intakeSample3 = new Vector2d(-27.75, 35.75);
 
         Vector2d outtakeBucket = new Vector2d(-23.5, 6.5);
@@ -106,7 +106,7 @@ public class PathMasterTheTestingNavigator {
                 .waitSeconds(.5)
                 //.strafeToSplineHeading(outtakeBucket, Math.toRadians(45))
                 .stopAndAdd(doOuttakeBucketOne())
-                .strafeToSplineHeading(new Vector2d(-24.75, 5.25), Math.toRadians(45))
+                .strafeToSplineHeading(new Vector2d(-24.5, 5.25), Math.toRadians(45))
                 .stopAndAdd(doOuttakeBucketTwo())
                 .waitSeconds(.5)
                 .stopAndAdd(bot.actionToStorage())
