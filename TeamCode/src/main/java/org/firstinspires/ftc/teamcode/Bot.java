@@ -190,13 +190,27 @@ public class Bot {
                 if (rightTriggerDown) {
                     vSlides.toStorage();
                 }
-                if (gamepad2.wasJustPressed(GamepadKeys.Button.A)){
+                if (gamepad2.wasJustPressed(GamepadKeys.Button.A)) {
+                    hSlides.middle();
+                    vSlides.toStorage();
+                    intake.posSurvey();
+                    outtake.openTransfer();
                     fsm = FSM.INTAKESAMPLE;
+                }
+                if (gamepad2.wasJustPressed(GamepadKeys.Button.Y)) {
+                    hSlides.close();
+                    vSlides.toStorage();
+                    intake.openSurvey();
+                    outtake.openClip();
+                    fsm = FSM.INTAKESPECIMEN;
                 }
                 break;
         }
         if(gamepad2.wasJustPressed(GamepadKeys.Button.RIGHT_BUMPER)){
             vSlides.toStorage();
+        }
+        if (gamepad2.wasJustPressed(GamepadKeys.Button.LEFT_BUMPER)){
+            vSlides.resetEncoders();
         }
         telemetry.addData("State: ", fsm);
         telemetry.addData("Vertical Slides Pos: ", vSlides.getEncodersAverage());
