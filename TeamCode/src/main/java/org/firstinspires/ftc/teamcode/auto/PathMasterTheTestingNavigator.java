@@ -144,7 +144,7 @@ public class PathMasterTheTestingNavigator {
                                 new SleepAction(0.25),
                                 slidesDown()
                         ),
-                        mecanumDrive.actionBuilder(new Pose2d(-25, 5, Math.toRadians(45)))
+                        mecanumDrive.actionBuilder(new Pose2d(-24.75, 5.25, Math.toRadians(45)))
                                 .strafeToSplineHeading(new Vector2d(-25, 35.5), Math.toRadians(180))
                                 .strafeToSplineHeading(intakeSample3, Math.toRadians(180))
                                 .build()
