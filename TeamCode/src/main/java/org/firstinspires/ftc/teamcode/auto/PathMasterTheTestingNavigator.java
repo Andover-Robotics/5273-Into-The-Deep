@@ -69,7 +69,7 @@ public class PathMasterTheTestingNavigator {
 
         Vector2d intakeSample1 = new Vector2d(-18.5, 26.5);
         Vector2d intakeSample2 = new Vector2d(-29, 24.75);
-        Vector2d intakeSample3 = new Vector2d(-27, 37);
+        Vector2d intakeSample3 = new Vector2d(-27.25, 35.5);
 
         //Vector2d outtakeBucket = new Vector2d(-25, 5);
 
