@@ -166,11 +166,11 @@ public class PathMasterTheTestingNavigator {
                 .stopAndAdd(doOuttakeBucket())
                 // output sample 3
                 .stopAndAdd(new ParallelAction(
-                        outtakeTransferPos(),
                         new SequentialAction(
-                                new SleepAction(0.25),
-                                slidesDown(),
                                 actionArmBucketPark(),
+                                new SleepAction(0.25),
+                                outtakeTransferPos(),
+                                slidesDown(),
                                 bot.closeHori()
                                 ),
                         mecanumDrive.actionBuilder(new Pose2d(-27, 3, Math.toRadians(45)))
