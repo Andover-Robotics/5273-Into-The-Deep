@@ -116,7 +116,7 @@ public class Bot {
                     }
                 }
                 if(gamepad2.wasJustPressed(GamepadKeys.Button.B)) {
-                    Actions.runBlocking(actionTransfer());
+                    Actions.runBlocking(actionTransferNoSlides());
                 }
                 if (gamepad2.wasJustPressed(GamepadKeys.Button.Y)) {
                     hSlides.close();
@@ -132,6 +132,9 @@ public class Bot {
                     outtake.open();
                 else
                     outtake.close();
+                if (gamepad2.wasJustPressed(GamepadKeys.Button.B)) {
+                    vSlides.toTopBucket();
+                }
                 if (gamepad2.wasJustPressed(GamepadKeys.Button.A)) {
                     hSlides.middle();
                     vSlides.toStorage();
