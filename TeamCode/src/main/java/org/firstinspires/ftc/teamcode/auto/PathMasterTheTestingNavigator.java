@@ -170,11 +170,12 @@ public class PathMasterTheTestingNavigator {
                         new SequentialAction(
                                 new SleepAction(0.25),
                                 slidesDown(),
-                                new SleepAction(3),
-                                bot.actionSlidesUpBucket()
-                        ),
+                                actionArmBucketPark(),
+                                bot.closeHori()
+                                ),
                         mecanumDrive.actionBuilder(new Pose2d(-27, 3, Math.toRadians(45)))
-                                .strafeToSplineHeading(new Vector2d(30, 28.5), Math.toRadians(90))
+                                .strafeToSplineHeading(new Vector2d(30, 12), Math.toRadians(270))
+                                .strafeToSplineHeading(new Vector2d(30, 28.5), Math.toRadians(270))
                                 .build()
                 ))
                 .build();
@@ -284,6 +285,7 @@ public class PathMasterTheTestingNavigator {
         ));
     }
 
+    public static Action actionArmBucketPark(){return bot.bucketPark();}
     public static Action actionSweepArmUp() {
         return bot.actionSweepArmUp();
     }

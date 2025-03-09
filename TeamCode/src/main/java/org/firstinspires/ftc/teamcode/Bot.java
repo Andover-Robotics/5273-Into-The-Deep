@@ -348,6 +348,12 @@ public class Bot {
                 new InstantAction(outtake::openClaw));
     }
 
+    public Action bucketPark() {
+        return new SequentialAction(
+                new InstantAction(outtake::posBucketPark)
+        );
+    }
+
     public Action actionSweepArmUp() {
         return new SequentialAction(
                 new InstantAction(() -> sweepServo.setPosition(SWEEP_UP))
