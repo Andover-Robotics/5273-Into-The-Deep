@@ -169,10 +169,12 @@ public class PathMasterTheTestingNavigator {
                         outtakeTransferPos(),
                         new SequentialAction(
                                 new SleepAction(0.25),
-                                slidesDown()
+                                slidesDown(),
+                                new SleepAction(3),
+                                bot.actionSlidesUpBucket()
                         ),
                         mecanumDrive.actionBuilder(new Pose2d(-27, 3, Math.toRadians(45)))
-                                .strafeToSplineHeading(new Vector2d(-27, 0), Math.toRadians(90))
+                                .strafeToSplineHeading(new Vector2d(30, 28.5), Math.toRadians(90))
                                 .build()
                 ))
                 .build();
