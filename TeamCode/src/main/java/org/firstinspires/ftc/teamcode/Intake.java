@@ -13,8 +13,8 @@ public class Intake {
     private final Servo fourL, fourR;
     private final Claw claw;
     private static final double CLAW_OPEN = 0.1167, CLAW_CLOSED = 0.34944;
-    private static final double FOURL_INTAKE = 0.25, FOURL_TRANSFER = 0.41611111111, FOURL_SURVEY = 0.6228;
-    private static final double FOURR_INTAKE = 0.3633, FOURR_TRANSFER = 0.38, FOURR_SURVEY = 0.1783;
+    private static final double FOURL_INTAKE = 0.25, FOURL_TRANSFER = 0.5416666667, FOURL_SURVEY = 0.6228;
+    private static final double FOURR_INTAKE = 0.3633, FOURR_TRANSFER = 0.254444444, FOURR_SURVEY = 0.1783;
 
     public Intake(HardwareMap map, Camera camera) {
         //intake = map.get(CRServo.class, "iServo");
