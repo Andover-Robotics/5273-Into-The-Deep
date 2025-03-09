@@ -132,7 +132,7 @@ public class PathMasterTheTestingNavigator {
                                 doSlidesUpBucket()
                         ),
                         mecanumDrive.actionBuilder(new Pose2d(-29, 24.75, Math.toRadians(90)))
-                                .strafeToSplineHeading(new Vector2d(-25, 5), Math.toRadians(45))
+                                .strafeToSplineHeading(new Vector2d(-24.75, 5.25), Math.toRadians(45))
                                 .build()
                 ))
                 .stopAndAdd(doOuttakeBucket())
