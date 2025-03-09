@@ -94,7 +94,7 @@ public class PathMasterTheTestingNavigator {
                 .waitSeconds(.5)
                 //.strafeToSplineHeading(outtakeBucket, Math.toRadians(45))
                 .stopAndAdd(doOuttakeBucketOne())
-                .strafeToSplineHeading(new Vector2d(-26.5, 3.5), Math.toRadians(45))
+                .strafeToSplineHeading(new Vector2d(-26, 4), Math.toRadians(45))
                 .stopAndAdd(doOuttakeBucketTwo())
                 // output sample 1
                 .strafeToSplineHeading(intakeSample2, Math.toRadians(90))
@@ -107,7 +107,7 @@ public class PathMasterTheTestingNavigator {
                 .waitSeconds(.5)
                 //.strafeToSplineHeading(outtakeBucket, Math.toRadians(45))
                 .stopAndAdd(doOuttakeBucketOne())
-                .strafeToSplineHeading(new Vector2d(-26.5, 3.5), Math.toRadians(45))
+                .strafeToSplineHeading(new Vector2d(-26, 4), Math.toRadians(45))
                 .stopAndAdd(doOuttakeBucketTwo())
                 .waitSeconds(.5)
                 .stopAndAdd(bot.actionToStorage())
