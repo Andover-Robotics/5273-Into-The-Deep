@@ -318,7 +318,7 @@ public class PathMasterTheTestingNavigator {
 
     private static Action doOuttakeSpecimen() { // clips to top rung
         return new SequentialAction(
-                bot.actionArmRungBottomPos(),
+                bot.actionSpecPosUp(),
                 new SleepAction(5),
                 bot.actionClipSpecimenUpDown()
         );
