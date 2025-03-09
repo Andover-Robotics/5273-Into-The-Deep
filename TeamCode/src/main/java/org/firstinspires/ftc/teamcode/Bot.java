@@ -338,7 +338,7 @@ public class Bot {
                 // claw should be set to perfect clipping pos so all you need is to have bot flush with the
                 // bottom part of the submersible, and brings higher vert slides
                 new InstantAction(vSlides::toClipTop),
-                new SleepAction(1),
+                new SleepAction(0.7),
                 new InstantAction(outtake::openClaw));
     }
 
