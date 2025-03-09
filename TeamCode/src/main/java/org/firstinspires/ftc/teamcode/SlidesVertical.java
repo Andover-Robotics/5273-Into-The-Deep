@@ -20,7 +20,7 @@ public class SlidesVertical {
     private int holdTarget = 0;
     private final MotorEx slidesLeft, slidesRight;
     //sets limits of slides extension
-    private static final int UPPER_BOUND = -2985;
+    private static final int UPPER_BOUND = -2885;
     private static final int STORAGE = 20;
     private static final int CLIP_POS = -1500;
     public PIDFController pidfController;
