@@ -17,7 +17,6 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 //our special silly very important goofy classes (w rizz)
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.Bot;
-import org.opencv.core.Mat;
 
 
 /**
@@ -79,83 +78,104 @@ public class PathMasterTheTestingNavigator {
                 .stopAndAdd(startAxons())
                 .stopAndAdd(bot.looseHori())
                 .stopAndAdd(new ParallelAction(
-                        doOuttakeBucketOne(),
+                        doSlidesUpBucket(),
                         mecanumDrive.actionBuilder(new Pose2d(0, 0, Math.toRadians(90)))
-                                //.strafeToSplineHeading(outtakeBucket, Math.toRadians(45))
                                 .strafeToSplineHeading(new Vector2d(-27, 3), Math.toRadians(45))
                                 .build()
                 ))
-                .stopAndAdd(doOuttakeBucketTwo())
+                .stopAndAdd(doOuttakeBucket())
                 // output sample 1
                 .stopAndAdd(new ParallelAction(
+                        bot.looseHori(),
+                        new SequentialAction(
+                                new SleepAction(0.25),
+                                slidesDown()
+                        ),
                         mecanumDrive.actionBuilder(new Pose2d(-27, 3, Math.toRadians(45)))
                                 .strafeToSplineHeading(intakeSample1, Math.toRadians(90))
-                                .waitSeconds(1)
-                                .build(),
-                        bot.actionToStorage(),
-                        bot.looseHori()
+                                .build()
                 ))
                 .waitSeconds(.5)
                 // input sample 1
                 .stopAndAdd(doIntake())
                 .waitSeconds(.5)
-                .stopAndAdd(doTransfer())
-                .waitSeconds(.5)
-                //.strafeToSplineHeading(outtakeBucket, Math.toRadians(45))
-                .stopAndAdd(doOuttakeBucketOne())
-                .strafeToSplineHeading(new Vector2d(-27, 3), Math.toRadians(45))
-                .stopAndAdd(doOuttakeBucketTwo())
+                .stopAndAdd(new ParallelAction(
+                        new SequentialAction(
+                                doTransfer(),
+                                new SleepAction(.5),
+                                doSlidesUpBucket()
+                        ),
+                        mecanumDrive.actionBuilder(new Pose2d(-18.5, 26.5, Math.toRadians(90)))
+                                .strafeToSplineHeading(new Vector2d(-26.5, 3.5), Math.toRadians(45))
+                                .build()
+                ))
+                .stopAndAdd(doOuttakeBucket())
                 // output sample 1
                 .stopAndAdd(new ParallelAction(
-                        mecanumDrive.actionBuilder(new Pose2d(-27, 3, Math.toRadians(45)))
+                        bot.looseHori(),
+                        new SequentialAction(
+                                new SleepAction(0.25),
+                                slidesDown()
+                        ),
+                        mecanumDrive.actionBuilder(new Pose2d(-26.5, 3.5, Math.toRadians(45)))
                                 .strafeToSplineHeading(intakeSample2, Math.toRadians(90))
-                                .waitSeconds(.5)
-                                .build(),
-                        bot.actionToStorage(),
-                        bot.looseHori()
+                                .build()
                 ))
                 .waitSeconds(.5)
                 //input sample 2
                 .stopAndAdd(doIntake())
                 .waitSeconds(.5)
-                .stopAndAdd(doTransfer())
-                .waitSeconds(.5)
-                //.strafeToSplineHeading(outtakeBucket, Math.toRadians(45))
-                .stopAndAdd(doOuttakeBucketOne())
-                .strafeToSplineHeading(new Vector2d(-27, 3), Math.toRadians(45))
-                .stopAndAdd(doOuttakeBucketTwo())
-                // output sample 2
-                .strafeToSplineHeading(new Vector2d(-27, 34.5), Math.toRadians(180))
                 .stopAndAdd(new ParallelAction(
-                        mecanumDrive.actionBuilder(new Pose2d(-27, 34.5, Math.toRadians(180)))
-                                .strafeToSplineHeading(intakeSample3, Math.toRadians(90))
-                                .waitSeconds(.5)
-                                .build(),
-                        bot.actionToStorage(),
+                        new SequentialAction(
+                                doTransfer(),
+                                new SleepAction(.5),
+                                doSlidesUpBucket()
+                        ),
+                        mecanumDrive.actionBuilder(new Pose2d(-29, 24.75, Math.toRadians(90)))
+                                .strafeToSplineHeading(new Vector2d(-26.5, 3.5), Math.toRadians(45))
+                                .build()
+                ))
+                .stopAndAdd(doOuttakeBucket())
+                // output sample 2
+                .stopAndAdd(new ParallelAction(
                         bot.looseHori(),
-                        bot.clawRoll90()
+                        bot.clawRoll90(),
+                        new SequentialAction(
+                                new SleepAction(0.25),
+                                slidesDown()
+                        ),
+                        mecanumDrive.actionBuilder(new Pose2d(-26.5, 3.5, Math.toRadians(45)))
+                                .strafeToSplineHeading(new Vector2d(-25, 37), Math.toRadians(180))
+                                .strafeToSplineHeading(intakeSample3, Math.toRadians(180))
+                                .build()
                 ))
                 .waitSeconds(.5)
                 //input sample 3
                 .stopAndAdd(doIntake())
                 .waitSeconds(.5)
-                .stopAndAdd(doTransfer())
-                .waitSeconds(.5)
-                //.strafeToSplineHeading(outtakeBucket, Math.toRadians(45))
-                .stopAndAdd(doOuttakeBucketOne())
-                .strafeToSplineHeading(new Vector2d(-27, 3), Math.toRadians(45))
-                .stopAndAdd(doOuttakeBucketTwo())
+                .stopAndAdd(new ParallelAction(
+                        new SequentialAction(
+                                doTransfer(),
+                                new SleepAction(.5),
+                                doSlidesUpBucket()
+                        ),
+                        mecanumDrive.actionBuilder(new Pose2d(-27, 37, Math.toRadians(90)))
+                                .strafeToSplineHeading(new Vector2d(-27, 3), Math.toRadians(45))
+                                .build()
+                ))
+                .stopAndAdd(doOuttakeBucket())
                 // output sample 3
                 .stopAndAdd(new ParallelAction(
+                        outtakeTransferPos(),
+                        new SequentialAction(
+                                new SleepAction(0.25),
+                                slidesDown()
+                        ),
                         mecanumDrive.actionBuilder(new Pose2d(-27, 3, Math.toRadians(45)))
-                                .strafeToSplineHeading(new Vector2d(0, -38), Math.toRadians(90))
-                                .waitSeconds(.5)
-                                .build(),
-                        bot.actionToStorage(),
-                        outtakeTransferPos()
+                                .strafeToSplineHeading(new Vector2d(-27, 0), Math.toRadians(90))
+                                .build()
                 ))
                 .build();
-
 
         opMode.waitForStart();
 
@@ -190,7 +210,7 @@ public class PathMasterTheTestingNavigator {
 
         Action arcStrikeVelocity = mecanumDrive.actionBuilder(new Pose2d(0 , 0 , Math.toRadians(270)))
                 .stopAndAdd(startAxons())
-                .stopAndAdd(bot.vertSlidesToBottom())
+                .stopAndAdd(slidesDown())
                 .strafeToSplineHeading(outtakeSpecInit, Math.toRadians(270))
 		        .stopAndAdd(doOuttakeSpecimen())
                 .waitSeconds(2)
@@ -236,20 +256,20 @@ public class PathMasterTheTestingNavigator {
                 .strafeToSplineHeading(outtakeSpec1, Math.toRadians(270))
                 .stopAndAdd(doOuttakeSpecimen())
                 .waitSeconds(2)
-                .stopAndAdd(bot.slidesDown())
+                .stopAndAdd(slidesDown())
                 .strafeToSplineHeading(intakeSpec, Math.toRadians(90))
                 .stopAndAdd(doIntakeSpecimen())
                 .strafeToSplineHeading(outtakeSpec2, Math.toRadians(270))
                 .stopAndAdd(doOuttakeSpecimen())
                 .waitSeconds(2)
-                .stopAndAdd(bot.slidesDown())
+                .stopAndAdd(slidesDown())
                 .strafeToSplineHeading(intakeSpec, Math.toRadians(90))
                 .stopAndAdd(doIntakeSpecimen())
                 .strafeToSplineHeading(outtakeSpec3, Math.toRadians(270))
                 .stopAndAdd(doOuttakeSpecimen())
                 .waitSeconds(2)
-                .stopAndAdd(bot.slidesDown())
-                .strafeToSplineHeading(new Vector2d(48, 0), Math.toRadians(90))
+                .stopAndAdd(slidesDown())
+                .strafeToSplineHeading(new Vector2d(-27, 0), Math.toRadians(90))
                 .stopAndAdd(outtakeTransferPos())
                 .build();
 
@@ -280,12 +300,12 @@ public class PathMasterTheTestingNavigator {
         return bot.actionIntakeSample();
     }
 
-    private static Action doOuttakeBucketOne() {
-        return bot.actionOuttakeBucketOne();
+    private static Action doSlidesUpBucket() {
+        return bot.actionSlidesUpBucket();
     }
 
-    private static Action doOuttakeBucketTwo() {
-        return bot.actionOuttakeBucketTwo();
+    private static Action doOuttakeBucket() {
+        return bot.actionOuttakeBucket();
     }
 
     private static Action doIntakeSpecimen() { //  specimen from wall

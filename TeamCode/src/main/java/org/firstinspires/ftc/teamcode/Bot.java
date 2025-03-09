@@ -29,6 +29,7 @@ public class Bot {
     private final Servo sweepServo;
 
     private static final double SWEEP_UP = 0.5, SWEEP_DOWN = 0;
+
     public enum FSM {
         STARTING,
         INTAKESAMPLE,
@@ -201,7 +202,7 @@ public class Bot {
         telemetry.addData("Vertical Slides Pos: ", vSlides.getEncodersAverage());
     }
 
-    public SequentialAction actionTransfer() {
+    public Action actionTransfer() {
         return new SequentialAction(
                 new InstantAction(outtake::posPreTransfer),
                 new InstantAction(intake::closeIntake),
@@ -229,7 +230,7 @@ public class Bot {
     }
 
 
-    public SequentialAction actionTransferNoSlides() {
+    public Action actionTransferNoSlides() {
         return new SequentialAction(
                 new InstantAction(outtake::posPreTransfer),
                 new InstantAction(intake::setPitchTransfer),
@@ -269,13 +270,13 @@ public class Bot {
         );
     }
 
-    public Action actionOuttakeBucketOne() {
+    public Action actionSlidesUpBucket() {
         return new SequentialAction(
                 new InstantAction(vSlides::toTopBucket)
         );
     }
 
-    public Action actionOuttakeBucketTwo() {
+    public Action actionOuttakeBucket() {
         return new SequentialAction(
                 new InstantAction(outtake::posPreBucket),
                 new SleepAction(.5),
@@ -285,13 +286,7 @@ public class Bot {
         );
     }
 
-    public Action actionToStorage() {
-        return new SequentialAction((
-                new InstantAction(vSlides::toStorage)
-        ));
-    }
-
-    public SequentialAction actionIntakeSpecimenDown() {
+    public Action actionIntakeSpecimenDown() {
         return new SequentialAction(
             // the moving to lower bound should be done by the outtake method at the end
             // open the claw before calling this method
@@ -302,7 +297,7 @@ public class Bot {
             new InstantAction(() -> fsm = FSM.CLIPSPECIMEN));
     }
 
-    public SequentialAction actionIntakeSpecimenUp() {
+    public Action actionIntakeSpecimenUp() {
         return new SequentialAction(
                 new InstantAction(outtake::close),
                 new SleepAction(0.2),
@@ -311,15 +306,19 @@ public class Bot {
     }
 
 
-    public InstantAction actionSpecPosUp() {
+    public Action actionSpecPosUp() {
         return new InstantAction(vSlides::toClipTop);
+    }
+
+    public Action slidesDown() {
+        return new InstantAction(vSlides::toStorage);
     }
 
     public void runPeriodic(){
         vSlides.periodic();
     }
 
-    public SequentialAction actionClipSpecimenDownUp() {
+    public Action actionClipSpecimenDownUp() {
         return new SequentialAction(
                 // claw should be set to perfect clipping pos so all you need is to have bot flush with the
                 // bottom part of the submersible, and brings higher vert slides
@@ -328,15 +327,11 @@ public class Bot {
                 new InstantAction(outtake::openClaw));
     }
 
-    public SequentialAction actionClipSpecimenUpDown() {
+    public Action actionClipSpecimenUpDown() {
         return new SequentialAction(
                 new InstantAction(vSlides::toClipBottom),
                 new SleepAction(1),
                 new InstantAction(outtake::openClaw));
-    }
-
-    public Action slidesDown() {
-        return new InstantAction(vSlides::toStorage);
     }
 
     public Action actionSweepArmUp() {
@@ -381,10 +376,6 @@ public class Bot {
         return new SequentialAction(
                 new InstantAction(hSlides::close)
                 );
-    }
-
-    public Action vertSlidesToBottom() {
-        return new InstantAction(vSlides::toStorage);
     }
 
     public Action slidesPeriodic() {
