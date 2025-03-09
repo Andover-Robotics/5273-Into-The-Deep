@@ -123,7 +123,7 @@ public class PathMasterTheTestingNavigator {
                 .waitSeconds(.5)
                 //.strafeToSplineHeading(outtakeBucket, Math.toRadians(45))
                 .stopAndAdd(doOuttakeBucketOne())
-                .strafeToSplineHeading(new Vector2d(-26, 4), Math.toRadians(45))
+                .strafeToSplineHeading(new Vector2d(-25.5, 4.5), Math.toRadians(45))
                 .stopAndAdd(doOuttakeBucketTwo())
                 // output sample 3
                 .strafeToSplineHeading(new Vector2d(-24, 2), Math.toRadians(90))
