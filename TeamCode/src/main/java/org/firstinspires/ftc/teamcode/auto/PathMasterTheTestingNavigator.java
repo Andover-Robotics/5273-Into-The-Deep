@@ -65,9 +65,9 @@ public class PathMasterTheTestingNavigator {
 
         bot = new Bot(opMode,hardwareMap, telemetry);
 
-        Vector2d intakeSample1 = new Vector2d(-19, 26.5);
+        Vector2d intakeSample1 = new Vector2d(-20, 26.5);
         Vector2d intakeSample2 = new Vector2d(-29, 24.75);
-        Vector2d intakeSample3 = new Vector2d(-27.25, 35.5);
+        Vector2d intakeSample3 = new Vector2d(-27.5, 35.5);
 
         Vector2d outtakeBucket = new Vector2d(-23.5, 6.5);
 
