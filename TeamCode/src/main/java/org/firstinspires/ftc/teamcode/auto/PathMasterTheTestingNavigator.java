@@ -78,7 +78,7 @@ public class PathMasterTheTestingNavigator {
                                 doOuttakeBucketOne(),
                                 mecanumDrive.actionBuilder(new Pose2d(0, 0, Math.toRadians(90)))
                                     //.strafeToSplineHeading(outtakeBucket, Math.toRadians(45))
-                                        .strafeToSplineHeading(new Vector2d(-27, 4), Math.toRadians(45))
+                                        .strafeToSplineHeading(new Vector2d(-26, 4), Math.toRadians(45))
                                         .build()
                                     ))
                 .stopAndAdd(doOuttakeBucketTwo())
