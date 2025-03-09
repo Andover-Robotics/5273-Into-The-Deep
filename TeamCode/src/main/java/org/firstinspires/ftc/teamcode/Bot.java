@@ -381,10 +381,6 @@ public class Bot {
         );
     }
 
-    public Action actionArmRungBottomPos() {
-        return new InstantAction(outtake::posRungClip);
-    }
-
     public Action actionOuttakeTransfer() {
         return new SequentialAction(
                 new InstantAction(outtake::openTransfer)
