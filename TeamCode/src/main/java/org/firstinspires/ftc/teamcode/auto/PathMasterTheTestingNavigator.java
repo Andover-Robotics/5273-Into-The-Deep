@@ -106,7 +106,7 @@ public class PathMasterTheTestingNavigator {
                 .waitSeconds(.5)
                 //.strafeToSplineHeading(outtakeBucket, Math.toRadians(45))
                 .stopAndAdd(doOuttakeBucketOne())
-                .strafeToSplineHeading(new Vector2d(-25, 5), Math.toRadians(45))
+                .strafeToSplineHeading(new Vector2d(-24.75, 5.25), Math.toRadians(45))
                 .stopAndAdd(doOuttakeBucketTwo())
                 .waitSeconds(.5)
                 .stopAndAdd(bot.actionToStorage())
