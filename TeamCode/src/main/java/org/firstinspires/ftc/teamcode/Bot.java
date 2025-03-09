@@ -263,8 +263,8 @@ public class Bot {
                 new InstantAction(intake::open),
                 new SleepAction(0.4),
                 new InstantAction(intake::openSurvey),
-                new InstantAction(hSlides::close)
-        );
+                new InstantAction(hSlides::close),
+                new InstantAction(() -> fsm = FSM.SCORESAMPLE));
     }
 
 
