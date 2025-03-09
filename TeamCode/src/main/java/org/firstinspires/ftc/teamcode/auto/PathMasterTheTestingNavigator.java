@@ -65,7 +65,7 @@ public class PathMasterTheTestingNavigator {
 
         bot = new Bot(opMode,hardwareMap, telemetry);
 
-        Vector2d intakeSample1 = new Vector2d(-18.5, 26.5);
+        Vector2d intakeSample1 = new Vector2d(-19, 26.5);
         Vector2d intakeSample2 = new Vector2d(-29, 24.75);
         Vector2d intakeSample3 = new Vector2d(-27.25, 35.5);
 
@@ -78,7 +78,7 @@ public class PathMasterTheTestingNavigator {
                                 doOuttakeBucketOne(),
                                 mecanumDrive.actionBuilder(new Pose2d(0, 0, Math.toRadians(90)))
                                     //.strafeToSplineHeading(outtakeBucket, Math.toRadians(45))
-                                        .strafeToSplineHeading(new Vector2d(-26, 4), Math.toRadians(45))
+                                        .strafeToSplineHeading(new Vector2d(-27, 4), Math.toRadians(45))
                                         .build()
                                     ))
                 .stopAndAdd(doOuttakeBucketTwo())
