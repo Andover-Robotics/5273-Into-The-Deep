@@ -67,7 +67,7 @@ public class PathMasterTheTestingNavigator {
 
         Vector2d intakeSample1 = new Vector2d(-20, 26.5);
         Vector2d intakeSample2 = new Vector2d(-29, 24.75);
-        Vector2d intakeSample3 = new Vector2d(-27.5, 35.5);
+        Vector2d intakeSample3 = new Vector2d(-27.5, 35.75);
 
         Vector2d outtakeBucket = new Vector2d(-23.5, 6.5);
 
@@ -113,7 +113,7 @@ public class PathMasterTheTestingNavigator {
                 .stopAndAdd(bot.looseHori())
                 .stopAndAdd(bot.clawRoll90())
                 // output sample 2
-                .strafeToSplineHeading(new Vector2d(-25, 35.5), Math.toRadians(180))
+                .strafeToSplineHeading(new Vector2d(-25, 35.75), Math.toRadians(180))
                 .strafeToSplineHeading(intakeSample3, Math.toRadians(180))
                 .waitSeconds(.5)
                 //input sample 3
