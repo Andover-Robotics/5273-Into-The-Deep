@@ -70,12 +70,11 @@ public class PathMasterTheTestingNavigator {
 
         Vector2d intakeSample1 = new Vector2d(-19.5, 25.5);
         Vector2d intakeSample2 = new Vector2d(-29, 23.5);
-        Vector2d intakeSample3 = new Vector2d(-27.75, 35);
+        Vector2d intakeSample3 = new Vector2d(-27, 35);
         //Vector2d outtakeBucket = new Vector2d(-25, 5);
 
 
         Action arcStrikeVelocity = mecanumDrive.actionBuilder(new Pose2d(0 , 0 , Math.toRadians(90)))
-
                 .stopAndAdd(new ParallelAction(
                         startAxons(),
                         bot.looseHori(),
@@ -97,6 +96,7 @@ public class PathMasterTheTestingNavigator {
                                 .build()
                 ))
                 .waitSeconds(.5)
+                .stopAndAdd(bot.looseHori())
                 // input sample 1
                 .stopAndAdd(doIntake())
                 .waitSeconds(.5)
@@ -107,7 +107,7 @@ public class PathMasterTheTestingNavigator {
                                 doSlidesUpBucket()
                         ),
                         mecanumDrive.actionBuilder(new Pose2d(-19.5, 25.5, Math.toRadians(90)))
-                                .strafeToSplineHeading(new Vector2d(-25.5, 4.5), Math.toRadians(45))
+                                .strafeToSplineHeading(new Vector2d(-26, 5), Math.toRadians(45))
                                 .build()
                 ))
                 .stopAndAdd(doOuttakeBucket())
@@ -118,11 +118,12 @@ public class PathMasterTheTestingNavigator {
                                 new SleepAction(0.25),
                                 slidesDown()
                         ),
-                        mecanumDrive.actionBuilder(new Pose2d(-25.5, 4.5, Math.toRadians(45)))
+                        mecanumDrive.actionBuilder(new Pose2d(-26, 5, Math.toRadians(45)))
                                 .strafeToSplineHeading(intakeSample2, Math.toRadians(90))
                                 .build()
                 ))
                 .waitSeconds(.5)
+                .stopAndAdd(bot.looseHori())
                 //input sample 2
                 .stopAndAdd(doIntake())
                 .waitSeconds(.5)
@@ -151,6 +152,7 @@ public class PathMasterTheTestingNavigator {
                                 .build()
                 ))
                 .waitSeconds(.5)
+                .stopAndAdd(bot.looseHori())
                 //input sample 3
                 .stopAndAdd(doIntake())
                 .waitSeconds(.5)
@@ -160,7 +162,7 @@ public class PathMasterTheTestingNavigator {
                                 new SleepAction(.3),
                                 doSlidesUpBucket()
                         ),
-                        mecanumDrive.actionBuilder(new Pose2d(-27.75, 35.75, Math.toRadians(90)))
+                        mecanumDrive.actionBuilder(new Pose2d(-27, 35, Math.toRadians(90)))
                                 .strafeToSplineHeading(new Vector2d(-25.5, 4.5), Math.toRadians(45))
                                 .build()
                 ))
@@ -177,6 +179,7 @@ public class PathMasterTheTestingNavigator {
                                 .strafeToSplineHeading(new Vector2d(30, 28.5), Math.toRadians(270))
                                 .build()
                 ))
+                .stopAndAdd(bot.closeHori())
                 .build();
 
         opMode.waitForStart();
