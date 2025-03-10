@@ -6,9 +6,9 @@ import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-import org.firstinspires.ftc.teamcode.Bot;
-import org.firstinspires.ftc.teamcode.SlidesHorizontal;
-import org.firstinspires.ftc.teamcode.SlidesVertical;
+import org.firstinspires.ftc.teamcode.teleop.Bot;
+import org.firstinspires.ftc.teamcode.teleop.subsystems.SlidesHorizontal;
+import org.firstinspires.ftc.teamcode.teleop.subsystems.SlidesVertical;
 @TeleOp(name = "Slides Test", group = "Teleop")
 public class SlidesTest extends LinearOpMode  {
     @Override

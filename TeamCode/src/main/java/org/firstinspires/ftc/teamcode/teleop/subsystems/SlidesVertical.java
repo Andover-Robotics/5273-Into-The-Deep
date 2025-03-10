@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.teleop.subsystems;
 
 import androidx.annotation.NonNull;
 
@@ -33,7 +33,7 @@ public class SlidesVertical {
     public double manualPower = 0;
     public boolean goingDown = false;
     private double profile_init_time = 0;
-    MotionProfiler profiler = new MotionProfiler(30000,20000);
+    public MotionProfiler profiler = new MotionProfiler(30000,20000);
 
 
     public SlidesVertical(OpMode running) {

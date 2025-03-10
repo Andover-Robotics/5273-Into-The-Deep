@@ -3,11 +3,11 @@ package org.firstinspires.ftc.teamcode.testing;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-import org.firstinspires.ftc.teamcode.Camera;
-import org.firstinspires.ftc.teamcode.Intake;
-import org.firstinspires.ftc.teamcode.Outtake;
-import org.firstinspires.ftc.teamcode.SlidesHorizontal;
-import org.firstinspires.ftc.teamcode.SlidesVertical;
+import org.firstinspires.ftc.teamcode.teleop.subsystems.Camera;
+import org.firstinspires.ftc.teamcode.teleop.subsystems.Intake;
+import org.firstinspires.ftc.teamcode.teleop.subsystems.Outtake;
+import org.firstinspires.ftc.teamcode.teleop.subsystems.SlidesHorizontal;
+import org.firstinspires.ftc.teamcode.teleop.subsystems.SlidesVertical;
 
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.arcrobotics.ftclib.gamepad.GamepadKeys;

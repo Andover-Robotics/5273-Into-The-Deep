@@ -1,6 +1,6 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.teleop.subsystems;
 
-import static org.firstinspires.ftc.teamcode.auto.MecanumDrive.PARAMS;
+import static org.firstinspires.ftc.teamcode.auto.miscRR.MecanumDrive.PARAMS;
 
 import androidx.annotation.NonNull;
 
@@ -10,7 +10,7 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
-import org.firstinspires.ftc.teamcode.auto.ThreeDeadWheelLocalizer;
+import org.firstinspires.ftc.teamcode.auto.miscRR.ThreeDeadWheelLocalizer;
 
 /**
  * Represents the drivetrain.
