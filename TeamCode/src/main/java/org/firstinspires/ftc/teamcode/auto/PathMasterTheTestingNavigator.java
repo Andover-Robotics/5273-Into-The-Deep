@@ -215,26 +215,25 @@ public class PathMasterTheTestingNavigator {
                 .stopAndAdd(slidesDown())
                 .strafeToSplineHeading(outtakeSpecInit, Math.toRadians(270))
 		        .stopAndAdd(doOuttakeSpecimen())
-                .waitSeconds(2)
                 .stopAndAdd(slidesDown())
 
                 .strafeToSplineHeading(new Vector2d(14, 28), Math.toRadians(210))
-                .strafeToSplineHeading(new Vector2d(20,30), Math.toRadians(60))     // ready for first sweep
+                .strafeToSplineHeading(new Vector2d(20,34), Math.toRadians(60))     // ready for first sweep
                 .waitSeconds(1)
                 .stopAndAdd(actionSweepArmDown())
-                .strafeToLinearHeading(new Vector2d(20,12), Math.toRadians(0))      // first sweep
+                .strafeToLinearHeading(new Vector2d(20,10), Math.toRadians(0))      // first sweep
                 .waitSeconds(1)
                 .stopAndAdd(actionSweepArmUp())
-                .splineToLinearHeading(new Pose2d(12,30, Math.toRadians(60)), Math.toRadians(90))     // ready for second sweep
+                .splineToLinearHeading(new Pose2d(12,34, Math.toRadians(60)), Math.toRadians(90))     // ready for second sweep
                 .waitSeconds(1)
                 .stopAndAdd(actionSweepArmDown())
-                .strafeToLinearHeading(new Vector2d(26, 12), Math.toRadians(0))     // second sweep
+                .strafeToLinearHeading(new Vector2d(26, 10), Math.toRadians(0))     // second sweep
                 .waitSeconds(1)
                 .stopAndAdd(actionSweepArmUp())
-                .splineToLinearHeading(new Pose2d(16, 30, Math.toRadians(60)), Math.toRadians(90))    // ready for third sweep
+                .splineToLinearHeading(new Pose2d(16, 34, Math.toRadians(60)), Math.toRadians(90))    // ready for third sweep
                 .waitSeconds(1)
                 .stopAndAdd(actionSweepArmDown())
-                .strafeToLinearHeading(new Vector2d(30, 12), Math.toRadians(0))     // third sweep
+                .strafeToLinearHeading(new Vector2d(30, 10), Math.toRadians(0))     // third sweep
                 .waitSeconds(1)
                 .stopAndAdd(actionSweepArmUp())
 
