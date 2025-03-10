@@ -103,8 +103,9 @@ public class PathMasterTheTestingNavigator {
                 .stopAndAdd(new ParallelAction(
                         new SequentialAction(
                                 doTransfer(),
-                                new SleepAction(.3),
-                                doSlidesUpBucket()
+                                new SleepAction(0.3),
+                                doSlidesUpBucket(),
+                                new SleepAction(0.5)
                         ),
                         mecanumDrive.actionBuilder(new Pose2d(-19.5, 25.5, Math.toRadians(90)))
                                 .strafeToSplineHeading(new Vector2d(-26, 5), Math.toRadians(45))
@@ -130,8 +131,9 @@ public class PathMasterTheTestingNavigator {
                 .stopAndAdd(new ParallelAction(
                         new SequentialAction(
                                 doTransfer(),
-                                new SleepAction(.3),
-                                doSlidesUpBucket()
+                                new SleepAction(0.3),
+                                doSlidesUpBucket(),
+                                new SleepAction(0.5)
                         ),
                         mecanumDrive.actionBuilder(new Pose2d(-29, 23.5, Math.toRadians(90)))
                                 .strafeToSplineHeading(new Vector2d(-26, 5.25), Math.toRadians(45))
@@ -159,8 +161,9 @@ public class PathMasterTheTestingNavigator {
                 .stopAndAdd(new ParallelAction(
                         new SequentialAction(
                                 doTransfer(),
-                                new SleepAction(.3),
-                                doSlidesUpBucket()
+                                new SleepAction(0.3),
+                                doSlidesUpBucket(),
+                                new SleepAction(0.5)
                         ),
                         mecanumDrive.actionBuilder(new Pose2d(-27, 35, Math.toRadians(90)))
                                 .strafeToSplineHeading(new Vector2d(-25.5, 4.5), Math.toRadians(45))
