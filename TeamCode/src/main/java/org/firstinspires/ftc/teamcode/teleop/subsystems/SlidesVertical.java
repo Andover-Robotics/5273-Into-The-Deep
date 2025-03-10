@@ -20,13 +20,13 @@ public class SlidesVertical {
     private int holdTarget = 0;
     private final MotorEx slidesLeft, slidesRight;
     //sets limits of slides extension
-    private static final int UPPER_BOUND = -2985;
+    private static final int UPPER_BOUND = -2885;
     private static final int STORAGE = 20;
-    private static final int CLIP_POS = -1500;
+    private static final int CLIP_POS = -1300;
     public PIDFController pidfController;
     public final int TOLERANCE = 10;
     public static double p = 0.025, i = 0.0, d = 0.0, f = 0.02, staticF = 0.01;  //tune these later (thanks lightning for placeholders)
-    private final double powerUp = 0.1, powerDown = 0.07, powerMin =0.2, manualDivide = 1;
+    private final double powerUp = 0.1, powerDown = 0.095, powerMin =0.2, manualDivide = 1;
     public  double target = 0;
     private double power;
     private final OpMode opMode;
@@ -100,11 +100,11 @@ public class SlidesVertical {
     }
 
     public void toClipTop() {   // the highest one
-    setPosition(CLIP_POS);
+        setPosition(CLIP_POS);
     }
 
     public void toClipBottom() {  // pulls vert slides down to clip it
-        setPosition(CLIP_POS + 800);
+        setPosition(CLIP_POS + 600);
     }
 
     //moves based on position inputted

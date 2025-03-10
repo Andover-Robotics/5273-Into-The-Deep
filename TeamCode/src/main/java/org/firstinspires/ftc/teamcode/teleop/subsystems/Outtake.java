@@ -6,9 +6,9 @@ public class Outtake {
     private final Servo armL, armR;
     private final Servo claw;
     private static final double CLAW_OPEN = 0.1472, CLAW_CLOSED = 0.00;
-    private static final double ARML_RUNGCLIP = .33277778, ARML_TRANSFER = 0.14444445, ARML_CLIP = 0.8572222;
-    private static final double ARMR_RUNGCLIP = 0.6566667, ARMR_TRANSFER = 0.83888889, ARMR_CLIP = 0.1272222;
-
+    private static final double ARML_RUNGCLIP = .33277778, ARML_TRANSFER = 0.15166666, ARML_CLIP = 0.8572222;
+    private static final double ARMR_RUNGCLIP = 0.6566667, ARMR_TRANSFER = 0.82833333, ARMR_CLIP = 0.1272222;
+    private static final double ARML_BUCKETPARK = 0.631666666667, ARMR_BUCKETPARK = .361666666666;
     public Outtake (HardwareMap map) {
         //intake = map.get(CRServo.class, "iServo");
         armL = map.get(Servo.class, "fourOL");
@@ -95,6 +95,11 @@ public class Outtake {
     public void posClipIntake(){
         fourLTo(ARML_CLIP);
         fourRTo(ARMR_CLIP);
+    }
+
+    public void posBucketPark() {
+        fourLTo(ARML_BUCKETPARK);
+        fourRTo(ARMR_BUCKETPARK);
     }
     public void open(){
         claw.setPosition(CLAW_OPEN);

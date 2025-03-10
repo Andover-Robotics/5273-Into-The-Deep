@@ -78,7 +78,7 @@ public class Bot {
      */
 
     public void teleopTick(GamepadEx gamepad1, GamepadEx gamepad2, Telemetry telemetry) throws InterruptedException {
-        boolean rightTriggerDown = gamepad2.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER) > 0.1;
+        boolean leftTriggerDown = gamepad2.getTrigger(GamepadKeys.Trigger.LEFT_TRIGGER) > 0.1;
         if (gamepad2.isDown(GamepadKeys.Button.X))
             fsm = FSM.HANG;
         switch (fsm) {
@@ -102,7 +102,7 @@ public class Bot {
                 hSlides.setPower(gamepad2.getLeftY());
                 intake.moveDiffyPos(gamepad2, telemetry);
                 telemetry.addData("Intake State", intake.fsm);
-                if (rightTriggerDown && (intake.isSurveyOpen() || intake.isSurveyClosed())){
+                if (leftTriggerDown && (intake.isSurveyOpen() || intake.isSurveyClosed())){
                     intake.open();
                     Thread.sleep(100);
                     intake.openIntake();
@@ -112,7 +112,7 @@ public class Bot {
                     if (gamepad2.getTrigger(GamepadKeys.Trigger.LEFT_TRIGGER) > 0.1) {
                         intake.toSamplePosition();
                         // Still need to press B later
-                    } else if (!rightTriggerDown) {
+                    } else if (!leftTriggerDown) {
                         intake.posIntake();
                         Thread.sleep(100);
                         intake.closeIntake();
@@ -121,7 +121,7 @@ public class Bot {
                     }
                 }
                 if(gamepad2.wasJustPressed(GamepadKeys.Button.B)) {
-                    Actions.runBlocking(actionTransfer());
+                    Actions.runBlocking(actionTransferNoSlides());
                 }
                 if (gamepad2.wasJustPressed(GamepadKeys.Button.Y)) {
                     hSlides.close();
@@ -133,10 +133,13 @@ public class Bot {
                 break;
             case SCORESAMPLE: // direct control over vertical slides and outtake
                 outtake.posPreBucket();
-                if (gamepad2.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER) > 0.1)
+                if (gamepad2.getTrigger(GamepadKeys.Trigger.LEFT_TRIGGER) > 0.1)
                     outtake.open();
                 else
                     outtake.close();
+                if (gamepad2.wasJustPressed(GamepadKeys.Button.B)) {
+                    vSlides.toTopBucket();
+                }
                 if (gamepad2.wasJustPressed(GamepadKeys.Button.A)) {
                     hSlides.middle();
                     vSlides.toStorage();
@@ -157,7 +160,7 @@ public class Bot {
             case INTAKESPECIMEN:
                 outtake.openClip();
                 if(gamepad2.wasJustPressed(GamepadKeys.Button.B)) {
-                    Actions.runBlocking(actionIntakeSpecimenDown());
+                    Actions.runBlocking(actionIntakeSpecimenUpDown());
                 }
                 if(gamepad2.wasJustPressed(GamepadKeys.Button.A)) {
                     vSlides.toStorage();
@@ -192,7 +195,7 @@ public class Bot {
                 hSlides.close();
                 intake.closeTransfer();
                 vSlides.slidesMove(gamepad2.getLeftY());
-                if (rightTriggerDown) {
+                if (leftTriggerDown) {
                     vSlides.toStorage();
                 }
                 if (gamepad2.wasJustPressed(GamepadKeys.Button.A)) {
@@ -266,7 +269,8 @@ public class Bot {
                 new InstantAction(intake::open),
                 new SleepAction(0.4),
                 new InstantAction(intake::openSurvey),
-                new InstantAction(hSlides::close)
+                new InstantAction(hSlides::close),
+                new InstantAction(() -> fsm = FSM.SCORESAMPLE)
         );
     }
 
@@ -305,7 +309,7 @@ public class Bot {
         );
     }
 
-    public Action actionIntakeSpecimenDown() {
+    public Action actionIntakeSpecimenUpDown() {
         return new SequentialAction(
             // the moving to lower bound should be done by the outtake method at the end
             // open the claw before calling this method
@@ -316,7 +320,7 @@ public class Bot {
             new InstantAction(() -> fsm = FSM.CLIPSPECIMEN));
     }
 
-    public Action actionIntakeSpecimenUp() {
+    public Action actionIntakeSpecimenDownUp() {
         return new SequentialAction(
                 new InstantAction(outtake::close),
                 new SleepAction(0.2),
@@ -342,7 +346,7 @@ public class Bot {
                 // claw should be set to perfect clipping pos so all you need is to have bot flush with the
                 // bottom part of the submersible, and brings higher vert slides
                 new InstantAction(vSlides::toClipTop),
-                new SleepAction(1),
+                new SleepAction(0.7),
                 new InstantAction(outtake::openClaw));
     }
 
@@ -351,6 +355,12 @@ public class Bot {
                 new InstantAction(vSlides::toClipBottom),
                 new SleepAction(1),
                 new InstantAction(outtake::openClaw));
+    }
+
+    public Action bucketPark() {
+        return new SequentialAction(
+                new InstantAction(outtake::posBucketPark)
+        );
     }
 
     public Action actionSweepArmUp() {
@@ -374,10 +384,6 @@ public class Bot {
                 new InstantAction(intake::openSurvey),
                 new InstantAction(outtake::closeTransfer)
         );
-    }
-
-    public Action actionArmRungBottomPos() {
-        return new InstantAction(outtake::posRungClip);
     }
 
     public Action actionOuttakeTransfer() {
