@@ -159,7 +159,7 @@ public class Bot {
             case INTAKESPECIMEN:
                 outtake.openWallIntake();
                 if(gamepad2.wasJustPressed(GamepadKeys.Button.B)) {
-                    Actions.runBlocking(actionIntakeSpecimenUpDown());
+                    Actions.runBlocking(actionIntakeSpecimenDownUp());
                 }
                 if(gamepad2.wasJustPressed(GamepadKeys.Button.A)) {
                     vSlides.toStorage();
@@ -223,7 +223,7 @@ public class Bot {
         telemetry.addData("Vertical Slides Pos: ", vSlides.getEncodersAverage());
     }
 
-    public SequentialAction actionTransfer() {
+    public Action actionTransfer() {
         return new SequentialAction(
                 new InstantAction(outtake::posPreTransfer),
                 new InstantAction(intake::closeIntake),
@@ -251,7 +251,7 @@ public class Bot {
     }
 
 
-    public SequentialAction actionTransferNoSlides() {
+    public Action actionTransferNoSlides() {
         return new SequentialAction(
                 new InstantAction(outtake::posPreTransfer),
                 new InstantAction(intake::setPitchTransfer),
@@ -269,7 +269,8 @@ public class Bot {
                 new SleepAction(0.4),
                 new InstantAction(intake::openSurvey),
                 new InstantAction(hSlides::close),
-                new InstantAction(() -> fsm = FSM.SCORESAMPLE));
+                new InstantAction(() -> fsm = FSM.SCORESAMPLE)
+        );
     }
 
 
@@ -291,13 +292,13 @@ public class Bot {
         );
     }
 
-    public Action actionOuttakeBucketOne() {
+    public Action actionSlidesUpBucket() {
         return new SequentialAction(
                 new InstantAction(vSlides::toTopBucket)
         );
     }
 
-    public Action actionOuttakeBucketTwo() {
+    public Action actionOuttakeBucket() {
         return new SequentialAction(
                 new InstantAction(outtake::posBucketOuttake),
                 new SleepAction(.5),
@@ -307,13 +308,7 @@ public class Bot {
         );
     }
 
-    public Action actionToStorage() {
-        return new SequentialAction((
-                new InstantAction(vSlides::toStorage)
-        ));
-    }
-
-    public SequentialAction actionIntakeSpecimenUpDown() {
+    public Action actionIntakeSpecimenDownUp() {
         return new SequentialAction(
             // the moving to lower bound should be done by the outtake method at the end
             // open the claw before calling this method
@@ -324,7 +319,7 @@ public class Bot {
             new InstantAction(() -> fsm = FSM.CLIPSPECIMEN));
     }
 
-    public SequentialAction actionIntakeSpecimenDownUp() {
+    public Action actionIntakeSpecimenUpDown() {
         return new SequentialAction(
                 new InstantAction(outtake::close),
                 new SleepAction(0.2),
@@ -333,15 +328,19 @@ public class Bot {
     }
 
 
-    public InstantAction actionSpecPosUp() {
+    public Action actionSpecPosUp() {
         return new InstantAction(vSlides::toClipTop);
+    }
+
+    public Action slidesDown() {
+        return new InstantAction(vSlides::toStorage);
     }
 
     public void runPeriodic(){
         vSlides.periodic();
     }
 
-    public SequentialAction actionClipSpecimenDownUp() {
+    public Action actionClipSpecimenDownUp() {
         return new SequentialAction(
                 // claw should be set to perfect clipping pos so all you need is to have bot flush with the
                 // bottom part of the submersible, and brings higher vert slides
@@ -350,15 +349,17 @@ public class Bot {
                 new InstantAction(outtake::openClaw));
     }
 
-    public SequentialAction actionClipSpecimenUpDown() {
+    public Action actionClipSpecimenUpDown() {
         return new SequentialAction(
                 new InstantAction(vSlides::toClipBottom),
                 new SleepAction(1),
                 new InstantAction(outtake::openClaw));
     }
 
-    public Action slidesDown() {
-        return new InstantAction(vSlides::toStorage);
+    public Action bucketPark() {
+        return new SequentialAction(
+                new InstantAction(outtake::posBucketPark)
+        );
     }
 
     public Action actionSweepArmUp() {
@@ -399,10 +400,6 @@ public class Bot {
         return new SequentialAction(
                 new InstantAction(hSlides::close)
                 );
-    }
-
-    public Action vertSlidesToBottom() {
-        return new InstantAction(vSlides::toStorage);
     }
 
     public Action slidesPeriodic() {

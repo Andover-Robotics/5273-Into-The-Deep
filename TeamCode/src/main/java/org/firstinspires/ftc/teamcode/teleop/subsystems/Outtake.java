@@ -9,6 +9,7 @@ public class Outtake {
     private static final double ARM_RUNG_LEFT = .33277778, ARM_TRANSFER_LEFT = 0.15166666, ARM_WALLINTAKE_LEFT = 0.8572222, ARM_BUCKET_LEFT = 0.712778;
     private static final double ARM_RUNG_RIGHT = 0.6566667, ARM_TRANSFER_RIGHT = 0.82833333, ARM_WALLINTAKE_RIGHT = 0.1272222, ARM_BUCKET_RIGHT = 0.276111;
 
+    private static final double ARML_BUCKETPARK = 0.631666666667, ARMR_BUCKETPARK = .361666666666;
     public Outtake (HardwareMap map) {
         //intake = map.get(CRServo.class, "iServo");
         armL = map.get(Servo.class, "fourOL");
@@ -94,6 +95,11 @@ public class Outtake {
     public void posWallIntake(){
         leftArmTo(ARM_WALLINTAKE_LEFT);
         rightArmTo(ARM_WALLINTAKE_RIGHT);
+    }
+
+    public void posBucketPark() {
+        leftArmTo(ARML_BUCKETPARK);
+        rightArmTo(ARMR_BUCKETPARK);
     }
     public void open(){
         claw.setPosition(CLAW_OPEN);

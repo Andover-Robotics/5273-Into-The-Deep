@@ -100,7 +100,7 @@ public class SlidesVertical {
     }
 
     public void toClipTop() {   // the highest one
-    setPosition(CLIP_POS);
+        setPosition(CLIP_POS);
     }
 
     public void toClipBottom() {  // pulls vert slides down to clip it
