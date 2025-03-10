@@ -21,28 +21,21 @@ public class MainTeleop extends LinearOpMode {
         Bot bot = new Bot(this,hardwareMap, telemetry);
         Movement movement = new Movement(hardwareMap);
 
-        Thread movementThread = new Thread(() -> { // thread movement separately so that Thread.sleep() can be safely called in bot.teleopTick()
+        Thread threaded = new Thread(() -> { // thread movement separately so that Thread.sleep() can be safely called in bot.teleopTick()
             while (!Thread.currentThread().isInterrupted()) {
                 movement.teleopTick(gamepadEx1.getLeftX(),gamepadEx1.getLeftY(),gamepadEx1.getRightX(), telemetry);//,gamepadEx1.wasJustPressed(GamepadKeys.Button.RIGHT_BUMPER),telemetry);
-            }
-        });
-
-        Thread vSlidesPeriodic = new Thread(() -> { // thread periodics separately so that Thread.sleep() can be safely called in bot.teleopTick()
-            while (!Thread.currentThread().isInterrupted()) {
                 bot.runPeriodic();
             }
         });
 
         waitForStart();
-        movementThread.start();
-        vSlidesPeriodic.start();
+        threaded.start();
         while (opModeIsActive()) {
             gamepadEx1.readButtons();
             gamepadEx2.readButtons();
             bot.teleopTick(gamepadEx1, gamepadEx2, telemetry);
             telemetry.update();
         }
-        movementThread.interrupt();
-        vSlidesPeriodic.interrupt();
+        threaded.interrupt();
     }
 }
