@@ -92,7 +92,7 @@ public class Bot {
                 if (gamepad2.wasJustPressed(GamepadKeys.Button.Y)) {
                     hSlides.close();
                     intake.openSurvey();
-                    outtake.openClip();
+                    outtake.openWallIntake();
                     fsm = FSM.INTAKESPECIMEN;
                 }
                 break;
@@ -125,7 +125,7 @@ public class Bot {
                 if (gamepad2.wasJustPressed(GamepadKeys.Button.Y)) {
                     hSlides.close();
                     intake.openSurvey();
-                    outtake.openClip();
+                    outtake.openWallIntake();
                     fsm = FSM.INTAKESPECIMEN;
                 }
                 telemetry.addData("Has sample: ",intake.hasSample());
@@ -150,14 +150,14 @@ public class Bot {
                     hSlides.close();
                     vSlides.toStorage();
                     intake.openSurvey();
-                    outtake.openClip();
+                    outtake.openWallIntake();
                     Thread.sleep(2000);
                     vSlides.resetEncoders();
                     fsm = FSM.INTAKESPECIMEN;
                 }
                 break;
             case INTAKESPECIMEN:
-                outtake.openClip();
+                outtake.openWallIntake();
                 if(gamepad2.wasJustPressed(GamepadKeys.Button.B)) {
                     Actions.runBlocking(actionIntakeSpecimenUpDown());
                 }
@@ -185,7 +185,7 @@ public class Bot {
                     hSlides.close();
                     vSlides.toStorage();
                     intake.openSurvey();
-                    outtake.openClip();
+                    outtake.openWallIntake();
                     fsm = FSM.INTAKESPECIMEN;
                 }
                 break;
@@ -208,7 +208,7 @@ public class Bot {
                     hSlides.close();
                     vSlides.toStorage();
                     intake.openSurvey();
-                    outtake.openClip();
+                    outtake.openWallIntake();
                     fsm = FSM.INTAKESPECIMEN;
                 }
                 break;
