@@ -70,7 +70,7 @@ public class PathMasterTheTestingNavigator {
 
         Vector2d intakeSample1 = new Vector2d(-19.5, 25.5);
         Vector2d intakeSample2 = new Vector2d(-29, 23.5);
-        Vector2d intakeSample3 = new Vector2d(-27.75, 34.75);
+        Vector2d intakeSample3 = new Vector2d(-27.75, 35);
         //Vector2d outtakeBucket = new Vector2d(-25, 5);
 
 
@@ -81,7 +81,7 @@ public class PathMasterTheTestingNavigator {
                         bot.looseHori(),
                         doSlidesUpBucket(),
                         mecanumDrive.actionBuilder(new Pose2d(0, 0, Math.toRadians(90)))
-                                .strafeToSplineHeading(new Vector2d(-26, 4), Math.toRadians(45))
+                                .strafeToSplineHeading(new Vector2d(-27, 4), Math.toRadians(45))
                                 .build()
                 ))
                 .stopAndAdd(doOuttakeBucket())
@@ -92,7 +92,7 @@ public class PathMasterTheTestingNavigator {
                                 new SleepAction(0.25),
                                 slidesDown()
                         ),
-                        mecanumDrive.actionBuilder(new Pose2d(-26, 4, Math.toRadians(45)))
+                        mecanumDrive.actionBuilder(new Pose2d(-27, 4, Math.toRadians(45)))
                                 .strafeToSplineHeading(intakeSample1, Math.toRadians(90))
                                 .build()
                 ))
@@ -106,7 +106,7 @@ public class PathMasterTheTestingNavigator {
                                 new SleepAction(.3),
                                 doSlidesUpBucket()
                         ),
-                        mecanumDrive.actionBuilder(new Pose2d(-19.5, 26.5, Math.toRadians(90)))
+                        mecanumDrive.actionBuilder(new Pose2d(-19.5, 25.5, Math.toRadians(90)))
                                 .strafeToSplineHeading(new Vector2d(-25.5, 4.5), Math.toRadians(45))
                                 .build()
                 ))
@@ -132,8 +132,8 @@ public class PathMasterTheTestingNavigator {
                                 new SleepAction(.3),
                                 doSlidesUpBucket()
                         ),
-                        mecanumDrive.actionBuilder(new Pose2d(-29, 24.5, Math.toRadians(90)))
-                                .strafeToSplineHeading(new Vector2d(-24.75, 5.25), Math.toRadians(45))
+                        mecanumDrive.actionBuilder(new Pose2d(-29, 23.5, Math.toRadians(90)))
+                                .strafeToSplineHeading(new Vector2d(-26, 5.25), Math.toRadians(45))
                                 .build()
                 ))
                 .stopAndAdd(doOuttakeBucket())
@@ -145,8 +145,8 @@ public class PathMasterTheTestingNavigator {
                                 new SleepAction(0.25),
                                 slidesDown()
                         ),
-                        mecanumDrive.actionBuilder(new Pose2d(-24.75, 5.25, Math.toRadians(45)))
-                                .strafeToSplineHeading(new Vector2d(-25, 35.75), Math.toRadians(180))
+                        mecanumDrive.actionBuilder(new Pose2d(-26, 5.25, Math.toRadians(45)))
+                                .strafeToSplineHeading(new Vector2d(-25, 35), Math.toRadians(180))
                                 .strafeToSplineHeading(intakeSample3, Math.toRadians(180))
                                 .build()
                 ))
