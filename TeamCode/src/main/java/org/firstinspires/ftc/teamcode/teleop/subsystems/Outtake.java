@@ -6,8 +6,8 @@ public class Outtake {
     private final Servo armL, armR;
     private final Servo claw;
     private static final double CLAW_OPEN = 0.1472, CLAW_CLOSED = 0.00;
-    private static final double ARML_RUNGCLIP = .33277778, ARML_TRANSFER = 0.15166666, ARML_CLIP = 0.8572222;
-    private static final double ARMR_RUNGCLIP = 0.6566667, ARMR_TRANSFER = 0.82833333, ARMR_CLIP = 0.1272222;
+    private static final double ARM_RUNG_LEFT = .33277778, ARM_TRANSFER_LEFT = 0.15166666, ARM_WALLINTAKE_LEFT = 0.8572222, ARM_BUCKET_LEFT = 0.712778;
+    private static final double ARM_RUNG_RIGHT = 0.6566667, ARM_TRANSFER_RIGHT = 0.82833333, ARM_WALLINTAKE_RIGHT = 0.1272222, ARM_BUCKET_RIGHT = 0.276111;
 
     public Outtake (HardwareMap map) {
         //intake = map.get(CRServo.class, "iServo");
@@ -38,18 +38,17 @@ public class Outtake {
         fsm = OuttakeState.BUCKET_CLOSED;
     }
 
-
-    public double fourLPos(){
+    public double leftArmPosition(){
         return(armL.getPosition());
     }
 
-    public double fourRPos(){
+    public double rightArmPosition(){
         return(armR.getPosition());
     }
 
     public void posRungClip(){
-        fourRTo(ARMR_RUNGCLIP);
-        fourLTo(ARML_RUNGCLIP);
+        rightArmTo(ARM_RUNG_RIGHT);
+        leftArmTo(ARM_RUNG_LEFT);
     }
 
     public void openTransfer(){
@@ -59,8 +58,8 @@ public class Outtake {
     }
 
     public void posPreTransfer(){
-        fourLTo(ARML_TRANSFER + 0.075);
-        fourRTo(ARMR_TRANSFER - 0.075);
+        leftArmTo(ARM_TRANSFER_LEFT + 0.075);
+        rightArmTo(ARM_TRANSFER_RIGHT - 0.075);
         openClaw();
     }
 
@@ -71,30 +70,30 @@ public class Outtake {
     }
 
     public void posTransfer(){
-        fourLTo(ARML_TRANSFER);
-        fourRTo(ARMR_TRANSFER);
+        leftArmTo(ARM_TRANSFER_LEFT);
+        rightArmTo(ARM_TRANSFER_RIGHT);
     }
 
-    public void openClip(){
-        posClipIntake();
+    public void openWallIntake(){
+        posWallIntake();
         openClaw();
         fsm = OuttakeState.CLIP_OPEN;
     }
 
-    public void closeClip(){
-        posClipIntake();
+    public void closeWallIntake(){
+        posWallIntake();
         closeClaw();
         fsm = OuttakeState.CLIP_CLOSED;
     }
 
-    public void posPreBucket(){
-        fourLTo(0.712778);
-        fourRTo(0.276111);
+    public void posBucketOuttake(){
+        leftArmTo(ARM_BUCKET_LEFT);
+        rightArmTo(ARM_BUCKET_RIGHT);
     }
 
-    public void posClipIntake(){
-        fourLTo(ARML_CLIP);
-        fourRTo(ARMR_CLIP);
+    public void posWallIntake(){
+        leftArmTo(ARM_WALLINTAKE_LEFT);
+        rightArmTo(ARM_WALLINTAKE_RIGHT);
     }
     public void open(){
         claw.setPosition(CLAW_OPEN);
@@ -102,10 +101,10 @@ public class Outtake {
     public void close(){
         claw.setPosition(CLAW_CLOSED);
     }
-    public void fourLTo(double position){
+    public void leftArmTo(double position){
         armL.setPosition(position);
     }
-    public void fourRTo(double position){
+    public void rightArmTo(double position){
         armR.setPosition(position);
     }
 

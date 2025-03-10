@@ -131,7 +131,7 @@ public class Bot {
                 telemetry.addData("Has sample: ",intake.hasSample());
                 break;
             case SCORESAMPLE: // direct control over vertical slides and outtake
-                outtake.posPreBucket();
+                outtake.posBucketOuttake();
                 if (gamepad2.getTrigger(GamepadKeys.Trigger.LEFT_TRIGGER) > 0.1)
                     outtake.open();
                 else
@@ -244,7 +244,7 @@ public class Bot {
                 new InstantAction(intake::openSurvey),
                 new InstantAction(vSlides::toTopBucket),
                 new SleepAction(0.1),
-                new InstantAction(outtake::posPreBucket),
+                new InstantAction(outtake::posBucketOuttake),
                 new InstantAction(hSlides::close),
                 new SleepAction(0.1),
                 new InstantAction(() -> fsm = FSM.SCORESAMPLE));
@@ -299,7 +299,7 @@ public class Bot {
 
     public Action actionOuttakeBucketTwo() {
         return new SequentialAction(
-                new InstantAction(outtake::posPreBucket),
+                new InstantAction(outtake::posBucketOuttake),
                 new SleepAction(.5),
                 new InstantAction(outtake::open),
                 new SleepAction(0.5),
