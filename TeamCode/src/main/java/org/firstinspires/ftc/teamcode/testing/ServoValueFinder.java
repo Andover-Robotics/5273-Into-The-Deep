@@ -43,7 +43,7 @@ public class ServoValueFinder extends LinearOpMode {
             }else if(gamepad2.dpad_down){
                 servo.Move(false);
             }
-            telemetry.addData("Use controller 2\nUp and down dpad to move servo(s)\nY to go to 0.5 position\nB to go back to selection\n\nPos:", servo.getPositions());
+            telemetry.addData("Use controller 2\nUp and down dpad to move servo(s)\nY to go to 0.5 position\nA to go to 1 position\nX to go to 0 position\nB to go back to selection\n\nPos:", servo.getPositions());
             telemetry.update();
         }
     }
