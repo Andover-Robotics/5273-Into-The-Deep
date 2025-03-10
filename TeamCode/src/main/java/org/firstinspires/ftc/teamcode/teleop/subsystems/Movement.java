@@ -46,10 +46,9 @@ public class Movement {
     // tick for teleop
 
     public void teleopTick(double leftStickX, double leftStickY, double rightStickX,/* boolean toggle,*/ Telemetry telemetry){
-        double trigger = 0;// toggle ? 0.5 : 1.0;
-        double axial = -leftStickY * (STRAFE_MULTIPLIER);  // forward back strafing
-        double lateral = -leftStickX * (STRAFE_MULTIPLIER); //side to side strafing
-        double yaw = -rightStickX * (ROTATION_MULTIPLIER); //heading change
+        double axial = -leftStickY * STRAFE_MULTIPLIER;  // Note: pushing stick forward gives negative value
+        double lateral = -leftStickX * STRAFE_MULTIPLIER;
+        double yaw = -rightStickX * ROTATION_MULTIPLIER;
 
         // Combine the joystick requests for each axis-motion to determine each wheel's power.
         // Set up a variable for each drive wheel to save the power level for telemetry.
