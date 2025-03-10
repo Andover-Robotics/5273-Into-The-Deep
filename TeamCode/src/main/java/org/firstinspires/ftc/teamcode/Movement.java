@@ -18,6 +18,7 @@ import org.firstinspires.ftc.teamcode.auto.ThreeDeadWheelLocalizer;
 public class Movement {
     private final DcMotor leftFront, leftBack, rightFront, rightBack;
     private final ThreeDeadWheelLocalizer localizer;
+    private final double STRAFE_MULTIPLIER = 0.8, ROTATION_MULTIPLIER = 0.3;
 
     /**
      * Initializes a Movement instance.
@@ -46,9 +47,9 @@ public class Movement {
 
     public void teleopTick(double leftStickX, double leftStickY, double rightStickX,/* boolean toggle,*/ Telemetry telemetry){
         double trigger = 0;// toggle ? 0.5 : 1.0;
-        double axial = -leftStickY * (1 - trigger * 0.8);  // Note: pushing stick forward gives negative value
-        double lateral = -leftStickX * (1 - trigger * 0.8);
-        double yaw = -rightStickX * (1 - trigger * 0.3);
+        double axial = -leftStickY * (STRAFE_MULTIPLIER);  // Note: pushing stick forward gives negative value
+        double lateral = -leftStickX * (STRAFE_MULTIPLIER);
+        double yaw = -rightStickX * (ROTATION_MULTIPLIER);
 
         // Combine the joystick requests for each axis-motion to determine each wheel's power.
         // Set up a variable for each drive wheel to save the power level for telemetry.
