@@ -84,7 +84,7 @@ public class PathMasterTheTestingNavigator {
                                 .build()
                 ))
                 .stopAndAdd(doOuttakeBucket())
-                // output sample 1
+                // output sample init
                 .stopAndAdd(new ParallelAction(
                         bot.looseHori(),
                         new SequentialAction(
@@ -102,7 +102,7 @@ public class PathMasterTheTestingNavigator {
                 .stopAndAdd(new ParallelAction(
                         new SequentialAction(
                                 doTransfer(),
-                                new SleepAction(.5),
+                                new SleepAction(.3),
                                 doSlidesUpBucket()
                         ),
                         mecanumDrive.actionBuilder(new Pose2d(-19.5, 26.5, Math.toRadians(90)))
@@ -128,7 +128,7 @@ public class PathMasterTheTestingNavigator {
                 .stopAndAdd(new ParallelAction(
                         new SequentialAction(
                                 doTransfer(),
-                                new SleepAction(.5),
+                                new SleepAction(.3),
                                 doSlidesUpBucket()
                         ),
                         mecanumDrive.actionBuilder(new Pose2d(-29, 24.5, Math.toRadians(90)))
@@ -156,7 +156,7 @@ public class PathMasterTheTestingNavigator {
                 .stopAndAdd(new ParallelAction(
                         new SequentialAction(
                                 doTransfer(),
-                                new SleepAction(.5),
+                                new SleepAction(.3),
                                 doSlidesUpBucket()
                         ),
                         mecanumDrive.actionBuilder(new Pose2d(-27.75, 35.75, Math.toRadians(90)))
@@ -168,8 +168,6 @@ public class PathMasterTheTestingNavigator {
                 .stopAndAdd(new ParallelAction(
                         new SequentialAction(
                                 actionArmBucketPark(),
-                                new SleepAction(0.25),
-                                outtakeTransferPos(),
                                 slidesDown(),
                                 bot.closeHori()
                                 ),
@@ -272,7 +270,6 @@ public class PathMasterTheTestingNavigator {
                 .waitSeconds(2)
                 .stopAndAdd(slidesDown())
                 .strafeToSplineHeading(new Vector2d(-27, 0), Math.toRadians(90))
-                .stopAndAdd(outtakeTransferPos())
                 .build();
 
         opMode.waitForStart();
@@ -295,7 +292,7 @@ public class PathMasterTheTestingNavigator {
 
     private static Action doTransfer() { return bot.actionTransferNoSlides();}
 
-    private static Action outtakeTransferPos() {
+    private static Action outtakeTransferPos() { //tai wanted this at the end to not mess up the wires not sure if we still need it
         return bot.actionOuttakeTransfer();
     }
 
