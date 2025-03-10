@@ -160,7 +160,7 @@ public class Bot {
             case INTAKESPECIMEN:
                 outtake.openClip();
                 if(gamepad2.wasJustPressed(GamepadKeys.Button.B)) {
-                    Actions.runBlocking(actionIntakeSpecimenUpDown());
+                    Actions.runBlocking(actionIntakeSpecimenDownUp());
                 }
                 if(gamepad2.wasJustPressed(GamepadKeys.Button.A)) {
                     vSlides.toStorage();
@@ -309,7 +309,7 @@ public class Bot {
         );
     }
 
-    public Action actionIntakeSpecimenUpDown() {
+    public Action actionIntakeSpecimenDownUp() {
         return new SequentialAction(
             // the moving to lower bound should be done by the outtake method at the end
             // open the claw before calling this method
@@ -320,7 +320,7 @@ public class Bot {
             new InstantAction(() -> fsm = FSM.CLIPSPECIMEN));
     }
 
-    public Action actionIntakeSpecimenDownUp() {
+    public Action actionIntakeSpecimenUpDown() {
         return new SequentialAction(
                 new InstantAction(outtake::close),
                 new SleepAction(0.2),
