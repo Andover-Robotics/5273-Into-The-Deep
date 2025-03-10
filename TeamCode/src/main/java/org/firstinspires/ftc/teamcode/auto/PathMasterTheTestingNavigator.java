@@ -35,7 +35,7 @@ public class PathMasterTheTestingNavigator {
 
 
         Action arcStrikeVelocity = mecanumDrive.actionBuilder(new Pose2d(0 , 0 , Math.toRadians(90)))
-                .strafeTo(new Vector2d(-55, 0))
+                .strafeTo(new Vector2d(-28, 0))
                 .build();
         opMode.waitForStart();
         Actions.runBlocking(arcStrikeVelocity);
@@ -50,7 +50,7 @@ public class PathMasterTheTestingNavigator {
         bot = new Bot(opMode,hardwareMap, telemetry);
 
         Action arcStrikeVelocity = mecanumDrive.actionBuilder(new Pose2d(0 , 0 , Math.toRadians(270)))
-                .strafeTo(new Vector2d(55, 0))
+                .strafeTo(new Vector2d(36, 0))
                 .build();
         opMode.waitForStart();
         Actions.runBlocking(arcStrikeVelocity);
