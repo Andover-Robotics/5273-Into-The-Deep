@@ -92,50 +92,15 @@ public class Claw {
 
     public void positionalActiveRollPitch(GamepadEx gamepad, Telemetry telemetry) {
         if (gamepad.wasJustPressed(GamepadKeys.Button.DPAD_LEFT)) {
-            //move in 45 degree increments in the positive direction for currentRoll
-            switch (currentRoll) {
-                case 0:
-                    roll.setPosition(ROLL_45_CLOCKWISE);
-                    currentRoll = 45;
-                    break;
-                case 45:
-                    roll.setPosition(ROLL_90_CLOCKWISE);
-                    currentRoll = 90;
-                    break;
-                case 90:
-                case -90:
-                    roll.setPosition(ROLL_45_COUNTERCLOCKWISE);
-                    currentRoll = -45;
-                    break;
-                case -45:
-                default:
-                    roll.setPosition(ROLL_MIDDLE);
-                    currentRoll = 0;
-                    break;
-            }
+            currentRoll = Utils.advance(currentRoll, new Integer[]{0, 45, 90, -45}, 1);
         } else if (gamepad.wasJustPressed(GamepadKeys.Button.DPAD_RIGHT)) {
-            //move in 45 degree increments in the negative direction for currentRoll
-            switch (currentRoll) {
-                case 0:
-                    roll.setPosition(ROLL_45_COUNTERCLOCKWISE);
-                    currentRoll = -45;
-                    break;
-                case -45:
-                    roll.setPosition(ROLL_90_COUNTERCLOCKWISE);
-                    currentRoll = -90;
-                    break;
-                case -90:
-                case 90:
-                    roll.setPosition(ROLL_45_CLOCKWISE);
-                    currentRoll = 45;
-                    break;
-                case 45:
-                default:
-                    roll.setPosition(ROLL_MIDDLE);
-                    currentRoll = 0;
-                    break;
-            }
+            currentRoll = Utils.advance(currentRoll, new Integer[]{0, 45, 90, -45}, -1);
         }
+        roll.setPosition(Utils.map(currentRoll,
+                new Integer[]{0, 45, 90, -45},
+                new Double[]{ROLL_45_CLOCKWISE, ROLL_90_CLOCKWISE, ROLL_45_COUNTERCLOCKWISE, ROLL_MIDDLE}
+        ));
+
         telemetry.addData("roll", currentRoll);
         telemetry.addData("rollServo", roll.getPosition());
 
@@ -173,37 +138,17 @@ public class Claw {
     }
 
     public void setRoll(RollPosition position) {
-        switch (position) {
-            case MIDDLE:
-                roll.setPosition(ROLL_MIDDLE);
-                break;
-            case CLOCKWISE_45:
-                roll.setPosition(ROLL_45_CLOCKWISE);
-                break;
-            case CLOCKWISE_90:
-                roll.setPosition(ROLL_90_CLOCKWISE);
-                break;
-            case COUNTERCLOCKWISE_45:
-                roll.setPosition(ROLL_45_COUNTERCLOCKWISE);
-                break;
-            case COUNTERCLOCKWISE_90:
-                roll.setPosition(ROLL_90_COUNTERCLOCKWISE);
-                break;
-        }
+        roll.setPosition(Utils.map(position,
+                new RollPosition[]{RollPosition.MIDDLE, RollPosition.CLOCKWISE_45, RollPosition.CLOCKWISE_90, RollPosition.COUNTERCLOCKWISE_45, RollPosition.COUNTERCLOCKWISE_90},
+                new Double[]{ROLL_MIDDLE, ROLL_45_CLOCKWISE, ROLL_90_CLOCKWISE, ROLL_45_COUNTERCLOCKWISE, ROLL_90_COUNTERCLOCKWISE}
+        ));
     }
 
     public void setPitch(PitchPosition position) {
-        switch (position) {
-            case MIDDLE:
-                pitch.setPosition(PITCH_MIDDLE);
-                break;
-            case TRANSFER:
-                pitch.setPosition(PITCH_TRANSFER);
-                break;
-            case DOWN_90:
-                pitch.setPosition(PITCH_90_DOWN);
-                break;
-        }
+        pitch.setPosition(Utils.map(position,
+                new PitchPosition[]{PitchPosition.MIDDLE, PitchPosition.TRANSFER, PitchPosition.DOWN_90},
+                new Double[]{PITCH_MIDDLE, PITCH_TRANSFER, PITCH_90_DOWN}
+        ));
     }
 
     public void setPositions(RollPosition rollPosition, PitchPosition pitchPosition) {
@@ -216,20 +161,10 @@ public class Claw {
         if (result != -1) {
             // TODO fix the angling for new claw
             int fixed = (int) Math.round(result / 45);
-            switch (fixed) {
-                case 1:
-                    roll.setPosition(ROLL_45_CLOCKWISE);
-                    break;
-                case 2:
-                    roll.setPosition(ROLL_90_CLOCKWISE);
-                    break;
-                case 3:
-                    roll.setPosition(ROLL_45_COUNTERCLOCKWISE);
-                    break;
-                default:
-                    roll.setPosition(ROLL_MIDDLE);
-                    break;
-            }
+            roll.setPosition(Utils.map(fixed,
+                    new Integer[]{0, 1, 2, 3, 4},
+                    new Double[]{ROLL_MIDDLE, ROLL_45_CLOCKWISE, ROLL_90_CLOCKWISE, ROLL_45_COUNTERCLOCKWISE, ROLL_MIDDLE}
+            ));
             return true;
         }
         return false;
