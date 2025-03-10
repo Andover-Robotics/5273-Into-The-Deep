@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.teleop.subsystems;
 
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
@@ -31,7 +31,7 @@ public class Camera {
     private final Scalar UPPER_YELLOW = new Scalar(30, 255, 255);
     private final Scalar LOWER_BLUE = new Scalar(100, 80, 25);
     private final Scalar UPPER_BLUE = new Scalar(130, 255, 255);
-    double angle = -1;
+    public double angle = -1;
 
     // OpenCV image processing
     class RectPipeline extends OpenCvPipeline {

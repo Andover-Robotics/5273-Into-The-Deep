@@ -16,7 +16,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 
 //our special silly very important goofy classes (w rizz)
 import org.firstinspires.ftc.robotcore.external.Telemetry;
-import org.firstinspires.ftc.teamcode.Bot;
+import org.firstinspires.ftc.teamcode.teleop.Bot;
 import org.firstinspires.ftc.teamcode.auto.miscRR.MecanumDrive;
 
 

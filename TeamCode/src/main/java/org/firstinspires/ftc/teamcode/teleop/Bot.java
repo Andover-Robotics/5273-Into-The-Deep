@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.teleop;
 
 import androidx.annotation.NonNull;
 
@@ -14,6 +14,11 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.teamcode.teleop.subsystems.Camera;
+import org.firstinspires.ftc.teamcode.teleop.subsystems.Intake;
+import org.firstinspires.ftc.teamcode.teleop.subsystems.Outtake;
+import org.firstinspires.ftc.teamcode.teleop.subsystems.SlidesHorizontal;
+import org.firstinspires.ftc.teamcode.teleop.subsystems.SlidesVertical;
 
 /**
  * Represents the Bot.
