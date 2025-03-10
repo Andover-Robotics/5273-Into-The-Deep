@@ -311,7 +311,7 @@ public class PathMasterTheTestingNavigator {
     }
 
     private static Action doIntakeSpecimen() { //  specimen from wall
-        return bot.actionIntakeSpecimenDownUp();
+        return bot.actionIntakeSpecimenUpDown();
     }
 
     private static Action doOuttakeSpecimen() { // clips to top rung
