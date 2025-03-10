@@ -223,33 +223,6 @@ public class Bot {
         telemetry.addData("Vertical Slides Pos: ", vSlides.getEncodersAverage());
     }
 
-    public Action actionTransfer() {
-        return new SequentialAction(
-                new InstantAction(outtake::posPreTransfer),
-                new InstantAction(intake::closeIntake),
-                new InstantAction(intake::setPitchTransfer),
-                new InstantAction(intake::looseClaw),
-                new InstantAction(vSlides::toStorage),
-                new InstantAction(hSlides::middle),
-                new SleepAction(0.2),
-                new InstantAction(intake::posTransfer),
-                new InstantAction(hSlides::close),
-                new SleepAction(0.5),
-                new InstantAction(outtake::openTransfer),
-                new SleepAction(0.25),
-                new InstantAction(outtake::closeClaw),
-                new SleepAction(0.25),
-                new InstantAction(intake::open),
-                new SleepAction(0.4),
-                new InstantAction(intake::openSurvey),
-                new InstantAction(vSlides::toTopBucket),
-                new SleepAction(0.1),
-                new InstantAction(outtake::posBucketOuttake),
-                new InstantAction(hSlides::close),
-                new SleepAction(0.1),
-                new InstantAction(() -> fsm = FSM.SCORESAMPLE));
-    }
-
 
     public Action actionTransferNoSlides() {
         return new SequentialAction(
