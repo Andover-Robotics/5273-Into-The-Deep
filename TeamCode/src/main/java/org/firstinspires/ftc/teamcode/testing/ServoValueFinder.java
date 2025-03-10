@@ -34,6 +34,10 @@ public class ServoValueFinder extends LinearOpMode {
                 servo = getServo();
             }else if(gamepad2.y){
                 servo.setPositions(0.5);
+            }else if(gamepad2.a){
+                servo.setPositions(1);
+            }else if(gamepad2.x) {
+                servo.setPositions(0);
             }else if(gamepad2.dpad_up){
                 servo.Move(true);
             }else if(gamepad2.dpad_down){
