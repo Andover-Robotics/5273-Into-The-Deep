@@ -77,7 +77,7 @@ public class PathMasterTheTestingNavigator {
         Action arcStrikeVelocity = mecanumDrive.actionBuilder(new Pose2d(0 , 0 , Math.toRadians(90)))
                 .stopAndAdd(new ParallelAction(
                         startAxons(),
-                        bot.looseHori(),
+                        bot.actionLoosenHorizontalSlides(),
                         doSlidesUpBucket(),
                         mecanumDrive.actionBuilder(new Pose2d(0, 0, Math.toRadians(90)))
                                 .strafeToSplineHeading(new Vector2d(-27, 4), Math.toRadians(45))
@@ -86,7 +86,7 @@ public class PathMasterTheTestingNavigator {
                 .stopAndAdd(doOuttakeBucket())
                 // output sample init
                 .stopAndAdd(new ParallelAction(
-                        bot.looseHori(),
+                        bot.actionLoosenHorizontalSlides(),
                         new SequentialAction(
                                 new SleepAction(0.25),
                                 slidesDown()
@@ -96,7 +96,7 @@ public class PathMasterTheTestingNavigator {
                                 .build()
                 ))
                 .waitSeconds(.5)
-                .stopAndAdd(bot.looseHori())
+                .stopAndAdd(bot.actionLoosenHorizontalSlides())
                 // input sample 1
                 .stopAndAdd(doIntake())
                 .waitSeconds(.5)
@@ -114,7 +114,7 @@ public class PathMasterTheTestingNavigator {
                 .stopAndAdd(doOuttakeBucket())
                 // output sample 1
                 .stopAndAdd(new ParallelAction(
-                        bot.looseHori(),
+                        bot.actionLoosenHorizontalSlides(),
                         new SequentialAction(
                                 new SleepAction(0.25),
                                 slidesDown()
@@ -124,7 +124,7 @@ public class PathMasterTheTestingNavigator {
                                 .build()
                 ))
                 .waitSeconds(.5)
-                .stopAndAdd(bot.looseHori())
+                .stopAndAdd(bot.actionLoosenHorizontalSlides())
                 //input sample 2
                 .stopAndAdd(doIntake())
                 .waitSeconds(.5)
@@ -142,8 +142,8 @@ public class PathMasterTheTestingNavigator {
                 .stopAndAdd(doOuttakeBucket())
                 // output sample 2
                 .stopAndAdd(new ParallelAction(
-                        bot.looseHori(),
-                        bot.clawRoll90(),
+                        bot.actionLoosenHorizontalSlides(),
+                        bot.actionClawRoll90(),
                         new SequentialAction(
                                 new SleepAction(0.25),
                                 slidesDown()
@@ -154,7 +154,7 @@ public class PathMasterTheTestingNavigator {
                                 .build()
                 ))
                 .waitSeconds(.5)
-                .stopAndAdd(bot.looseHori())
+                .stopAndAdd(bot.actionLoosenHorizontalSlides())
                 //input sample 3
                 .stopAndAdd(doIntake())
                 .waitSeconds(.5)
@@ -175,14 +175,14 @@ public class PathMasterTheTestingNavigator {
                         new SequentialAction(
                                 actionArmBucketPark(),
                                 slidesDown(),
-                                bot.closeHori()
+                                bot.actionCloseHorizontalSlides()
                                 ),
                         mecanumDrive.actionBuilder(new Pose2d(-25.5, 4.5, Math.toRadians(45)))
                                 .strafeToSplineHeading(new Vector2d(30, 12), Math.toRadians(270))
                                 .strafeToSplineHeading(new Vector2d(30, 28.5), Math.toRadians(270))
                                 .build()
                 ))
-                .stopAndAdd(bot.closeHori())
+                .stopAndAdd(bot.actionCloseHorizontalSlides())
                 .build();
 
         opMode.waitForStart();
@@ -190,7 +190,7 @@ public class PathMasterTheTestingNavigator {
 
         Actions.runBlocking(new ParallelAction(
                 arcStrikeVelocity,
-                bot.slidesPeriodic()
+                bot.actionSlidesPeriodic()
         ));
     }
 
@@ -283,12 +283,12 @@ public class PathMasterTheTestingNavigator {
 
         Actions.runBlocking(new ParallelAction(
                 arcStrikeVelocity,
-                bot.slidesPeriodic(),
-                bot.periodicHorizSlidesClosed()
+                bot.actionSlidesPeriodic(),
+                bot.actionPeriodicHorizSlidesClosed()
         ));
     }
 
-    public static Action actionArmBucketPark(){return bot.bucketPark();}
+    public static Action actionArmBucketPark(){return bot.actionBucketPark();}
     public static Action actionSweepArmUp() {
         return bot.actionSweepArmUp();
     }
@@ -328,7 +328,7 @@ public class PathMasterTheTestingNavigator {
     }
 
     private static Action slidesDown() {
-        return bot.slidesDown();
+        return bot.actionSlidesDown();
     }
 
     private static Action startAxons(){ return bot.actionStartAxons();}

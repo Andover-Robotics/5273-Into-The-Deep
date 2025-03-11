@@ -250,7 +250,7 @@ public class Bot {
         return new InstantAction(vSlides::toClipTop);
     }
 
-    public Action slidesDown() {
+    public Action actionSlidesDown() {
         return new InstantAction(vSlides::toStorage);
     }
 
@@ -274,7 +274,7 @@ public class Bot {
                 new InstantAction(outtake::openClaw));
     }
 
-    public Action bucketPark() {
+    public Action actionBucketPark() {
         return new SequentialAction(
                 new InstantAction(outtake::posBucketPark)
         );
@@ -292,7 +292,7 @@ public class Bot {
         );
     }
 
-    public Action periodicHorizSlidesClosed() {
+    public Action actionPeriodicHorizSlidesClosed() {
         return hSlides.horizPeriodicClosed();
     }
 
@@ -309,22 +309,22 @@ public class Bot {
         );
     }
 
-    public Action clawRoll90() {
+    public Action actionClawRoll90() {
         return new SequentialAction(
                 new InstantAction(intake::clawRoll90)
                 );
     }
-    public Action closeHori() {
+    public Action actionCloseHorizontalSlides() {
         return new SequentialAction(
                 new InstantAction(hSlides::close)
                 );
     }
 
-    public Action slidesPeriodic() {
+    public Action actionSlidesPeriodic() {
         return vSlides.periodicAction();
     }
 
-    public Action looseHori() {
+    public Action actionLoosenHorizontalSlides() {
         return new InstantAction(hSlides::loose);
     }
 }

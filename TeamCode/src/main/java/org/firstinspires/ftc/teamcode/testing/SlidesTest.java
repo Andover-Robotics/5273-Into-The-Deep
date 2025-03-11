@@ -23,7 +23,7 @@ public class SlidesTest extends LinearOpMode  {
             vSlides.slidesMove(gamepadx.getLeftY());
             if(gamepadx.wasJustPressed(GamepadKeys.Button.A)) Actions.runBlocking(bot.actionSpecPosUp());
             if(gamepadx.wasJustPressed(GamepadKeys.Button.B)) Actions.runBlocking(bot.actionClipSpecimenDownUp());
-            if (gamepadx.wasJustPressed(GamepadKeys.Button.X)) Actions.runBlocking(bot.slidesDown());
+            if (gamepadx.wasJustPressed(GamepadKeys.Button.X)) Actions.runBlocking(bot.actionSlidesDown());
             vSlides.periodic();
             gamepadx.readButtons();
         }
