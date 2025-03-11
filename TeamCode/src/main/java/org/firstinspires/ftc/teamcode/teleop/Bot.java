@@ -30,7 +30,6 @@ public class Bot {
     private final Intake intake;
     private final SlidesVertical vSlides;
     private final Outtake outtake;
-    private final Camera camera;
     private final Servo sweepServo;
 
     private static final double SWEEP_UP = 0.5, SWEEP_DOWN = 0;
@@ -52,7 +51,7 @@ public class Bot {
      */
     public Bot(OpMode opMode, @NonNull HardwareMap hardwareMap, @NonNull Telemetry telemetry) {
         // initializations:
-        camera = new Camera(hardwareMap, telemetry);
+        Camera camera = new Camera(hardwareMap, telemetry);
 
         // intake:
         hSlides = new SlidesHorizontal(hardwareMap, telemetry);
