@@ -9,7 +9,7 @@ import org.firstinspires.ftc.teamcode.teleop.subsystems.Movement;
 /**
  * Represents the Teleop OpMode
  */
-@TeleOp(name = "New Main Teleop", group = "main")
+@TeleOp(name = "New Main Teleop", group = "AA_main")
 class MainTeleop extends LinearOpMode {
     /**
      * Runs the OpMode.
