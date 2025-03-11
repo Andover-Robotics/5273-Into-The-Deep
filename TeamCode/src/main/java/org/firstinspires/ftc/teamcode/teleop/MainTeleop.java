@@ -10,7 +10,7 @@ import org.firstinspires.ftc.teamcode.teleop.subsystems.Movement;
  * Represents the Teleop OpMode
  */
 @TeleOp(name = "New Main Teleop", group = "main")
-public class MainTeleop extends LinearOpMode {
+class MainTeleop extends LinearOpMode {
     /**
      * Runs the OpMode.
      */
@@ -33,7 +33,7 @@ public class MainTeleop extends LinearOpMode {
         while (opModeIsActive()) {
             gamepadEx1.readButtons();
             gamepadEx2.readButtons();
-            bot.teleopTick(gamepadEx1, gamepadEx2, telemetry);
+            bot.teleopTick(gamepadEx1, telemetry);
             telemetry.update();
         }
         threaded.interrupt();

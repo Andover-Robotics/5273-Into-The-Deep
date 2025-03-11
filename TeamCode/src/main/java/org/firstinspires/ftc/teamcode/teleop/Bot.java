@@ -42,7 +42,7 @@ public class Bot {
         HANG
     }
 
-    public FSM fsm = FSM.STARTING;
+    public FSM fsm;
 
     /**
      * Initializes a Bot instance.
@@ -70,12 +70,11 @@ public class Bot {
     /**
      * Runs one tick of the Teleop OpMode, excluding movement, which is threaded separately
      *
-     * @param gamepad1  {@link com.qualcomm.robotcore.hardware.Gamepad} 1
      * @param gamepad2  {@link com.qualcomm.robotcore.hardware.Gamepad} 2
      * @param telemetry {@link org.firstinspires.ftc.robotcore.external.Telemetry}
      */
 
-    public void teleopTick(GamepadEx gamepad1, GamepadEx gamepad2, Telemetry telemetry) throws InterruptedException {
+    public void teleopTick(GamepadEx gamepad2, Telemetry telemetry) throws InterruptedException {
         boolean leftTriggerDown = gamepad2.getTrigger(GamepadKeys.Trigger.LEFT_TRIGGER) > 0.1;
         if (gamepad2.isDown(GamepadKeys.Button.X))
             fsm = FSM.HANG;
