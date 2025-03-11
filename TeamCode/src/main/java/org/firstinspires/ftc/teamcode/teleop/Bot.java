@@ -80,21 +80,23 @@ public class Bot {
         boolean leftTriggerDown = gamepad2.getTrigger(GamepadKeys.Trigger.LEFT_TRIGGER) > 0.1;
         if (gamepad2.isDown(GamepadKeys.Button.X))
             fsm = FSM.HANG;
+        if (gamepad2.wasJustPressed(GamepadKeys.Button.A)) {
+            hSlides.middle();
+            vSlides.toStorage();
+            intake.posSurvey();
+            outtake.openTransfer();
+            fsm = FSM.INTAKESAMPLE;
+        }
+        if (gamepad2.wasJustPressed(GamepadKeys.Button.Y)) {
+            hSlides.close();
+            vSlides.toStorage();
+            intake.openSurvey();
+            outtake.openWallIntake();
+            fsm = FSM.INTAKESPECIMEN;
+        }
         switch (fsm) {
             case STARTING: // if just started
                 vSlides.resetEncoders();
-                if (gamepad2.wasJustPressed(GamepadKeys.Button.A)) {
-                    hSlides.middle();
-                    intake.openSurvey();
-                    outtake.openTransfer();
-                    fsm = FSM.INTAKESAMPLE;
-                }
-                if (gamepad2.wasJustPressed(GamepadKeys.Button.Y)) {
-                    hSlides.close();
-                    intake.openSurvey();
-                    outtake.openWallIntake();
-                    fsm = FSM.INTAKESPECIMEN;
-                }
                 break;
             case INTAKESAMPLE: // direction control over horizontal slides and intake
                 outtake.openTransfer();
@@ -122,12 +124,6 @@ public class Bot {
                 if(gamepad2.wasJustPressed(GamepadKeys.Button.B)) {
                     Actions.runBlocking(actionTransferNoSlides());
                 }
-                if (gamepad2.wasJustPressed(GamepadKeys.Button.Y)) {
-                    hSlides.close();
-                    intake.openSurvey();
-                    outtake.openWallIntake();
-                    fsm = FSM.INTAKESPECIMEN;
-                }
                 telemetry.addData("Has sample: ",intake.hasSample());
                 break;
             case SCORESAMPLE: // direct control over vertical slides and outtake
@@ -136,24 +132,8 @@ public class Bot {
                     outtake.open();
                 else
                     outtake.close();
-                if (gamepad2.wasJustPressed(GamepadKeys.Button.A)) {
-                    hSlides.middle();
-                    vSlides.toStorage();
-                    intake.posSurvey();
-                    outtake.openTransfer();
-                    fsm = FSM.INTAKESAMPLE;
-                }
                 if (gamepad2.wasJustPressed(GamepadKeys.Button.B)) {
                     vSlides.toTopBucket();
-                }
-                if (gamepad2.wasJustPressed(GamepadKeys.Button.Y)) {
-                    hSlides.close();
-                    vSlides.toStorage();
-                    intake.openSurvey();
-                    outtake.openWallIntake();
-                    Thread.sleep(2000);
-                    vSlides.resetEncoders();
-                    fsm = FSM.INTAKESPECIMEN;
                 }
                 break;
             case INTAKESPECIMEN:
@@ -161,32 +141,11 @@ public class Bot {
                 if(gamepad2.wasJustPressed(GamepadKeys.Button.B)) {
                     Actions.runBlocking(actionIntakeSpecimenDownUp());
                 }
-                if(gamepad2.wasJustPressed(GamepadKeys.Button.A)) {
-                    vSlides.toStorage();
-                    hSlides.middle();
-                    intake.openSurvey();
-                    outtake.openTransfer();
-                    fsm = FSM.INTAKESAMPLE;
-                }
                 break;
             case CLIPSPECIMEN:
                 outtake.posRungClip();
                 if(gamepad2.wasJustPressed(GamepadKeys.Button.B)){
                     Actions.runBlocking(actionClipSpecimenDownUp());
-                }
-                if (gamepad2.wasJustPressed(GamepadKeys.Button.A)) {
-                    hSlides.middle();
-                    vSlides.toStorage();
-                    intake.posSurvey();
-                    outtake.openTransfer();
-                    fsm = FSM.INTAKESAMPLE;
-                }
-                if (gamepad2.wasJustPressed(GamepadKeys.Button.Y)) {
-                    hSlides.close();
-                    vSlides.toStorage();
-                    intake.openSurvey();
-                    outtake.openWallIntake();
-                    fsm = FSM.INTAKESPECIMEN;
                 }
                 break;
             case HANG:
@@ -196,20 +155,6 @@ public class Bot {
                 vSlides.slidesMove(gamepad2.getLeftY());
                 if (leftTriggerDown) {
                     vSlides.toStorage();
-                }
-                if (gamepad2.wasJustPressed(GamepadKeys.Button.A)) {
-                    hSlides.middle();
-                    vSlides.toStorage();
-                    intake.posSurvey();
-                    outtake.openTransfer();
-                    fsm = FSM.INTAKESAMPLE;
-                }
-                if (gamepad2.wasJustPressed(GamepadKeys.Button.Y)) {
-                    hSlides.close();
-                    vSlides.toStorage();
-                    intake.openSurvey();
-                    outtake.openWallIntake();
-                    fsm = FSM.INTAKESPECIMEN;
                 }
                 break;
         }
