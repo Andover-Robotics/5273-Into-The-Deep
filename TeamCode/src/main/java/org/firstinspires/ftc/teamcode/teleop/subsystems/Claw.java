@@ -183,8 +183,4 @@ public class Claw {
                         (red <= 500 && blue >= 2500 && green <= 500) ||
                         (red >= 2500 && blue <= 500 && green >= 2500));
     }
-
-    public void rollIt90() {
-        roll.setPosition(ROLL_90_CLOCKWISE);
-    }
 }

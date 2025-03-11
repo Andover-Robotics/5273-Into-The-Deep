@@ -16,9 +16,8 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 public class SlidesHorizontal {
     private final Servo slidesLeft, slidesRight;
 
-    private static final double EXPANDEDR = 0.4617, CONTRACTEDR = 0.2206, MIDDLER = 0.37;
-    private static final double EXPANDEDL = 0.5383, CONTRACTEDL = 0.7744, MIDDLEL = 0.6244;
-    private static final double LOOSEL = 0.75277778, LOOSER = 0.27777778;
+    private static final double EXPANDEDR = 0.4617, MIDDLER = 0.37, LOOSER = 0.27777778, CONTRACTEDR = 0.2206;
+    private static final double EXPANDEDL = 0.5383, MIDDLEL = 0.6244, LOOSEL = 0.75277778, CONTRACTEDL = 0.7744;
     private final Telemetry telemetry;
 
     public SlidesHorizontal(HardwareMap map, Telemetry tele) {
