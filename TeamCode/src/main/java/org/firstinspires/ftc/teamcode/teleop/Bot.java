@@ -158,9 +158,6 @@ public class Bot {
                 break;
             case INTAKESPECIMEN:
                 outtake.openWallIntake();
-                if(gamepad2.wasJustPressed(GamepadKeys.Button.B)) {
-                    Actions.runBlocking(actionIntakeSpecimenDownUp());
-                }
                 if(gamepad2.wasJustPressed(GamepadKeys.Button.A)) {
                     vSlides.toStorage();
                     hSlides.middle();
@@ -168,18 +165,21 @@ public class Bot {
                     outtake.openTransfer();
                     fsm = FSM.INTAKESAMPLE;
                 }
+                if(gamepad2.wasJustPressed(GamepadKeys.Button.B)) {
+                    Actions.runBlocking(actionIntakeSpecimenDownUp());
+                }
                 break;
             case CLIPSPECIMEN:
                 outtake.posRungClip();
-                if(gamepad2.wasJustPressed(GamepadKeys.Button.B)){
-                    Actions.runBlocking(actionClipSpecimenDownUp());
-                }
                 if (gamepad2.wasJustPressed(GamepadKeys.Button.A)) {
                     hSlides.middle();
                     vSlides.toStorage();
                     intake.posSurvey();
                     outtake.openTransfer();
                     fsm = FSM.INTAKESAMPLE;
+                }
+                if(gamepad2.wasJustPressed(GamepadKeys.Button.B)){
+                    Actions.runBlocking(actionClipSpecimenDownUp());
                 }
                 if (gamepad2.wasJustPressed(GamepadKeys.Button.Y)) {
                     hSlides.close();
