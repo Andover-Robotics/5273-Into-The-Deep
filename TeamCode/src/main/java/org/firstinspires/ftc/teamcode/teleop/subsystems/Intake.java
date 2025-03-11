@@ -188,6 +188,6 @@ public class Intake {
     }
 
     public void clawRoll90() {
-        claw.rollIt90();
+        claw.setRoll(Claw.RollPosition.CLOCKWISE_90);
     }
 }
