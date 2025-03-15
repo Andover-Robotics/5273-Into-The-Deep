@@ -75,7 +75,9 @@ public class Bot {
      */
 
     public void teleopTick(GamepadEx gamepad2, Telemetry telemetry) throws InterruptedException {
+
         boolean leftTriggerDown = gamepad2.getTrigger(GamepadKeys.Trigger.LEFT_TRIGGER) > 0.1;
+
         if (gamepad2.isDown(GamepadKeys.Button.X))
             fsm = FSM.HANG;
         if (gamepad2.wasJustPressed(GamepadKeys.Button.A)) {
@@ -92,6 +94,17 @@ public class Bot {
             outtake.openWallIntake();
             fsm = FSM.INTAKESPECIMEN;
         }
+        if(gamepad2.wasJustPressed(GamepadKeys.Button.RIGHT_BUMPER))
+        {
+            vSlides.toStorage();
+        }
+        if (gamepad2.wasJustPressed(GamepadKeys.Button.LEFT_BUMPER))
+        {
+            vSlides.resetEncoders();
+        }
+        telemetry.addData("State: ", fsm);
+        telemetry.addData("Vertical Slides Pos: ", vSlides.getEncodersAverage());
+
         switch (fsm) {
             case STARTING: // if just started
                 vSlides.resetEncoders();
@@ -156,14 +169,6 @@ public class Bot {
                 }
                 break;
         }
-        if(gamepad2.wasJustPressed(GamepadKeys.Button.RIGHT_BUMPER)){
-            vSlides.toStorage();
-        }
-        if (gamepad2.wasJustPressed(GamepadKeys.Button.LEFT_BUMPER)){
-            vSlides.resetEncoders();
-        }
-        telemetry.addData("State: ", fsm);
-        telemetry.addData("Vertical Slides Pos: ", vSlides.getEncodersAverage());
     }
 
 
