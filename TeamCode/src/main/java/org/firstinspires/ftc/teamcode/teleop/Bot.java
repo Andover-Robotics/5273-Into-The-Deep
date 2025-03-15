@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.teleop;
 
 import androidx.annotation.NonNull;
 
+import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
 import com.acmerobotics.roadrunner.Action;
 import com.acmerobotics.roadrunner.InstantAction;
 import com.acmerobotics.roadrunner.SequentialAction;
@@ -329,5 +330,25 @@ public class Bot {
 
     public Action actionLoosenHorizontalSlides() {
         return new InstantAction(hSlides::loose);
+    }
+
+    public Action actionCameraAutoIntake() {
+        class camClawAction implements Action {
+            @Override
+            public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+                try {
+                    if (!intake.getStopMoving()) {
+                        intake.toSamplePosition();
+                        intake.setStopMoving(true);
+                    }
+                } catch (InterruptedException e) {
+                    e.getMessage();
+                    Thread.currentThread().interrupt();
+                    return false;
+                }
+                return !(intake.getStopMoving()); // this should be fine since it doesn't run in parallel, you just run it
+            }
+        }
+        return new camClawAction();
     }
 }

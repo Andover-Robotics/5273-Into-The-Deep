@@ -15,6 +15,7 @@ public class Intake {
     private static final double FOURL_INTAKE = 0.25, FOURL_TRANSFER = 0.31111111, FOURL_SURVEY = 0.6228;
     private static final double FOURR_INTAKE = 0.3633, FOURR_TRANSFER = 0.48666666, FOURR_SURVEY = 0.1783;
 
+    private static boolean stopMoving = false;
     public Intake(HardwareMap map, Camera camera) {
         //intake = map.get(CRServo.class, "iServo");
         fourL = map.get(Servo.class, "fourIL");
@@ -118,12 +119,6 @@ public class Intake {
         claw.looseClaw();
     }
 
-    public void openTransfer() {
-        posTransfer();
-        claw.looseClaw();
-        fsm = IntakeState.TRANSFER_OPEN;
-    }
-
     public void closeTransfer() {
         posTransfer();
         claw.closeClaw();
@@ -172,6 +167,7 @@ public class Intake {
     public void toSamplePosition() throws InterruptedException {
         boolean worked = claw.toSamplePosition();
         if (worked) {
+            stopMoving = true;
             Thread.sleep(100);
             closeIntake();
             Thread.sleep(400);
@@ -189,5 +185,13 @@ public class Intake {
 
     public void clawRoll90() {
         claw.setRoll(Claw.RollPosition.CLOCKWISE_90);
+    }
+
+    public boolean getStopMoving() {
+        return stopMoving;
+    }
+
+    public void setStopMoving(boolean set) {
+        stopMoving = set;
     }
 }
