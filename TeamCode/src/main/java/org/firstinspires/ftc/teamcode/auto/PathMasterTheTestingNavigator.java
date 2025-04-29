@@ -276,7 +276,8 @@ public class PathMasterTheTestingNavigator {
                 .stopAndAdd(doOuttakeSpecimen())
                 .waitSeconds(2)
                 .stopAndAdd(slidesDown())
-                .strafeToSplineHeading(new Vector2d(-27, 0), Math.toRadians(90))
+                .strafeToSplineHeading(outtakeSpec3, Math.toRadians(90))
+                .stopAndAdd(bot.actionCameraAutoIntake()) //dont think its like this, but if so id have to figure out t he mvmt and hslides
                 .build();
 
         opMode.waitForStart();
